@@ -1,0 +1,176 @@
+# TranslateApi
+
+All URIs are relative to *https://lilt.com/2*
+
+Method | HTTP request | Description
+------------- | ------------- | -------------
+[**registerSegment**](TranslateApi.md#registerSegment) | **GET** /translate/register | Register a segment
+[**translateSegment**](TranslateApi.md#translateSegment) | **GET** /translate | Translate a segment
+
+
+<a name="registerSegment"></a>
+# **registerSegment**
+> TranslateRegisterResponse registerSegment(source, srclang, trglang)
+
+Register a segment
+
+Register a source string for interactive translation. The &#x60;source_hash&#x60; value that is returned by this request is required by the &#x60;prefix&#x60; parameter for the translation endpoint. The maximum source length is 5,000 characters. Usage charges apply to this endpoint for production REST API keys.  
+
+### Example
+```java
+// Import classes:
+import com.lilt.ApiClient;
+import com.lilt.ApiException;
+import com.lilt.Configuration;
+import com.lilt.auth.*;
+import com.lilt.models.*;
+import com.lilt.api.TranslateApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    TranslateApi apiInstance = new TranslateApi(defaultClient);
+    String source = "source_example"; // String | A source string to be registered.
+    String srclang = "srclang_example"; // String | An ISO 639-1 language code.
+    String trglang = "trglang_example"; // String | An ISO 639-1 language code.
+    try {
+      TranslateRegisterResponse result = apiInstance.registerSegment(source, srclang, trglang);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TranslateApi#registerSegment");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **source** | **String**| A source string to be registered. |
+ **srclang** | **String**| An ISO 639-1 language code. |
+ **trglang** | **String**| An ISO 639-1 language code. |
+
+### Return type
+
+[**TranslateRegisterResponse**](TranslateRegisterResponse.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A status object. |  -  |
+**0** | Unexpected error |  -  |
+
+<a name="translateSegment"></a>
+# **translateSegment**
+> TranslationList translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches)
+
+Translate a segment
+
+Translate a source string.  Setting the &#x60;rich&#x60; parameter to &#x60;true&#x60; will change the response format to include additional information about each translation including a model score, word alignments,  and formatting information. The rich format can be seen in the example response on this page.  By default, this endpoint also returns translation memory (TM) fuzzy matches, along with associated scores. Fuzzy matches always appear ahead of machine translation output in the response.  The maximum source length is 5,000 characters.  Usage charges apply to this endpoint for production REST API keys.  
+
+### Example
+```java
+// Import classes:
+import com.lilt.ApiClient;
+import com.lilt.ApiException;
+import com.lilt.Configuration;
+import com.lilt.auth.*;
+import com.lilt.models.*;
+import com.lilt.api.TranslateApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    TranslateApi apiInstance = new TranslateApi(defaultClient);
+    Integer memoryId = 56; // Integer | A unique Memory identifier.
+    String source = "source_example"; // String | The source text to be translated.
+    Integer sourceHash = 56; // Integer | A source hash code.
+    String prefix = "prefix_example"; // String | A target prefix.
+    Integer n = 1; // Integer | Return top n translations.
+    Boolean rich = false; // Boolean | Returns rich translation information (e.g., with word alignments).
+    Boolean tmMatches = true; // Boolean | Include translation memory fuzzy matches.
+    try {
+      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TranslateApi#translateSegment");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **memoryId** | **Integer**| A unique Memory identifier. |
+ **source** | **String**| The source text to be translated. | [optional]
+ **sourceHash** | **Integer**| A source hash code. | [optional]
+ **prefix** | **String**| A target prefix. | [optional]
+ **n** | **Integer**| Return top n translations. | [optional] [default to 1]
+ **rich** | **Boolean**| Returns rich translation information (e.g., with word alignments). | [optional] [default to false]
+ **tmMatches** | **Boolean**| Include translation memory fuzzy matches. | [optional] [default to true]
+
+### Return type
+
+[**TranslationList**](TranslationList.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A TranslationList object. |  -  |
+**0** | Unexpected error |  -  |
+
