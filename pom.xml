@@ -5,7 +5,7 @@
     <artifactId>lilt-java-client</artifactId>
     <packaging>jar</packaging>
     <name>lilt-java-client</name>
-    <version>v2.0</version>
+    <version>2.0</version>
     <url>https://github.com/openapitools/openapi-generator</url>
     <description>OpenAPI Java</description>
     <scm>

@@ -55,7 +55,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>lilt-java-client</artifactId>
-  <version>v2.0</version>
+  <version>2.0</version>
   <scope>compile</scope>
 </dependency>
 ```
