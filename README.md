@@ -54,18 +54,10 @@ Add this dependency to your project's POM:
 ```xml
 <dependency>
   <groupId>org.openapitools</groupId>
-  <artifactId>openapi-java-client</artifactId>
+  <artifactId>lilt-java-client</artifactId>
   <version>v2.0</version>
   <scope>compile</scope>
 </dependency>
-```
-
-### Gradle users
-
-Add this dependency to your project's build file:
-
-```groovy
-compile "org.openapitools:openapi-java-client:v2.0"
 ```
 
 ### Others
