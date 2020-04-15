@@ -1,4 +1,4 @@
-# openapi-java-client
+# Lilt-java-client
 
 Lilt REST API
 - API version: v2.0
