@@ -25,12 +25,12 @@ Assign and unassign a Document for translation and/or review.
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.DocumentsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DocumentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -100,12 +100,12 @@ Create a new Document. A Document is a collection of one or more Segments. Docum
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.DocumentsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DocumentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -175,12 +175,12 @@ Delete a Document.
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.DocumentsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DocumentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -250,12 +250,12 @@ Export a Document that has been translated in the Lilt web application. Any Docu
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.DocumentsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DocumentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -328,12 +328,12 @@ List a Document.  The listing will include the pretranslation status for the doc
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.DocumentsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DocumentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -405,12 +405,12 @@ Initiate pretranslation of a list of Documents. This request will mark document(
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.DocumentsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DocumentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -484,12 +484,12 @@ Update a Document.
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.DocumentsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DocumentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -559,12 +559,12 @@ Create a Document from a file in any of the formats [documented in our knowledge
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.DocumentsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.DocumentsApi;
 
 public class Example {
   public static void main(String[] args) {

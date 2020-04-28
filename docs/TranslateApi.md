@@ -19,12 +19,12 @@ Register a source string for interactive translation. The &#x60;source_hash&#x60
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.TranslateApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TranslateApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 <a name="translateSegment"></a>
 # **translateSegment**
-> TranslationList translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches)
+> TranslationList translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags)
 
 Translate a segment
 
@@ -98,12 +98,12 @@ Translate a source string.  Setting the &#x60;rich&#x60; parameter to &#x60;true
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.TranslateApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.TranslateApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -129,8 +129,9 @@ public class Example {
     Integer n = 1; // Integer | Return top n translations.
     Boolean rich = false; // Boolean | Returns rich translation information (e.g., with word alignments).
     Boolean tmMatches = true; // Boolean | Include translation memory fuzzy matches.
+    Boolean projectTags = false; // Boolean | Project tags. Projects tags in source to target if set to true.
     try {
-      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches);
+      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#translateSegment");
@@ -154,6 +155,7 @@ Name | Type | Description  | Notes
  **n** | **Integer**| Return top n translations. | [optional] [default to 1]
  **rich** | **Boolean**| Returns rich translation information (e.g., with word alignments). | [optional] [default to false]
  **tmMatches** | **Boolean**| Include translation memory fuzzy matches. | [optional] [default to true]
+ **projectTags** | **Boolean**| Project tags. Projects tags in source to target if set to true. | [optional] [default to false]
 
 ### Return type
 

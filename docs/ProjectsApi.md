@@ -23,12 +23,12 @@ Create a Project. A Project is a collection of Documents.  A Project is associat
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -98,12 +98,12 @@ Delete a Project.
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -164,7 +164,7 @@ Name | Type | Description  | Notes
 
 <a name="getProject"></a>
 # **getProject**
-> List&lt;Project&gt; getProject(id, srclang, trglang, fromTime, toTime, state, archived)
+> List&lt;Project&gt; getProject(id, srclang, trglang, fromTime, toTime, state, archived, connectorId)
 
 Retrieve a Project
 
@@ -173,12 +173,12 @@ Retrieves one or more projects, including the documents associated with each pro
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -204,8 +204,9 @@ public class Example {
     Integer toTime = 56; // Integer | Unix time stamp (epoch, in seconds) of Projects with `created_at` less than the value.
     String state = "state_example"; // String | A project state (backlog, inProgress, inReview, inQA, done).
     Boolean archived = true; // Boolean | A flag that toggles whether to include archived projects in the response (the default is `true`).
+    Integer connectorId = 56; // Integer | A unique Connector identifier.
     try {
-      List<Project> result = apiInstance.getProject(id, srclang, trglang, fromTime, toTime, state, archived);
+      List<Project> result = apiInstance.getProject(id, srclang, trglang, fromTime, toTime, state, archived, connectorId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsApi#getProject");
@@ -229,6 +230,7 @@ Name | Type | Description  | Notes
  **toTime** | **Integer**| Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. | [optional]
  **state** | **String**| A project state (backlog, inProgress, inReview, inQA, done). | [optional]
  **archived** | **Boolean**| A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). | [optional]
+ **connectorId** | **Integer**| A unique Connector identifier. | [optional]
 
 ### Return type
 
@@ -260,12 +262,12 @@ Get information about a project that can be used for quoting. This includes: * A
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -335,12 +337,12 @@ Retrieve the status of a Project.
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -410,12 +412,12 @@ Update a Project.
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import org.openapitools.client.ApiClient;
+import org.openapitools.client.ApiException;
+import org.openapitools.client.Configuration;
+import org.openapitools.client.auth.*;
+import org.openapitools.client.models.*;
+import org.openapitools.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {
