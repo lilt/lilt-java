@@ -296,6 +296,7 @@ public class ProjectsApi {
      * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
      * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
      * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
+     * @param connectorId A unique Connector identifier. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -306,7 +307,7 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getProjectCall(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getProjectCall(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -342,6 +343,10 @@ public class ProjectsApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("archived", archived));
         }
 
+        if (connectorId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("connector_id", connectorId));
+        }
+
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
@@ -364,10 +369,10 @@ public class ProjectsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getProjectValidateBeforeCall(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getProjectValidateBeforeCall(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId, final ApiCallback _callback) throws ApiException {
         
 
-        okhttp3.Call localVarCall = getProjectCall(id, srclang, trglang, fromTime, toTime, state, archived, _callback);
+        okhttp3.Call localVarCall = getProjectCall(id, srclang, trglang, fromTime, toTime, state, archived, connectorId, _callback);
         return localVarCall;
 
     }
@@ -382,6 +387,7 @@ public class ProjectsApi {
      * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
      * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
      * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
+     * @param connectorId A unique Connector identifier. (optional)
      * @return List&lt;Project&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -391,8 +397,8 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public List<Project> getProject(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived) throws ApiException {
-        ApiResponse<List<Project>> localVarResp = getProjectWithHttpInfo(id, srclang, trglang, fromTime, toTime, state, archived);
+    public List<Project> getProject(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId) throws ApiException {
+        ApiResponse<List<Project>> localVarResp = getProjectWithHttpInfo(id, srclang, trglang, fromTime, toTime, state, archived, connectorId);
         return localVarResp.getData();
     }
 
@@ -406,6 +412,7 @@ public class ProjectsApi {
      * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
      * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
      * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
+     * @param connectorId A unique Connector identifier. (optional)
      * @return ApiResponse&lt;List&lt;Project&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -415,8 +422,8 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<Project>> getProjectWithHttpInfo(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived) throws ApiException {
-        okhttp3.Call localVarCall = getProjectValidateBeforeCall(id, srclang, trglang, fromTime, toTime, state, archived, null);
+    public ApiResponse<List<Project>> getProjectWithHttpInfo(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId) throws ApiException {
+        okhttp3.Call localVarCall = getProjectValidateBeforeCall(id, srclang, trglang, fromTime, toTime, state, archived, connectorId, null);
         Type localVarReturnType = new TypeToken<List<Project>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -431,6 +438,7 @@ public class ProjectsApi {
      * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
      * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
      * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
+     * @param connectorId A unique Connector identifier. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -441,9 +449,9 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getProjectAsync(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, final ApiCallback<List<Project>> _callback) throws ApiException {
+    public okhttp3.Call getProjectAsync(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId, final ApiCallback<List<Project>> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getProjectValidateBeforeCall(id, srclang, trglang, fromTime, toTime, state, archived, _callback);
+        okhttp3.Call localVarCall = getProjectValidateBeforeCall(id, srclang, trglang, fromTime, toTime, state, archived, connectorId, _callback);
         Type localVarReturnType = new TypeToken<List<Project>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

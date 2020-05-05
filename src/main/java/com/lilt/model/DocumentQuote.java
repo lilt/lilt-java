@@ -20,7 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.lilt.model.DocumentQuote;
 import com.lilt.model.MatchBand;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -29,11 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Quoting information for a Project. 
+ * Quoting information for a Document. 
  */
-@ApiModel(description = "Quoting information for a Project. ")
+@ApiModel(description = "Quoting information for a Document. ")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-04T17:28:50.309026-07:00[America/Los_Angeles]")
-public class ProjectQuote {
+public class DocumentQuote {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
   private Integer id;
@@ -62,23 +61,19 @@ public class ProjectQuote {
   @SerializedName(SERIALIZED_NAME_BANDS)
   private List<MatchBand> bands = null;
 
-  public static final String SERIALIZED_NAME_DOCUMENTS = "documents";
-  @SerializedName(SERIALIZED_NAME_DOCUMENTS)
-  private List<DocumentQuote> documents = null;
 
-
-  public ProjectQuote id(Integer id) {
+  public DocumentQuote id(Integer id) {
     
     this.id = id;
     return this;
   }
 
    /**
-   * A unique Project identifier.
+   * A unique Document identifier.
    * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "21902", value = "A unique Project identifier.")
+  @ApiModelProperty(example = "21902", value = "A unique Document identifier.")
 
   public Integer getId() {
     return id;
@@ -90,18 +85,18 @@ public class ProjectQuote {
   }
 
 
-  public ProjectQuote numSourceWords(Integer numSourceWords) {
+  public DocumentQuote numSourceWords(Integer numSourceWords) {
     
     this.numSourceWords = numSourceWords;
     return this;
   }
 
    /**
-   * The number of source words in the Project.
+   * The number of source words in the Document.
    * @return numSourceWords
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "8000", value = "The number of source words in the Project.")
+  @ApiModelProperty(example = "8000", value = "The number of source words in the Document.")
 
   public Integer getNumSourceWords() {
     return numSourceWords;
@@ -113,18 +108,18 @@ public class ProjectQuote {
   }
 
 
-  public ProjectQuote numWordsNew(Integer numWordsNew) {
+  public DocumentQuote numWordsNew(Integer numWordsNew) {
     
     this.numWordsNew = numWordsNew;
     return this;
   }
 
    /**
-   * The number of new source words in the Project.
+   * The number of new source words in the Document.
    * @return numWordsNew
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "6039", value = "The number of new source words in the Project.")
+  @ApiModelProperty(example = "6039", value = "The number of new source words in the Document.")
 
   public Integer getNumWordsNew() {
     return numWordsNew;
@@ -136,18 +131,18 @@ public class ProjectQuote {
   }
 
 
-  public ProjectQuote numSegmentsNew(Integer numSegmentsNew) {
+  public DocumentQuote numSegmentsNew(Integer numSegmentsNew) {
     
     this.numSegmentsNew = numSegmentsNew;
     return this;
   }
 
    /**
-   * The number of new segments in the Project.
+   * The number of new segments in the Document.
    * @return numSegmentsNew
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "151", value = "The number of new segments in the Project.")
+  @ApiModelProperty(example = "151", value = "The number of new segments in the Document.")
 
   public Integer getNumSegmentsNew() {
     return numSegmentsNew;
@@ -159,18 +154,18 @@ public class ProjectQuote {
   }
 
 
-  public ProjectQuote numWordsRepetition(Integer numWordsRepetition) {
+  public DocumentQuote numWordsRepetition(Integer numWordsRepetition) {
     
     this.numWordsRepetition = numWordsRepetition;
     return this;
   }
 
    /**
-   * The number of repetition source words in the Project.
+   * The number of repetition source words in the Document.
    * @return numWordsRepetition
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "12", value = "The number of repetition source words in the Project.")
+  @ApiModelProperty(example = "12", value = "The number of repetition source words in the Document.")
 
   public Integer getNumWordsRepetition() {
     return numWordsRepetition;
@@ -182,18 +177,18 @@ public class ProjectQuote {
   }
 
 
-  public ProjectQuote numSegmentsRepetition(Integer numSegmentsRepetition) {
+  public DocumentQuote numSegmentsRepetition(Integer numSegmentsRepetition) {
     
     this.numSegmentsRepetition = numSegmentsRepetition;
     return this;
   }
 
    /**
-   * The number of repetition segments in the Project.
+   * The number of repetition segments in the Document.
    * @return numSegmentsRepetition
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "2980000", value = "The number of repetition segments in the Project.")
+  @ApiModelProperty(example = "2980000", value = "The number of repetition segments in the Document.")
 
   public Integer getNumSegmentsRepetition() {
     return numSegmentsRepetition;
@@ -205,13 +200,13 @@ public class ProjectQuote {
   }
 
 
-  public ProjectQuote bands(List<MatchBand> bands) {
+  public DocumentQuote bands(List<MatchBand> bands) {
     
     this.bands = bands;
     return this;
   }
 
-  public ProjectQuote addBandsItem(MatchBand bandsItem) {
+  public DocumentQuote addBandsItem(MatchBand bandsItem) {
     if (this.bands == null) {
       this.bands = new ArrayList<MatchBand>();
     }
@@ -236,37 +231,6 @@ public class ProjectQuote {
   }
 
 
-  public ProjectQuote documents(List<DocumentQuote> documents) {
-    
-    this.documents = documents;
-    return this;
-  }
-
-  public ProjectQuote addDocumentsItem(DocumentQuote documentsItem) {
-    if (this.documents == null) {
-      this.documents = new ArrayList<DocumentQuote>();
-    }
-    this.documents.add(documentsItem);
-    return this;
-  }
-
-   /**
-   * A list of DocumentQuote objects that quotes information for a Document.
-   * @return documents
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "A list of DocumentQuote objects that quotes information for a Document.")
-
-  public List<DocumentQuote> getDocuments() {
-    return documents;
-  }
-
-
-  public void setDocuments(List<DocumentQuote> documents) {
-    this.documents = documents;
-  }
-
-
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -275,27 +239,26 @@ public class ProjectQuote {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ProjectQuote projectQuote = (ProjectQuote) o;
-    return Objects.equals(this.id, projectQuote.id) &&
-        Objects.equals(this.numSourceWords, projectQuote.numSourceWords) &&
-        Objects.equals(this.numWordsNew, projectQuote.numWordsNew) &&
-        Objects.equals(this.numSegmentsNew, projectQuote.numSegmentsNew) &&
-        Objects.equals(this.numWordsRepetition, projectQuote.numWordsRepetition) &&
-        Objects.equals(this.numSegmentsRepetition, projectQuote.numSegmentsRepetition) &&
-        Objects.equals(this.bands, projectQuote.bands) &&
-        Objects.equals(this.documents, projectQuote.documents);
+    DocumentQuote documentQuote = (DocumentQuote) o;
+    return Objects.equals(this.id, documentQuote.id) &&
+        Objects.equals(this.numSourceWords, documentQuote.numSourceWords) &&
+        Objects.equals(this.numWordsNew, documentQuote.numWordsNew) &&
+        Objects.equals(this.numSegmentsNew, documentQuote.numSegmentsNew) &&
+        Objects.equals(this.numWordsRepetition, documentQuote.numWordsRepetition) &&
+        Objects.equals(this.numSegmentsRepetition, documentQuote.numSegmentsRepetition) &&
+        Objects.equals(this.bands, documentQuote.bands);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, numSourceWords, numWordsNew, numSegmentsNew, numWordsRepetition, numSegmentsRepetition, bands, documents);
+    return Objects.hash(id, numSourceWords, numWordsNew, numSegmentsNew, numWordsRepetition, numSegmentsRepetition, bands);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ProjectQuote {\n");
+    sb.append("class DocumentQuote {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    numSourceWords: ").append(toIndentedString(numSourceWords)).append("\n");
     sb.append("    numWordsNew: ").append(toIndentedString(numWordsNew)).append("\n");
@@ -303,7 +266,6 @@ public class ProjectQuote {
     sb.append("    numWordsRepetition: ").append(toIndentedString(numWordsRepetition)).append("\n");
     sb.append("    numSegmentsRepetition: ").append(toIndentedString(numSegmentsRepetition)).append("\n");
     sb.append("    bands: ").append(toIndentedString(bands)).append("\n");
-    sb.append("    documents: ").append(toIndentedString(documents)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -19,12 +19,12 @@ Register a source string for interactive translation. The &#x60;source_hash&#x60
 ### Example
 ```java
 // Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.TranslateApi;
+import com.lilt.ApiClient;
+import com.lilt.ApiException;
+import com.lilt.Configuration;
+import com.lilt.auth.*;
+import com.lilt.models.*;
+import com.lilt.api.TranslateApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -98,12 +98,12 @@ Translate a source string.  Setting the &#x60;rich&#x60; parameter to &#x60;true
 ### Example
 ```java
 // Import classes:
-import org.openapitools.client.ApiClient;
-import org.openapitools.client.ApiException;
-import org.openapitools.client.Configuration;
-import org.openapitools.client.auth.*;
-import org.openapitools.client.models.*;
-import org.openapitools.client.api.TranslateApi;
+import com.lilt.ApiClient;
+import com.lilt.ApiException;
+import com.lilt.Configuration;
+import com.lilt.auth.*;
+import com.lilt.models.*;
+import com.lilt.api.TranslateApi;
 
 public class Example {
   public static void main(String[] args) {

@@ -300,6 +300,7 @@ public class FilesApi {
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
      * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
+     * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -310,7 +311,7 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadFileCall(String name, String body, String exportUri, String fileHash, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call uploadFileCall(String name, String body, String exportUri, String fileHash, Boolean langId, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -328,6 +329,10 @@ public class FilesApi {
 
         if (fileHash != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("file_hash", fileHash));
+        }
+
+        if (langId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("langId", langId));
         }
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
@@ -352,7 +357,7 @@ public class FilesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call uploadFileValidateBeforeCall(String name, String body, String exportUri, String fileHash, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call uploadFileValidateBeforeCall(String name, String body, String exportUri, String fileHash, Boolean langId, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
@@ -365,7 +370,7 @@ public class FilesApi {
         }
         
 
-        okhttp3.Call localVarCall = uploadFileCall(name, body, exportUri, fileHash, _callback);
+        okhttp3.Call localVarCall = uploadFileCall(name, body, exportUri, fileHash, langId, _callback);
         return localVarCall;
 
     }
@@ -377,6 +382,7 @@ public class FilesApi {
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
      * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
+     * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @return java.io.File
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -386,8 +392,8 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public java.io.File uploadFile(String name, String body, String exportUri, String fileHash) throws ApiException {
-        ApiResponse<java.io.File> localVarResp = uploadFileWithHttpInfo(name, body, exportUri, fileHash);
+    public java.io.File uploadFile(String name, String body, String exportUri, String fileHash, Boolean langId) throws ApiException {
+        ApiResponse<java.io.File> localVarResp = uploadFileWithHttpInfo(name, body, exportUri, fileHash, langId);
         return localVarResp.getData();
     }
 
@@ -398,6 +404,7 @@ public class FilesApi {
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
      * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
+     * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @return ApiResponse&lt;java.io.File&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -407,8 +414,8 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<java.io.File> uploadFileWithHttpInfo(String name, String body, String exportUri, String fileHash) throws ApiException {
-        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, null);
+    public ApiResponse<java.io.File> uploadFileWithHttpInfo(String name, String body, String exportUri, String fileHash, Boolean langId) throws ApiException {
+        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, null);
         Type localVarReturnType = new TypeToken<java.io.File>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -420,6 +427,7 @@ public class FilesApi {
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
      * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
+     * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -430,9 +438,9 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadFileAsync(String name, String body, String exportUri, String fileHash, final ApiCallback<java.io.File> _callback) throws ApiException {
+    public okhttp3.Call uploadFileAsync(String name, String body, String exportUri, String fileHash, Boolean langId, final ApiCallback<java.io.File> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, _callback);
+        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, _callback);
         Type localVarReturnType = new TypeToken<java.io.File>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

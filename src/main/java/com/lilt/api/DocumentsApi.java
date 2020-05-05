@@ -911,6 +911,7 @@ public class DocumentsApi {
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
      * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -921,7 +922,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentFileCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentFileCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -946,6 +947,10 @@ public class DocumentsApi {
             localVarHeaderParams.put("auto_accept", localVarApiClient.parameterToString(autoAccept));
         }
 
+        if (configId != null) {
+            localVarHeaderParams.put("config_id", localVarApiClient.parameterToString(configId));
+        }
+
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
@@ -967,7 +972,7 @@ public class DocumentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call uploadDocumentFileValidateBeforeCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call uploadDocumentFileValidateBeforeCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
@@ -985,7 +990,7 @@ public class DocumentsApi {
         }
         
 
-        okhttp3.Call localVarCall = uploadDocumentFileCall(name, projectId, body, pretranslate, autoAccept, _callback);
+        okhttp3.Call localVarCall = uploadDocumentFileCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
         return localVarCall;
 
     }
@@ -998,6 +1003,7 @@ public class DocumentsApi {
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
      * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @return DocumentWithSegments
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1007,8 +1013,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentWithSegments uploadDocumentFile(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept) throws ApiException {
-        ApiResponse<DocumentWithSegments> localVarResp = uploadDocumentFileWithHttpInfo(name, projectId, body, pretranslate, autoAccept);
+    public DocumentWithSegments uploadDocumentFile(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
+        ApiResponse<DocumentWithSegments> localVarResp = uploadDocumentFileWithHttpInfo(name, projectId, body, pretranslate, autoAccept, configId);
         return localVarResp.getData();
     }
 
@@ -1020,6 +1026,7 @@ public class DocumentsApi {
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
      * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @return ApiResponse&lt;DocumentWithSegments&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1029,8 +1036,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentWithSegments> uploadDocumentFileWithHttpInfo(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept) throws ApiException {
-        okhttp3.Call localVarCall = uploadDocumentFileValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, null);
+    public ApiResponse<DocumentWithSegments> uploadDocumentFileWithHttpInfo(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
+        okhttp3.Call localVarCall = uploadDocumentFileValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, null);
         Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1043,6 +1050,7 @@ public class DocumentsApi {
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
      * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1053,9 +1061,9 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentFileAsync(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentFileAsync(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = uploadDocumentFileValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, _callback);
+        okhttp3.Call localVarCall = uploadDocumentFileValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
         Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
