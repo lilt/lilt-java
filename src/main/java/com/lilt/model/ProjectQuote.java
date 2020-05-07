@@ -20,6 +20,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.lilt.model.DocumentQuote;
 import com.lilt.model.MatchBand;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,7 +32,7 @@ import java.util.List;
  * Quoting information for a Project. 
  */
 @ApiModel(description = "Quoting information for a Project. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-13T16:28:14.210947-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-04T17:28:50.309026-07:00[America/Los_Angeles]")
 public class ProjectQuote {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -57,9 +58,13 @@ public class ProjectQuote {
   @SerializedName(SERIALIZED_NAME_NUM_SEGMENTS_REPETITION)
   private Integer numSegmentsRepetition;
 
-  public static final String SERIALIZED_NAME_RESOURCES = "resources";
-  @SerializedName(SERIALIZED_NAME_RESOURCES)
-  private List<MatchBand> resources = null;
+  public static final String SERIALIZED_NAME_BANDS = "bands";
+  @SerializedName(SERIALIZED_NAME_BANDS)
+  private List<MatchBand> bands = null;
+
+  public static final String SERIALIZED_NAME_DOCUMENTS = "documents";
+  @SerializedName(SERIALIZED_NAME_DOCUMENTS)
+  private List<DocumentQuote> documents = null;
 
 
   public ProjectQuote id(Integer id) {
@@ -200,34 +205,65 @@ public class ProjectQuote {
   }
 
 
-  public ProjectQuote resources(List<MatchBand> resources) {
+  public ProjectQuote bands(List<MatchBand> bands) {
     
-    this.resources = resources;
+    this.bands = bands;
     return this;
   }
 
-  public ProjectQuote addResourcesItem(MatchBand resourcesItem) {
-    if (this.resources == null) {
-      this.resources = new ArrayList<MatchBand>();
+  public ProjectQuote addBandsItem(MatchBand bandsItem) {
+    if (this.bands == null) {
+      this.bands = new ArrayList<MatchBand>();
     }
-    this.resources.add(resourcesItem);
+    this.bands.add(bandsItem);
     return this;
   }
 
    /**
    * A list of MatchBand objects that represent translation memory leverage statistics.
-   * @return resources
+   * @return bands
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "A list of MatchBand objects that represent translation memory leverage statistics.")
 
-  public List<MatchBand> getResources() {
-    return resources;
+  public List<MatchBand> getBands() {
+    return bands;
   }
 
 
-  public void setResources(List<MatchBand> resources) {
-    this.resources = resources;
+  public void setBands(List<MatchBand> bands) {
+    this.bands = bands;
+  }
+
+
+  public ProjectQuote documents(List<DocumentQuote> documents) {
+    
+    this.documents = documents;
+    return this;
+  }
+
+  public ProjectQuote addDocumentsItem(DocumentQuote documentsItem) {
+    if (this.documents == null) {
+      this.documents = new ArrayList<DocumentQuote>();
+    }
+    this.documents.add(documentsItem);
+    return this;
+  }
+
+   /**
+   * A list of DocumentQuote objects that quotes information for a Document.
+   * @return documents
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "A list of DocumentQuote objects that quotes information for a Document.")
+
+  public List<DocumentQuote> getDocuments() {
+    return documents;
+  }
+
+
+  public void setDocuments(List<DocumentQuote> documents) {
+    this.documents = documents;
   }
 
 
@@ -246,12 +282,13 @@ public class ProjectQuote {
         Objects.equals(this.numSegmentsNew, projectQuote.numSegmentsNew) &&
         Objects.equals(this.numWordsRepetition, projectQuote.numWordsRepetition) &&
         Objects.equals(this.numSegmentsRepetition, projectQuote.numSegmentsRepetition) &&
-        Objects.equals(this.resources, projectQuote.resources);
+        Objects.equals(this.bands, projectQuote.bands) &&
+        Objects.equals(this.documents, projectQuote.documents);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, numSourceWords, numWordsNew, numSegmentsNew, numWordsRepetition, numSegmentsRepetition, resources);
+    return Objects.hash(id, numSourceWords, numWordsNew, numSegmentsNew, numWordsRepetition, numSegmentsRepetition, bands, documents);
   }
 
 
@@ -265,7 +302,8 @@ public class ProjectQuote {
     sb.append("    numSegmentsNew: ").append(toIndentedString(numSegmentsNew)).append("\n");
     sb.append("    numWordsRepetition: ").append(toIndentedString(numWordsRepetition)).append("\n");
     sb.append("    numSegmentsRepetition: ").append(toIndentedString(numSegmentsRepetition)).append("\n");
-    sb.append("    resources: ").append(toIndentedString(resources)).append("\n");
+    sb.append("    bands: ").append(toIndentedString(bands)).append("\n");
+    sb.append("    documents: ").append(toIndentedString(documents)).append("\n");
     sb.append("}");
     return sb.toString();
   }

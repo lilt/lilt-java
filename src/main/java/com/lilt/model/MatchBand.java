@@ -28,7 +28,7 @@ import java.io.IOException;
  * A translation memory match band. 
  */
 @ApiModel(description = "A translation memory match band. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-13T16:28:14.210947-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-04T17:28:50.309026-07:00[America/Los_Angeles]")
 public class MatchBand {
   public static final String SERIALIZED_NAME_MINIMUM_SCORE = "minimum_score";
   @SerializedName(SERIALIZED_NAME_MINIMUM_SCORE)

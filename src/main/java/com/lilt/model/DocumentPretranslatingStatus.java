@@ -28,7 +28,7 @@ import java.io.IOException;
  * A status object indicating the pretranslation status.
  */
 @ApiModel(description = "A status object indicating the pretranslation status.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-04-13T16:28:14.210947-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-04T17:28:50.309026-07:00[America/Los_Angeles]")
 public class DocumentPretranslatingStatus {
   public static final String SERIALIZED_NAME_PRETRANSLATION = "pretranslation";
   @SerializedName(SERIALIZED_NAME_PRETRANSLATION)

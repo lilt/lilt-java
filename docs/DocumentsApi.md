@@ -550,7 +550,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadDocumentFile"></a>
 # **uploadDocumentFile**
-> DocumentWithSegments uploadDocumentFile(name, projectId, body, pretranslate, autoAccept)
+> DocumentWithSegments uploadDocumentFile(name, projectId, body, pretranslate, autoAccept, configId)
 
 Upload a File
 
@@ -588,8 +588,9 @@ public class Example {
     String body = "body_example"; // String | The file contents to be uploaded. The entire POST body will be treated as the file. 
     String pretranslate = "pretranslate_example"; // String | An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are `null`, `tm`, or `tm+mt` 
     Boolean autoAccept = true; // Boolean | An optional parameter to auto-accept segments with 100% translation memory matches when the `pretranslate` option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to `false`, no segments will be auto-accepted. 
+    Integer configId = 56; // Integer | An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. 
     try {
-      DocumentWithSegments result = apiInstance.uploadDocumentFile(name, projectId, body, pretranslate, autoAccept);
+      DocumentWithSegments result = apiInstance.uploadDocumentFile(name, projectId, body, pretranslate, autoAccept, configId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling DocumentsApi#uploadDocumentFile");
@@ -611,6 +612,7 @@ Name | Type | Description  | Notes
  **body** | **String**| The file contents to be uploaded. The entire POST body will be treated as the file.  |
  **pretranslate** | **String**| An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  | [optional]
  **autoAccept** | **Boolean**| An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  | [optional]
+ **configId** | **Integer**| An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  | [optional]
 
 ### Return type
 

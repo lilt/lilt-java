@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 <a name="translateSegment"></a>
 # **translateSegment**
-> TranslationList translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches)
+> TranslationList translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags)
 
 Translate a segment
 
@@ -129,8 +129,9 @@ public class Example {
     Integer n = 1; // Integer | Return top n translations.
     Boolean rich = false; // Boolean | Returns rich translation information (e.g., with word alignments).
     Boolean tmMatches = true; // Boolean | Include translation memory fuzzy matches.
+    Boolean projectTags = false; // Boolean | Project tags. Projects tags in source to target if set to true.
     try {
-      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches);
+      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#translateSegment");
@@ -154,6 +155,7 @@ Name | Type | Description  | Notes
  **n** | **Integer**| Return top n translations. | [optional] [default to 1]
  **rich** | **Boolean**| Returns rich translation information (e.g., with word alignments). | [optional] [default to false]
  **tmMatches** | **Boolean**| Include translation memory fuzzy matches. | [optional] [default to true]
+ **projectTags** | **Boolean**| Project tags. Projects tags in source to target if set to true. | [optional] [default to false]
 
 ### Return type
 

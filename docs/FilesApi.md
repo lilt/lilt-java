@@ -163,7 +163,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadFile"></a>
 # **uploadFile**
-> java.io.File uploadFile(name, body, exportUri, fileHash)
+> java.io.File uploadFile(name, body, exportUri, fileHash, langId)
 
 Upload a File
 
@@ -200,8 +200,9 @@ public class Example {
     String body = "body_example"; // String | The file contents to be uploaded. The entire POST body will be treated as the file.
     String exportUri = "exportUri_example"; // String | A webhook endpoint that will export the translated document back to the source repository.
     String fileHash = "fileHash_example"; // String | A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn't provided.
+    Boolean langId = true; // Boolean | Flag indicating whether to perform language detection on the uploaded file. Default is false.
     try {
-      java.io.File result = apiInstance.uploadFile(name, body, exportUri, fileHash);
+      java.io.File result = apiInstance.uploadFile(name, body, exportUri, fileHash, langId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling FilesApi#uploadFile");
@@ -222,6 +223,7 @@ Name | Type | Description  | Notes
  **body** | **String**| The file contents to be uploaded. The entire POST body will be treated as the file. |
  **exportUri** | **String**| A webhook endpoint that will export the translated document back to the source repository. | [optional]
  **fileHash** | **String**| A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. | [optional]
+ **langId** | **Boolean**| Flag indicating whether to perform language detection on the uploaded file. Default is false. | [optional]
 
 ### Return type
 

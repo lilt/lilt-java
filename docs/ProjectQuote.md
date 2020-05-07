@@ -13,7 +13,8 @@ Name | Type | Description | Notes
 **numSegmentsNew** | **Integer** | The number of new segments in the Project. |  [optional]
 **numWordsRepetition** | **Integer** | The number of repetition source words in the Project. |  [optional]
 **numSegmentsRepetition** | **Integer** | The number of repetition segments in the Project. |  [optional]
-**resources** | [**List&lt;MatchBand&gt;**](MatchBand.md) | A list of MatchBand objects that represent translation memory leverage statistics. |  [optional]
+**bands** | [**List&lt;MatchBand&gt;**](MatchBand.md) | A list of MatchBand objects that represent translation memory leverage statistics. |  [optional]
+**documents** | [**List&lt;DocumentQuote&gt;**](DocumentQuote.md) | A list of DocumentQuote objects that quotes information for a Document. |  [optional]
 
 
 
