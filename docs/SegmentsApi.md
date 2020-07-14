@@ -163,7 +163,7 @@ Name | Type | Description  | Notes
 
 <a name="getSegment"></a>
 # **getSegment**
-> Segment getSegment(id)
+> SegmentWithComments getSegment(id, includeComments)
 
 Retrieve a Segment
 
@@ -197,8 +197,9 @@ public class Example {
 
     SegmentsApi apiInstance = new SegmentsApi(defaultClient);
     Integer id = 56; // Integer | A unique Segment identifier.
+    Boolean includeComments = false; // Boolean | Include comments in the response.
     try {
-      Segment result = apiInstance.getSegment(id);
+      SegmentWithComments result = apiInstance.getSegment(id, includeComments);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling SegmentsApi#getSegment");
@@ -216,10 +217,11 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **Integer**| A unique Segment identifier. |
+ **includeComments** | **Boolean**| Include comments in the response. | [optional] [default to false]
 
 ### Return type
 
-[**Segment**](Segment.md)
+[**SegmentWithComments**](SegmentWithComments.md)
 
 ### Authorization
 

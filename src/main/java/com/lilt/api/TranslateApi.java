@@ -206,7 +206,6 @@ public class TranslateApi {
      * @param source The source text to be translated. (optional)
      * @param sourceHash A source hash code. (optional)
      * @param prefix A target prefix. (optional)
-     * @param n Return top n translations. (optional, default to 1)
      * @param rich Returns rich translation information (e.g., with word alignments). (optional, default to false)
      * @param tmMatches Include translation memory fuzzy matches. (optional, default to true)
      * @param projectTags Project tags. Projects tags in source to target if set to true. (optional, default to false)
@@ -220,7 +219,7 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call translateSegmentCall(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call translateSegmentCall(Integer memoryId, String source, Integer sourceHash, String prefix, Boolean rich, Boolean tmMatches, Boolean projectTags, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -242,10 +241,6 @@ public class TranslateApi {
 
         if (prefix != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("prefix", prefix));
-        }
-
-        if (n != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("n", n));
         }
 
         if (rich != null) {
@@ -282,7 +277,7 @@ public class TranslateApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call translateSegmentValidateBeforeCall(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call translateSegmentValidateBeforeCall(Integer memoryId, String source, Integer sourceHash, String prefix, Boolean rich, Boolean tmMatches, Boolean projectTags, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'memoryId' is set
         if (memoryId == null) {
@@ -290,7 +285,7 @@ public class TranslateApi {
         }
         
 
-        okhttp3.Call localVarCall = translateSegmentCall(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, _callback);
+        okhttp3.Call localVarCall = translateSegmentCall(memoryId, source, sourceHash, prefix, rich, tmMatches, projectTags, _callback);
         return localVarCall;
 
     }
@@ -302,7 +297,6 @@ public class TranslateApi {
      * @param source The source text to be translated. (optional)
      * @param sourceHash A source hash code. (optional)
      * @param prefix A target prefix. (optional)
-     * @param n Return top n translations. (optional, default to 1)
      * @param rich Returns rich translation information (e.g., with word alignments). (optional, default to false)
      * @param tmMatches Include translation memory fuzzy matches. (optional, default to true)
      * @param projectTags Project tags. Projects tags in source to target if set to true. (optional, default to false)
@@ -315,8 +309,8 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public TranslationList translateSegment(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags) throws ApiException {
-        ApiResponse<TranslationList> localVarResp = translateSegmentWithHttpInfo(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags);
+    public TranslationList translateSegment(Integer memoryId, String source, Integer sourceHash, String prefix, Boolean rich, Boolean tmMatches, Boolean projectTags) throws ApiException {
+        ApiResponse<TranslationList> localVarResp = translateSegmentWithHttpInfo(memoryId, source, sourceHash, prefix, rich, tmMatches, projectTags);
         return localVarResp.getData();
     }
 
@@ -327,7 +321,6 @@ public class TranslateApi {
      * @param source The source text to be translated. (optional)
      * @param sourceHash A source hash code. (optional)
      * @param prefix A target prefix. (optional)
-     * @param n Return top n translations. (optional, default to 1)
      * @param rich Returns rich translation information (e.g., with word alignments). (optional, default to false)
      * @param tmMatches Include translation memory fuzzy matches. (optional, default to true)
      * @param projectTags Project tags. Projects tags in source to target if set to true. (optional, default to false)
@@ -340,8 +333,8 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<TranslationList> translateSegmentWithHttpInfo(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags) throws ApiException {
-        okhttp3.Call localVarCall = translateSegmentValidateBeforeCall(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, null);
+    public ApiResponse<TranslationList> translateSegmentWithHttpInfo(Integer memoryId, String source, Integer sourceHash, String prefix, Boolean rich, Boolean tmMatches, Boolean projectTags) throws ApiException {
+        okhttp3.Call localVarCall = translateSegmentValidateBeforeCall(memoryId, source, sourceHash, prefix, rich, tmMatches, projectTags, null);
         Type localVarReturnType = new TypeToken<TranslationList>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -353,7 +346,6 @@ public class TranslateApi {
      * @param source The source text to be translated. (optional)
      * @param sourceHash A source hash code. (optional)
      * @param prefix A target prefix. (optional)
-     * @param n Return top n translations. (optional, default to 1)
      * @param rich Returns rich translation information (e.g., with word alignments). (optional, default to false)
      * @param tmMatches Include translation memory fuzzy matches. (optional, default to true)
      * @param projectTags Project tags. Projects tags in source to target if set to true. (optional, default to false)
@@ -367,9 +359,9 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call translateSegmentAsync(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, final ApiCallback<TranslationList> _callback) throws ApiException {
+    public okhttp3.Call translateSegmentAsync(Integer memoryId, String source, Integer sourceHash, String prefix, Boolean rich, Boolean tmMatches, Boolean projectTags, final ApiCallback<TranslationList> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = translateSegmentValidateBeforeCall(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, _callback);
+        okhttp3.Call localVarCall = translateSegmentValidateBeforeCall(memoryId, source, sourceHash, prefix, rich, tmMatches, projectTags, _callback);
         Type localVarReturnType = new TypeToken<TranslationList>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

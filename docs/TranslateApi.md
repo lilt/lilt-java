@@ -89,7 +89,7 @@ Name | Type | Description  | Notes
 
 <a name="translateSegment"></a>
 # **translateSegment**
-> TranslationList translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags)
+> TranslationList translateSegment(memoryId, source, sourceHash, prefix, rich, tmMatches, projectTags)
 
 Translate a segment
 
@@ -126,12 +126,11 @@ public class Example {
     String source = "source_example"; // String | The source text to be translated.
     Integer sourceHash = 56; // Integer | A source hash code.
     String prefix = "prefix_example"; // String | A target prefix.
-    Integer n = 1; // Integer | Return top n translations.
     Boolean rich = false; // Boolean | Returns rich translation information (e.g., with word alignments).
     Boolean tmMatches = true; // Boolean | Include translation memory fuzzy matches.
     Boolean projectTags = false; // Boolean | Project tags. Projects tags in source to target if set to true.
     try {
-      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags);
+      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, rich, tmMatches, projectTags);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#translateSegment");
@@ -152,7 +151,6 @@ Name | Type | Description  | Notes
  **source** | **String**| The source text to be translated. | [optional]
  **sourceHash** | **Integer**| A source hash code. | [optional]
  **prefix** | **String**| A target prefix. | [optional]
- **n** | **Integer**| Return top n translations. | [optional] [default to 1]
  **rich** | **Boolean**| Returns rich translation information (e.g., with word alignments). | [optional] [default to false]
  **tmMatches** | **Boolean**| Include translation memory fuzzy matches. | [optional] [default to true]
  **projectTags** | **Boolean**| Project tags. Projects tags in source to target if set to true. | [optional] [default to false]

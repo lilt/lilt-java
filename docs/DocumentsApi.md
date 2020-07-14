@@ -396,7 +396,7 @@ Name | Type | Description  | Notes
 
 <a name="pretranslateDocument"></a>
 # **pretranslateDocument**
-> DocumentPretranslateResponse pretranslateDocument(body, caseSensitive, autoAccept)
+> DocumentPretranslateResponse pretranslateDocument(body, caseSensitive, autoAccept, mode)
 
 Pretranslate a Document
 
@@ -432,8 +432,9 @@ public class Example {
     DocumentPretranslateParameters body = new DocumentPretranslateParameters(); // DocumentPretranslateParameters | 
     Boolean caseSensitive = true; // Boolean | Optional for using case matching against TM hits.
     Boolean autoAccept = true; // Boolean | Optional parameter for auto-accepting 100% TM hits.
+    String mode = "mode_example"; // String | An optional parameter indicating how the document will be pretranslated.  The accepted values are `null`, `tm`, or `tm+mt`. Default is `tm+mt`. 
     try {
-      DocumentPretranslateResponse result = apiInstance.pretranslateDocument(body, caseSensitive, autoAccept);
+      DocumentPretranslateResponse result = apiInstance.pretranslateDocument(body, caseSensitive, autoAccept, mode);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling DocumentsApi#pretranslateDocument");
@@ -453,6 +454,7 @@ Name | Type | Description  | Notes
  **body** | [**DocumentPretranslateParameters**](DocumentPretranslateParameters.md)|  |
  **caseSensitive** | **Boolean**| Optional for using case matching against TM hits. | [optional]
  **autoAccept** | **Boolean**| Optional parameter for auto-accepting 100% TM hits. | [optional]
+ **mode** | **String**| An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  | [optional]
 
 ### Return type
 

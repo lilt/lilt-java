@@ -32,6 +32,7 @@ import com.lilt.model.Segment;
 import com.lilt.model.SegmentCreateParameters;
 import com.lilt.model.SegmentDeleteResponse;
 import com.lilt.model.SegmentUpdateParameters;
+import com.lilt.model.SegmentWithComments;
 import com.lilt.model.TaggedSegment;
 
 import java.lang.reflect.Type;
@@ -294,6 +295,7 @@ public class SegmentsApi {
     /**
      * Build call for getSegment
      * @param id A unique Segment identifier. (required)
+     * @param includeComments Include comments in the response. (optional, default to false)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -304,7 +306,7 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getSegmentCall(Integer id, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getSegmentCall(Integer id, Boolean includeComments, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -314,6 +316,10 @@ public class SegmentsApi {
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         if (id != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
+        }
+
+        if (includeComments != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("include_comments", includeComments));
         }
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
@@ -338,7 +344,7 @@ public class SegmentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getSegmentValidateBeforeCall(Integer id, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getSegmentValidateBeforeCall(Integer id, Boolean includeComments, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'id' is set
         if (id == null) {
@@ -346,7 +352,7 @@ public class SegmentsApi {
         }
         
 
-        okhttp3.Call localVarCall = getSegmentCall(id, _callback);
+        okhttp3.Call localVarCall = getSegmentCall(id, includeComments, _callback);
         return localVarCall;
 
     }
@@ -355,7 +361,8 @@ public class SegmentsApi {
      * Retrieve a Segment
      * Retrieve a Segment.  
      * @param id A unique Segment identifier. (required)
-     * @return Segment
+     * @param includeComments Include comments in the response. (optional, default to false)
+     * @return SegmentWithComments
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -364,8 +371,8 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public Segment getSegment(Integer id) throws ApiException {
-        ApiResponse<Segment> localVarResp = getSegmentWithHttpInfo(id);
+    public SegmentWithComments getSegment(Integer id, Boolean includeComments) throws ApiException {
+        ApiResponse<SegmentWithComments> localVarResp = getSegmentWithHttpInfo(id, includeComments);
         return localVarResp.getData();
     }
 
@@ -373,7 +380,8 @@ public class SegmentsApi {
      * Retrieve a Segment
      * Retrieve a Segment.  
      * @param id A unique Segment identifier. (required)
-     * @return ApiResponse&lt;Segment&gt;
+     * @param includeComments Include comments in the response. (optional, default to false)
+     * @return ApiResponse&lt;SegmentWithComments&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -382,9 +390,9 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Segment> getSegmentWithHttpInfo(Integer id) throws ApiException {
-        okhttp3.Call localVarCall = getSegmentValidateBeforeCall(id, null);
-        Type localVarReturnType = new TypeToken<Segment>(){}.getType();
+    public ApiResponse<SegmentWithComments> getSegmentWithHttpInfo(Integer id, Boolean includeComments) throws ApiException {
+        okhttp3.Call localVarCall = getSegmentValidateBeforeCall(id, includeComments, null);
+        Type localVarReturnType = new TypeToken<SegmentWithComments>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -392,6 +400,7 @@ public class SegmentsApi {
      * Retrieve a Segment (asynchronously)
      * Retrieve a Segment.  
      * @param id A unique Segment identifier. (required)
+     * @param includeComments Include comments in the response. (optional, default to false)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -402,10 +411,10 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getSegmentAsync(Integer id, final ApiCallback<Segment> _callback) throws ApiException {
+    public okhttp3.Call getSegmentAsync(Integer id, Boolean includeComments, final ApiCallback<SegmentWithComments> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getSegmentValidateBeforeCall(id, _callback);
-        Type localVarReturnType = new TypeToken<Segment>(){}.getType();
+        okhttp3.Call localVarCall = getSegmentValidateBeforeCall(id, includeComments, _callback);
+        Type localVarReturnType = new TypeToken<SegmentWithComments>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

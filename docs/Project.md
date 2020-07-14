@@ -18,6 +18,7 @@ Name | Type | Description | Notes
 **dueDate** | **Integer** | The due date. Measured in seconds since the Unix epoch. |  [optional]
 **archived** | **Boolean** | The archived state of the Project. |  [optional]
 **metadata** | [**Object**](.md) | A JSON object for storing various project metadata. |  [optional]
+**sampleReviewPercentage** | **Integer** | The project&#39;s sample review percentage. |  [optional]
 **createdAt** | **Integer** | Time at which the object was created. Measured in seconds since the Unix epoch. |  [optional]
 **updatedAt** | **Integer** | Time at which the object was created. Measured in seconds since the Unix epoch. |  [optional]
 **document** | [**List&lt;DocumentWithoutSegments&gt;**](DocumentWithoutSegments.md) | A list of Documents. |  [optional]

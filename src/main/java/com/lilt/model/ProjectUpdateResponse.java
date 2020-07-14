@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * ProjectUpdateResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-04T17:28:50.309026-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-07-13T16:57:35.902304-07:00[America/Los_Angeles]")
 public class ProjectUpdateResponse {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -52,6 +52,10 @@ public class ProjectUpdateResponse {
   public static final String SERIALIZED_NAME_METADATA = "metadata";
   @SerializedName(SERIALIZED_NAME_METADATA)
   private Object metadata;
+
+  public static final String SERIALIZED_NAME_SAMPLE_REVIEW_PERCENTAGE = "sample_review_percentage";
+  @SerializedName(SERIALIZED_NAME_SAMPLE_REVIEW_PERCENTAGE)
+  private Integer sampleReviewPercentage;
 
 
   public ProjectUpdateResponse id(Integer id) {
@@ -191,6 +195,29 @@ public class ProjectUpdateResponse {
   }
 
 
+  public ProjectUpdateResponse sampleReviewPercentage(Integer sampleReviewPercentage) {
+    
+    this.sampleReviewPercentage = sampleReviewPercentage;
+    return this;
+  }
+
+   /**
+   * The Project&#39;s sample review percentage. Must be an integer between 10 and 100, a multiple of 10 and greater than minimum value (displayed in error message).
+   * @return sampleReviewPercentage
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "20", value = "The Project's sample review percentage. Must be an integer between 10 and 100, a multiple of 10 and greater than minimum value (displayed in error message).")
+
+  public Integer getSampleReviewPercentage() {
+    return sampleReviewPercentage;
+  }
+
+
+  public void setSampleReviewPercentage(Integer sampleReviewPercentage) {
+    this.sampleReviewPercentage = sampleReviewPercentage;
+  }
+
+
   @Override
   public boolean equals(java.lang.Object o) {
     if (this == o) {
@@ -205,12 +232,13 @@ public class ProjectUpdateResponse {
         Objects.equals(this.state, projectUpdateResponse.state) &&
         Objects.equals(this.dueDate, projectUpdateResponse.dueDate) &&
         Objects.equals(this.archived, projectUpdateResponse.archived) &&
-        Objects.equals(this.metadata, projectUpdateResponse.metadata);
+        Objects.equals(this.metadata, projectUpdateResponse.metadata) &&
+        Objects.equals(this.sampleReviewPercentage, projectUpdateResponse.sampleReviewPercentage);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, state, dueDate, archived, metadata);
+    return Objects.hash(id, name, state, dueDate, archived, metadata, sampleReviewPercentage);
   }
 
 
@@ -224,6 +252,7 @@ public class ProjectUpdateResponse {
     sb.append("    dueDate: ").append(toIndentedString(dueDate)).append("\n");
     sb.append("    archived: ").append(toIndentedString(archived)).append("\n");
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
+    sb.append("    sampleReviewPercentage: ").append(toIndentedString(sampleReviewPercentage)).append("\n");
     sb.append("}");
     return sb.toString();
   }
