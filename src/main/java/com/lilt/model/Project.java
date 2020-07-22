@@ -31,7 +31,7 @@ import java.util.List;
  * A Project is a collection of zero or more Documents. It is specific to a language pair, and is associated with exactly one Memory for that language pair. The Memory association cannot be changed after the Project is created. 
  */
 @ApiModel(description = "A Project is a collection of zero or more Documents. It is specific to a language pair, and is associated with exactly one Memory for that language pair. The Memory association cannot be changed after the Project is created. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-04T17:28:50.309026-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-07-13T16:57:35.902304-07:00[America/Los_Angeles]")
 public class Project {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -76,6 +76,10 @@ public class Project {
   public static final String SERIALIZED_NAME_METADATA = "metadata";
   @SerializedName(SERIALIZED_NAME_METADATA)
   private Object metadata;
+
+  public static final String SERIALIZED_NAME_SAMPLE_REVIEW_PERCENTAGE = "sample_review_percentage";
+  @SerializedName(SERIALIZED_NAME_SAMPLE_REVIEW_PERCENTAGE)
+  private Integer sampleReviewPercentage;
 
   public static final String SERIALIZED_NAME_CREATED_AT = "created_at";
   @SerializedName(SERIALIZED_NAME_CREATED_AT)
@@ -343,6 +347,29 @@ public class Project {
   }
 
 
+  public Project sampleReviewPercentage(Integer sampleReviewPercentage) {
+    
+    this.sampleReviewPercentage = sampleReviewPercentage;
+    return this;
+  }
+
+   /**
+   * The project&#39;s sample review percentage.
+   * @return sampleReviewPercentage
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "20", value = "The project's sample review percentage.")
+
+  public Integer getSampleReviewPercentage() {
+    return sampleReviewPercentage;
+  }
+
+
+  public void setSampleReviewPercentage(Integer sampleReviewPercentage) {
+    this.sampleReviewPercentage = sampleReviewPercentage;
+  }
+
+
   public Project createdAt(Integer createdAt) {
     
     this.createdAt = createdAt;
@@ -440,6 +467,7 @@ public class Project {
         Objects.equals(this.dueDate, project.dueDate) &&
         Objects.equals(this.archived, project.archived) &&
         Objects.equals(this.metadata, project.metadata) &&
+        Objects.equals(this.sampleReviewPercentage, project.sampleReviewPercentage) &&
         Objects.equals(this.createdAt, project.createdAt) &&
         Objects.equals(this.updatedAt, project.updatedAt) &&
         Objects.equals(this.document, project.document);
@@ -447,7 +475,7 @@ public class Project {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, memoryId, srclang, trglang, srclocale, trglocale, name, state, dueDate, archived, metadata, createdAt, updatedAt, document);
+    return Objects.hash(id, memoryId, srclang, trglang, srclocale, trglocale, name, state, dueDate, archived, metadata, sampleReviewPercentage, createdAt, updatedAt, document);
   }
 
 
@@ -466,6 +494,7 @@ public class Project {
     sb.append("    dueDate: ").append(toIndentedString(dueDate)).append("\n");
     sb.append("    archived: ").append(toIndentedString(archived)).append("\n");
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
+    sb.append("    sampleReviewPercentage: ").append(toIndentedString(sampleReviewPercentage)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("    document: ").append(toIndentedString(document)).append("\n");

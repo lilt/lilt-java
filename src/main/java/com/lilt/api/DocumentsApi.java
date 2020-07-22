@@ -665,6 +665,7 @@ public class DocumentsApi {
      * @param body  (required)
      * @param caseSensitive Optional for using case matching against TM hits. (optional)
      * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
+     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -675,7 +676,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call pretranslateDocumentCall(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call pretranslateDocumentCall(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, String mode, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -689,6 +690,10 @@ public class DocumentsApi {
 
         if (autoAccept != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("auto_accept", autoAccept));
+        }
+
+        if (mode != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
@@ -713,7 +718,7 @@ public class DocumentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call pretranslateDocumentValidateBeforeCall(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call pretranslateDocumentValidateBeforeCall(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, String mode, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
@@ -721,7 +726,7 @@ public class DocumentsApi {
         }
         
 
-        okhttp3.Call localVarCall = pretranslateDocumentCall(body, caseSensitive, autoAccept, _callback);
+        okhttp3.Call localVarCall = pretranslateDocumentCall(body, caseSensitive, autoAccept, mode, _callback);
         return localVarCall;
 
     }
@@ -732,6 +737,7 @@ public class DocumentsApi {
      * @param body  (required)
      * @param caseSensitive Optional for using case matching against TM hits. (optional)
      * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
+     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
      * @return DocumentPretranslateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -741,8 +747,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentPretranslateResponse pretranslateDocument(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept) throws ApiException {
-        ApiResponse<DocumentPretranslateResponse> localVarResp = pretranslateDocumentWithHttpInfo(body, caseSensitive, autoAccept);
+    public DocumentPretranslateResponse pretranslateDocument(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, String mode) throws ApiException {
+        ApiResponse<DocumentPretranslateResponse> localVarResp = pretranslateDocumentWithHttpInfo(body, caseSensitive, autoAccept, mode);
         return localVarResp.getData();
     }
 
@@ -752,6 +758,7 @@ public class DocumentsApi {
      * @param body  (required)
      * @param caseSensitive Optional for using case matching against TM hits. (optional)
      * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
+     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
      * @return ApiResponse&lt;DocumentPretranslateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -761,8 +768,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentPretranslateResponse> pretranslateDocumentWithHttpInfo(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept) throws ApiException {
-        okhttp3.Call localVarCall = pretranslateDocumentValidateBeforeCall(body, caseSensitive, autoAccept, null);
+    public ApiResponse<DocumentPretranslateResponse> pretranslateDocumentWithHttpInfo(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, String mode) throws ApiException {
+        okhttp3.Call localVarCall = pretranslateDocumentValidateBeforeCall(body, caseSensitive, autoAccept, mode, null);
         Type localVarReturnType = new TypeToken<DocumentPretranslateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -773,6 +780,7 @@ public class DocumentsApi {
      * @param body  (required)
      * @param caseSensitive Optional for using case matching against TM hits. (optional)
      * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
+     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -783,9 +791,9 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call pretranslateDocumentAsync(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, final ApiCallback<DocumentPretranslateResponse> _callback) throws ApiException {
+    public okhttp3.Call pretranslateDocumentAsync(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, String mode, final ApiCallback<DocumentPretranslateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = pretranslateDocumentValidateBeforeCall(body, caseSensitive, autoAccept, _callback);
+        okhttp3.Call localVarCall = pretranslateDocumentValidateBeforeCall(body, caseSensitive, autoAccept, mode, _callback);
         Type localVarReturnType = new TypeToken<DocumentPretranslateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

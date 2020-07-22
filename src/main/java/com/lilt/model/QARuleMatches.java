@@ -31,7 +31,7 @@ import java.util.List;
  * QA rules describing the errors in the text.
  */
 @ApiModel(description = "QA rules describing the errors in the text.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-05-04T17:28:50.309026-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-07-13T16:57:35.902304-07:00[America/Los_Angeles]")
 public class QARuleMatches {
   public static final String SERIALIZED_NAME_MATCHES = "matches";
   @SerializedName(SERIALIZED_NAME_MATCHES)
