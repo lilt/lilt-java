@@ -28,7 +28,7 @@ import org.threeten.bp.OffsetDateTime;
 /**
  * DocumentAssignmentParameters
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-07-13T16:57:35.902304-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-07-24T09:28:10.400208-07:00[America/Los_Angeles]")
 public class DocumentAssignmentParameters {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)

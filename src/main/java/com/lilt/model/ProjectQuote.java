@@ -32,7 +32,7 @@ import java.util.List;
  * Quoting information for a Project. 
  */
 @ApiModel(description = "Quoting information for a Project. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-07-13T16:57:35.902304-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-07-24T09:28:10.400208-07:00[America/Los_Angeles]")
 public class ProjectQuote {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)

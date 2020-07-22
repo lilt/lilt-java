@@ -661,11 +661,12 @@ public class DocumentsApi {
         return localVarCall;
     }
     /**
-     * Build call for pretranslateDocument
+     * Build call for pretranslateDocuments
      * @param body  (required)
-     * @param caseSensitive Optional for using case matching against TM hits. (optional)
      * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
-     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
+     * @param caseSensitive Optional for using case matching against TM hits. (optional)
+     * @param attributeToCreator Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
+     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -676,7 +677,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call pretranslateDocumentCall(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, String mode, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call pretranslateDocumentsCall(DocumentPretranslateParameters body, Boolean autoAccept, Boolean caseSensitive, Boolean attributeToCreator, String mode, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -684,12 +685,16 @@ public class DocumentsApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (autoAccept != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("auto_accept", autoAccept));
+        }
+
         if (caseSensitive != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("case_sensitive", caseSensitive));
         }
 
-        if (autoAccept != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("auto_accept", autoAccept));
+        if (attributeToCreator != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("attribute_to_creator", attributeToCreator));
         }
 
         if (mode != null) {
@@ -718,15 +723,15 @@ public class DocumentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call pretranslateDocumentValidateBeforeCall(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, String mode, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call pretranslateDocumentsValidateBeforeCall(DocumentPretranslateParameters body, Boolean autoAccept, Boolean caseSensitive, Boolean attributeToCreator, String mode, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling pretranslateDocument(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling pretranslateDocuments(Async)");
         }
         
 
-        okhttp3.Call localVarCall = pretranslateDocumentCall(body, caseSensitive, autoAccept, mode, _callback);
+        okhttp3.Call localVarCall = pretranslateDocumentsCall(body, autoAccept, caseSensitive, attributeToCreator, mode, _callback);
         return localVarCall;
 
     }
@@ -735,9 +740,10 @@ public class DocumentsApi {
      * Pretranslate a Document
      * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example cURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
      * @param body  (required)
-     * @param caseSensitive Optional for using case matching against TM hits. (optional)
      * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
-     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
+     * @param caseSensitive Optional for using case matching against TM hits. (optional)
+     * @param attributeToCreator Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
+     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
      * @return DocumentPretranslateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -747,8 +753,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentPretranslateResponse pretranslateDocument(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, String mode) throws ApiException {
-        ApiResponse<DocumentPretranslateResponse> localVarResp = pretranslateDocumentWithHttpInfo(body, caseSensitive, autoAccept, mode);
+    public DocumentPretranslateResponse pretranslateDocuments(DocumentPretranslateParameters body, Boolean autoAccept, Boolean caseSensitive, Boolean attributeToCreator, String mode) throws ApiException {
+        ApiResponse<DocumentPretranslateResponse> localVarResp = pretranslateDocumentsWithHttpInfo(body, autoAccept, caseSensitive, attributeToCreator, mode);
         return localVarResp.getData();
     }
 
@@ -756,9 +762,10 @@ public class DocumentsApi {
      * Pretranslate a Document
      * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example cURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
      * @param body  (required)
-     * @param caseSensitive Optional for using case matching against TM hits. (optional)
      * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
-     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
+     * @param caseSensitive Optional for using case matching against TM hits. (optional)
+     * @param attributeToCreator Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
+     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
      * @return ApiResponse&lt;DocumentPretranslateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -768,8 +775,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentPretranslateResponse> pretranslateDocumentWithHttpInfo(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, String mode) throws ApiException {
-        okhttp3.Call localVarCall = pretranslateDocumentValidateBeforeCall(body, caseSensitive, autoAccept, mode, null);
+    public ApiResponse<DocumentPretranslateResponse> pretranslateDocumentsWithHttpInfo(DocumentPretranslateParameters body, Boolean autoAccept, Boolean caseSensitive, Boolean attributeToCreator, String mode) throws ApiException {
+        okhttp3.Call localVarCall = pretranslateDocumentsValidateBeforeCall(body, autoAccept, caseSensitive, attributeToCreator, mode, null);
         Type localVarReturnType = new TypeToken<DocumentPretranslateResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -778,9 +785,10 @@ public class DocumentsApi {
      * Pretranslate a Document (asynchronously)
      * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example cURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
      * @param body  (required)
-     * @param caseSensitive Optional for using case matching against TM hits. (optional)
      * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
-     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
+     * @param caseSensitive Optional for using case matching against TM hits. (optional)
+     * @param attributeToCreator Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
+     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -791,9 +799,9 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call pretranslateDocumentAsync(DocumentPretranslateParameters body, Boolean caseSensitive, Boolean autoAccept, String mode, final ApiCallback<DocumentPretranslateResponse> _callback) throws ApiException {
+    public okhttp3.Call pretranslateDocumentsAsync(DocumentPretranslateParameters body, Boolean autoAccept, Boolean caseSensitive, Boolean attributeToCreator, String mode, final ApiCallback<DocumentPretranslateResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = pretranslateDocumentValidateBeforeCall(body, caseSensitive, autoAccept, mode, _callback);
+        okhttp3.Call localVarCall = pretranslateDocumentsValidateBeforeCall(body, autoAccept, caseSensitive, attributeToCreator, mode, _callback);
         Type localVarReturnType = new TypeToken<DocumentPretranslateResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

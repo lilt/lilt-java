@@ -25,35 +25,62 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * DocumentAssignmentResponse
+ * InlineResponse201
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-07-24T09:28:10.400208-07:00[America/Los_Angeles]")
-public class DocumentAssignmentResponse {
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
+public class InlineResponse201 {
+  public static final String SERIALIZED_NAME_FILE = "File";
+  @SerializedName(SERIALIZED_NAME_FILE)
+  private java.io.File file;
+
+  public static final String SERIALIZED_NAME_DETECTED_LANG = "detected_lang";
+  @SerializedName(SERIALIZED_NAME_DETECTED_LANG)
+  private String detectedLang;
 
 
-  public DocumentAssignmentResponse id(Integer id) {
+  public InlineResponse201 file(java.io.File file) {
     
-    this.id = id;
+    this.file = file;
     return this;
   }
 
    /**
-   * A unique Document identifier.
-   * @return id
+   * Get file
+   * @return file
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "46530", value = "A unique Document identifier.")
+  @ApiModelProperty(value = "")
 
-  public Integer getId() {
-    return id;
+  public java.io.File getFile() {
+    return file;
   }
 
 
-  public void setId(Integer id) {
-    this.id = id;
+  public void setFile(java.io.File file) {
+    this.file = file;
+  }
+
+
+  public InlineResponse201 detectedLang(String detectedLang) {
+    
+    this.detectedLang = detectedLang;
+    return this;
+  }
+
+   /**
+   * Language associated with the file.
+   * @return detectedLang
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "zxx", value = "Language associated with the file.")
+
+  public String getDetectedLang() {
+    return detectedLang;
+  }
+
+
+  public void setDetectedLang(String detectedLang) {
+    this.detectedLang = detectedLang;
   }
 
 
@@ -65,21 +92,23 @@ public class DocumentAssignmentResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DocumentAssignmentResponse documentAssignmentResponse = (DocumentAssignmentResponse) o;
-    return Objects.equals(this.id, documentAssignmentResponse.id);
+    InlineResponse201 inlineResponse201 = (InlineResponse201) o;
+    return Objects.equals(this.file, inlineResponse201.file) &&
+        Objects.equals(this.detectedLang, inlineResponse201.detectedLang);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return Objects.hash(file, detectedLang);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DocumentAssignmentResponse {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("class InlineResponse201 {\n");
+    sb.append("    file: ").append(toIndentedString(file)).append("\n");
+    sb.append("    detectedLang: ").append(toIndentedString(detectedLang)).append("\n");
     sb.append("}");
     return sb.toString();
   }

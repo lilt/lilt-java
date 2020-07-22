@@ -11,29 +11,49 @@
  */
 
 
-package com.lilt;
+package com.lilt.model;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-07-24T09:28:10.400208-07:00[America/Los_Angeles]")
-public class Configuration {
-    private static ApiClient defaultApiClient = new ApiClient();
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+
+
+/**
+ * Model tests for InlineResponse201
+ */
+public class InlineResponse201Test {
+    private final InlineResponse201 model = new InlineResponse201();
 
     /**
-     * Get the default API client, which would be used when creating API
-     * instances without providing an API client.
-     *
-     * @return Default API client
+     * Model tests for InlineResponse201
      */
-    public static ApiClient getDefaultApiClient() {
-        return defaultApiClient;
+    @Test
+    public void testInlineResponse201() {
+        // TODO: test InlineResponse201
     }
 
     /**
-     * Set the default API client, which would be used when creating API
-     * instances without providing an API client.
-     *
-     * @param apiClient API client
+     * Test the property 'file'
      */
-    public static void setDefaultApiClient(ApiClient apiClient) {
-        defaultApiClient = apiClient;
+    @Test
+    public void fileTest() {
+        // TODO: test file
     }
+
+    /**
+     * Test the property 'detectedLang'
+     */
+    @Test
+    public void detectedLangTest() {
+        // TODO: test detectedLang
+    }
+
 }
