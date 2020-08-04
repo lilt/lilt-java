@@ -9,7 +9,7 @@ Method | HTTP request | Description
 [**deleteDocument**](DocumentsApi.md#deleteDocument) | **DELETE** /documents | Delete a Document
 [**downloadFile**](DocumentsApi.md#downloadFile) | **GET** /documents/files | Download a File
 [**getDocument**](DocumentsApi.md#getDocument) | **GET** /documents | Retrieve a Document
-[**pretranslateDocument**](DocumentsApi.md#pretranslateDocument) | **POST** /documents/pretranslate | Pretranslate a Document
+[**pretranslateDocuments**](DocumentsApi.md#pretranslateDocuments) | **POST** /documents/pretranslate | Pretranslate a Document
 [**updateDocument**](DocumentsApi.md#updateDocument) | **PUT** /documents | Update a Document
 [**uploadDocumentFile**](DocumentsApi.md#uploadDocumentFile) | **POST** /documents/files | Upload a File
 
@@ -394,9 +394,9 @@ Name | Type | Description  | Notes
 **200** | A Document object. |  -  |
 **0** | Unexpected error |  -  |
 
-<a name="pretranslateDocument"></a>
-# **pretranslateDocument**
-> DocumentPretranslateResponse pretranslateDocument(body, caseSensitive, autoAccept, mode)
+<a name="pretranslateDocuments"></a>
+# **pretranslateDocuments**
+> DocumentPretranslateResponse pretranslateDocuments(body, autoAccept, caseSensitive, attributeToCreator, mode)
 
 Pretranslate a Document
 
@@ -430,14 +430,15 @@ public class Example {
 
     DocumentsApi apiInstance = new DocumentsApi(defaultClient);
     DocumentPretranslateParameters body = new DocumentPretranslateParameters(); // DocumentPretranslateParameters | 
-    Boolean caseSensitive = true; // Boolean | Optional for using case matching against TM hits.
     Boolean autoAccept = true; // Boolean | Optional parameter for auto-accepting 100% TM hits.
-    String mode = "mode_example"; // String | An optional parameter indicating how the document will be pretranslated.  The accepted values are `null`, `tm`, or `tm+mt`. Default is `tm+mt`. 
+    Boolean caseSensitive = true; // Boolean | Optional for using case matching against TM hits.
+    Boolean attributeToCreator = true; // Boolean | Optional parameter for attributing translation authorship of exact matches to document creator.
+    String mode = "mode_example"; // String | An optional parameter indicating how the document will be pretranslated.  The accepted values are `tm`, or `tm+mt`. Default is `tm+mt`. 
     try {
-      DocumentPretranslateResponse result = apiInstance.pretranslateDocument(body, caseSensitive, autoAccept, mode);
+      DocumentPretranslateResponse result = apiInstance.pretranslateDocuments(body, autoAccept, caseSensitive, attributeToCreator, mode);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#pretranslateDocument");
+      System.err.println("Exception when calling DocumentsApi#pretranslateDocuments");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -452,9 +453,10 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**DocumentPretranslateParameters**](DocumentPretranslateParameters.md)|  |
- **caseSensitive** | **Boolean**| Optional for using case matching against TM hits. | [optional]
  **autoAccept** | **Boolean**| Optional parameter for auto-accepting 100% TM hits. | [optional]
- **mode** | **String**| An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  | [optional]
+ **caseSensitive** | **Boolean**| Optional for using case matching against TM hits. | [optional]
+ **attributeToCreator** | **Boolean**| Optional parameter for attributing translation authorship of exact matches to document creator. | [optional]
+ **mode** | **String**| An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  | [optional]
 
 ### Return type
 

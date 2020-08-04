@@ -26,63 +26,89 @@ import java.io.IOException;
 import java.math.BigDecimal;
 
 /**
- * An object that indicates where the query term appears in the source.
+ * InlineResponse200
  */
-@ApiModel(description = "An object that indicates where the query term appears in the source.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-07-24T09:28:10.400208-07:00[America/Los_Angeles]")
-public class LexiconEntrySourceSpan {
-  public static final String SERIALIZED_NAME_START = "start";
-  @SerializedName(SERIALIZED_NAME_START)
-  private BigDecimal start;
+public class InlineResponse200 {
+  public static final String SERIALIZED_NAME_FILE = "File";
+  @SerializedName(SERIALIZED_NAME_FILE)
+  private java.io.File file;
 
-  public static final String SERIALIZED_NAME_LENGTH = "length";
-  @SerializedName(SERIALIZED_NAME_LENGTH)
-  private BigDecimal length;
+  public static final String SERIALIZED_NAME_DETECTED_LANG = "detected_lang";
+  @SerializedName(SERIALIZED_NAME_DETECTED_LANG)
+  private String detectedLang;
+
+  public static final String SERIALIZED_NAME_DETECTED_LANG_CONFIDENCE = "detected_lang_confidence";
+  @SerializedName(SERIALIZED_NAME_DETECTED_LANG_CONFIDENCE)
+  private BigDecimal detectedLangConfidence;
 
 
-  public LexiconEntrySourceSpan start(BigDecimal start) {
+  public InlineResponse200 file(java.io.File file) {
     
-    this.start = start;
+    this.file = file;
     return this;
   }
 
    /**
-   * The zero-indexed start index when &#x60;source&#x60; is split on whitespace. 
-   * @return start
+   * Get file
+   * @return file
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The zero-indexed start index when `source` is split on whitespace. ")
+  @ApiModelProperty(value = "")
 
-  public BigDecimal getStart() {
-    return start;
+  public java.io.File getFile() {
+    return file;
   }
 
 
-  public void setStart(BigDecimal start) {
-    this.start = start;
+  public void setFile(java.io.File file) {
+    this.file = file;
   }
 
 
-  public LexiconEntrySourceSpan length(BigDecimal length) {
+  public InlineResponse200 detectedLang(String detectedLang) {
     
-    this.length = length;
+    this.detectedLang = detectedLang;
     return this;
   }
 
    /**
-   * The length in words after &#x60;start&#x60; of the source query term. 
-   * @return length
+   * Language associated with the file.
+   * @return detectedLang
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The length in words after `start` of the source query term. ")
+  @ApiModelProperty(example = "de", value = "Language associated with the file.")
 
-  public BigDecimal getLength() {
-    return length;
+  public String getDetectedLang() {
+    return detectedLang;
   }
 
 
-  public void setLength(BigDecimal length) {
-    this.length = length;
+  public void setDetectedLang(String detectedLang) {
+    this.detectedLang = detectedLang;
+  }
+
+
+  public InlineResponse200 detectedLangConfidence(BigDecimal detectedLangConfidence) {
+    
+    this.detectedLangConfidence = detectedLangConfidence;
+    return this;
+  }
+
+   /**
+   * Confidence score for the language associated with the file.
+   * @return detectedLangConfidence
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "0.7", value = "Confidence score for the language associated with the file.")
+
+  public BigDecimal getDetectedLangConfidence() {
+    return detectedLangConfidence;
+  }
+
+
+  public void setDetectedLangConfidence(BigDecimal detectedLangConfidence) {
+    this.detectedLangConfidence = detectedLangConfidence;
   }
 
 
@@ -94,23 +120,25 @@ public class LexiconEntrySourceSpan {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LexiconEntrySourceSpan lexiconEntrySourceSpan = (LexiconEntrySourceSpan) o;
-    return Objects.equals(this.start, lexiconEntrySourceSpan.start) &&
-        Objects.equals(this.length, lexiconEntrySourceSpan.length);
+    InlineResponse200 inlineResponse200 = (InlineResponse200) o;
+    return Objects.equals(this.file, inlineResponse200.file) &&
+        Objects.equals(this.detectedLang, inlineResponse200.detectedLang) &&
+        Objects.equals(this.detectedLangConfidence, inlineResponse200.detectedLangConfidence);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(start, length);
+    return Objects.hash(file, detectedLang, detectedLangConfidence);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LexiconEntrySourceSpan {\n");
-    sb.append("    start: ").append(toIndentedString(start)).append("\n");
-    sb.append("    length: ").append(toIndentedString(length)).append("\n");
+    sb.append("class InlineResponse200 {\n");
+    sb.append("    file: ").append(toIndentedString(file)).append("\n");
+    sb.append("    detectedLang: ").append(toIndentedString(detectedLang)).append("\n");
+    sb.append("    detectedLangConfidence: ").append(toIndentedString(detectedLangConfidence)).append("\n");
     sb.append("}");
     return sb.toString();
   }
