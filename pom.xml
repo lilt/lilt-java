@@ -5,23 +5,26 @@
     <artifactId>lilt-java-client</artifactId>
     <packaging>jar</packaging>
     <name>Lilt Java Client</name>
-    <version>2.0</version>
+    <version>2.0.1</version>
     <url>https://github.com/lilt/lilt-java</url>
     <description>Java bindings for the Lilt REST API: https://lilt.com/docs/api</description>
-    <scm>
-        <connection>scm:git:git@github.com:openapitools/openapi-generator.git</connection>
-        <developerConnection>scm:git:git@github.com:openapitools/openapi-generator.git</developerConnection>
-        <url>https://github.com/openapitools/openapi-generator</url>
-    </scm>
 
     <developers>
         <developer>
-            <name>OpenAPI-Generator Contributors</name>
-            <email>team@openapitools.org</email>
-            <organization>OpenAPITools.org</organization>
-            <organizationUrl>http://openapitools.org</organizationUrl>
+            <name>Lilt Engineering</name>
+            <email>support@lilt.com</email>
+            <organization>Lilt</organization>
+            <organizationUrl>https://lilt.com</organizationUrl>
         </developer>
     </developers>
+
+    <distributionManagement>
+      <repository>
+        <id>github</id>
+        <name>Lilt packages on GitHub</name>
+        <url>https://maven.pkg.github.com/lilt/lilt-java</url>
+      </repository>
+    </distributionManagement>
 
     <build>
         <plugins>
