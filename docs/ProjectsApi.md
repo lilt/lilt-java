@@ -23,12 +23,12 @@ Create a Project. A Project is a collection of Documents.  A Project is associat
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -98,12 +98,12 @@ Delete a Project.
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -173,12 +173,12 @@ Retrieves one or more projects, including the documents associated with each pro
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -262,12 +262,12 @@ Get information about a project that can be used for quoting. This includes: * A
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -337,12 +337,12 @@ Retrieve the status of a Project.
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -412,12 +412,12 @@ Update a Project.
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.ProjectsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.ProjectsApi;
 
 public class Example {
   public static void main(String[] args) {

@@ -22,12 +22,12 @@ Create a Segment and add it to a Memory. A Segment is a source/target pair that 
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.SegmentsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.SegmentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -97,12 +97,12 @@ Delete a Segment from memory. This will not delete a segment from a document.
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.SegmentsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.SegmentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -172,12 +172,12 @@ Retrieve a Segment.
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.SegmentsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.SegmentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -249,12 +249,12 @@ Project tags for a segment. The &#x60;source_tagged&#x60; string contains one or
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.SegmentsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.SegmentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -328,12 +328,12 @@ Update a Segment in memory. The Memory will be updated with the new target strin
 ### Example
 ```java
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.SegmentsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.SegmentsApi;
 
 public class Example {
   public static void main(String[] args) {
