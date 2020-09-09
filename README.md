@@ -49,6 +49,22 @@ Refer to the [OSSRH Guide](http://central.sonatype.org/pages/ossrh-guide.html) f
 
 ### Maven users
 
+The library is hosted in GitHub packages, so configure your project's POM
+to point to the correct repository:
+
+```xml
+<repositories>
+  <repository>
+    <id>github</id>
+    <name>Github Packages</name>
+    <url>https://maven.pkg.github.com/lilt/lilt-java</url>
+  </repository>
+</repositories>
+ ```
+
+You will also need to authenticate with GitHub Packages by updating
+your `~/.m2/settings.xml` file as described [here](https://docs.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages).
+
 Add this dependency to your project's POM:
 
 ```xml
