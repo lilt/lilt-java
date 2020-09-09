@@ -28,7 +28,7 @@ import java.io.IOException;
  * A Comment&#39;s annotation. 
  */
 @ApiModel(description = "A Comment's annotation. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-07-24T09:28:10.400208-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-09-09T11:50:08.360-07:00[America/Los_Angeles]")
 public class Annotation {
   public static final String SERIALIZED_NAME_TEXT = "text";
   @SerializedName(SERIALIZED_NAME_TEXT)
@@ -46,7 +46,7 @@ public class Annotation {
    * @return text
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "minor", value = "The Comment's annotation text.")
+  @ApiModelProperty(example = "mistranslation", value = "The Comment's annotation text.")
 
   public String getText() {
     return text;
