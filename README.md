@@ -49,13 +49,29 @@ Refer to the [OSSRH Guide](http://central.sonatype.org/pages/ossrh-guide.html) f
 
 ### Maven users
 
+The library is hosted in GitHub packages, so configure your project's POM
+to point to the correct repository:
+
+```xml
+<repositories>
+  <repository>
+    <id>github</id>
+    <name>Github Packages</name>
+    <url>https://maven.pkg.github.com/lilt/lilt-java</url>
+  </repository>
+</repositories>
+ ```
+
+You will also need to authenticate with GitHub Packages by updating
+your `~/.m2/settings.xml` file as described [here](https://docs.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages).
+
 Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-  <groupId>org.openapitools</groupId>
+  <groupId>com.lilt.client</groupId>
   <artifactId>lilt-java-client</artifactId>
-  <version>2.0</version>
+  <version>2.0.1</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -70,7 +86,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-v2.0.jar`
+* `target/lilt-java-client-2.0.1.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
