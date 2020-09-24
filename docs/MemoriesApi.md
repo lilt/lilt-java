@@ -482,7 +482,7 @@ Name | Type | Description  | Notes
 
 <a name="syncDownMemory"></a>
 # **syncDownMemory**
-> File syncDownMemory(id, fromTime, toTime, when)
+> byte[] syncDownMemory(id, fromTime, toTime, when)
 
 Get-sync for a Memory
 
@@ -520,7 +520,7 @@ public class Example {
     Integer toTime = 56; // Integer | Unix time stamp (epoch, in seconds) of the end of the Memory section.
     String when = "when_example"; // String | The date field on which retrieved segments match from/to time stamps: `created`, `updated`, `deleted`. If this parameter is omitted, then the whole Memory is returned.
     try {
-      File result = apiInstance.syncDownMemory(id, fromTime, toTime, when);
+      byte[] result = apiInstance.syncDownMemory(id, fromTime, toTime, when);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling MemoriesApi#syncDownMemory");
@@ -544,7 +544,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**File**](File.md)
+**byte[]**
 
 ### Authorization
 

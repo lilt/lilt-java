@@ -45,7 +45,7 @@ public class Example {
     BasicAuth.setPassword("YOUR PASSWORD");
 
     ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
-    Connector1 body = new Connector1(); // Connector1 | 
+    Connector body = new Connector(); // Connector | 
     try {
       Connector result = apiInstance.createConnector(body);
       System.out.println(result);
@@ -64,7 +64,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Connector1**](Connector1.md)|  |
+ **body** | [**Connector**](Connector.md)|  |
 
 ### Return type
 
@@ -162,7 +162,7 @@ Name | Type | Description  | Notes
 
 <a name="getConnectors"></a>
 # **getConnectors**
-> Connector getConnectors(id)
+> List&lt;Connector&gt; getConnectors(id)
 
 Retrieve a Connector
 
@@ -197,7 +197,7 @@ public class Example {
     ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
     Integer id = 56; // Integer | A unique Connector identifier.
     try {
-      Connector result = apiInstance.getConnectors(id);
+      List<Connector> result = apiInstance.getConnectors(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ConnectorsApi#getConnectors");
@@ -218,7 +218,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Connector**](Connector.md)
+[**List&lt;Connector&gt;**](Connector.md)
 
 ### Authorization
 
@@ -232,7 +232,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | A connector. |  -  |
+**200** | A list of Connectors. |  -  |
 **403** | Unauthorized. |  -  |
 **410** | Connector deleted. |  -  |
 **0** | Unexpected error. |  -  |
@@ -272,7 +272,7 @@ public class Example {
     BasicAuth.setPassword("YOUR PASSWORD");
 
     ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
-    Connector body = new Connector(); // Connector | 
+    ConnectorArguments body = new ConnectorArguments(); // ConnectorArguments | 
     try {
       Connector result = apiInstance.updateConnector(body);
       System.out.println(result);
@@ -291,7 +291,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Connector**](Connector.md)|  |
+ **body** | [**ConnectorArguments**](ConnectorArguments.md)|  |
 
 ### Return type
 

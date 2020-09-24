@@ -11,29 +11,65 @@
  */
 
 
-package com.lilt.client;
+package com.lilt.client.model;
 
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-09-24T00:29:30.356Z[GMT]")
-public class Configuration {
-    private static ApiClient defaultApiClient = new ApiClient();
+import com.google.gson.TypeAdapter;
+import com.google.gson.annotations.JsonAdapter;
+import com.google.gson.annotations.SerializedName;
+import com.google.gson.stream.JsonReader;
+import com.google.gson.stream.JsonWriter;
+import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
+import java.io.IOException;
+import org.junit.Assert;
+import org.junit.Ignore;
+import org.junit.Test;
+
+
+/**
+ * Model tests for ConnectorArguments
+ */
+public class ConnectorArgumentsTest {
+    private final ConnectorArguments model = new ConnectorArguments();
 
     /**
-     * Get the default API client, which would be used when creating API
-     * instances without providing an API client.
-     *
-     * @return Default API client
+     * Model tests for ConnectorArguments
      */
-    public static ApiClient getDefaultApiClient() {
-        return defaultApiClient;
+    @Test
+    public void testConnectorArguments() {
+        // TODO: test ConnectorArguments
     }
 
     /**
-     * Set the default API client, which would be used when creating API
-     * instances without providing an API client.
-     *
-     * @param apiClient API client
+     * Test the property 'id'
      */
-    public static void setDefaultApiClient(ApiClient apiClient) {
-        defaultApiClient = apiClient;
+    @Test
+    public void idTest() {
+        // TODO: test id
     }
+
+    /**
+     * Test the property 'name'
+     */
+    @Test
+    public void nameTest() {
+        // TODO: test name
+    }
+
+    /**
+     * Test the property 'args'
+     */
+    @Test
+    public void argsTest() {
+        // TODO: test args
+    }
+
+    /**
+     * Test the property 'schedule'
+     */
+    @Test
+    public void scheduleTest() {
+        // TODO: test schedule
+    }
+
 }

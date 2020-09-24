@@ -28,7 +28,6 @@ import java.io.IOException;
 
 
 import com.lilt.client.model.Error;
-import java.io.File;
 import com.lilt.client.model.Memory;
 import com.lilt.client.model.MemoryCreateParameters;
 import com.lilt.client.model.MemoryDeleteResponse;
@@ -911,7 +910,7 @@ public class MemoriesApi {
      * @param fromTime Unix time stamp (epoch, in seconds) of the start of the Memory section. (optional)
      * @param toTime Unix time stamp (epoch, in seconds) of the end of the Memory section. (optional)
      * @param when The date field on which retrieved segments match from/to time stamps: &#x60;created&#x60;, &#x60;updated&#x60;, &#x60;deleted&#x60;. If this parameter is omitted, then the whole Memory is returned. (optional)
-     * @return File
+     * @return byte[]
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -920,8 +919,8 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public File syncDownMemory(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
-        ApiResponse<File> localVarResp = syncDownMemoryWithHttpInfo(id, fromTime, toTime, when);
+    public byte[] syncDownMemory(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
+        ApiResponse<byte[]> localVarResp = syncDownMemoryWithHttpInfo(id, fromTime, toTime, when);
         return localVarResp.getData();
     }
 
@@ -932,7 +931,7 @@ public class MemoriesApi {
      * @param fromTime Unix time stamp (epoch, in seconds) of the start of the Memory section. (optional)
      * @param toTime Unix time stamp (epoch, in seconds) of the end of the Memory section. (optional)
      * @param when The date field on which retrieved segments match from/to time stamps: &#x60;created&#x60;, &#x60;updated&#x60;, &#x60;deleted&#x60;. If this parameter is omitted, then the whole Memory is returned. (optional)
-     * @return ApiResponse&lt;File&gt;
+     * @return ApiResponse&lt;byte[]&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -941,9 +940,9 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<File> syncDownMemoryWithHttpInfo(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
+    public ApiResponse<byte[]> syncDownMemoryWithHttpInfo(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
         okhttp3.Call localVarCall = syncDownMemoryValidateBeforeCall(id, fromTime, toTime, when, null);
-        Type localVarReturnType = new TypeToken<File>(){}.getType();
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -964,10 +963,10 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call syncDownMemoryAsync(Integer id, Integer fromTime, Integer toTime, String when, final ApiCallback<File> _callback) throws ApiException {
+    public okhttp3.Call syncDownMemoryAsync(Integer id, Integer fromTime, Integer toTime, String when, final ApiCallback<byte[]> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = syncDownMemoryValidateBeforeCall(id, fromTime, toTime, when, _callback);
-        Type localVarReturnType = new TypeToken<File>(){}.getType();
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

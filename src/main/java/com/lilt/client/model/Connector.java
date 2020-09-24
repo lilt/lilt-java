@@ -27,12 +27,8 @@ import java.io.IOException;
 /**
  * Connector
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-09-09T11:54:15.439-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-09-24T00:29:30.356Z[GMT]")
 public class Connector {
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
-
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
@@ -46,29 +42,6 @@ public class Connector {
   private String schedule;
 
 
-  public Connector id(Integer id) {
-    
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * A unique Connector identifier.
-   * @return id
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "46530", value = "A unique Connector identifier.")
-
-  public Integer getId() {
-    return id;
-  }
-
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-
   public Connector name(String name) {
     
     this.name = name;
@@ -80,7 +53,7 @@ public class Connector {
    * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "zendesk", value = "Name of connector.")
+  @ApiModelProperty(value = "Name of connector.")
 
   public String getName() {
     return name;
@@ -147,15 +120,14 @@ public class Connector {
       return false;
     }
     Connector connector = (Connector) o;
-    return Objects.equals(this.id, connector.id) &&
-        Objects.equals(this.name, connector.name) &&
+    return Objects.equals(this.name, connector.name) &&
         Objects.equals(this.args, connector.args) &&
         Objects.equals(this.schedule, connector.schedule);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, args, schedule);
+    return Objects.hash(name, args, schedule);
   }
 
 
@@ -163,7 +135,6 @@ public class Connector {
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class Connector {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    args: ").append(toIndentedString(args)).append("\n");
     sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");

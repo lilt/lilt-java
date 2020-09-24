@@ -1,0 +1,4420 @@
+openapi: 3.0.1
+info:
+  contact:
+    email: support@lilt.com
+    name: Lilt REST API Support
+    url: https://lilt.com/docs/api
+  description: |
+    The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:
+      * Training of and translating with interactive, adaptive machine translation
+      * Large-scale translation memory
+      * The Lexicon (a large-scale termbase)
+      * Programmatic control of the Lilt CAT environment
+      * Translation memory synchronization
+
+    Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.
+    ## Authentication
+    Requests are authenticated via REST API key, which requires the Business plan.
+
+    Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.
+
+    For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.
+  title: Lilt REST API
+  version: v2.0
+servers:
+- url: https://lilt.com/2
+security:
+- ApiKeyAuth: []
+- BasicAuth: []
+paths:
+  /:
+    get:
+      description: |+
+        This resource does not have any attributes. It lists the name of the
+        REST API.
+
+        This endpoint can be used to verify REST API keys and to check the
+        availability of the REST API.
+
+      operationId: root
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ApiRoot'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve the REST API root
+      tags:
+      - Root
+      x-accepts: application/json
+  /files:
+    delete:
+      description: |+
+        Delete a File.
+
+        Example CURL command:
+        ```
+          curl -X DELETE https://lilt.com/2/files?key=API_KEY&id=123 ```
+
+      operationId: deleteFile
+      parameters:
+      - description: A unique File identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "204":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/FileDeleteResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete a File
+      tags:
+      - Files
+      x-accepts: application/json
+    get:
+      description: |-
+        Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.
+
+        To retrieve a specific file, specify the <strong>id</strong> request parameter. To retrieve all files, omit the <strong>id</strong> request parameter.
+
+        Example cURL command:
+        ```
+         curl -X GET https://lilt.com/2/files?key=API_KEY&id=274```
+      operationId: getFiles
+      parameters:
+      - description: A unique File identifier.
+        in: query
+        name: id
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/File'
+                title: FilesList
+                type: array
+          description: A list of files.
+        "403":
+          content: {}
+          description: Unauthorized.
+        "410":
+          content: {}
+          description: File deleted.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error.
+      summary: Retrieve a File
+      tags:
+      - Files
+      x-accepts: application/json
+    post:
+      description: |+
+        Upload a File in any of the formats [documented in our knowledge
+        base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats).
+        Request parameters should be passed in as query string parameters.
+
+        When uploading a file, any parameters needed to issue a request to the
+        specified export_uri can be encoded in the export_uri itself as query
+        parameters. Typical examples of parameters that may be required are an
+        access token to authorize requests to a third-party HTTP API and the
+        unique identifier of a resource available via the third-party HTTP API
+        that corresponds to the file. An example export_uri that encodes a
+        target resource identifier (i.e., source_id) of an associated resource
+        behind a third party HTTP API is given in the cURL command below.
+
+        Example cURL command:
+        ```
+          curl -X POST https://lilt.com/2/files?key=API_KEY&name=en_US.json&export_uri=https://example.com/export?source_id=12345 \
+          --header "Content-Type: application/octet-stream" \
+          --data-binary @en_US.json
+        ```
+        Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.
+
+        The language detection will complete asynchronously. Prior to completion, the `detected_lang` value will be `zxx`, the reserved ISO 639-2 code for "No linguistic content/not applicable".
+
+        If the language can not be determined, or the detection process fails, the `detected_lang` field will return `und`, the reserved ISO 639-2 code for undetermined language, and the `detected_lang_confidence` score will be `0`.
+
+      operationId: uploadFile
+      parameters:
+      - description: A file name.
+        in: query
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: A webhook endpoint that will export the translated document back
+          to the source repository.
+        in: query
+        name: export_uri
+        schema:
+          type: string
+      - description: A hash value to associate with the file. The MD5 hash of the
+          body contents will be used by default if a value isn't provided.
+        in: query
+        name: file_hash
+        schema:
+          type: string
+      - description: Flag indicating whether to perform language detection on the
+          uploaded file. Default is false.
+        in: query
+        name: langId
+        schema:
+          type: boolean
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              example: |-
+                <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+                <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2">
+                ...
+                </xliff>
+              title: FileUploadBody
+              type: string
+        description: The file contents to be uploaded. The entire POST body will be
+          treated as the file.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/File'
+          description: A File object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Upload a File
+      tags:
+      - Files
+      x-codegen-request-body-name: body
+      x-contentType: application/octet-stream
+      x-accepts: application/json
+  /connectors:
+    delete:
+      description: |+
+        Delete a Connector.
+
+        Example CURL command:
+        ```
+          curl -X DELETE https://lilt.com/2/connectors?key=API_KEY&id=123 ```
+
+      operationId: deleteConnector
+      parameters:
+      - description: A unique Connector identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "204":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConnectorDeleteResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete a Connector
+      tags:
+      - Connectors
+      x-accepts: application/json
+    get:
+      description: |-
+        Retrieves one or more connectors available to your user. Connectors are not associated with a project or a memory.
+
+        To retrieve a specific connector, specify the <strong>id</strong> request parameter. To retrieve all connectors, omit the <strong>id</strong> request parameter.
+
+        Example cURL command:
+        ```
+         curl -X GET https://lilt.com/2/connectors?key=API_KEY&id=274```
+      operationId: getConnectors
+      parameters:
+      - description: A unique Connector identifier.
+        in: query
+        name: id
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Connector'
+                title: ConnectorsList
+                type: array
+          description: A list of Connectors.
+        "403":
+          content: {}
+          description: Unauthorized.
+        "410":
+          content: {}
+          description: Connector deleted.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error.
+      summary: Retrieve a Connector
+      tags:
+      - Connectors
+      x-accepts: application/json
+    post:
+      description: |
+        Create a new connector linked to a supported external cms.
+      operationId: createConnector
+      requestBody:
+        $ref: '#/components/requestBodies/connector'
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  description: Name of connector.
+                  type: string
+                args:
+                  description: Connector parameters.
+                  properties: {}
+                  type: object
+                schedule:
+                  description: Cron string
+                  example: 0 0 * * *
+                  type: string
+              title: connector
+              type: object
+        description: Connector arguments.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connector'
+          description: A Connector object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Upload a Connector
+      tags:
+      - Connectors
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+    put:
+      description: |
+        Create a new connector linked to a supported external content source.
+      operationId: updateConnector
+      requestBody:
+        $ref: '#/components/requestBodies/ConnectorArguments'
+        content:
+          application/json:
+            schema:
+              example:
+                args: '{}'
+                schedule: 0 0 * * *
+                name: zendesk
+                id: 46530
+              properties:
+                id:
+                  description: A unique Connector identifier.
+                  example: 46530
+                  type: integer
+                name:
+                  description: Name of connector.
+                  example: zendesk
+                  type: string
+                args:
+                  description: Connector parameters.
+                  properties: {}
+                  type: object
+                schedule:
+                  description: Cron string
+                  example: 0 0 * * *
+                  type: string
+              title: ConnectorArguments
+              type: object
+        description: Connector arguments.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Connector'
+          description: A Connector object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Upload a Connector
+      tags:
+      - Connectors
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /documents:
+    delete:
+      description: |
+        Delete a Document.
+      operationId: deleteDocument
+      parameters:
+      - description: A unique Document identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentDeleteResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete a Document
+      tags:
+      - Documents
+      x-accepts: application/json
+    get:
+      description: |-
+        List a Document.
+
+        The listing will include the pretranslation status for the document. When pretranslation is in progress for a document, the `GET /documents` endpoint's response will include `is_pretranslating = true` as well as a more detailed status property `status.pretranslation` one of `idle`, `pending`, or `running`.
+      operationId: getDocument
+      parameters:
+      - description: A unique Document identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: Flag indicating whether full segment information should be returned.
+        in: query
+        name: with_segments
+        schema:
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentWithSegments'
+          description: A Document object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve a Document
+      tags:
+      - Documents
+      x-accepts: application/json
+    post:
+      description: |
+        Create a new Document. A Document is a collection of one or more Segments.
+        Documents are nested inside of Projects, and appear in the Project details view in the web app.
+        Document-level relationships between Segments are considered by the machine translation system during adaptation. If there is no inherent document structure in your data, you still might consider grouping related Segments into Documents to improve translation quality.
+      operationId: createDocument
+      requestBody:
+        $ref: '#/components/requestBodies/DocumentParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                project_id: 23618
+                name: Introduction.xliff
+              properties:
+                name:
+                  description: The document name.
+                  example: Introduction.xliff
+                  type: string
+                project_id:
+                  description: A unique Project identifier.
+                  example: 23618
+                  type: integer
+              required:
+              - name
+              - project_id
+              title: DocumentParameters
+              type: object
+        description: The Document resource to create.
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentWithSegments'
+          description: A Document object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Create a Document
+      tags:
+      - Documents
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+    put:
+      description: |
+        Update a Document.
+      operationId: updateDocument
+      requestBody:
+        $ref: '#/components/requestBodies/DocumentUpdateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                name: Introduction to our App
+                id: 46530
+              properties:
+                id:
+                  description: A unique Document identifier.
+                  example: 46530
+                  type: integer
+                name:
+                  description: The Document name.
+                  example: Introduction to our App
+                  type: string
+              required:
+              - id
+              - name
+              title: DocumentUpdateParameters
+              type: object
+        description: The Document resource to update.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentWithSegments'
+          description: A Document object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Update a Document
+      tags:
+      - Documents
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /documents/share:
+    put:
+      description: |+
+        Assign and unassign a Document for translation and/or review.
+
+      operationId: assignDocument
+      requestBody:
+        $ref: '#/components/requestBodies/DocumentAssignmentParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                is_reviewer: false
+                due_date: 2000-01-23T04:56:07.000+00:00
+                is_translator: true
+                id: 46530
+                email: user@email.com
+              properties:
+                id:
+                  description: A unique Document identifier.
+                  example: 46530
+                  type: integer
+                email:
+                  description: An email address.
+                  example: user@email.com
+                  type: string
+                is_translator:
+                  description: If true, assign for translating. If false, then unassign.
+                  example: true
+                  type: boolean
+                is_reviewer:
+                  description: If true, assign for reviewing. If false, then unassign.
+                  example: false
+                  type: boolean
+                due_date:
+                  description: Due date for translation or review (set based on `is_translator`
+                    and `is_reviewer` flags).
+                  format: date-time
+                  type: string
+              required:
+              - email
+              - id
+              title: DocumentAssignmentParameters
+              type: object
+        description: Attributes of the Document resource to assign.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentAssignmentResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Assign a Document
+      tags:
+      - Documents
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /documents/pretranslate:
+    post:
+      description: |
+        Initiate pretranslation of a list of Documents. This request will mark
+        document(s) as being pretranslated. Pretranslation in this context is:
+        - Applying and confirming exact TM matches based on the Memory of the
+        Project;
+        - Translating all other segments via MT without confirming
+        them.
+
+        Example cURL command:
+        ```
+        curl -X POST https://lilt.com/2/documents/pretranslate?key=API_KEY -d {"id": [123]} -H "Content-Type: application/json"
+        ```
+
+        Document translation is an asynchronous process that, in effect, is
+        performed in the background.
+
+        To check the status of pretranslation for a document, use the `GET
+        /documents` endpoint. When pretranslation is in progress for a document,
+        the `GET /documents` endpoint's response will include `is_pretranslating
+        = true` as well as a more detailed status property
+        `status.pretranslation` one of `idle`, `pending`, or `running`.
+
+        Once pretranslation is finished, the document can be downloaded via `GET
+        /documents/files`.
+      operationId: pretranslateDocuments
+      parameters:
+      - description: Optional parameter for auto-accepting 100% TM hits.
+        in: query
+        name: auto_accept
+        schema:
+          type: boolean
+      - description: Optional for using case matching against TM hits.
+        in: query
+        name: case_sensitive
+        schema:
+          type: boolean
+      - description: Optional parameter for attributing translation authorship of
+          exact matches to document creator.
+        in: query
+        name: attribute_to_creator
+        schema:
+          type: boolean
+      - description: |
+          An optional parameter indicating how the document will be pretranslated.
+
+          The accepted values are `tm`, or `tm+mt`. Default is `tm+mt`.
+        in: query
+        name: mode
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/DocumentPretranslateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                id:
+                - 123
+                - 234
+              properties:
+                id:
+                  description: A list of unique Document identifiers.
+                  example:
+                  - 123
+                  - 234
+                  items:
+                    type: integer
+                  type: array
+              title: DocumentPretranslateParameters
+              type: object
+        description: A list of unique Document identifiers.
+        required: true
+      responses:
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentPretranslateResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Pretranslate a Document
+      tags:
+      - Documents
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /documents/files:
+    get:
+      description: |+
+        Export a Document that has been translated in the Lilt web application.
+        Any Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting `is_xliff=false`.
+        This endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource.
+        Example CURL command:
+        ```
+          curl -X GET https://lilt.com/2/documents/files?key=API_KEY&id=274 -o from_lilt.xliff
+        ```
+
+      operationId: downloadDocument
+      parameters:
+      - description: An unique Document identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: Download the document in XLIFF 1.2 format.
+        in: query
+        name: is_xliff
+        schema:
+          default: true
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/octet-stream:
+              schema:
+                format: byte
+                title: DocumentDownloadResponse
+                type: string
+          description: A file.
+        "502":
+          content: {}
+          description: File in pretranslation.
+        default:
+          content:
+            application/octet-stream:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Download a Document
+      tags:
+      - Documents
+      x-accepts: application/octet-stream
+    post:
+      description: |+
+        Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats).
+        Request parameters should be passed as JSON object with the header  field `LILT-API`.
+        Example CURL command:
+        ```
+          curl -X POST https://lilt.com/2/documents/files?key=API_KEY \
+          --header "LILT-API: {\"name\": \"introduction.xliff\",\"pretranslate\": \"tm+mt\",\"project_id\": 9}" \
+          --header "Content-Type: application/octet-stream" \
+          --data-binary @Introduction.xliff
+        ```
+
+      operationId: uploadDocument
+      parameters:
+      - description: A file name.
+        in: header
+        name: name
+        required: true
+        schema:
+          type: string
+      - description: A unique Project identifier.
+        in: header
+        name: project_id
+        required: true
+        schema:
+          type: integer
+      - description: |
+          An optional parameter indicating if and how the document will be
+          pretranslated upon being uploaded.
+
+          The accepted values are `null`, `tm`, or `tm+mt`
+        in: header
+        name: pretranslate
+        schema:
+          type: string
+      - description: |
+          An optional parameter to auto-accept segments with 100% translation
+          memory matches when the `pretranslate` option is also set, or to
+          auto-accept any target data that is present when the uploaded file
+          is XLIFF. If omitted or set to `false`, no segments will be
+          auto-accepted.
+        in: header
+        name: auto_accept
+        schema:
+          type: boolean
+      - description: |
+          An optional pararameter to specify an import configuration to
+          be applied when extracting translatable content from this file.
+        in: header
+        name: config_id
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              example: |-
+                <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+                <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2">
+                ...
+                </xliff>
+              title: DocumentUploadBody
+              type: string
+        description: |
+          The file contents to be uploaded. The entire POST body will be
+          treated as the file.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentWithSegments'
+          description: A Document object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Upload a File
+      tags:
+      - Documents
+      x-codegen-request-body-name: body
+      x-contentType: application/octet-stream
+      x-accepts: application/json
+  /languages:
+    get:
+      description: |+
+        Get a list of supported languages.
+
+      operationId: getLanguages
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LanguagesResponse'
+          description: An object listing supported languages and their corresponding
+            locales.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve supported languages
+      tags:
+      - Languages
+      x-accepts: application/json
+  /lexicon:
+    get:
+      description: |+
+        Query the Lexicon. The Lexicon is an editable termbase / concordance that is integrated with the Memory.
+
+      operationId: queryLexicon
+      parameters:
+      - description: A unique Memory identifier.
+        in: query
+        name: memory_id
+        required: true
+        schema:
+          type: integer
+      - description: An ISO 639-1 language code.
+        in: query
+        name: srclang
+        required: true
+        schema:
+          type: string
+      - description: An ISO 639-1 language code.
+        in: query
+        name: trglang
+        required: true
+        schema:
+          type: string
+      - description: The query term.
+        in: query
+        name: query
+        required: true
+        schema:
+          type: string
+      - description: The maximum number of results to return.
+        in: query
+        name: "n"
+        schema:
+          default: 1
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/LexiconEntry'
+                title: LexiconQueryResponse
+                type: array
+          description: A list of LexiconEntry objects.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Query a Lexicon
+      tags:
+      - Lexicon
+      x-accepts: application/json
+    post:
+      description: |+
+        Update the Lexicon (Termbase as displayed in the ui) with a new term. The maximum source length is 250
+        characters.
+
+      operationId: updateLexicon
+      requestBody:
+        $ref: '#/components/requestBodies/LexiconUpdateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                memory_id: 10641
+                source: washing machine
+                target: Waschmaschine
+              properties:
+                memory_id:
+                  description: A unique Memory identifier.
+                  example: 10641
+                  type: integer
+                source:
+                  description: The source side of the lexicon entry.
+                  example: washing machine
+                  type: string
+                target:
+                  description: The target side of the lexicon entry.
+                  example: Waschmaschine
+                  type: string
+              required:
+              - memory_id
+              - source
+              - target
+              title: LexiconUpdateParameters
+              type: object
+        description: The lexicon entry.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LexiconUpdateResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Update a Lexicon
+      tags:
+      - Lexicon
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /memories:
+    delete:
+      description: |
+        Delete a Memory.
+      operationId: deleteMemory
+      parameters:
+      - description: A unique Memory identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryDeleteResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete a Memory
+      tags:
+      - Memories
+      x-accepts: application/json
+    get:
+      description: |+
+        Retrieve a Memory. If you cannot access the Memory (401 error) please check permissions (e.g. in case you created the Memory via the web app with a different account you may have to explicitly share that Memory).
+
+      operationId: getMemory
+      parameters:
+      - description: An optional Memory identifier.
+        in: query
+        name: id
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Memory'
+                title: MemoryResponse
+                type: array
+          description: A list of Memory objects.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve a Memory
+      tags:
+      - Memories
+      x-accepts: application/json
+    post:
+      description: |+
+        Create a new Memory. A Memory is a container that collects source/target
+        sentences for a specific language pair (e.g., English>French). The data
+        in the Memory is used to train the MT system, populate the TM, and
+        update the lexicon. Memories are private to your account - the data is
+        not shared across users - unless you explicitly share a Memory with your
+        team (via web app only).
+
+        <a href="https://lilt.com/kb/memory/memories" target=_blank>Refer
+        to our KB</a> for a more detailed description.
+
+      operationId: createMemory
+      requestBody:
+        $ref: '#/components/requestBodies/MemoryCreateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                trglocale: FR
+                name: automotive
+                srclang: en
+                srclocale: US
+                trglang: fr
+              properties:
+                name:
+                  description: A name for the Memory.
+                  example: automotive
+                  type: string
+                srclang:
+                  description: An ISO 639-1 language identifier.
+                  example: en
+                  type: string
+                trglang:
+                  description: An ISO 639-1 language identifier.
+                  example: fr
+                  type: string
+                srclocale:
+                  description: An ISO 3166-1 region name for language locales
+                  example: US
+                  type: string
+                trglocale:
+                  description: An ISO 3166-1 region name for language locales
+                  example: FR
+                  type: string
+              required:
+              - name
+              - srclang
+              - trglang
+              title: MemoryCreateParameters
+              type: object
+        description: The Memory resource to create.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memory'
+          description: A Memory object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Create a Memory
+      tags:
+      - Memories
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+    put:
+      description: |
+        Update a Memory.
+      operationId: updateMemory
+      requestBody:
+        $ref: '#/components/requestBodies/MemoryUpdateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                name: Automotive Memory
+                id: 7246
+              properties:
+                id:
+                  description: A unique Memory identifier.
+                  example: 7246
+                  type: integer
+                name:
+                  description: The Memory name.
+                  example: Automotive Memory
+                  type: string
+              required:
+              - id
+              - name
+              title: MemoryUpdateParameters
+              type: object
+        description: The Memory resource to update.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Memory'
+          description: A Memory object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Update the name of a Memory
+      tags:
+      - Memories
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /memories/query:
+    get:
+      description: |+
+        Perform a translation memory query.
+
+      operationId: queryMemory
+      parameters:
+      - description: A unique Memory identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: A source query.
+        in: query
+        name: query
+        required: true
+        schema:
+          type: string
+      - description: Maximum number of results to return.
+        in: query
+        name: "n"
+        schema:
+          default: 10
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/TranslationMemoryEntry'
+                title: MemoryQueryResponse
+                type: array
+          description: A list of TranslationMemoryEntry objects.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Query a Memory
+      tags:
+      - Memories
+      x-accepts: application/json
+  /memories/sync:
+    delete:
+      description: |+
+        Deletes segments in the Memory matching the `from_time`, `to_time` and `when` parameters.
+
+        Example CURL command:
+        ```
+          curl -X DELETE https://lilt.com/2/memories/sync?key=API_KEY&id=42&from_time=1491048000&to_time=1491049800&when=created
+        ```
+
+      operationId: syncDeleteMemory
+      parameters:
+      - description: A unique Memory identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: Unix time stamp (epoch, in seconds) of the start of the Memory
+          section.
+        in: query
+        name: from_time
+        schema:
+          type: integer
+      - description: Unix time stamp (epoch, in seconds) of the end of the Memory
+          section.
+        in: query
+        name: to_time
+        schema:
+          type: integer
+      - description: 'The date field on which retrieved segments match from/to time
+          stamps: `created`, `updated`, `deleted`.'
+        in: query
+        name: when
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryInsertResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete-sync for a Memory
+      tags:
+      - Memories
+      x-accepts: application/json
+    get:
+      description: |+
+        Get all or part of a memory in TMX 1.4b format. If the `from_time` and/or `to_time` are omitted, then all segments are returned. The parameter `when` specifies on which date field `from_time` and `to_time` are matched. Possible values are `created` (when the segment was originally created in the memory), `updated` (when the segment was lastly updated), and `deleted` (when the segment was deleted).
+
+        Example CURL command:
+        ```
+          curl -X GET https://lilt.com/2/memories/sync?key=API_KEY&id=42 -o from_lilt.tmx
+        ```
+
+      operationId: syncDownMemory
+      parameters:
+      - description: A unique Memory identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: Unix time stamp (epoch, in seconds) of the start of the Memory
+          section.
+        in: query
+        name: from_time
+        schema:
+          type: integer
+      - description: Unix time stamp (epoch, in seconds) of the end of the Memory
+          section.
+        in: query
+        name: to_time
+        schema:
+          type: integer
+      - description: 'The date field on which retrieved segments match from/to time
+          stamps: `created`, `updated`, `deleted`. If this parameter is omitted, then
+          the whole Memory is returned.'
+        in: query
+        name: when
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/x-tmx:
+              schema:
+                format: byte
+                title: MemorySyncResponse
+                type: string
+          description: A TMX 1.4b file.
+        default:
+          content:
+            application/x-tmx:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Get-sync for a Memory
+      tags:
+      - Memories
+      x-accepts: application/x-tmx
+    post:
+      description: |+
+        Inserts a TM in TMX 1.4b format into the Memory. Request parameters should be passed as JSON object with the header field `LILT-API`.
+
+        Example CURL command:
+        ```
+          curl -X POST https://lilt.com/2/memories/sync?key=API_KEY \
+            --header "LILT-API: {\"name\": \"my_memory.tmx\",\"id\": 42}" \
+            --header "Content-Type: application/octet-stream" \
+            --data-binary @my_memory.tmx
+        ```
+
+      operationId: syncInsertMemory
+      parameters:
+      - description: A unique Memory identifier.
+        in: header
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: Name of the TMX file.
+        in: header
+        name: name
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              title: MemoryInsertBody
+              type: string
+        description: The file contents to be uploaded. The entire POST body will be
+          treated as the file.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryInsertResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Insert-sync for a Memory
+      tags:
+      - Memories
+      x-codegen-request-body-name: body
+      x-contentType: application/octet-stream
+      x-accepts: application/json
+    put:
+      description: |+
+        Updates the Memory with given TMX file. Request parameters should be passed as JSON object with the header field `LILT-API`. The number of segments returned by the `from_time`, `to_time`, `when` parameters and the number of segments in the TMX file need to be identical.
+
+        Example CURL command:
+        ```
+          curl -X PUT https://lilt.com/2/memories/sync?key=API_KEY \
+            --header "LILT-API: {\"name\": \"my_memory.tmx\", \"id\": 42, \"from_time\": 1491048000, \"to_time\": 1491049800, "when": "Updated"}" \
+            --header "Content-Type: application/octet-stream" \
+            --data-binary @my_memory.tmx
+        ```
+
+      operationId: syncUpdateMemory
+      parameters:
+      - description: A unique Memory identifier.
+        in: header
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: Unix time stamp (epoch, in seconds) of the start of the Memory
+          section.
+        in: header
+        name: from_time
+        schema:
+          type: integer
+      - description: Unix time stamp (epoch, in seconds) of the end of the Memory
+          section.
+        in: header
+        name: to_time
+        schema:
+          type: integer
+      - description: 'The date field on which retrieved segments match from/to time
+          stamps: `created`, `updated`, `deleted`.'
+        in: header
+        name: when
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: MemoryUpdateBody
+              type: string
+        description: The file contents to be uploaded. The entire PUT body will be
+          treated as the file.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryUpdateResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Update-sync for a Memory
+      tags:
+      - Memories
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /memories/import:
+    post:
+      description: |+
+        Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are `*.tmx`, `*.sdltm` and `*.tmq` for TM data; `*.csv` and `*.tbx` for termbase data. Request parameters should be passed as JSON object with the header field `LILT-API`.
+
+        Example cURL command to upload a translation memory file named `my_memory.sdltm` in the current working directory:
+        ```
+          curl -X POST https://lilt.com/2/memories/import?key=API_KEY \
+            --header "LILT-API: {\"name\": \"my_memory.sdltm\",\"memory_id\": 42}" \
+            --header "Content-Type: application/octet-stream" \
+            --data-binary @my_memory.sdltm
+        ```
+
+      operationId: importMemoryFile
+      parameters:
+      - description: A unique Memory identifier.
+        in: header
+        name: memory_id
+        required: true
+        schema:
+          type: integer
+      - description: Name of the TM or termbase file.
+        in: header
+        name: name
+        required: true
+        schema:
+          type: string
+      requestBody:
+        content:
+          application/octet-stream:
+            schema:
+              title: MemoryImportBody
+              type: string
+        description: The file contents to be uploaded. The entire POST body will be
+          treated as the file.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MemoryImportResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: File import for a Memory
+      tags:
+      - Memories
+      x-codegen-request-body-name: body
+      x-contentType: application/octet-stream
+      x-accepts: application/json
+  /projects:
+    delete:
+      description: |
+        Delete a Project.
+      operationId: deleteProject
+      parameters:
+      - description: A unique Project identifier.
+        in: query
+        name: id
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectDeleteResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete a Project
+      tags:
+      - Projects
+      x-accepts: application/json
+    get:
+      description: |-
+        Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.
+
+        To retrieve a specific project, specify the `id` request parameter. To retrieve all projects, omit the `id` request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the `srclang` and `trglang` request parameters, respectively.
+      operationId: getProjects
+      parameters:
+      - description: A unique Project identifier.
+        in: query
+        name: id
+        schema:
+          type: integer
+      - description: An ISO 639-1 language code.
+        in: query
+        name: srclang
+        schema:
+          type: string
+      - description: An ISO 639-1 language code.
+        in: query
+        name: trglang
+        schema:
+          type: string
+      - description: Unix time stamp (epoch, in seconds) of Projects with `created_at`
+          greater than or equal to the value.
+        in: query
+        name: from_time
+        schema:
+          type: integer
+      - description: Unix time stamp (epoch, in seconds) of Projects with `created_at`
+          less than the value.
+        in: query
+        name: to_time
+        schema:
+          type: integer
+      - description: A project state (backlog, inProgress, inReview, inQA, done).
+        in: query
+        name: state
+        schema:
+          type: string
+      - description: A flag that toggles whether to include archived projects in the
+          response (the default is `true`).
+        in: query
+        name: archived
+        schema:
+          type: boolean
+      - description: A unique Connector identifier.
+        in: query
+        name: connector_id
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Project'
+                title: ProjectResponse
+                type: array
+          description: A list of Project objects.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve a Project
+      tags:
+      - Projects
+      x-accepts: application/json
+    post:
+      description: |+
+        Create a Project. A Project is a collection of Documents.
+
+        A Project is associated with exactly one Memory.
+
+        Projects appear in the dashboard of the web app.
+
+      operationId: createProject
+      requestBody:
+        $ref: '#/components/requestBodies/ProjectCreateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                metadata:
+                  connectorType: github
+                  notes: example metadata
+                memory_id: 1234
+                name: My new project
+                file_ids:
+                - 123
+                - 124
+                - 125
+                due_date: 1489147692
+              properties:
+                name:
+                  description: A name for the Project.
+                  example: My new project
+                  type: string
+                memory_id:
+                  description: The Memory to associate with this new Project.
+                  example: 1234
+                  type: integer
+                file_ids:
+                  description: A list of Files to add to this new Project.
+                  example:
+                  - 123
+                  - 124
+                  - 125
+                  items:
+                    type: integer
+                  type: array
+                due_date:
+                  description: The due date. Measured in seconds since the Unix epoch.
+                  example: 1489147692
+                  type: integer
+                metadata:
+                  description: Metadata associated with a project. This field must
+                    be valid JSON.
+                  example:
+                    connectorType: github
+                    notes: example metadata
+                  properties: {}
+                  type: object
+              required:
+              - memory_id
+              - name
+              title: ProjectCreateParameters
+              type: object
+        description: The Project resource to create.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: A Project object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Create a Project
+      tags:
+      - Projects
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+    put:
+      description: |
+        Update a Project.
+      operationId: updateProject
+      requestBody:
+        $ref: '#/components/requestBodies/ProjectUpdateResponse'
+        content:
+          application/json:
+            schema:
+              example:
+                archived: false
+                metadata:
+                  connectorType: github
+                  notes: example metadata
+                sample_review_percentage: 20
+                name: Walker Percy Essays
+                due_date: 1489147692
+                id: 1234
+                state: backlog
+              properties:
+                id:
+                  description: A unique Project identifier.
+                  example: 1234
+                  type: integer
+                name:
+                  description: The Project name.
+                  example: Walker Percy Essays
+                  type: string
+                state:
+                  description: The project's state. The possible states are 'backlog',
+                    'inProgress', 'inReview', 'inQA', and 'done'
+                  example: backlog
+                  type: string
+                due_date:
+                  description: The due date. Measured in seconds since the Unix epoch.
+                  example: 1489147692
+                  type: integer
+                archived:
+                  description: True if the project is archived. Otherwise, false.
+                  example: false
+                  type: boolean
+                metadata:
+                  description: Metadata associated with a project. This field must
+                    be valid JSON.
+                  example:
+                    connectorType: github
+                    notes: example metadata
+                  properties: {}
+                  type: object
+                sample_review_percentage:
+                  description: The Project's sample review percentage. Must be an
+                    integer between 10 and 100, a multiple of 10 and greater than
+                    minimum value (displayed in error message).
+                  example: 20
+                  type: integer
+              required:
+              - id
+              title: ProjectUpdateResponse
+              type: object
+        description: The Project resource to update.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Project'
+          description: A Project object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Update a Project
+      tags:
+      - Projects
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /projects/quote:
+    get:
+      description: |+
+        Get information about a project that can be used for quoting. This includes:
+        * A translation memory leverage report
+        * Word count
+        * Segment count
+
+      operationId: getProjectReport
+      parameters:
+      - description: A unique Project identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectQuote'
+          description: An object that represents a Project quote.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve Project report
+      tags:
+      - Projects
+      x-accepts: application/json
+  /projects/status:
+    get:
+      description: |+
+        Retrieve the status of a Project.
+
+      operationId: getProjectStatus
+      parameters:
+      - description: A unique Project identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ProjectStatus'
+          description: An object that represents a Project status report.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve Project status
+      tags:
+      - Projects
+      x-accepts: application/json
+  /qa:
+    get:
+      description: |
+        Perform QA checks on a target string. Optionally, you can specify a source string for additional bilingual checks, e.g. number consistency.
+      operationId: qaCheck
+      parameters:
+      - description: A target string to be checked.
+        in: query
+        name: target
+        required: true
+        schema:
+          type: string
+      - description: An ISO 639-1 language code.
+        in: query
+        name: trglang
+        required: true
+        schema:
+          type: string
+      - description: An optional source string.
+        in: query
+        name: source
+        schema:
+          type: string
+      - description: An ISO 639-1 language code.
+        in: query
+        name: srclang
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/QARuleMatches'
+          description: A QARuleMatches object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Perform QA check
+      tags:
+      - QA
+      x-accepts: application/json
+  /segments:
+    delete:
+      description: |
+        Delete a Segment from memory. This will not delete a segment from a document.
+      operationId: deleteSegment
+      parameters:
+      - description: A unique Segment identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentDeleteResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete a Segment
+      tags:
+      - Segments
+      x-accepts: application/json
+    get:
+      description: |+
+        Retrieve a Segment.
+
+      operationId: getSegment
+      parameters:
+      - description: A unique Segment identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      - description: Include comments in the response.
+        in: query
+        name: include_comments
+        schema:
+          default: false
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SegmentWithComments'
+          description: A Segment object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve a Segment
+      tags:
+      - Segments
+      x-accepts: application/json
+    post:
+      description: |+
+        Create a Segment and add it to a Memory. A Segment is a source/target
+        pair that is used to train the machine translation system and populate
+        the translation memory. This is not intended to be used on documents and will throw an error.
+
+        The maximum source length is 5,000 characters.
+
+      operationId: createSegment
+      requestBody:
+        $ref: '#/components/requestBodies/SegmentCreateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                memory_id: 10641
+                source: Code zur Fehleranalyse einschalten
+                document_id: 1876
+                target: Enable debugging code
+              properties:
+                memory_id:
+                  description: A unique Memory identifier.
+                  example: 10641
+                  type: integer
+                document_id:
+                  description: A unique Document identifier.
+                  example: 1876
+                  type: integer
+                source:
+                  description: The source string.
+                  example: Code zur Fehleranalyse einschalten
+                  type: string
+                target:
+                  description: The target string.
+                  example: Enable debugging code
+                  type: string
+              required:
+              - source
+              title: SegmentCreateParameters
+              type: object
+        description: |
+          The Segment resource to create.
+
+          To add a Segment to a Memory, include the `memory_id` and `target` parameters.
+
+          To add a Segment to a Document, include the `document_id` and the `source` parameters.
+          The `target` parameter is optional.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
+          description: A Segment object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Create a Segment
+      tags:
+      - Segments
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+    put:
+      description: |+
+        Update a Segment in memory. The Memory will be updated with the new target string.
+
+      operationId: updateSegment
+      requestBody:
+        $ref: '#/components/requestBodies/SegmentUpdateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                id: 84480010
+                target: Enable debug code
+              properties:
+                id:
+                  description: A unique Segment identifier.
+                  example: 84480010
+                  type: integer
+                target:
+                  description: The target string.
+                  example: Enable debug code
+                  type: string
+              required:
+              - id
+              - target
+              title: SegmentUpdateParameters
+              type: object
+        description: The Segment resource to update.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Segment'
+          description: A Segment object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Update a Segment
+      tags:
+      - Segments
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /segments/tag:
+    get:
+      description: |+
+        Project tags for a segment. The `source_tagged` string contains one or more SGML
+        tags. The `target` string is untagged. This endpoint will automatically place the
+        source tags in the target.
+
+        Usage charges apply to this endpoint for production REST API keys.
+
+      operationId: tagSegment
+      parameters:
+      - description: The tagged source string.
+        in: query
+        name: source_tagged
+        required: true
+        schema:
+          type: string
+      - description: The target string.
+        in: query
+        name: target
+        required: true
+        schema:
+          type: string
+      - description: A unique Memory identifier.
+        in: query
+        name: memory_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TaggedSegment'
+          description: A TaggedSegment object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Tag a Segment
+      tags:
+      - Segments
+      x-accepts: application/json
+  /translate:
+    get:
+      description: |+
+        Translate a source string.
+
+        Setting the `rich` parameter to `true` will change the response format
+        to include additional information about each translation including a
+        model score, word alignments,  and formatting information. The rich
+        format can be seen in the example response on this page.
+
+        By default, this endpoint also returns translation memory (TM) fuzzy matches, along
+        with associated scores. Fuzzy matches always appear ahead of machine translation
+        output in the response.
+
+        The maximum source length is 5,000 characters.
+
+        Usage charges apply to this endpoint for production REST API keys.
+
+      operationId: translateSegment
+      parameters:
+      - description: A unique Memory identifier.
+        in: query
+        name: memory_id
+        required: true
+        schema:
+          type: integer
+      - description: The source text to be translated.
+        in: query
+        name: source
+        schema:
+          type: string
+      - description: A source hash code.
+        in: query
+        name: source_hash
+        schema:
+          type: integer
+      - description: A target prefix.
+        in: query
+        name: prefix
+        schema:
+          type: string
+      - description: Return top n translations (deprecated).
+        in: query
+        name: "n"
+        schema:
+          default: 1
+          type: integer
+      - description: Returns rich translation information (e.g., with word alignments).
+        in: query
+        name: rich
+        schema:
+          default: false
+          type: boolean
+      - description: Include translation memory fuzzy matches.
+        in: query
+        name: tm_matches
+        schema:
+          default: true
+          type: boolean
+      - description: Project tags. Projects tags in source to target if set to true.
+        in: query
+        name: project_tags
+        schema:
+          default: false
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationList'
+          description: A TranslationList object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Translate a segment
+      tags:
+      - Translate
+      x-accepts: application/json
+  /translate/register:
+    get:
+      description: |+
+        Register a source string for interactive translation. The `source_hash` value that is returned by this request is required by the `prefix` parameter for the translation endpoint.
+        The maximum source length is 5,000 characters.
+        Usage charges apply to this endpoint for production REST API keys.
+
+      operationId: registerSegment
+      parameters:
+      - description: A source string to be registered.
+        in: query
+        name: source
+        required: true
+        schema:
+          type: string
+      - description: An ISO 639-1 language code.
+        in: query
+        name: srclang
+        required: true
+        schema:
+          type: string
+      - description: An ISO 639-1 language code.
+        in: query
+        name: trglang
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslateRegisterResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Register a segment
+      tags:
+      - Translate
+      x-accepts: application/json
+components:
+  requestBodies:
+    LexiconUpdateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LexiconUpdateParameters'
+      required: true
+    MemoryCreateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MemoryCreateParameters'
+      required: true
+    DocumentUpdateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DocumentUpdateParameters'
+      required: true
+    SegmentUpdateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SegmentUpdateParameters'
+      required: true
+    MemoryUpdateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/MemoryUpdateParameters'
+      required: true
+    DocumentAssignmentParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DocumentAssignmentParameters'
+      required: true
+    SegmentCreateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SegmentCreateParameters'
+      required: true
+    DocumentPretranslateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DocumentPretranslateParameters'
+      required: true
+    DocumentParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DocumentParameters'
+      required: false
+    connector:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/connector'
+      required: true
+    ProjectCreateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectCreateParameters'
+      required: true
+    ConnectorArguments:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConnectorArguments'
+      required: true
+    ProjectUpdateResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ProjectUpdateResponse'
+      required: true
+  schemas:
+    Error:
+      description: |
+        Response in the event of an unexpected error.
+      example:
+        message: Internal server error.
+      properties:
+        message:
+          description: A human-readable message describing the error.
+          type: object
+      type: object
+    Connector:
+      description: |
+        A Connector is a Lilt managed api bridge between a content source and Lilt services.
+      example:
+        args: '{}'
+        schedule: schedule
+        updated_at: updated_at
+        name: name
+        created_at: created_at
+        id: 0
+      properties:
+        id:
+          type: integer
+        name:
+          type: string
+        schedule:
+          type: string
+        args:
+          properties: {}
+          type: object
+        created_at:
+          type: string
+        updated_at:
+          type: string
+      type: object
+    Project:
+      description: |
+        A Project is a collection of zero or more Documents. It is specific to a language pair, and is associated with exactly one Memory for that language pair. The Memory association cannot be changed after the Project is created.
+      example:
+        metadata:
+          connectorType: github
+          notes: example metadata
+        trglocale: FR
+        document:
+        - srclang: en
+          created_at: 1489147692
+          reviewer_email: reviewer@example.com
+          export_succeeded: false
+          trglang: de
+          import_in_progress: false
+          import_error_message: Could not parse XML.
+          import_succeeded: false
+          export_error_message: Could not parse XML.
+          updated_at: 1489147692
+          project_id: 287
+          name: Introduction.xliff
+          id: 46530
+          export_in_progress: false
+          is_pretranslating: false
+          translator_email: translator@example.com
+          status: '{"pretranslation":"idle"}'
+        - srclang: en
+          created_at: 1489147692
+          reviewer_email: reviewer@example.com
+          export_succeeded: false
+          trglang: de
+          import_in_progress: false
+          import_error_message: Could not parse XML.
+          import_succeeded: false
+          export_error_message: Could not parse XML.
+          updated_at: 1489147692
+          project_id: 287
+          name: Introduction.xliff
+          id: 46530
+          export_in_progress: false
+          is_pretranslating: false
+          translator_email: translator@example.com
+          status: '{"pretranslation":"idle"}'
+        srclang: en
+        due_date: 1489147692
+        created_at: 1489147692
+        trglang: fr
+        archived: false
+        memory_id: 1234
+        updated_at: 1489147692
+        sample_review_percentage: 20
+        name: My New Project
+        id: 448
+        state: backlog
+        srclocale: US
+      properties:
+        id:
+          description: A unique number identifying the Project.
+          example: 448
+          type: integer
+        memory_id:
+          description: A unique number identifying the associated Memory.
+          example: 1234
+          type: integer
+        srclang:
+          description: An ISO 639-1 language identifier.
+          example: en
+          type: string
+        trglang:
+          description: An ISO 639-1 language identifier.
+          example: fr
+          type: string
+        srclocale:
+          description: A locale identifier, supported for srclang.
+          example: US
+          type: string
+        trglocale:
+          description: A locale identifier, supported for trglang.
+          example: FR
+          type: string
+        name:
+          description: A name for the project.
+          example: My New Project
+          type: string
+        state:
+          description: The project's state. The possible states are 'backlog', 'inProgress',
+            'inReview', 'inQA', and 'done'
+          example: backlog
+          type: string
+        due_date:
+          description: The due date. Measured in seconds since the Unix epoch.
+          example: 1489147692
+          type: integer
+        archived:
+          description: The archived state of the Project.
+          example: false
+          type: boolean
+        metadata:
+          description: A JSON object for storing various project metadata.
+          example:
+            connectorType: github
+            notes: example metadata
+          properties: {}
+          type: object
+        sample_review_percentage:
+          description: The project's sample review percentage.
+          example: 20
+          type: integer
+        created_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        updated_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        document:
+          description: A list of Documents.
+          items:
+            $ref: '#/components/schemas/DocumentWithoutSegments'
+          type: array
+      type: object
+    ProjectQuote:
+      description: |
+        Quoting information for a Project.
+      example:
+        num_source_words: 8000
+        documents:
+        - num_source_words: 8000
+          num_segments_new: 151
+          num_segments_repetition: 2980000
+          id: 21902
+          num_words_repetition: 12
+          bands:
+          - maximum_score: 85
+            num_source_words: 151
+            num_segments: 12
+            minimum_score: 94
+          - maximum_score: 85
+            num_source_words: 151
+            num_segments: 12
+            minimum_score: 94
+          num_words_new: 6039
+        - num_source_words: 8000
+          num_segments_new: 151
+          num_segments_repetition: 2980000
+          id: 21902
+          num_words_repetition: 12
+          bands:
+          - maximum_score: 85
+            num_source_words: 151
+            num_segments: 12
+            minimum_score: 94
+          - maximum_score: 85
+            num_source_words: 151
+            num_segments: 12
+            minimum_score: 94
+          num_words_new: 6039
+        num_segments_new: 151
+        num_segments_repetition: 2980000
+        id: 21902
+        num_words_repetition: 12
+        bands:
+        - maximum_score: 85
+          num_source_words: 151
+          num_segments: 12
+          minimum_score: 94
+        - maximum_score: 85
+          num_source_words: 151
+          num_segments: 12
+          minimum_score: 94
+        num_words_new: 6039
+      properties:
+        id:
+          description: A unique Project identifier.
+          example: 21902
+          type: integer
+        num_source_words:
+          description: The number of source words in the Project.
+          example: 8000
+          type: integer
+        num_words_new:
+          description: The number of new source words in the Project.
+          example: 6039
+          type: integer
+        num_segments_new:
+          description: The number of new segments in the Project.
+          example: 151
+          type: integer
+        num_words_repetition:
+          description: The number of repetition source words in the Project.
+          example: 12
+          type: integer
+        num_segments_repetition:
+          description: The number of repetition segments in the Project.
+          example: 2980000
+          type: integer
+        bands:
+          description: A list of MatchBand objects that represent translation memory
+            leverage statistics.
+          items:
+            $ref: '#/components/schemas/MatchBand'
+          type: array
+        documents:
+          description: A list of DocumentQuote objects that quotes information for
+            a Document.
+          items:
+            $ref: '#/components/schemas/DocumentQuote'
+          type: array
+      type: object
+    DocumentQuote:
+      description: |
+        Quoting information for a Document.
+      example:
+        num_source_words: 8000
+        num_segments_new: 151
+        num_segments_repetition: 2980000
+        id: 21902
+        num_words_repetition: 12
+        bands:
+        - maximum_score: 85
+          num_source_words: 151
+          num_segments: 12
+          minimum_score: 94
+        - maximum_score: 85
+          num_source_words: 151
+          num_segments: 12
+          minimum_score: 94
+        num_words_new: 6039
+      properties:
+        id:
+          description: A unique Document identifier.
+          example: 21902
+          type: integer
+        num_source_words:
+          description: The number of source words in the Document.
+          example: 8000
+          type: integer
+        num_words_new:
+          description: The number of new source words in the Document.
+          example: 6039
+          type: integer
+        num_segments_new:
+          description: The number of new segments in the Document.
+          example: 151
+          type: integer
+        num_words_repetition:
+          description: The number of repetition source words in the Document.
+          example: 12
+          type: integer
+        num_segments_repetition:
+          description: The number of repetition segments in the Document.
+          example: 2980000
+          type: integer
+        bands:
+          description: A list of MatchBand objects that represent translation memory
+            leverage statistics.
+          items:
+            $ref: '#/components/schemas/MatchBand'
+          type: array
+      type: object
+    MatchBand:
+      description: |
+        A translation memory match band.
+      example:
+        maximum_score: 85
+        num_source_words: 151
+        num_segments: 12
+        minimum_score: 94
+      properties:
+        minimum_score:
+          description: The minimum fuzzy match score.
+          example: 94
+          type: integer
+        maximum_score:
+          description: The maximum fuzzy match score.
+          example: 85
+          type: integer
+        num_source_words:
+          description: The number of source words in the band.
+          example: 151
+          type: integer
+        num_segments:
+          description: The number of source segments in the band.
+          example: 12
+          type: integer
+      type: object
+    ProjectStatus:
+      description: |
+        The status of a Project.
+      example:
+        time_elapsed_translation: 33487
+        time_elapsed_review: 66521
+        num_words_reviewed: 12
+        num_source_words: 6039
+        time_elapsed: 2980000
+        resources:
+        - time_elapsed_review: 1172000
+          num_words_reviewed: 182
+          time_elapsed: 1172000
+          num_words_new: 12
+          time_elapsed_research: 1172000
+          time_elapsed_translation: 1172000
+          num_words_exact: 56
+          num_words_fuzzy: 24
+          num_segments_reviewed: 30
+          name: Joe Strummer
+          num_words_confirmed: 151
+          email: joe.strummer@lilt.com
+          num_segments_confirmed: 25
+        - time_elapsed_review: 1172000
+          num_words_reviewed: 182
+          time_elapsed: 1172000
+          num_words_new: 12
+          time_elapsed_research: 1172000
+          time_elapsed_translation: 1172000
+          num_words_exact: 56
+          num_words_fuzzy: 24
+          num_segments_reviewed: 30
+          name: Joe Strummer
+          num_words_confirmed: 151
+          email: joe.strummer@lilt.com
+          num_segments_confirmed: 25
+        id: 21902
+        num_words_confirmed: 151
+        time_elapsed_research: 912348
+      properties:
+        id:
+          description: A unique Project identifier.
+          example: 21902
+          type: integer
+        num_source_words:
+          description: The number of source words in the Project.
+          example: 6039
+          type: integer
+        num_words_confirmed:
+          description: The number of confirmed source words.
+          example: 151
+          type: integer
+        num_words_reviewed:
+          description: The number of reviewed source words.
+          example: 12
+          type: integer
+        time_elapsed:
+          description: The total time spent on the project by all resources. Measured
+            in milliseconds.
+          example: 2980000
+          type: integer
+        time_elapsed_translation:
+          description: The total time spent on translation by all resources. Measured
+            in milliseconds.
+          example: 33487
+          type: integer
+        time_elapsed_research:
+          description: The total time spent on research by all resources. Measured
+            in milliseconds.
+          example: 912348
+          type: integer
+        time_elapsed_review:
+          description: The total time spent on reviewing by all resources. Measured
+            in milliseconds.
+          example: 66521
+          type: integer
+        resources:
+          description: A list of ResourceStatus objects that represent per-resource
+            statistics.
+          items:
+            $ref: '#/components/schemas/ResourceStatus'
+          type: array
+      type: object
+    ResourceStatus:
+      description: |
+        The status of a resource working on a Project.
+      example:
+        time_elapsed_review: 1172000
+        num_words_reviewed: 182
+        time_elapsed: 1172000
+        num_words_new: 12
+        time_elapsed_research: 1172000
+        time_elapsed_translation: 1172000
+        num_words_exact: 56
+        num_words_fuzzy: 24
+        num_segments_reviewed: 30
+        name: Joe Strummer
+        num_words_confirmed: 151
+        email: joe.strummer@lilt.com
+        num_segments_confirmed: 25
+      properties:
+        email:
+          description: An email address.
+          example: joe.strummer@lilt.com
+          type: string
+        name:
+          description: The full name.
+          example: Joe Strummer
+          type: string
+        num_words_confirmed:
+          description: The number of source words confirmed.
+          example: 151
+          type: integer
+        num_words_new:
+          description: The number of new source words confirmed.
+          example: 12
+          type: integer
+        num_words_fuzzy:
+          description: The number of fuzzy match source words confirmed.
+          example: 24
+          type: integer
+        num_words_exact:
+          description: The number of exact match source words confirmed.
+          example: 56
+          type: integer
+        num_words_reviewed:
+          description: The number of source words reviewed.
+          example: 182
+          type: integer
+        time_elapsed:
+          description: The total time spent on translation and research. Measured
+            in milliseconds.
+          example: 1172000
+          type: integer
+        time_elapsed_translation:
+          description: The total time spent translating. Measured in milliseconds.
+          example: 1172000
+          type: integer
+        time_elapsed_research:
+          description: The total time spent on research. Measured in milliseconds.
+          example: 1172000
+          type: integer
+        time_elapsed_review:
+          description: The total time spent reviewing. Measured in milliseconds.
+          example: 1172000
+          type: integer
+        num_segments_confirmed:
+          description: The number of source segments confirmed.
+          example: 25
+          type: integer
+        num_segments_reviewed:
+          description: The number of source segments reviewed.
+          example: 30
+          type: integer
+      type: object
+    File:
+      description: A File is an unprocessed source file that can later be added to
+        a project.
+      example:
+        detected_lang_confidence: 0.7
+        file_hash: 3858f62230ac3c915f300c664312c63f
+        updated_at: 1489147692
+        name: en_US.json
+        created_at: 1489147692
+        id: 46530
+        export_uri: https://example.com/export
+        detected_lang: de
+      properties:
+        id:
+          description: A unique number identifying the File.
+          example: 46530
+          type: integer
+        name:
+          description: The file name.
+          example: en_US.json
+          type: string
+        file_hash:
+          description: A unique hash value associated with the file. An MD5 hash of
+            the file content will be used by default.
+          example: 3858f62230ac3c915f300c664312c63f
+          type: string
+        export_uri:
+          description: A webhook endpoint that will export the translated document
+            back to the source repository.
+          example: https://example.com/export
+          type: string
+        detected_lang:
+          description: Language associated with the file.
+          example: de
+          type: string
+        detected_lang_confidence:
+          description: Confidence score for the language associated with the file.
+          example: 0.7
+          type: number
+        created_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        updated_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+      type: object
+    DocumentWithoutSegments:
+      description: |
+        A Document is a collection of zero or more Segments.
+      example:
+        srclang: en
+        created_at: 1489147692
+        reviewer_email: reviewer@example.com
+        export_succeeded: false
+        trglang: de
+        import_in_progress: false
+        import_error_message: Could not parse XML.
+        import_succeeded: false
+        export_error_message: Could not parse XML.
+        updated_at: 1489147692
+        project_id: 287
+        name: Introduction.xliff
+        id: 46530
+        export_in_progress: false
+        is_pretranslating: false
+        translator_email: translator@example.com
+        status: '{"pretranslation":"idle"}'
+      properties:
+        id:
+          description: A unique number identifying the Document.
+          example: 46530
+          type: integer
+        project_id:
+          description: A unique number identifying the Project.
+          example: 287
+          type: integer
+        srclang:
+          description: An ISO 639-1 language identifier.
+          example: en
+          type: string
+        trglang:
+          description: An ISO 639-1 language identifier.
+          example: de
+          type: string
+        name:
+          description: The document name.
+          example: Introduction.xliff
+          type: string
+        import_in_progress:
+          description: True if the document is currently being imported
+          example: false
+          type: boolean
+        import_succeeded:
+          description: True if the import process succeeded.
+          example: false
+          type: boolean
+        import_error_message:
+          description: Error message if `import_succeeded=false`
+          example: Could not parse XML.
+          type: string
+        export_in_progress:
+          description: True if the document is currently being exported for download
+          example: false
+          type: boolean
+        export_succeeded:
+          description: True if the export process succeeded.
+          example: false
+          type: boolean
+        export_error_message:
+          description: Error message if `export_succeeded=false`
+          example: Could not parse XML.
+          type: string
+        is_pretranslating:
+          description: True if the document is currently being pretranslated.
+          example: false
+          type: boolean
+        status:
+          $ref: '#/components/schemas/DocumentWithoutSegments_status'
+        translator_email:
+          description: The email of the assigned translator.
+          example: translator@example.com
+          type: string
+        reviewer_email:
+          description: The email of the assigned reviewer.
+          example: reviewer@example.com
+          type: string
+        created_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        updated_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+      type: object
+    DocumentWithSegments:
+      description: |
+        A Document is a collection of zero or more Segments.
+      example:
+        srclang: en
+        created_at: 1489147692
+        reviewer_email: reviewer@example.com
+        export_succeeded: false
+        trglang: de
+        import_in_progress: false
+        segments:
+        - is_reviewed: true
+          memory_id: 5678
+          updated_at: 1489147692
+          is_confirmed: true
+          srclang: en
+          created_at: 1489147692
+          id: 84480010
+          source: The red bus.
+          document_id: 1234
+          trglang: fr
+          target: Le bus rouge.
+        - is_reviewed: true
+          memory_id: 5678
+          updated_at: 1489147692
+          is_confirmed: true
+          srclang: en
+          created_at: 1489147692
+          id: 84480010
+          source: The red bus.
+          document_id: 1234
+          trglang: fr
+          target: Le bus rouge.
+        import_error_message: Could not parse XML.
+        import_succeeded: false
+        export_error_message: Could not parse XML.
+        updated_at: 1489147692
+        project_id: 287
+        name: Introduction.xliff
+        id: 46530
+        export_in_progress: false
+        is_pretranslating: false
+        translator_email: translator@example.com
+        status: '{"pretranslation":"idle"}'
+      properties:
+        id:
+          description: A unique number identifying the Document.
+          example: 46530
+          type: integer
+        project_id:
+          description: A unique number identifying the Project.
+          example: 287
+          type: integer
+        srclang:
+          description: An ISO 639-1 language identifier.
+          example: en
+          type: string
+        trglang:
+          description: An ISO 639-1 language identifier.
+          example: de
+          type: string
+        name:
+          description: The document name.
+          example: Introduction.xliff
+          type: string
+        import_in_progress:
+          description: True if the document is currently being imported
+          example: false
+          type: boolean
+        import_succeeded:
+          description: True if the import process succeeded.
+          example: false
+          type: boolean
+        import_error_message:
+          description: Error message if `import_succeeded=false`
+          example: Could not parse XML.
+          type: string
+        export_in_progress:
+          description: True if the document is currently being exported for download
+          example: false
+          type: boolean
+        export_succeeded:
+          description: True if the export process succeeded.
+          example: false
+          type: boolean
+        export_error_message:
+          description: Error message if `export_succeeded=false`
+          example: Could not parse XML.
+          type: string
+        is_pretranslating:
+          description: True if the document is currently being pretranslated.
+          example: false
+          type: boolean
+        status:
+          $ref: '#/components/schemas/DocumentWithoutSegments_status'
+        translator_email:
+          description: The email of the assigned translator.
+          example: translator@example.com
+          type: string
+        reviewer_email:
+          description: The email of the assigned reviewer.
+          example: reviewer@example.com
+          type: string
+        created_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        updated_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        segments:
+          description: A list of Segments.
+          items:
+            $ref: '#/components/schemas/Segment'
+          type: array
+      type: object
+    LexiconEntry:
+      description: |
+        An Lexicon entry for a source term or phrase.
+      example:
+        examples:
+        - '[{"source":"Waschmaschine","sourceDelimiters":["",""],"target":["washing","machine"],"targetDelimiters":["","
+          ",""],"sourceSpan":{"start":0,"length":1},"targetSpan":{"start":1,"length":1},"similarity":0,"memoryId":10641}]'
+        - '[{"source":"Waschmaschine","sourceDelimiters":["",""],"target":["washing","machine"],"targetDelimiters":["","
+          ",""],"sourceSpan":{"start":0,"length":1},"targetSpan":{"start":1,"length":1},"similarity":0,"memoryId":10641}]'
+        translations: []
+      properties:
+        translations:
+          description: A list of translations for the query term.
+          example: []
+          items:
+            $ref: '#/components/schemas/LexiconEntry_translations'
+          type: array
+        examples:
+          description: A list of concordance examples for the query term.
+          items:
+            $ref: '#/components/schemas/LexiconEntry_examples'
+          type: array
+      type: object
+    DocumentPretranslating:
+      description: |
+        Document object for which pretranslation was requested.
+      example:
+        import_error_message: ""
+        import_succeeded: true
+        id: 123.0
+        is_processing: false
+        is_pretranslating: true
+        import_in_progress: false
+        status: '{"pretranslation":"running"}'
+      properties:
+        id:
+          description: A status object indicating the pretranslation status.
+          example: 123.0
+          type: number
+        import_in_progress:
+          description: Indicates that the document is being imported.
+          example: false
+          type: boolean
+        import_succeeded:
+          description: Indicates that the document was successfully imported.
+          example: true
+          type: boolean
+        import_error_message:
+          description: Indicates there was an error importing the document.
+          example: ""
+          type: string
+        is_processing:
+          description: Indicates the document is being processed.
+          example: false
+          type: boolean
+        is_pretranslating:
+          description: Indicates the document is being pretranslated.
+          example: true
+          type: boolean
+        status:
+          $ref: '#/components/schemas/DocumentPretranslating_status'
+      type: object
+    Memory:
+      description: |
+        A Memory is a collection of parallel (source/target) segments
+        from which a MT/TM model is trained. When a translator confirms
+        a segment in the Interface, a parallel segment is added to the
+        Memory. Parallel segments from existing translation memories and
+        bitexts can also be added to the Memory via the REST API.
+      example:
+        trglocale: FR
+        updated_at: 1489147692
+        srclang: en
+        name: Acme Corp Support Content
+        created_at: 1489147692
+        resources:
+        - resources
+        - resources
+        id: 1234
+        srclocale: US
+        version: 78
+        num_segments: 1028
+        trglang: fr
+      properties:
+        id:
+          description: A unique number identifying the Memory.
+          example: 1234
+          type: integer
+        srclang:
+          description: An ISO 639-1 language identifier.
+          example: en
+          type: string
+        trglang:
+          description: An ISO 639-1 language identifier.
+          example: fr
+          type: string
+        srclocale:
+          description: An ISO 639-1 language identifier.
+          example: US
+          type: string
+        trglocale:
+          description: An ISO 639-1 language identifier.
+          example: FR
+          type: string
+        name:
+          description: A name for the Memory.
+          example: Acme Corp Support Content
+          type: string
+        version:
+          description: The current version of the Memory, which is the number of updates
+            since the memory was created.
+          example: 78
+          type: integer
+        created_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        updated_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        num_segments:
+          description: The number of confirmed Segments incorporated into this Memory.
+          example: 1028
+          type: integer
+        resources:
+          description: The resource files (translation memories and termbases) associated
+            with this Memory.
+          items:
+            type: string
+          type: array
+      type: object
+    Translation:
+      description: A machine translation (MT) or a translation memory (TM) match of
+        a source segment.
+      example:
+      - score: 3.4936864E-8
+        align: 0-0 1-1 2-2 3-3
+        targetDelimiters:
+        - ""
+        - ' '
+        - ' '
+        - ""
+        - ""
+        targetWords:
+        - Authentifizierung
+        - nicht
+        - erforderlich
+        - "."
+        target: Authentifizierung nicht erforderlich .
+        targetWithTags: Authentifizierung nicht erforderlich.
+        isTMMatch: false
+        provenance: 0 0 0 0
+      properties:
+        target:
+          description: The target string.
+          type: string
+        targetWithTags:
+          description: The target string with source tags projected into the target.
+          type: string
+        align:
+          description: |
+            "MT only: A whitespace delimited list of source-target alignment indices."
+          type: string
+        provenance:
+          description: |
+            Positive values indicate that the word is from the Memory,
+            with contiguous identical entries (e.g., 2 2) indicating
+            phrase matches. Negative contiguous values indicate entries from the Lexicon.
+            0 indicates a word from the background data.
+          type: string
+        score:
+          description: The score of the translation.
+          type: number
+        isTMMatch:
+          description: 'TM only: If true, indicates an exact translation memory match.'
+          type: boolean
+        targetDelimiters:
+          description: A format string that indicates, for each word, if the word
+            should be preceded by a space.
+          items:
+            type: string
+          type: array
+        targetWords:
+          description: |
+            The target string can be constructed by suffixing each `targetDelimiters` entry with its corresponding word in `targetWords` and concatenating the constructed array.
+            Please note that the `targetDelimiters` array has one more entry than `targetWords` array which is why the last entry in the array will be the last value of `targetDelimiters`.
+          items:
+            type: string
+          type: array
+      type: object
+    TranslationList:
+      description: An ranked list of translations and associated metadata.
+      example:
+        untokenizedSource: Authentication not required.
+        tokenizedSource: Authentication not required .
+        translation:
+        - - score: 3.4936864E-8
+            align: 0-0 1-1 2-2 3-3
+            targetDelimiters:
+            - ""
+            - ' '
+            - ' '
+            - ""
+            - ""
+            targetWords:
+            - Authentifizierung
+            - nicht
+            - erforderlich
+            - "."
+            target: Authentifizierung nicht erforderlich .
+            targetWithTags: Authentifizierung nicht erforderlich.
+            isTMMatch: false
+            provenance: 0 0 0 0
+        - - score: 3.4936864E-8
+            align: 0-0 1-1 2-2 3-3
+            targetDelimiters:
+            - ""
+            - ' '
+            - ' '
+            - ""
+            - ""
+            targetWords:
+            - Authentifizierung
+            - nicht
+            - erforderlich
+            - "."
+            target: Authentifizierung nicht erforderlich .
+            targetWithTags: Authentifizierung nicht erforderlich.
+            isTMMatch: false
+            provenance: 0 0 0 0
+        sourceDelimiters:
+        - ""
+        - ' '
+        - ' '
+        - ""
+        - ""
+      properties:
+        untokenizedSource:
+          description: The untokenized source segment. Punctuation has not been separated
+            from words.
+          example: Authentication not required.
+          type: string
+        tokenizedSource:
+          description: The tokenized source segment. Punctuation has been separated
+            from words.
+          example: Authentication not required .
+          type: string
+        sourceDelimiters:
+          description: A format string that indicates, for each word, if the word
+            should be preceded by a space.
+          example:
+          - ""
+          - ' '
+          - ' '
+          - ""
+          - ""
+          items:
+            type: string
+          type: array
+        translation:
+          description: A list of Translation objects.
+          items:
+            $ref: '#/components/schemas/Translation'
+          type: array
+      type: object
+    Segment:
+      description: |
+        A Segment is a source string and, optionally, its translation. A Segment can be associated with both a Memory and a Document. The Segment object contains additional metadata about the source and target strings.
+      example:
+        is_reviewed: true
+        memory_id: 5678
+        updated_at: 1489147692
+        is_confirmed: true
+        srclang: en
+        created_at: 1489147692
+        id: 84480010
+        source: The red bus.
+        document_id: 1234
+        trglang: fr
+        target: Le bus rouge.
+      properties:
+        id:
+          description: A unique number identifying the Segment.
+          example: 84480010
+          type: integer
+        created_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        updated_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        document_id:
+          description: A unique Document identifier.
+          example: 1234
+          type: integer
+        memory_id:
+          description: The Memory with which this Segment is associated.
+          example: 5678
+          type: integer
+        source:
+          description: The source string.
+          example: The red bus.
+          type: string
+        srclang:
+          description: An ISO 639-1 language code.
+          example: en
+          type: string
+        target:
+          description: The target string.
+          example: Le bus rouge.
+          type: string
+        trglang:
+          description: An ISO 639-1 language code.
+          example: fr
+          type: string
+        is_confirmed:
+          description: The confirmation status.
+          example: true
+          type: boolean
+        is_reviewed:
+          description: The review status.
+          example: true
+          type: boolean
+      type: object
+    SegmentWithComments:
+      description: |
+        A Segment is a source string and, optionally, its translation. A Segment can be associated with both a Memory and a Document. The Segment object contains additional metadata about the source and target strings.
+      example:
+        is_reviewed: true
+        memory_id: 5678
+        comments:
+        - user_id: 5678
+          is_resolved: true
+          annotations:
+          - text: mistranslation
+          - text: mistranslation
+          created_at: 1489147692
+          id: 84480010
+          text: This is incorrect.
+        - user_id: 5678
+          is_resolved: true
+          annotations:
+          - text: mistranslation
+          - text: mistranslation
+          created_at: 1489147692
+          id: 84480010
+          text: This is incorrect.
+        updated_at: 1489147692
+        is_confirmed: true
+        srclang: en
+        created_at: 1489147692
+        id: 84480010
+        source: The red bus.
+        document_id: 1234
+        trglang: fr
+        target: Le bus rouge.
+      properties:
+        id:
+          description: A unique number identifying the Segment.
+          example: 84480010
+          type: integer
+        created_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        updated_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+        document_id:
+          description: A unique Document identifier.
+          example: 1234
+          type: integer
+        memory_id:
+          description: The Memory with which this Segment is associated.
+          example: 5678
+          type: integer
+        source:
+          description: The source string.
+          example: The red bus.
+          type: string
+        srclang:
+          description: An ISO 639-1 language code.
+          example: en
+          type: string
+        target:
+          description: The target string.
+          example: Le bus rouge.
+          type: string
+        trglang:
+          description: An ISO 639-1 language code.
+          example: fr
+          type: string
+        is_confirmed:
+          description: The confirmation status.
+          example: true
+          type: boolean
+        is_reviewed:
+          description: The review status.
+          example: true
+          type: boolean
+        comments:
+          description: A list of Comments.
+          items:
+            $ref: '#/components/schemas/Comment'
+          type: array
+      type: object
+    Comment:
+      description: |
+        A Comment is a translator's or a reviewer's comment on a segment.
+      example:
+        user_id: 5678
+        is_resolved: true
+        annotations:
+        - text: mistranslation
+        - text: mistranslation
+        created_at: 1489147692
+        id: 84480010
+        text: This is incorrect.
+      properties:
+        id:
+          description: A unique number identifying the Comment.
+          example: 84480010
+          type: integer
+        text:
+          description: The comment text.
+          example: This is incorrect.
+          type: string
+        user_id:
+          description: The User who created this Comment.
+          example: 5678
+          type: integer
+        is_resolved:
+          description: Whether the Comment is resolved.
+          example: true
+          type: boolean
+        annotations:
+          description: A list of optional Annotations.
+          items:
+            $ref: '#/components/schemas/Annotation'
+          type: array
+        created_at:
+          description: Time at which the object was created. Measured in seconds since
+            the Unix epoch.
+          example: 1489147692
+          type: integer
+      type: object
+    Annotation:
+      description: |
+        A Comment's annotation.
+      example:
+        text: mistranslation
+      properties:
+        text:
+          description: The Comment's annotation text.
+          example: mistranslation
+          type: string
+      type: object
+    TaggedSegment:
+      description: A source string with tags automatically projected from source to
+        target.
+      example:
+        source_tagged: The <b>red bus.</b>
+        target_tagged: Le <b>bus rouge.</b>
+      properties:
+        source_tagged:
+          description: The tagged source string.
+          example: The <b>red bus.</b>
+          type: string
+        target_tagged:
+          description: The tagged target string.
+          example: Le <b>bus rouge.</b>
+          type: string
+      type: object
+    TranslationMemoryEntry:
+      description: A translation memory entry.
+      example:
+        score: 100
+        metadata: '{}'
+        source: The red bus.
+        target: Le bus rouge.
+      properties:
+        source:
+          description: The source string.
+          example: The red bus.
+          type: string
+        target:
+          description: The target string. Tags will be automatically placed according
+            to the query string.
+          example: Le bus rouge.
+          type: string
+        score:
+          description: The fuzzy match score.
+          example: 100
+          type: integer
+        metadata:
+          description: Attributes describing the translation memory entry.
+          properties: {}
+          type: object
+      type: object
+    QARuleMatches:
+      description: QA rules describing the errors in the text.
+      example:
+        matches:
+        - offset: 19
+          context:
+            offset: 19
+            length: 7
+            text: This segment has a speling mistake
+          length: 7
+          shortMessage: Spelling mistake
+          rule:
+            issueType: misspelling
+            subId: ""
+            urls: []
+            description: Possible spelling mistake
+            id: MORFOLOGIK_RULE_EN_US
+            category:
+              name: Possible Typo
+              id: TYPOS
+          replacements:
+          - value: spelling
+          - value: spewing
+          - value: spieling
+          message: Possible spelling mistake found
+        - offset: 19
+          context:
+            offset: 19
+            length: 7
+            text: This segment has a speling mistake
+          length: 7
+          shortMessage: Spelling mistake
+          rule:
+            issueType: misspelling
+            subId: ""
+            urls: []
+            description: Possible spelling mistake
+            id: MORFOLOGIK_RULE_EN_US
+            category:
+              name: Possible Typo
+              id: TYPOS
+          replacements:
+          - value: spelling
+          - value: spewing
+          - value: spieling
+          message: Possible spelling mistake found
+      properties:
+        matches:
+          items:
+            $ref: '#/components/schemas/QARuleMatches_matches'
+          type: array
+      type: object
+    ApiRoot:
+      example:
+        api_name: Lilt REST API v2
+        api_root: /2
+      properties:
+        api_name:
+          example: Lilt REST API v2
+          type: string
+        api_root:
+          example: /2
+          type: string
+    FileDeleteResponse:
+      example:
+        deleted: true
+        id: 12345
+      properties:
+        id:
+          description: A unique File identifier.
+          example: 12345
+          type: integer
+        deleted:
+          description: If the operation succeeded, then `true`. Otherwise, `false`.
+          example: true
+          type: boolean
+    ConnectorArguments:
+      example:
+        args: '{}'
+        schedule: 0 0 * * *
+        name: zendesk
+        id: 46530
+      properties:
+        id:
+          description: A unique Connector identifier.
+          example: 46530
+          type: integer
+        name:
+          description: Name of connector.
+          example: zendesk
+          type: string
+        args:
+          description: Connector parameters.
+          properties: {}
+          type: object
+        schedule:
+          description: Cron string
+          example: 0 0 * * *
+          type: string
+      title: ConnectorArguments
+      type: object
+    connector:
+      properties:
+        name:
+          description: Name of connector.
+          type: string
+        args:
+          description: Connector parameters.
+          properties: {}
+          type: object
+        schedule:
+          description: Cron string
+          example: 0 0 * * *
+          type: string
+      title: connector
+      type: object
+    ConnectorDeleteResponse:
+      example:
+        deleted: true
+        id: 12345
+      properties:
+        id:
+          description: A unique Connector identifier.
+          example: 12345
+          type: integer
+        deleted:
+          description: If the operation succeeded, then `true`. Otherwise, `false`.
+          example: true
+          type: boolean
+    DocumentUpdateParameters:
+      example:
+        name: Introduction to our App
+        id: 46530
+      properties:
+        id:
+          description: A unique Document identifier.
+          example: 46530
+          type: integer
+        name:
+          description: The Document name.
+          example: Introduction to our App
+          type: string
+      required:
+      - id
+      - name
+      title: DocumentUpdateParameters
+      type: object
+    DocumentParameters:
+      example:
+        project_id: 23618
+        name: Introduction.xliff
+      properties:
+        name:
+          description: The document name.
+          example: Introduction.xliff
+          type: string
+        project_id:
+          description: A unique Project identifier.
+          example: 23618
+          type: integer
+      required:
+      - name
+      - project_id
+      title: DocumentParameters
+      type: object
+    DocumentDeleteResponse:
+      example:
+        deleted: true
+        id: 46530
+      properties:
+        id:
+          description: A unique Document identifier.
+          example: 46530
+          type: integer
+        deleted:
+          description: If the operation succeeded, then `true`. Otherwise, `false`.
+          example: true
+          type: boolean
+    DocumentAssignmentParameters:
+      example:
+        is_reviewer: false
+        due_date: 2000-01-23T04:56:07.000+00:00
+        is_translator: true
+        id: 46530
+        email: user@email.com
+      properties:
+        id:
+          description: A unique Document identifier.
+          example: 46530
+          type: integer
+        email:
+          description: An email address.
+          example: user@email.com
+          type: string
+        is_translator:
+          description: If true, assign for translating. If false, then unassign.
+          example: true
+          type: boolean
+        is_reviewer:
+          description: If true, assign for reviewing. If false, then unassign.
+          example: false
+          type: boolean
+        due_date:
+          description: Due date for translation or review (set based on `is_translator`
+            and `is_reviewer` flags).
+          format: date-time
+          type: string
+      required:
+      - email
+      - id
+      title: DocumentAssignmentParameters
+      type: object
+    DocumentAssignmentResponse:
+      example:
+        id: 46530
+      properties:
+        id:
+          description: A unique Document identifier.
+          example: 46530
+          type: integer
+    DocumentPretranslateParameters:
+      example:
+        id:
+        - 123
+        - 234
+      properties:
+        id:
+          description: A list of unique Document identifiers.
+          example:
+          - 123
+          - 234
+          items:
+            type: integer
+          type: array
+      title: DocumentPretranslateParameters
+      type: object
+    DocumentPretranslateResponse:
+      example:
+        documents:
+        - import_error_message: ""
+          import_succeeded: true
+          id: 123.0
+          is_processing: false
+          is_pretranslating: true
+          import_in_progress: false
+          status: '{"pretranslation":"running"}'
+        - import_error_message: ""
+          import_succeeded: true
+          id: 123.0
+          is_processing: false
+          is_pretranslating: true
+          import_in_progress: false
+          status: '{"pretranslation":"running"}'
+        id:
+        - 123
+        - 234
+        is_pretranslating: true
+      properties:
+        id:
+          description: A list of documents being pretranslated.
+          example:
+          - 123
+          - 234
+          items:
+            type: integer
+          type: array
+        is_pretranslating:
+          description: If the operation succeeded, then `true`. Otherwise, `false`.
+          example: true
+          type: boolean
+        documents:
+          description: Document pretranslation status.
+          items:
+            $ref: '#/components/schemas/DocumentPretranslating'
+          type: array
+    LanguagesResponse:
+      example:
+        source_to_target:
+          en:
+            da: true
+            de: true
+            fr: true
+            "...": '...'
+          "...": '...'
+        code_to_name:
+          aa: Afar
+          ab: Abkhazian
+          af: Afrikaans
+          "...": '...'
+      properties:
+        source_to_target:
+          description: A two-dimensional object in which the first key is an ISO 639-1
+            language code indicating the source, and the second key is an ISO 639-1
+            language code indicating the target.
+          example:
+            en:
+              da: true
+              de: true
+              fr: true
+              "...": '...'
+            "...": '...'
+          properties: {}
+          type: object
+        code_to_name:
+          description: An object in which the key is an ISO 639-1 language code, and
+            the value is the language name.
+          example:
+            aa: Afar
+            ab: Abkhazian
+            af: Afrikaans
+            "...": '...'
+          properties: {}
+          type: object
+    LexiconUpdateParameters:
+      example:
+        memory_id: 10641
+        source: washing machine
+        target: Waschmaschine
+      properties:
+        memory_id:
+          description: A unique Memory identifier.
+          example: 10641
+          type: integer
+        source:
+          description: The source side of the lexicon entry.
+          example: washing machine
+          type: string
+        target:
+          description: The target side of the lexicon entry.
+          example: Waschmaschine
+          type: string
+      required:
+      - memory_id
+      - source
+      - target
+      title: LexiconUpdateParameters
+      type: object
+    LexiconUpdateResponse:
+      example:
+        memory_id: 46530
+        success: true
+      properties:
+        memory_id:
+          description: A unique Memory identifier.
+          example: 46530
+          type: integer
+        success:
+          description: If the operation succeeded, then `true`. Otherwise, `false`.
+          example: true
+          type: boolean
+    MemoryUpdateParameters:
+      example:
+        name: Automotive Memory
+        id: 7246
+      properties:
+        id:
+          description: A unique Memory identifier.
+          example: 7246
+          type: integer
+        name:
+          description: The Memory name.
+          example: Automotive Memory
+          type: string
+      required:
+      - id
+      - name
+      title: MemoryUpdateParameters
+      type: object
+    MemoryCreateParameters:
+      example:
+        trglocale: FR
+        name: automotive
+        srclang: en
+        srclocale: US
+        trglang: fr
+      properties:
+        name:
+          description: A name for the Memory.
+          example: automotive
+          type: string
+        srclang:
+          description: An ISO 639-1 language identifier.
+          example: en
+          type: string
+        trglang:
+          description: An ISO 639-1 language identifier.
+          example: fr
+          type: string
+        srclocale:
+          description: An ISO 3166-1 region name for language locales
+          example: US
+          type: string
+        trglocale:
+          description: An ISO 3166-1 region name for language locales
+          example: FR
+          type: string
+      required:
+      - name
+      - srclang
+      - trglang
+      title: MemoryCreateParameters
+      type: object
+    MemoryDeleteResponse:
+      example:
+        deleted: true
+        id: 46530
+      properties:
+        id:
+          description: A unique Memory identifier.
+          example: 46530
+          type: integer
+        deleted:
+          description: If the operation succeeded, then `true`. Otherwise, `false`.
+          example: true
+          type: boolean
+    MemoryUpdateResponse:
+      example:
+        id: 123
+        num_updates: 0
+      properties:
+        id:
+          description: A unique Memory identifier.
+          example: 123
+          type: integer
+        num_updates:
+          description: The number of updates to the Memory.
+          type: integer
+    MemoryInsertResponse:
+      example:
+        id: 123
+        num_updates: 107
+      properties:
+        id:
+          description: A unique Memory identifier.
+          example: 123
+          type: integer
+        num_updates:
+          description: The number of updates to the Memory.
+          example: 107
+          type: integer
+    MemoryImportResponse:
+      example:
+        isProcessing: 1
+        id: 123
+      properties:
+        id:
+          description: A unique Memory identifier.
+          example: 123
+          type: integer
+        isProcessing:
+          description: The current state of the import.
+          example: 1
+          type: integer
+    ProjectUpdateResponse:
+      example:
+        archived: false
+        metadata:
+          connectorType: github
+          notes: example metadata
+        sample_review_percentage: 20
+        name: Walker Percy Essays
+        due_date: 1489147692
+        id: 1234
+        state: backlog
+      properties:
+        id:
+          description: A unique Project identifier.
+          example: 1234
+          type: integer
+        name:
+          description: The Project name.
+          example: Walker Percy Essays
+          type: string
+        state:
+          description: The project's state. The possible states are 'backlog', 'inProgress',
+            'inReview', 'inQA', and 'done'
+          example: backlog
+          type: string
+        due_date:
+          description: The due date. Measured in seconds since the Unix epoch.
+          example: 1489147692
+          type: integer
+        archived:
+          description: True if the project is archived. Otherwise, false.
+          example: false
+          type: boolean
+        metadata:
+          description: Metadata associated with a project. This field must be valid
+            JSON.
+          example:
+            connectorType: github
+            notes: example metadata
+          properties: {}
+          type: object
+        sample_review_percentage:
+          description: The Project's sample review percentage. Must be an integer
+            between 10 and 100, a multiple of 10 and greater than minimum value (displayed
+            in error message).
+          example: 20
+          type: integer
+      required:
+      - id
+      title: ProjectUpdateResponse
+      type: object
+    ProjectCreateParameters:
+      example:
+        metadata:
+          connectorType: github
+          notes: example metadata
+        memory_id: 1234
+        name: My new project
+        file_ids:
+        - 123
+        - 124
+        - 125
+        due_date: 1489147692
+      properties:
+        name:
+          description: A name for the Project.
+          example: My new project
+          type: string
+        memory_id:
+          description: The Memory to associate with this new Project.
+          example: 1234
+          type: integer
+        file_ids:
+          description: A list of Files to add to this new Project.
+          example:
+          - 123
+          - 124
+          - 125
+          items:
+            type: integer
+          type: array
+        due_date:
+          description: The due date. Measured in seconds since the Unix epoch.
+          example: 1489147692
+          type: integer
+        metadata:
+          description: Metadata associated with a project. This field must be valid
+            JSON.
+          example:
+            connectorType: github
+            notes: example metadata
+          properties: {}
+          type: object
+      required:
+      - memory_id
+      - name
+      title: ProjectCreateParameters
+      type: object
+    ProjectDeleteResponse:
+      example:
+        deleted: true
+        id: 46530
+      properties:
+        id:
+          description: A unique Project identifier.
+          example: 46530
+          type: integer
+        deleted:
+          description: If the operation succeeded, then `true`. Otherwise, `false`.
+          example: true
+          type: boolean
+    SegmentUpdateParameters:
+      example:
+        id: 84480010
+        target: Enable debug code
+      properties:
+        id:
+          description: A unique Segment identifier.
+          example: 84480010
+          type: integer
+        target:
+          description: The target string.
+          example: Enable debug code
+          type: string
+      required:
+      - id
+      - target
+      title: SegmentUpdateParameters
+      type: object
+    SegmentCreateParameters:
+      example:
+        memory_id: 10641
+        source: Code zur Fehleranalyse einschalten
+        document_id: 1876
+        target: Enable debugging code
+      properties:
+        memory_id:
+          description: A unique Memory identifier.
+          example: 10641
+          type: integer
+        document_id:
+          description: A unique Document identifier.
+          example: 1876
+          type: integer
+        source:
+          description: The source string.
+          example: Code zur Fehleranalyse einschalten
+          type: string
+        target:
+          description: The target string.
+          example: Enable debugging code
+          type: string
+      required:
+      - source
+      title: SegmentCreateParameters
+      type: object
+    SegmentDeleteResponse:
+      example:
+        deleted: true
+        id: 46530
+      properties:
+        id:
+          description: A unique Segment identifier.
+          example: 46530
+          type: integer
+        deleted:
+          description: If the operation succeeded, then `true`. Otherwise, `false`.
+          example: true
+          type: boolean
+    TranslateRegisterResponse:
+      example:
+        num_words: 88
+        source_hash: 11476
+      properties:
+        source_hash:
+          description: A unique source token required by the `prefix` parameter for
+            translation requests.
+          example: 11476
+          type: integer
+        num_words:
+          description: The number of billed words in the segment.
+          example: 88
+          type: integer
+    DocumentWithoutSegments_status:
+      description: A list of translations for the query term.
+      example: '{"pretranslation":"idle"}'
+      properties:
+        pretranslation:
+          description: ""
+          enum:
+          - idle
+          - pending
+          - running
+          example: idle
+          type: string
+    LexiconEntry_translations:
+      properties:
+        source:
+          description: The source string.
+          type: string
+        target:
+          description: The target string.
+          type: string
+        frequency:
+          description: The frequency of the term in the Lexicon.
+          type: number
+        memory_id:
+          description: |
+            A unique Memory identifier. If this identifier is missing, then
+            the term comes from the generic termbase.
+          type: number
+    LexiconEntry_sourceSpan:
+      description: An object that indicates where the query term appears in the source.
+      properties:
+        start:
+          description: |
+            The zero-indexed start index when `source` is split on whitespace.
+          type: number
+        length:
+          description: |
+            The length in words after `start` of the source query term.
+          type: number
+    LexiconEntry_targetSpan:
+      description: |
+        An object that indicates the location in the target of contiguous
+        words that align with the source query.
+      properties:
+        start:
+          description: |
+            The zero-indexed start index when `target` is split on whitespace.
+          type: number
+        length:
+          description: |
+            The length in words after `start` of the target aligned
+            phrase.
+          type: number
+    LexiconEntry_examples:
+      example: '[{"source":"Waschmaschine","sourceDelimiters":["",""],"target":["washing","machine"],"targetDelimiters":["","
+        ",""],"sourceSpan":{"start":0,"length":1},"targetSpan":{"start":1,"length":1},"similarity":0,"memoryId":10641}]'
+      properties:
+        source:
+          description: The source string.
+          type: string
+        sourceDelimiters:
+          description: |
+            A format string that indicates, for each word, if the source word
+            should be preceded by a space.
+          items:
+            type: string
+          type: array
+        target:
+          description: The target string
+          type: string
+        targetDelimiters:
+          description: |
+            A format string that indicates, for each word, if the target word
+            should be preceded by a space.
+          items:
+            type: string
+          type: array
+        sourceSpan:
+          $ref: '#/components/schemas/LexiconEntry_sourceSpan'
+        targetSpan:
+          $ref: '#/components/schemas/LexiconEntry_targetSpan'
+        similarity:
+          type: number
+        memory_id:
+          description: |
+            A unique Memory identifier. If this identifier is missing, then
+            the term comes from the generic concordance.
+          type: number
+    DocumentPretranslating_status:
+      description: A status object indicating the pretranslation status.
+      example: '{"pretranslation":"running"}'
+      properties:
+        pretranslation:
+          description: ""
+          example: running
+          type: string
+    QARuleMatches_context:
+      example:
+        offset: 19
+        length: 7
+        text: This segment has a speling mistake
+      properties:
+        length:
+          description: The length of the error in characters in the context.
+          example: 7
+          type: integer
+        offset:
+          description: The 0-based character offset of the error in the context text.
+          example: 19
+          type: integer
+        text:
+          description: Context of the error, i.e. the error and some text to the left
+            and to the left.
+          example: This segment has a speling mistake
+          type: string
+      required:
+      - length
+      - offset
+      - text
+    QARuleMatches_replacements:
+      properties:
+        value:
+          description: the replacement string
+          type: string
+    QARuleMatches_rule_category:
+      example:
+        name: Possible Typo
+        id: TYPOS
+      properties:
+        id:
+          description: A category's identifier that's unique for this language.
+          example: TYPOS
+          type: string
+        name:
+          description: A short description of the category.
+          example: Possible Typo
+          type: string
+    QARuleMatches_rule_urls:
+      properties:
+        value:
+          description: the URL
+          type: string
+    QARuleMatches_rule:
+      example:
+        issueType: misspelling
+        subId: ""
+        urls: []
+        description: Possible spelling mistake
+        id: MORFOLOGIK_RULE_EN_US
+        category:
+          name: Possible Typo
+          id: TYPOS
+      properties:
+        category:
+          $ref: '#/components/schemas/QARuleMatches_rule_category'
+        description:
+          example: Possible spelling mistake
+          type: string
+        id:
+          description: An rule's identifier that's unique for this language.
+          example: MORFOLOGIK_RULE_EN_US
+          type: string
+        issueType:
+          description: The Localization Quality Issue Type. This is not defined for
+            all languages, in which case it will always be 'Uncategorized'.
+          example: misspelling
+          type: string
+        subId:
+          description: An optional sub identifier of the rule, used when several rules
+            are grouped.
+          example: ""
+          type: string
+        urls:
+          description: An optional array of URLs with a more detailed description
+            of the error.
+          example: []
+          items:
+            $ref: '#/components/schemas/QARuleMatches_rule_urls'
+          type: array
+      required:
+      - category
+      - description
+      - id
+    QARuleMatches_matches:
+      example:
+        offset: 19
+        context:
+          offset: 19
+          length: 7
+          text: This segment has a speling mistake
+        length: 7
+        shortMessage: Spelling mistake
+        rule:
+          issueType: misspelling
+          subId: ""
+          urls: []
+          description: Possible spelling mistake
+          id: MORFOLOGIK_RULE_EN_US
+          category:
+            name: Possible Typo
+            id: TYPOS
+        replacements:
+        - value: spelling
+        - value: spewing
+        - value: spieling
+        message: Possible spelling mistake found
+      properties:
+        context:
+          $ref: '#/components/schemas/QARuleMatches_context'
+        length:
+          description: The length of the error in characters.
+          example: 7
+          type: integer
+        message:
+          description: Message about the error displayed to the user.
+          example: Possible spelling mistake found
+          type: string
+        offset:
+          description: The 0-based character offset of the error in the text.
+          example: 19
+          type: integer
+        replacements:
+          description: Replacements that might correct the error. The array can be
+            empty, in this case there is no suggested replacement.
+          example:
+          - value: spelling
+          - value: spewing
+          - value: spieling
+          items:
+            $ref: '#/components/schemas/QARuleMatches_replacements'
+          type: array
+        rule:
+          $ref: '#/components/schemas/QARuleMatches_rule'
+        shortMessage:
+          description: An optional shorter version of 'message'.
+          example: Spelling mistake
+          type: string
+      required:
+      - context
+      - length
+      - message
+      - offset
+      - replacements
+  securitySchemes:
+    BasicAuth:
+      scheme: basic
+      type: http
+    ApiKeyAuth:
+      in: query
+      name: key
+      type: apiKey
+

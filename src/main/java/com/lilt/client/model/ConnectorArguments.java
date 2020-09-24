@@ -25,30 +25,62 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * DocumentParameters
+ * ConnectorArguments
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-09-24T00:29:30.356Z[GMT]")
-public class DocumentParameters {
+public class ConnectorArguments {
+  public static final String SERIALIZED_NAME_ID = "id";
+  @SerializedName(SERIALIZED_NAME_ID)
+  private Integer id;
+
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
 
-  public static final String SERIALIZED_NAME_PROJECT_ID = "project_id";
-  @SerializedName(SERIALIZED_NAME_PROJECT_ID)
-  private Integer projectId;
+  public static final String SERIALIZED_NAME_ARGS = "args";
+  @SerializedName(SERIALIZED_NAME_ARGS)
+  private Object args;
+
+  public static final String SERIALIZED_NAME_SCHEDULE = "schedule";
+  @SerializedName(SERIALIZED_NAME_SCHEDULE)
+  private String schedule;
 
 
-  public DocumentParameters name(String name) {
+  public ConnectorArguments id(Integer id) {
+    
+    this.id = id;
+    return this;
+  }
+
+   /**
+   * A unique Connector identifier.
+   * @return id
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "46530", value = "A unique Connector identifier.")
+
+  public Integer getId() {
+    return id;
+  }
+
+
+  public void setId(Integer id) {
+    this.id = id;
+  }
+
+
+  public ConnectorArguments name(String name) {
     
     this.name = name;
     return this;
   }
 
    /**
-   * The document name.
+   * Name of connector.
    * @return name
   **/
-  @ApiModelProperty(example = "Introduction.xliff", required = true, value = "The document name.")
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "zendesk", value = "Name of connector.")
 
   public String getName() {
     return name;
@@ -60,25 +92,49 @@ public class DocumentParameters {
   }
 
 
-  public DocumentParameters projectId(Integer projectId) {
+  public ConnectorArguments args(Object args) {
     
-    this.projectId = projectId;
+    this.args = args;
     return this;
   }
 
    /**
-   * A unique Project identifier.
-   * @return projectId
+   * Connector parameters.
+   * @return args
   **/
-  @ApiModelProperty(example = "23618", required = true, value = "A unique Project identifier.")
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Connector parameters.")
 
-  public Integer getProjectId() {
-    return projectId;
+  public Object getArgs() {
+    return args;
   }
 
 
-  public void setProjectId(Integer projectId) {
-    this.projectId = projectId;
+  public void setArgs(Object args) {
+    this.args = args;
+  }
+
+
+  public ConnectorArguments schedule(String schedule) {
+    
+    this.schedule = schedule;
+    return this;
+  }
+
+   /**
+   * Cron string
+   * @return schedule
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "0 0 * * *", value = "Cron string")
+
+  public String getSchedule() {
+    return schedule;
+  }
+
+
+  public void setSchedule(String schedule) {
+    this.schedule = schedule;
   }
 
 
@@ -90,23 +146,27 @@ public class DocumentParameters {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DocumentParameters documentParameters = (DocumentParameters) o;
-    return Objects.equals(this.name, documentParameters.name) &&
-        Objects.equals(this.projectId, documentParameters.projectId);
+    ConnectorArguments connectorArguments = (ConnectorArguments) o;
+    return Objects.equals(this.id, connectorArguments.id) &&
+        Objects.equals(this.name, connectorArguments.name) &&
+        Objects.equals(this.args, connectorArguments.args) &&
+        Objects.equals(this.schedule, connectorArguments.schedule);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, projectId);
+    return Objects.hash(id, name, args, schedule);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DocumentParameters {\n");
+    sb.append("class ConnectorArguments {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    projectId: ").append(toIndentedString(projectId)).append("\n");
+    sb.append("    args: ").append(toIndentedString(args)).append("\n");
+    sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");
     sb.append("}");
     return sb.toString();
   }

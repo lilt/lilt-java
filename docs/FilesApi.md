@@ -86,7 +86,7 @@ Name | Type | Description  | Notes
 
 <a name="getFiles"></a>
 # **getFiles**
-> InlineResponse200 getFiles(id)
+> List&lt;java.io.File&gt; getFiles(id)
 
 Retrieve a File
 
@@ -121,7 +121,7 @@ public class Example {
     FilesApi apiInstance = new FilesApi(defaultClient);
     Integer id = 56; // Integer | A unique File identifier.
     try {
-      InlineResponse200 result = apiInstance.getFiles(id);
+      List<java.io.File> result = apiInstance.getFiles(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling FilesApi#getFiles");
@@ -142,7 +142,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse200**](InlineResponse200.md)
+[**List&lt;java.io.File&gt;**](java.io.File.md)
 
 ### Authorization
 
@@ -156,14 +156,14 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | A file. |  -  |
+**200** | A list of files. |  -  |
 **403** | Unauthorized. |  -  |
 **410** | File deleted. |  -  |
 **0** | Unexpected error. |  -  |
 
 <a name="uploadFile"></a>
 # **uploadFile**
-> InlineResponse201 uploadFile(name, body, exportUri, fileHash, langId)
+> java.io.File uploadFile(name, body, exportUri, fileHash, langId)
 
 Upload a File
 
@@ -202,7 +202,7 @@ public class Example {
     String fileHash = "fileHash_example"; // String | A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn't provided.
     Boolean langId = true; // Boolean | Flag indicating whether to perform language detection on the uploaded file. Default is false.
     try {
-      InlineResponse201 result = apiInstance.uploadFile(name, body, exportUri, fileHash, langId);
+      java.io.File result = apiInstance.uploadFile(name, body, exportUri, fileHash, langId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling FilesApi#uploadFile");
@@ -227,7 +227,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse201**](InlineResponse201.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 

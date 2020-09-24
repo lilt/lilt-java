@@ -36,7 +36,6 @@ import com.lilt.client.model.DocumentPretranslateResponse;
 import com.lilt.client.model.DocumentUpdateParameters;
 import com.lilt.client.model.DocumentWithSegments;
 import com.lilt.client.model.Error;
-import java.io.File;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -405,7 +404,7 @@ public class DocumentsApi {
         return localVarCall;
     }
     /**
-     * Build call for downloadFile
+     * Build call for downloadDocument
      * @param id An unique Document identifier. (required)
      * @param isXliff Download the document in XLIFF 1.2 format. (optional, default to true)
      * @param _callback Callback for upload/download progress
@@ -419,7 +418,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call downloadFileCall(Integer id, Boolean isXliff, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call downloadDocumentCall(Integer id, Boolean isXliff, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -457,25 +456,25 @@ public class DocumentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call downloadFileValidateBeforeCall(Integer id, Boolean isXliff, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call downloadDocumentValidateBeforeCall(Integer id, Boolean isXliff, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'id' is set
         if (id == null) {
-            throw new ApiException("Missing the required parameter 'id' when calling downloadFile(Async)");
+            throw new ApiException("Missing the required parameter 'id' when calling downloadDocument(Async)");
         }
         
 
-        okhttp3.Call localVarCall = downloadFileCall(id, isXliff, _callback);
+        okhttp3.Call localVarCall = downloadDocumentCall(id, isXliff, _callback);
         return localVarCall;
 
     }
 
     /**
-     * Download a File
+     * Download a Document
      * Export a Document that has been translated in the Lilt web application. Any Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting &#x60;is_xliff&#x3D;false&#x60;. This endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource. Example CURL command: &#x60;&#x60;&#x60;   curl -X GET https://lilt.com/2/documents/files?key&#x3D;API_KEY&amp;id&#x3D;274 -o from_lilt.xliff &#x60;&#x60;&#x60;  
      * @param id An unique Document identifier. (required)
      * @param isXliff Download the document in XLIFF 1.2 format. (optional, default to true)
-     * @return File
+     * @return byte[]
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -485,17 +484,17 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public File downloadFile(Integer id, Boolean isXliff) throws ApiException {
-        ApiResponse<File> localVarResp = downloadFileWithHttpInfo(id, isXliff);
+    public byte[] downloadDocument(Integer id, Boolean isXliff) throws ApiException {
+        ApiResponse<byte[]> localVarResp = downloadDocumentWithHttpInfo(id, isXliff);
         return localVarResp.getData();
     }
 
     /**
-     * Download a File
+     * Download a Document
      * Export a Document that has been translated in the Lilt web application. Any Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting &#x60;is_xliff&#x3D;false&#x60;. This endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource. Example CURL command: &#x60;&#x60;&#x60;   curl -X GET https://lilt.com/2/documents/files?key&#x3D;API_KEY&amp;id&#x3D;274 -o from_lilt.xliff &#x60;&#x60;&#x60;  
      * @param id An unique Document identifier. (required)
      * @param isXliff Download the document in XLIFF 1.2 format. (optional, default to true)
-     * @return ApiResponse&lt;File&gt;
+     * @return ApiResponse&lt;byte[]&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -505,14 +504,14 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<File> downloadFileWithHttpInfo(Integer id, Boolean isXliff) throws ApiException {
-        okhttp3.Call localVarCall = downloadFileValidateBeforeCall(id, isXliff, null);
-        Type localVarReturnType = new TypeToken<File>(){}.getType();
+    public ApiResponse<byte[]> downloadDocumentWithHttpInfo(Integer id, Boolean isXliff) throws ApiException {
+        okhttp3.Call localVarCall = downloadDocumentValidateBeforeCall(id, isXliff, null);
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Download a File (asynchronously)
+     * Download a Document (asynchronously)
      * Export a Document that has been translated in the Lilt web application. Any Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting &#x60;is_xliff&#x3D;false&#x60;. This endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource. Example CURL command: &#x60;&#x60;&#x60;   curl -X GET https://lilt.com/2/documents/files?key&#x3D;API_KEY&amp;id&#x3D;274 -o from_lilt.xliff &#x60;&#x60;&#x60;  
      * @param id An unique Document identifier. (required)
      * @param isXliff Download the document in XLIFF 1.2 format. (optional, default to true)
@@ -527,10 +526,10 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call downloadFileAsync(Integer id, Boolean isXliff, final ApiCallback<File> _callback) throws ApiException {
+    public okhttp3.Call downloadDocumentAsync(Integer id, Boolean isXliff, final ApiCallback<byte[]> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = downloadFileValidateBeforeCall(id, isXliff, _callback);
-        Type localVarReturnType = new TypeToken<File>(){}.getType();
+        okhttp3.Call localVarCall = downloadDocumentValidateBeforeCall(id, isXliff, _callback);
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -921,7 +920,7 @@ public class DocumentsApi {
         return localVarCall;
     }
     /**
-     * Build call for uploadDocumentFile
+     * Build call for uploadDocument
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
@@ -938,7 +937,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentFileCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -988,25 +987,25 @@ public class DocumentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call uploadDocumentFileValidateBeforeCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call uploadDocumentValidateBeforeCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling uploadDocumentFile(Async)");
+            throw new ApiException("Missing the required parameter 'name' when calling uploadDocument(Async)");
         }
         
         // verify the required parameter 'projectId' is set
         if (projectId == null) {
-            throw new ApiException("Missing the required parameter 'projectId' when calling uploadDocumentFile(Async)");
+            throw new ApiException("Missing the required parameter 'projectId' when calling uploadDocument(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling uploadDocumentFile(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling uploadDocument(Async)");
         }
         
 
-        okhttp3.Call localVarCall = uploadDocumentFileCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
+        okhttp3.Call localVarCall = uploadDocumentCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
         return localVarCall;
 
     }
@@ -1029,8 +1028,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentWithSegments uploadDocumentFile(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
-        ApiResponse<DocumentWithSegments> localVarResp = uploadDocumentFileWithHttpInfo(name, projectId, body, pretranslate, autoAccept, configId);
+    public DocumentWithSegments uploadDocument(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
+        ApiResponse<DocumentWithSegments> localVarResp = uploadDocumentWithHttpInfo(name, projectId, body, pretranslate, autoAccept, configId);
         return localVarResp.getData();
     }
 
@@ -1052,8 +1051,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentWithSegments> uploadDocumentFileWithHttpInfo(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
-        okhttp3.Call localVarCall = uploadDocumentFileValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, null);
+    public ApiResponse<DocumentWithSegments> uploadDocumentWithHttpInfo(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
+        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, null);
         Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1077,9 +1076,9 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentFileAsync(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentAsync(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = uploadDocumentFileValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
+        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
         Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
