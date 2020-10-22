@@ -288,175 +288,6 @@ public class ProjectsApi {
         return localVarCall;
     }
     /**
-     * Build call for getProject
-     * @param id A unique Project identifier. (optional)
-     * @param srclang An ISO 639-1 language code. (optional)
-     * @param trglang An ISO 639-1 language code. (optional)
-     * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
-     * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
-     * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
-     * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
-     * @param connectorId A unique Connector identifier. (optional)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A list of Project objects. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getProjectCall(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId, final ApiCallback _callback) throws ApiException {
-        Object localVarPostBody = null;
-
-        // create path and map variables
-        String localVarPath = "/projects";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        if (id != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
-        }
-
-        if (srclang != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("srclang", srclang));
-        }
-
-        if (trglang != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("trglang", trglang));
-        }
-
-        if (fromTime != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("from_time", fromTime));
-        }
-
-        if (toTime != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("to_time", toTime));
-        }
-
-        if (state != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("state", state));
-        }
-
-        if (archived != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("archived", archived));
-        }
-
-        if (connectorId != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("connector_id", connectorId));
-        }
-
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
-        return localVarApiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call getProjectValidateBeforeCall(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId, final ApiCallback _callback) throws ApiException {
-        
-
-        okhttp3.Call localVarCall = getProjectCall(id, srclang, trglang, fromTime, toTime, state, archived, connectorId, _callback);
-        return localVarCall;
-
-    }
-
-    /**
-     * Retrieve a Project
-     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
-     * @param id A unique Project identifier. (optional)
-     * @param srclang An ISO 639-1 language code. (optional)
-     * @param trglang An ISO 639-1 language code. (optional)
-     * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
-     * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
-     * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
-     * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
-     * @param connectorId A unique Connector identifier. (optional)
-     * @return List&lt;Project&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A list of Project objects. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
-     </table>
-     */
-    public List<Project> getProject(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId) throws ApiException {
-        ApiResponse<List<Project>> localVarResp = getProjectWithHttpInfo(id, srclang, trglang, fromTime, toTime, state, archived, connectorId);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Retrieve a Project
-     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
-     * @param id A unique Project identifier. (optional)
-     * @param srclang An ISO 639-1 language code. (optional)
-     * @param trglang An ISO 639-1 language code. (optional)
-     * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
-     * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
-     * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
-     * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
-     * @param connectorId A unique Connector identifier. (optional)
-     * @return ApiResponse&lt;List&lt;Project&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A list of Project objects. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<List<Project>> getProjectWithHttpInfo(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId) throws ApiException {
-        okhttp3.Call localVarCall = getProjectValidateBeforeCall(id, srclang, trglang, fromTime, toTime, state, archived, connectorId, null);
-        Type localVarReturnType = new TypeToken<List<Project>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Retrieve a Project (asynchronously)
-     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
-     * @param id A unique Project identifier. (optional)
-     * @param srclang An ISO 639-1 language code. (optional)
-     * @param trglang An ISO 639-1 language code. (optional)
-     * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
-     * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
-     * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
-     * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
-     * @param connectorId A unique Connector identifier. (optional)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A list of Project objects. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call getProjectAsync(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId, final ApiCallback<List<Project>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = getProjectValidateBeforeCall(id, srclang, trglang, fromTime, toTime, state, archived, connectorId, _callback);
-        Type localVarReturnType = new TypeToken<List<Project>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
      * Build call for getProjectReport
      * @param id A unique Project identifier. (required)
      * @param _callback Callback for upload/download progress
@@ -689,6 +520,175 @@ public class ProjectsApi {
 
         okhttp3.Call localVarCall = getProjectStatusValidateBeforeCall(id, _callback);
         Type localVarReturnType = new TypeToken<ProjectStatus>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for getProjects
+     * @param id A unique Project identifier. (optional)
+     * @param srclang An ISO 639-1 language code. (optional)
+     * @param trglang An ISO 639-1 language code. (optional)
+     * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
+     * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
+     * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
+     * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
+     * @param connectorId A unique Connector identifier. (optional)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A list of Project objects. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getProjectsCall(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/projects";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (id != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
+        }
+
+        if (srclang != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("srclang", srclang));
+        }
+
+        if (trglang != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("trglang", trglang));
+        }
+
+        if (fromTime != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("from_time", fromTime));
+        }
+
+        if (toTime != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("to_time", toTime));
+        }
+
+        if (state != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("state", state));
+        }
+
+        if (archived != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("archived", archived));
+        }
+
+        if (connectorId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("connector_id", connectorId));
+        }
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getProjectsValidateBeforeCall(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId, final ApiCallback _callback) throws ApiException {
+        
+
+        okhttp3.Call localVarCall = getProjectsCall(id, srclang, trglang, fromTime, toTime, state, archived, connectorId, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Retrieve a Project
+     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
+     * @param id A unique Project identifier. (optional)
+     * @param srclang An ISO 639-1 language code. (optional)
+     * @param trglang An ISO 639-1 language code. (optional)
+     * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
+     * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
+     * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
+     * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
+     * @param connectorId A unique Connector identifier. (optional)
+     * @return List&lt;Project&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A list of Project objects. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<Project> getProjects(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId) throws ApiException {
+        ApiResponse<List<Project>> localVarResp = getProjectsWithHttpInfo(id, srclang, trglang, fromTime, toTime, state, archived, connectorId);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Retrieve a Project
+     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
+     * @param id A unique Project identifier. (optional)
+     * @param srclang An ISO 639-1 language code. (optional)
+     * @param trglang An ISO 639-1 language code. (optional)
+     * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
+     * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
+     * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
+     * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
+     * @param connectorId A unique Connector identifier. (optional)
+     * @return ApiResponse&lt;List&lt;Project&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A list of Project objects. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<Project>> getProjectsWithHttpInfo(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId) throws ApiException {
+        okhttp3.Call localVarCall = getProjectsValidateBeforeCall(id, srclang, trglang, fromTime, toTime, state, archived, connectorId, null);
+        Type localVarReturnType = new TypeToken<List<Project>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Retrieve a Project (asynchronously)
+     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
+     * @param id A unique Project identifier. (optional)
+     * @param srclang An ISO 639-1 language code. (optional)
+     * @param trglang An ISO 639-1 language code. (optional)
+     * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
+     * @param toTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; less than the value. (optional)
+     * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
+     * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
+     * @param connectorId A unique Connector identifier. (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A list of Project objects. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getProjectsAsync(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId, final ApiCallback<List<Project>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getProjectsValidateBeforeCall(id, srclang, trglang, fromTime, toTime, state, archived, connectorId, _callback);
+        Type localVarReturnType = new TypeToken<List<Project>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

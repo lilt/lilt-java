@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * QARuleMatchesContext
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-09-09T11:54:15.439-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-10-22T17:35:42.609Z[GMT]")
 public class QARuleMatchesContext {
   public static final String SERIALIZED_NAME_LENGTH = "length";
   @SerializedName(SERIALIZED_NAME_LENGTH)

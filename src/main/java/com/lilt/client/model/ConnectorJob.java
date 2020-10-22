@@ -25,58 +25,90 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * Connector
+ * A ConnectorJob tracks the status of an import or export action. 
  */
+@ApiModel(description = "A ConnectorJob tracks the status of an import or export action. ")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-10-22T17:35:42.609Z[GMT]")
-public class Connector {
-  public static final String SERIALIZED_NAME_NAME = "name";
-  @SerializedName(SERIALIZED_NAME_NAME)
-  private String name;
+public class ConnectorJob {
+  public static final String SERIALIZED_NAME_ID = "id";
+  @SerializedName(SERIALIZED_NAME_ID)
+  private Integer id;
+
+  public static final String SERIALIZED_NAME_STATUS = "status";
+  @SerializedName(SERIALIZED_NAME_STATUS)
+  private String status;
 
   public static final String SERIALIZED_NAME_ARGS = "args";
   @SerializedName(SERIALIZED_NAME_ARGS)
   private Object args;
 
-  public static final String SERIALIZED_NAME_SCHEDULE = "schedule";
-  @SerializedName(SERIALIZED_NAME_SCHEDULE)
-  private String schedule;
+  public static final String SERIALIZED_NAME_CREATED_AT = "created_at";
+  @SerializedName(SERIALIZED_NAME_CREATED_AT)
+  private String createdAt;
+
+  public static final String SERIALIZED_NAME_UPDATED_AT = "updated_at";
+  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
+  private String updatedAt;
 
 
-  public Connector name(String name) {
+  public ConnectorJob id(Integer id) {
     
-    this.name = name;
+    this.id = id;
     return this;
   }
 
    /**
-   * Name of connector.
-   * @return name
+   * Get id
+   * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Name of connector.")
+  @ApiModelProperty(value = "")
 
-  public String getName() {
-    return name;
+  public Integer getId() {
+    return id;
   }
 
 
-  public void setName(String name) {
-    this.name = name;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
 
-  public Connector args(Object args) {
+  public ConnectorJob status(String status) {
+    
+    this.status = status;
+    return this;
+  }
+
+   /**
+   * Get status
+   * @return status
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getStatus() {
+    return status;
+  }
+
+
+  public void setStatus(String status) {
+    this.status = status;
+  }
+
+
+  public ConnectorJob args(Object args) {
     
     this.args = args;
     return this;
   }
 
    /**
-   * Connector parameters.
+   * Get args
    * @return args
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "Connector parameters.")
+  @ApiModelProperty(value = "")
 
   public Object getArgs() {
     return args;
@@ -88,26 +120,49 @@ public class Connector {
   }
 
 
-  public Connector schedule(String schedule) {
+  public ConnectorJob createdAt(String createdAt) {
     
-    this.schedule = schedule;
+    this.createdAt = createdAt;
     return this;
   }
 
    /**
-   * Cron string
-   * @return schedule
+   * Get createdAt
+   * @return createdAt
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "0 0 * * *", value = "Cron string")
+  @ApiModelProperty(value = "")
 
-  public String getSchedule() {
-    return schedule;
+  public String getCreatedAt() {
+    return createdAt;
   }
 
 
-  public void setSchedule(String schedule) {
-    this.schedule = schedule;
+  public void setCreatedAt(String createdAt) {
+    this.createdAt = createdAt;
+  }
+
+
+  public ConnectorJob updatedAt(String updatedAt) {
+    
+    this.updatedAt = updatedAt;
+    return this;
+  }
+
+   /**
+   * Get updatedAt
+   * @return updatedAt
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public String getUpdatedAt() {
+    return updatedAt;
+  }
+
+
+  public void setUpdatedAt(String updatedAt) {
+    this.updatedAt = updatedAt;
   }
 
 
@@ -119,25 +174,29 @@ public class Connector {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    Connector connector = (Connector) o;
-    return Objects.equals(this.name, connector.name) &&
-        Objects.equals(this.args, connector.args) &&
-        Objects.equals(this.schedule, connector.schedule);
+    ConnectorJob connectorJob = (ConnectorJob) o;
+    return Objects.equals(this.id, connectorJob.id) &&
+        Objects.equals(this.status, connectorJob.status) &&
+        Objects.equals(this.args, connectorJob.args) &&
+        Objects.equals(this.createdAt, connectorJob.createdAt) &&
+        Objects.equals(this.updatedAt, connectorJob.updatedAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, args, schedule);
+    return Objects.hash(id, status, args, createdAt, updatedAt);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class Connector {\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("class ConnectorJob {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    status: ").append(toIndentedString(status)).append("\n");
     sb.append("    args: ").append(toIndentedString(args)).append("\n");
-    sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");
+    sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
+    sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
     sb.append("}");
     return sb.toString();
   }

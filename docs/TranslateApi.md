@@ -126,7 +126,7 @@ public class Example {
     String source = "source_example"; // String | The source text to be translated.
     Integer sourceHash = 56; // Integer | A source hash code.
     String prefix = "prefix_example"; // String | A target prefix.
-    Integer n = 1; // Integer | Return top n translations.
+    Integer n = 1; // Integer | Return top n translations (deprecated).
     Boolean rich = false; // Boolean | Returns rich translation information (e.g., with word alignments).
     Boolean tmMatches = true; // Boolean | Include translation memory fuzzy matches.
     Boolean projectTags = false; // Boolean | Project tags. Projects tags in source to target if set to true.
@@ -152,7 +152,7 @@ Name | Type | Description  | Notes
  **source** | **String**| The source text to be translated. | [optional]
  **sourceHash** | **Integer**| A source hash code. | [optional]
  **prefix** | **String**| A target prefix. | [optional]
- **n** | **Integer**| Return top n translations. | [optional] [default to 1]
+ **n** | **Integer**| Return top n translations (deprecated). | [optional] [default to 1]
  **rich** | **Boolean**| Returns rich translation information (e.g., with word alignments). | [optional] [default to false]
  **tmMatches** | **Boolean**| Include translation memory fuzzy matches. | [optional] [default to true]
  **projectTags** | **Boolean**| Project tags. Projects tags in source to target if set to true. | [optional] [default to false]

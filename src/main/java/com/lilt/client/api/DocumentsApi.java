@@ -30,13 +30,13 @@ import java.io.IOException;
 import com.lilt.client.model.DocumentAssignmentParameters;
 import com.lilt.client.model.DocumentAssignmentResponse;
 import com.lilt.client.model.DocumentDeleteResponse;
+import com.lilt.client.model.DocumentDoneUpdateParameters;
 import com.lilt.client.model.DocumentParameters;
 import com.lilt.client.model.DocumentPretranslateParameters;
 import com.lilt.client.model.DocumentPretranslateResponse;
 import com.lilt.client.model.DocumentUpdateParameters;
 import com.lilt.client.model.DocumentWithSegments;
 import com.lilt.client.model.Error;
-import java.io.File;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -405,7 +405,117 @@ public class DocumentsApi {
         return localVarCall;
     }
     /**
-     * Build call for downloadFile
+     * Build call for documentsDoneTranslationPost
+     * @param body  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call documentsDoneTranslationPostCall(DocumentDoneUpdateParameters body, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/documents/done/translation";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call documentsDoneTranslationPostValidateBeforeCall(DocumentDoneUpdateParameters body, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling documentsDoneTranslationPost(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = documentsDoneTranslationPostCall(body, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Mark translation done
+     * Mark the translation of documents as done/undone in bulk. When being marked positively as done: - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review. Example curl: &#x60;&#x60;&#x60; curl --location --request POST &#39;https://lilt.com/2/documents/done/translation&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;documentIds\&quot;: [23921, 23922],     \&quot;isDone\&quot;: true }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return DocumentWithSegments
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public DocumentWithSegments documentsDoneTranslationPost(DocumentDoneUpdateParameters body) throws ApiException {
+        ApiResponse<DocumentWithSegments> localVarResp = documentsDoneTranslationPostWithHttpInfo(body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Mark translation done
+     * Mark the translation of documents as done/undone in bulk. When being marked positively as done: - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review. Example curl: &#x60;&#x60;&#x60; curl --location --request POST &#39;https://lilt.com/2/documents/done/translation&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;documentIds\&quot;: [23921, 23922],     \&quot;isDone\&quot;: true }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return ApiResponse&lt;DocumentWithSegments&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<DocumentWithSegments> documentsDoneTranslationPostWithHttpInfo(DocumentDoneUpdateParameters body) throws ApiException {
+        okhttp3.Call localVarCall = documentsDoneTranslationPostValidateBeforeCall(body, null);
+        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Mark translation done (asynchronously)
+     * Mark the translation of documents as done/undone in bulk. When being marked positively as done: - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review. Example curl: &#x60;&#x60;&#x60; curl --location --request POST &#39;https://lilt.com/2/documents/done/translation&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;documentIds\&quot;: [23921, 23922],     \&quot;isDone\&quot;: true }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call documentsDoneTranslationPostAsync(DocumentDoneUpdateParameters body, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = documentsDoneTranslationPostValidateBeforeCall(body, _callback);
+        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for downloadDocument
      * @param id An unique Document identifier. (required)
      * @param isXliff Download the document in XLIFF 1.2 format. (optional, default to true)
      * @param _callback Callback for upload/download progress
@@ -419,7 +529,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call downloadFileCall(Integer id, Boolean isXliff, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call downloadDocumentCall(Integer id, Boolean isXliff, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -457,25 +567,25 @@ public class DocumentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call downloadFileValidateBeforeCall(Integer id, Boolean isXliff, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call downloadDocumentValidateBeforeCall(Integer id, Boolean isXliff, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'id' is set
         if (id == null) {
-            throw new ApiException("Missing the required parameter 'id' when calling downloadFile(Async)");
+            throw new ApiException("Missing the required parameter 'id' when calling downloadDocument(Async)");
         }
         
 
-        okhttp3.Call localVarCall = downloadFileCall(id, isXliff, _callback);
+        okhttp3.Call localVarCall = downloadDocumentCall(id, isXliff, _callback);
         return localVarCall;
 
     }
 
     /**
-     * Download a File
+     * Download a Document
      * Export a Document that has been translated in the Lilt web application. Any Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting &#x60;is_xliff&#x3D;false&#x60;. This endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource. Example CURL command: &#x60;&#x60;&#x60;   curl -X GET https://lilt.com/2/documents/files?key&#x3D;API_KEY&amp;id&#x3D;274 -o from_lilt.xliff &#x60;&#x60;&#x60;  
      * @param id An unique Document identifier. (required)
      * @param isXliff Download the document in XLIFF 1.2 format. (optional, default to true)
-     * @return File
+     * @return byte[]
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -485,17 +595,17 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public File downloadFile(Integer id, Boolean isXliff) throws ApiException {
-        ApiResponse<File> localVarResp = downloadFileWithHttpInfo(id, isXliff);
+    public byte[] downloadDocument(Integer id, Boolean isXliff) throws ApiException {
+        ApiResponse<byte[]> localVarResp = downloadDocumentWithHttpInfo(id, isXliff);
         return localVarResp.getData();
     }
 
     /**
-     * Download a File
+     * Download a Document
      * Export a Document that has been translated in the Lilt web application. Any Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting &#x60;is_xliff&#x3D;false&#x60;. This endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource. Example CURL command: &#x60;&#x60;&#x60;   curl -X GET https://lilt.com/2/documents/files?key&#x3D;API_KEY&amp;id&#x3D;274 -o from_lilt.xliff &#x60;&#x60;&#x60;  
      * @param id An unique Document identifier. (required)
      * @param isXliff Download the document in XLIFF 1.2 format. (optional, default to true)
-     * @return ApiResponse&lt;File&gt;
+     * @return ApiResponse&lt;byte[]&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -505,14 +615,14 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<File> downloadFileWithHttpInfo(Integer id, Boolean isXliff) throws ApiException {
-        okhttp3.Call localVarCall = downloadFileValidateBeforeCall(id, isXliff, null);
-        Type localVarReturnType = new TypeToken<File>(){}.getType();
+    public ApiResponse<byte[]> downloadDocumentWithHttpInfo(Integer id, Boolean isXliff) throws ApiException {
+        okhttp3.Call localVarCall = downloadDocumentValidateBeforeCall(id, isXliff, null);
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Download a File (asynchronously)
+     * Download a Document (asynchronously)
      * Export a Document that has been translated in the Lilt web application. Any Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting &#x60;is_xliff&#x3D;false&#x60;. This endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource. Example CURL command: &#x60;&#x60;&#x60;   curl -X GET https://lilt.com/2/documents/files?key&#x3D;API_KEY&amp;id&#x3D;274 -o from_lilt.xliff &#x60;&#x60;&#x60;  
      * @param id An unique Document identifier. (required)
      * @param isXliff Download the document in XLIFF 1.2 format. (optional, default to true)
@@ -527,10 +637,10 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call downloadFileAsync(Integer id, Boolean isXliff, final ApiCallback<File> _callback) throws ApiException {
+    public okhttp3.Call downloadDocumentAsync(Integer id, Boolean isXliff, final ApiCallback<byte[]> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = downloadFileValidateBeforeCall(id, isXliff, _callback);
-        Type localVarReturnType = new TypeToken<File>(){}.getType();
+        okhttp3.Call localVarCall = downloadDocumentValidateBeforeCall(id, isXliff, _callback);
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -663,10 +773,10 @@ public class DocumentsApi {
     /**
      * Build call for pretranslateDocuments
      * @param body  (required)
-     * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
-     * @param caseSensitive Optional for using case matching against TM hits. (optional)
-     * @param attributeToCreator Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
-     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
+     * @param autoAccept Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits. (optional)
+     * @param caseSensitive Deprecated, use body param instead. Optional for using case matching against TM hits. (optional)
+     * @param attributeToCreator Deprecated, use body param instead. Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
+     * @param mode Deprecated, use body param instead. An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm&#x60;.  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -738,12 +848,12 @@ public class DocumentsApi {
 
     /**
      * Pretranslate a Document
-     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example cURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
+     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
      * @param body  (required)
-     * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
-     * @param caseSensitive Optional for using case matching against TM hits. (optional)
-     * @param attributeToCreator Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
-     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
+     * @param autoAccept Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits. (optional)
+     * @param caseSensitive Deprecated, use body param instead. Optional for using case matching against TM hits. (optional)
+     * @param attributeToCreator Deprecated, use body param instead. Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
+     * @param mode Deprecated, use body param instead. An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm&#x60;.  (optional)
      * @return DocumentPretranslateResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -760,12 +870,12 @@ public class DocumentsApi {
 
     /**
      * Pretranslate a Document
-     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example cURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
+     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
      * @param body  (required)
-     * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
-     * @param caseSensitive Optional for using case matching against TM hits. (optional)
-     * @param attributeToCreator Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
-     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
+     * @param autoAccept Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits. (optional)
+     * @param caseSensitive Deprecated, use body param instead. Optional for using case matching against TM hits. (optional)
+     * @param attributeToCreator Deprecated, use body param instead. Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
+     * @param mode Deprecated, use body param instead. An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm&#x60;.  (optional)
      * @return ApiResponse&lt;DocumentPretranslateResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -783,12 +893,12 @@ public class DocumentsApi {
 
     /**
      * Pretranslate a Document (asynchronously)
-     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example cURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
+     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
      * @param body  (required)
-     * @param autoAccept Optional parameter for auto-accepting 100% TM hits. (optional)
-     * @param caseSensitive Optional for using case matching against TM hits. (optional)
-     * @param attributeToCreator Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
-     * @param mode An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  (optional)
+     * @param autoAccept Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits. (optional)
+     * @param caseSensitive Deprecated, use body param instead. Optional for using case matching against TM hits. (optional)
+     * @param attributeToCreator Deprecated, use body param instead. Optional parameter for attributing translation authorship of exact matches to document creator. (optional)
+     * @param mode Deprecated, use body param instead. An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm&#x60;.  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -921,7 +1031,7 @@ public class DocumentsApi {
         return localVarCall;
     }
     /**
-     * Build call for uploadDocumentFile
+     * Build call for uploadDocument
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
@@ -938,7 +1048,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentFileCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -988,25 +1098,25 @@ public class DocumentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call uploadDocumentFileValidateBeforeCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call uploadDocumentValidateBeforeCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
-            throw new ApiException("Missing the required parameter 'name' when calling uploadDocumentFile(Async)");
+            throw new ApiException("Missing the required parameter 'name' when calling uploadDocument(Async)");
         }
         
         // verify the required parameter 'projectId' is set
         if (projectId == null) {
-            throw new ApiException("Missing the required parameter 'projectId' when calling uploadDocumentFile(Async)");
+            throw new ApiException("Missing the required parameter 'projectId' when calling uploadDocument(Async)");
         }
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling uploadDocumentFile(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling uploadDocument(Async)");
         }
         
 
-        okhttp3.Call localVarCall = uploadDocumentFileCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
+        okhttp3.Call localVarCall = uploadDocumentCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
         return localVarCall;
 
     }
@@ -1029,8 +1139,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentWithSegments uploadDocumentFile(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
-        ApiResponse<DocumentWithSegments> localVarResp = uploadDocumentFileWithHttpInfo(name, projectId, body, pretranslate, autoAccept, configId);
+    public DocumentWithSegments uploadDocument(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
+        ApiResponse<DocumentWithSegments> localVarResp = uploadDocumentWithHttpInfo(name, projectId, body, pretranslate, autoAccept, configId);
         return localVarResp.getData();
     }
 
@@ -1052,8 +1162,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentWithSegments> uploadDocumentFileWithHttpInfo(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
-        okhttp3.Call localVarCall = uploadDocumentFileValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, null);
+    public ApiResponse<DocumentWithSegments> uploadDocumentWithHttpInfo(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
+        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, null);
         Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1077,9 +1187,9 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentFileAsync(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentAsync(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = uploadDocumentFileValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
+        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
         Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
