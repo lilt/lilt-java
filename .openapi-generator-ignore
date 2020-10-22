@@ -31,3 +31,4 @@ gradlew.bat
 build.sbt
 settings.gradle
 gradle/**
+src/test/**
