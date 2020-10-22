@@ -29,11 +29,27 @@ import java.util.List;
 /**
  * DocumentPretranslateParameters
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-09-09T11:54:15.439-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-10-22T17:35:42.609Z[GMT]")
 public class DocumentPretranslateParameters {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
-  private List<Integer> id = null;
+  private List<Integer> id = new ArrayList<Integer>();
+
+  public static final String SERIALIZED_NAME_AUTO_ACCEPT = "auto_accept";
+  @SerializedName(SERIALIZED_NAME_AUTO_ACCEPT)
+  private Boolean autoAccept;
+
+  public static final String SERIALIZED_NAME_CASE_SENSITIVE = "case_sensitive";
+  @SerializedName(SERIALIZED_NAME_CASE_SENSITIVE)
+  private Boolean caseSensitive;
+
+  public static final String SERIALIZED_NAME_ATTRIBUTE_TO_CREATOR = "attribute_to_creator";
+  @SerializedName(SERIALIZED_NAME_ATTRIBUTE_TO_CREATOR)
+  private Boolean attributeToCreator;
+
+  public static final String SERIALIZED_NAME_MODE = "mode";
+  @SerializedName(SERIALIZED_NAME_MODE)
+  private String mode;
 
 
   public DocumentPretranslateParameters id(List<Integer> id) {
@@ -43,9 +59,6 @@ public class DocumentPretranslateParameters {
   }
 
   public DocumentPretranslateParameters addIdItem(Integer idItem) {
-    if (this.id == null) {
-      this.id = new ArrayList<Integer>();
-    }
     this.id.add(idItem);
     return this;
   }
@@ -54,8 +67,7 @@ public class DocumentPretranslateParameters {
    * A list of unique Document identifiers.
    * @return id
   **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "[123, 234]", value = "A list of unique Document identifiers.")
+  @ApiModelProperty(example = "[123, 234]", required = true, value = "A list of unique Document identifiers.")
 
   public List<Integer> getId() {
     return id;
@@ -64,6 +76,98 @@ public class DocumentPretranslateParameters {
 
   public void setId(List<Integer> id) {
     this.id = id;
+  }
+
+
+  public DocumentPretranslateParameters autoAccept(Boolean autoAccept) {
+    
+    this.autoAccept = autoAccept;
+    return this;
+  }
+
+   /**
+   * Optional parameter for auto-accepting 100% TM hits.
+   * @return autoAccept
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "false", value = "Optional parameter for auto-accepting 100% TM hits.")
+
+  public Boolean getAutoAccept() {
+    return autoAccept;
+  }
+
+
+  public void setAutoAccept(Boolean autoAccept) {
+    this.autoAccept = autoAccept;
+  }
+
+
+  public DocumentPretranslateParameters caseSensitive(Boolean caseSensitive) {
+    
+    this.caseSensitive = caseSensitive;
+    return this;
+  }
+
+   /**
+   * Optional for using case matching against TM hits..
+   * @return caseSensitive
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "false", value = "Optional for using case matching against TM hits..")
+
+  public Boolean getCaseSensitive() {
+    return caseSensitive;
+  }
+
+
+  public void setCaseSensitive(Boolean caseSensitive) {
+    this.caseSensitive = caseSensitive;
+  }
+
+
+  public DocumentPretranslateParameters attributeToCreator(Boolean attributeToCreator) {
+    
+    this.attributeToCreator = attributeToCreator;
+    return this;
+  }
+
+   /**
+   * Optional parameter for attributing translation authorship of exact matches to document creator.
+   * @return attributeToCreator
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "false", value = "Optional parameter for attributing translation authorship of exact matches to document creator.")
+
+  public Boolean getAttributeToCreator() {
+    return attributeToCreator;
+  }
+
+
+  public void setAttributeToCreator(Boolean attributeToCreator) {
+    this.attributeToCreator = attributeToCreator;
+  }
+
+
+  public DocumentPretranslateParameters mode(String mode) {
+    
+    this.mode = mode;
+    return this;
+  }
+
+   /**
+   * An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm&#x60;. 
+   * @return mode
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "tm+mt", value = "An optional parameter indicating how the document will be pretranslated.  The accepted values are `tm`, or `tm+mt`. Default is `tm`. ")
+
+  public String getMode() {
+    return mode;
+  }
+
+
+  public void setMode(String mode) {
+    this.mode = mode;
   }
 
 
@@ -76,12 +180,16 @@ public class DocumentPretranslateParameters {
       return false;
     }
     DocumentPretranslateParameters documentPretranslateParameters = (DocumentPretranslateParameters) o;
-    return Objects.equals(this.id, documentPretranslateParameters.id);
+    return Objects.equals(this.id, documentPretranslateParameters.id) &&
+        Objects.equals(this.autoAccept, documentPretranslateParameters.autoAccept) &&
+        Objects.equals(this.caseSensitive, documentPretranslateParameters.caseSensitive) &&
+        Objects.equals(this.attributeToCreator, documentPretranslateParameters.attributeToCreator) &&
+        Objects.equals(this.mode, documentPretranslateParameters.mode);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id);
+    return Objects.hash(id, autoAccept, caseSensitive, attributeToCreator, mode);
   }
 
 
@@ -90,6 +198,10 @@ public class DocumentPretranslateParameters {
     StringBuilder sb = new StringBuilder();
     sb.append("class DocumentPretranslateParameters {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    autoAccept: ").append(toIndentedString(autoAccept)).append("\n");
+    sb.append("    caseSensitive: ").append(toIndentedString(caseSensitive)).append("\n");
+    sb.append("    attributeToCreator: ").append(toIndentedString(attributeToCreator)).append("\n");
+    sb.append("    mode: ").append(toIndentedString(mode)).append("\n");
     sb.append("}");
     return sb.toString();
   }

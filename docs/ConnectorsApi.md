@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**createConnector**](ConnectorsApi.md#createConnector) | **POST** /connectors | Upload a Connector
 [**deleteConnector**](ConnectorsApi.md#deleteConnector) | **DELETE** /connectors | Delete a Connector
 [**getConnectors**](ConnectorsApi.md#getConnectors) | **GET** /connectors | Retrieve a Connector
+[**syncConnector**](ConnectorsApi.md#syncConnector) | **POST** /connectors/sync | Sync a Connector
 [**updateConnector**](ConnectorsApi.md#updateConnector) | **PUT** /connectors | Upload a Connector
 
 
@@ -45,7 +46,7 @@ public class Example {
     BasicAuth.setPassword("YOUR PASSWORD");
 
     ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
-    Connector1 body = new Connector1(); // Connector1 | 
+    Connector body = new Connector(); // Connector | 
     try {
       Connector result = apiInstance.createConnector(body);
       System.out.println(result);
@@ -64,7 +65,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Connector1**](Connector1.md)|  |
+ **body** | [**Connector**](Connector.md)|  |
 
 ### Return type
 
@@ -162,11 +163,11 @@ Name | Type | Description  | Notes
 
 <a name="getConnectors"></a>
 # **getConnectors**
-> Connector getConnectors(id)
+> List&lt;Connector&gt; getConnectors(id)
 
 Retrieve a Connector
 
-Retrieves one or more connectors available to your user. Connectors are not associated with a project or a memory.  To retrieve a specific connector, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all connectors, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example cURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
+Retrieves one or more connectors available to your user. Connectors are not associated with a project or a memory.  To retrieve a specific connector, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all connectors, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -197,7 +198,7 @@ public class Example {
     ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
     Integer id = 56; // Integer | A unique Connector identifier.
     try {
-      Connector result = apiInstance.getConnectors(id);
+      List<Connector> result = apiInstance.getConnectors(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ConnectorsApi#getConnectors");
@@ -218,7 +219,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Connector**](Connector.md)
+[**List&lt;Connector&gt;**](Connector.md)
 
 ### Authorization
 
@@ -232,10 +233,85 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | A connector. |  -  |
+**200** | A list of Connectors. |  -  |
 **403** | Unauthorized. |  -  |
 **410** | Connector deleted. |  -  |
 **0** | Unexpected error. |  -  |
+
+<a name="syncConnector"></a>
+# **syncConnector**
+> ConnectorJob syncConnector(id)
+
+Sync a Connector
+
+Request an import job for the given connector ID. This will check the target system for new content to pull into Lilt. 
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.ConnectorsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
+    Integer id = 56; // Integer | A unique Connector identifier.
+    try {
+      ConnectorJob result = apiInstance.syncConnector(id);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ConnectorsApi#syncConnector");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **Integer**| A unique Connector identifier. |
+
+### Return type
+
+[**ConnectorJob**](ConnectorJob.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**201** | A Connector Job object. |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="updateConnector"></a>
 # **updateConnector**
@@ -272,7 +348,7 @@ public class Example {
     BasicAuth.setPassword("YOUR PASSWORD");
 
     ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
-    Connector body = new Connector(); // Connector | 
+    ConnectorArguments body = new ConnectorArguments(); // ConnectorArguments | 
     try {
       Connector result = apiInstance.updateConnector(body);
       System.out.println(result);
@@ -291,7 +367,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**Connector**](Connector.md)|  |
+ **body** | [**ConnectorArguments**](ConnectorArguments.md)|  |
 
 ### Return type
 

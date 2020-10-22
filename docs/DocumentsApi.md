@@ -7,11 +7,12 @@ Method | HTTP request | Description
 [**assignDocument**](DocumentsApi.md#assignDocument) | **PUT** /documents/share | Assign a Document
 [**createDocument**](DocumentsApi.md#createDocument) | **POST** /documents | Create a Document
 [**deleteDocument**](DocumentsApi.md#deleteDocument) | **DELETE** /documents | Delete a Document
-[**downloadFile**](DocumentsApi.md#downloadFile) | **GET** /documents/files | Download a File
+[**documentsDoneTranslationPost**](DocumentsApi.md#documentsDoneTranslationPost) | **POST** /documents/done/translation | Mark translation done
+[**downloadDocument**](DocumentsApi.md#downloadDocument) | **GET** /documents/files | Download a Document
 [**getDocument**](DocumentsApi.md#getDocument) | **GET** /documents | Retrieve a Document
 [**pretranslateDocuments**](DocumentsApi.md#pretranslateDocuments) | **POST** /documents/pretranslate | Pretranslate a Document
 [**updateDocument**](DocumentsApi.md#updateDocument) | **PUT** /documents | Update a Document
-[**uploadDocumentFile**](DocumentsApi.md#uploadDocumentFile) | **POST** /documents/files | Upload a File
+[**uploadDocument**](DocumentsApi.md#uploadDocument) | **POST** /documents/files | Upload a File
 
 
 <a name="assignDocument"></a>
@@ -239,11 +240,85 @@ Name | Type | Description  | Notes
 **200** | A status object. |  -  |
 **0** | Unexpected error |  -  |
 
-<a name="downloadFile"></a>
-# **downloadFile**
-> File downloadFile(id, isXliff)
+<a name="documentsDoneTranslationPost"></a>
+# **documentsDoneTranslationPost**
+> DocumentWithSegments documentsDoneTranslationPost(body)
 
-Download a File
+Mark translation done
+
+Mark the translation of documents as done/undone in bulk. When being marked positively as done: - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review. Example curl: &#x60;&#x60;&#x60; curl --location --request POST &#39;https://lilt.com/2/documents/done/translation&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;documentIds\&quot;: [23921, 23922],     \&quot;isDone\&quot;: true }&#39; &#x60;&#x60;&#x60; 
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.DocumentsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
+    DocumentDoneUpdateParameters body = new DocumentDoneUpdateParameters(); // DocumentDoneUpdateParameters | 
+    try {
+      DocumentWithSegments result = apiInstance.documentsDoneTranslationPost(body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DocumentsApi#documentsDoneTranslationPost");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**DocumentDoneUpdateParameters**](DocumentDoneUpdateParameters.md)|  |
+
+### Return type
+
+[**DocumentWithSegments**](DocumentWithSegments.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | array of updated documents |  -  |
+
+<a name="downloadDocument"></a>
+# **downloadDocument**
+> byte[] downloadDocument(id, isXliff)
+
+Download a Document
 
 Export a Document that has been translated in the Lilt web application. Any Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting &#x60;is_xliff&#x3D;false&#x60;. This endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource. Example CURL command: &#x60;&#x60;&#x60;   curl -X GET https://lilt.com/2/documents/files?key&#x3D;API_KEY&amp;id&#x3D;274 -o from_lilt.xliff &#x60;&#x60;&#x60;  
 
@@ -277,10 +352,10 @@ public class Example {
     Integer id = 56; // Integer | An unique Document identifier.
     Boolean isXliff = true; // Boolean | Download the document in XLIFF 1.2 format.
     try {
-      File result = apiInstance.downloadFile(id, isXliff);
+      byte[] result = apiInstance.downloadDocument(id, isXliff);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#downloadFile");
+      System.err.println("Exception when calling DocumentsApi#downloadDocument");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -299,7 +374,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**File**](File.md)
+**byte[]**
 
 ### Authorization
 
@@ -400,7 +475,7 @@ Name | Type | Description  | Notes
 
 Pretranslate a Document
 
-Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example cURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
+Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
 
 ### Example
 ```java
@@ -430,10 +505,10 @@ public class Example {
 
     DocumentsApi apiInstance = new DocumentsApi(defaultClient);
     DocumentPretranslateParameters body = new DocumentPretranslateParameters(); // DocumentPretranslateParameters | 
-    Boolean autoAccept = true; // Boolean | Optional parameter for auto-accepting 100% TM hits.
-    Boolean caseSensitive = true; // Boolean | Optional for using case matching against TM hits.
-    Boolean attributeToCreator = true; // Boolean | Optional parameter for attributing translation authorship of exact matches to document creator.
-    String mode = "mode_example"; // String | An optional parameter indicating how the document will be pretranslated.  The accepted values are `tm`, or `tm+mt`. Default is `tm+mt`. 
+    Boolean autoAccept = true; // Boolean | Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits.
+    Boolean caseSensitive = true; // Boolean | Deprecated, use body param instead. Optional for using case matching against TM hits.
+    Boolean attributeToCreator = true; // Boolean | Deprecated, use body param instead. Optional parameter for attributing translation authorship of exact matches to document creator.
+    String mode = "mode_example"; // String | Deprecated, use body param instead. An optional parameter indicating how the document will be pretranslated.  The accepted values are `tm`, or `tm+mt`. Default is `tm`. 
     try {
       DocumentPretranslateResponse result = apiInstance.pretranslateDocuments(body, autoAccept, caseSensitive, attributeToCreator, mode);
       System.out.println(result);
@@ -453,10 +528,10 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **body** | [**DocumentPretranslateParameters**](DocumentPretranslateParameters.md)|  |
- **autoAccept** | **Boolean**| Optional parameter for auto-accepting 100% TM hits. | [optional]
- **caseSensitive** | **Boolean**| Optional for using case matching against TM hits. | [optional]
- **attributeToCreator** | **Boolean**| Optional parameter for attributing translation authorship of exact matches to document creator. | [optional]
- **mode** | **String**| An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm+mt&#x60;.  | [optional]
+ **autoAccept** | **Boolean**| Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits. | [optional]
+ **caseSensitive** | **Boolean**| Deprecated, use body param instead. Optional for using case matching against TM hits. | [optional]
+ **attributeToCreator** | **Boolean**| Deprecated, use body param instead. Optional parameter for attributing translation authorship of exact matches to document creator. | [optional]
+ **mode** | **String**| Deprecated, use body param instead. An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm&#x60;.  | [optional]
 
 ### Return type
 
@@ -552,9 +627,9 @@ Name | Type | Description  | Notes
 **200** | A Document object. |  -  |
 **0** | Unexpected error |  -  |
 
-<a name="uploadDocumentFile"></a>
-# **uploadDocumentFile**
-> DocumentWithSegments uploadDocumentFile(name, projectId, body, pretranslate, autoAccept, configId)
+<a name="uploadDocument"></a>
+# **uploadDocument**
+> DocumentWithSegments uploadDocument(name, projectId, body, pretranslate, autoAccept, configId)
 
 Upload a File
 
@@ -594,10 +669,10 @@ public class Example {
     Boolean autoAccept = true; // Boolean | An optional parameter to auto-accept segments with 100% translation memory matches when the `pretranslate` option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to `false`, no segments will be auto-accepted. 
     Integer configId = 56; // Integer | An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. 
     try {
-      DocumentWithSegments result = apiInstance.uploadDocumentFile(name, projectId, body, pretranslate, autoAccept, configId);
+      DocumentWithSegments result = apiInstance.uploadDocument(name, projectId, body, pretranslate, autoAccept, configId);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#uploadDocumentFile");
+      System.err.println("Exception when calling DocumentsApi#uploadDocument");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());

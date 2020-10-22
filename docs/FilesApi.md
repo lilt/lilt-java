@@ -86,11 +86,11 @@ Name | Type | Description  | Notes
 
 <a name="getFiles"></a>
 # **getFiles**
-> InlineResponse200 getFiles(id)
+> List&lt;java.io.File&gt; getFiles(id)
 
 Retrieve a File
 
-Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.  To retrieve a specific file, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all files, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example cURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/files?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
+Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.  To retrieve a specific file, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all files, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/files?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -121,7 +121,7 @@ public class Example {
     FilesApi apiInstance = new FilesApi(defaultClient);
     Integer id = 56; // Integer | A unique File identifier.
     try {
-      InlineResponse200 result = apiInstance.getFiles(id);
+      List<java.io.File> result = apiInstance.getFiles(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling FilesApi#getFiles");
@@ -142,7 +142,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse200**](InlineResponse200.md)
+[**List&lt;java.io.File&gt;**](java.io.File.md)
 
 ### Authorization
 
@@ -156,18 +156,18 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | A file. |  -  |
+**200** | A list of files. |  -  |
 **403** | Unauthorized. |  -  |
 **410** | File deleted. |  -  |
 **0** | Unexpected error. |  -  |
 
 <a name="uploadFile"></a>
 # **uploadFile**
-> InlineResponse201 uploadFile(name, body, exportUri, fileHash, langId)
+> java.io.File uploadFile(name, body, exportUri, fileHash, langId)
 
 Upload a File
 
-Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  When uploading a file, any parameters needed to issue a request to the specified export_uri can be encoded in the export_uri itself as query parameters. Typical examples of parameters that may be required are an access token to authorize requests to a third-party HTTP API and the unique identifier of a resource available via the third-party HTTP API that corresponds to the file. An example export_uri that encodes a target resource identifier (i.e., source_id) of an associated resource behind a third party HTTP API is given in the cURL command below.  Example cURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json&amp;export_uri&#x3D;https://example.com/export?source_id&#x3D;12345 \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
+Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  When uploading a file, any parameters needed to issue a request to the specified export_uri can be encoded in the export_uri itself as query parameters. Typical examples of parameters that may be required are an access token to authorize requests to a third-party HTTP API and the unique identifier of a resource available via the third-party HTTP API that corresponds to the file. An example export_uri that encodes a target resource identifier (i.e., source_id) of an associated resource behind a third party HTTP API is given in the CURL command below.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json&amp;export_uri&#x3D;https://example.com/export?source_id&#x3D;12345 \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
 
 ### Example
 ```java
@@ -202,7 +202,7 @@ public class Example {
     String fileHash = "fileHash_example"; // String | A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn't provided.
     Boolean langId = true; // Boolean | Flag indicating whether to perform language detection on the uploaded file. Default is false.
     try {
-      InlineResponse201 result = apiInstance.uploadFile(name, body, exportUri, fileHash, langId);
+      java.io.File result = apiInstance.uploadFile(name, body, exportUri, fileHash, langId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling FilesApi#uploadFile");
@@ -227,7 +227,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**InlineResponse201**](InlineResponse201.md)
+[**java.io.File**](java.io.File.md)
 
 ### Authorization
 

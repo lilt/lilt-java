@@ -25,60 +25,34 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * SegmentUpdateParameters
+ * DocumentDoneUpdateParameters
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-10-22T17:35:42.609Z[GMT]")
-public class SegmentUpdateParameters {
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
-
-  public static final String SERIALIZED_NAME_TARGET = "target";
-  @SerializedName(SERIALIZED_NAME_TARGET)
-  private String target;
+public class DocumentDoneUpdateParameters {
+  public static final String SERIALIZED_NAME_IS_DONE = "isDone";
+  @SerializedName(SERIALIZED_NAME_IS_DONE)
+  private Boolean isDone;
 
 
-  public SegmentUpdateParameters id(Integer id) {
+  public DocumentDoneUpdateParameters isDone(Boolean isDone) {
     
-    this.id = id;
+    this.isDone = isDone;
     return this;
   }
 
    /**
-   * A unique Segment identifier.
-   * @return id
+   * Get isDone
+   * @return isDone
   **/
-  @ApiModelProperty(example = "84480010", required = true, value = "A unique Segment identifier.")
+  @ApiModelProperty(example = "true", required = true, value = "")
 
-  public Integer getId() {
-    return id;
+  public Boolean getIsDone() {
+    return isDone;
   }
 
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-
-  public SegmentUpdateParameters target(String target) {
-    
-    this.target = target;
-    return this;
-  }
-
-   /**
-   * The target string.
-   * @return target
-  **/
-  @ApiModelProperty(example = "Enable debug code", required = true, value = "The target string.")
-
-  public String getTarget() {
-    return target;
-  }
-
-
-  public void setTarget(String target) {
-    this.target = target;
+  public void setIsDone(Boolean isDone) {
+    this.isDone = isDone;
   }
 
 
@@ -90,23 +64,21 @@ public class SegmentUpdateParameters {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SegmentUpdateParameters segmentUpdateParameters = (SegmentUpdateParameters) o;
-    return Objects.equals(this.id, segmentUpdateParameters.id) &&
-        Objects.equals(this.target, segmentUpdateParameters.target);
+    DocumentDoneUpdateParameters documentDoneUpdateParameters = (DocumentDoneUpdateParameters) o;
+    return Objects.equals(this.isDone, documentDoneUpdateParameters.isDone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, target);
+    return Objects.hash(isDone);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SegmentUpdateParameters {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    target: ").append(toIndentedString(target)).append("\n");
+    sb.append("class DocumentDoneUpdateParameters {\n");
+    sb.append("    isDone: ").append(toIndentedString(isDone)).append("\n");
     sb.append("}");
     return sb.toString();
   }

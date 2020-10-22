@@ -28,7 +28,6 @@ import java.io.IOException;
 
 
 import com.lilt.client.model.Error;
-import java.io.File;
 import com.lilt.client.model.Memory;
 import com.lilt.client.model.MemoryCreateParameters;
 import com.lilt.client.model.MemoryDeleteResponse;
@@ -486,7 +485,7 @@ public class MemoriesApi {
 
     /**
      * File import for a Memory
-     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60; and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example cURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  
+     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60; and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example CURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  
      * @param memoryId A unique Memory identifier. (required)
      * @param name Name of the TM or termbase file. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
@@ -506,7 +505,7 @@ public class MemoriesApi {
 
     /**
      * File import for a Memory
-     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60; and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example cURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  
+     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60; and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example CURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  
      * @param memoryId A unique Memory identifier. (required)
      * @param name Name of the TM or termbase file. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
@@ -527,7 +526,7 @@ public class MemoriesApi {
 
     /**
      * File import for a Memory (asynchronously)
-     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60; and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example cURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  
+     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60; and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example CURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  
      * @param memoryId A unique Memory identifier. (required)
      * @param name Name of the TM or termbase file. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
@@ -911,7 +910,7 @@ public class MemoriesApi {
      * @param fromTime Unix time stamp (epoch, in seconds) of the start of the Memory section. (optional)
      * @param toTime Unix time stamp (epoch, in seconds) of the end of the Memory section. (optional)
      * @param when The date field on which retrieved segments match from/to time stamps: &#x60;created&#x60;, &#x60;updated&#x60;, &#x60;deleted&#x60;. If this parameter is omitted, then the whole Memory is returned. (optional)
-     * @return File
+     * @return byte[]
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -920,8 +919,8 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public File syncDownMemory(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
-        ApiResponse<File> localVarResp = syncDownMemoryWithHttpInfo(id, fromTime, toTime, when);
+    public byte[] syncDownMemory(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
+        ApiResponse<byte[]> localVarResp = syncDownMemoryWithHttpInfo(id, fromTime, toTime, when);
         return localVarResp.getData();
     }
 
@@ -932,7 +931,7 @@ public class MemoriesApi {
      * @param fromTime Unix time stamp (epoch, in seconds) of the start of the Memory section. (optional)
      * @param toTime Unix time stamp (epoch, in seconds) of the end of the Memory section. (optional)
      * @param when The date field on which retrieved segments match from/to time stamps: &#x60;created&#x60;, &#x60;updated&#x60;, &#x60;deleted&#x60;. If this parameter is omitted, then the whole Memory is returned. (optional)
-     * @return ApiResponse&lt;File&gt;
+     * @return ApiResponse&lt;byte[]&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -941,9 +940,9 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<File> syncDownMemoryWithHttpInfo(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
+    public ApiResponse<byte[]> syncDownMemoryWithHttpInfo(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
         okhttp3.Call localVarCall = syncDownMemoryValidateBeforeCall(id, fromTime, toTime, when, null);
-        Type localVarReturnType = new TypeToken<File>(){}.getType();
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -964,10 +963,10 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call syncDownMemoryAsync(Integer id, Integer fromTime, Integer toTime, String when, final ApiCallback<File> _callback) throws ApiException {
+    public okhttp3.Call syncDownMemoryAsync(Integer id, Integer fromTime, Integer toTime, String when, final ApiCallback<byte[]> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = syncDownMemoryValidateBeforeCall(id, fromTime, toTime, when, _callback);
-        Type localVarReturnType = new TypeToken<File>(){}.getType();
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

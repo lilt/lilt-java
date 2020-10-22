@@ -31,7 +31,7 @@ import java.util.List;
  * A machine translation (MT) or a translation memory (TM) match of a source segment.
  */
 @ApiModel(description = "A machine translation (MT) or a translation memory (TM) match of a source segment.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-09-09T11:54:15.439-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-10-22T17:35:42.609Z[GMT]")
 public class Translation {
   public static final String SERIALIZED_NAME_TARGET = "target";
   @SerializedName(SERIALIZED_NAME_TARGET)
@@ -250,11 +250,11 @@ public class Translation {
   }
 
    /**
-   * The target string can be constructed by suffixing each &#x60;targetDelimiters&#x60; entry with its corresponding word in &#x60;targetWords&#x60; and concatenating the constructed array.  Please note that the &#x60;targetDelimiters&#x60; array has one more entry than &#x60;targetWords&#x60; array which is why the last entry in the array will be the last value of &#x60;targetDelimiters&#x60;. 
+   * The target string can be constructed by suffixing each &#x60;targetDelimiters&#x60; entry with its corresponding word in &#x60;targetWords&#x60; and concatenating the constructed array. Please note that the &#x60;targetDelimiters&#x60; array has one more entry than &#x60;targetWords&#x60; array which is why the last entry in the array will be the last value of &#x60;targetDelimiters&#x60;. 
    * @return targetWords
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The target string can be constructed by suffixing each `targetDelimiters` entry with its corresponding word in `targetWords` and concatenating the constructed array.  Please note that the `targetDelimiters` array has one more entry than `targetWords` array which is why the last entry in the array will be the last value of `targetDelimiters`. ")
+  @ApiModelProperty(value = "The target string can be constructed by suffixing each `targetDelimiters` entry with its corresponding word in `targetWords` and concatenating the constructed array. Please note that the `targetDelimiters` array has one more entry than `targetWords` array which is why the last entry in the array will be the last value of `targetDelimiters`. ")
 
   public List<String> getTargetWords() {
     return targetWords;

@@ -25,30 +25,39 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * SegmentUpdateParameters
+ * ConnectorArguments
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-10-22T17:35:42.609Z[GMT]")
-public class SegmentUpdateParameters {
+public class ConnectorArguments {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
   private Integer id;
 
-  public static final String SERIALIZED_NAME_TARGET = "target";
-  @SerializedName(SERIALIZED_NAME_TARGET)
-  private String target;
+  public static final String SERIALIZED_NAME_NAME = "name";
+  @SerializedName(SERIALIZED_NAME_NAME)
+  private String name;
+
+  public static final String SERIALIZED_NAME_ARGS = "args";
+  @SerializedName(SERIALIZED_NAME_ARGS)
+  private Object args;
+
+  public static final String SERIALIZED_NAME_SCHEDULE = "schedule";
+  @SerializedName(SERIALIZED_NAME_SCHEDULE)
+  private String schedule;
 
 
-  public SegmentUpdateParameters id(Integer id) {
+  public ConnectorArguments id(Integer id) {
     
     this.id = id;
     return this;
   }
 
    /**
-   * A unique Segment identifier.
+   * A unique Connector identifier.
    * @return id
   **/
-  @ApiModelProperty(example = "84480010", required = true, value = "A unique Segment identifier.")
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "46530", value = "A unique Connector identifier.")
 
   public Integer getId() {
     return id;
@@ -60,25 +69,72 @@ public class SegmentUpdateParameters {
   }
 
 
-  public SegmentUpdateParameters target(String target) {
+  public ConnectorArguments name(String name) {
     
-    this.target = target;
+    this.name = name;
     return this;
   }
 
    /**
-   * The target string.
-   * @return target
+   * Name of connector.
+   * @return name
   **/
-  @ApiModelProperty(example = "Enable debug code", required = true, value = "The target string.")
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "zendesk", value = "Name of connector.")
 
-  public String getTarget() {
-    return target;
+  public String getName() {
+    return name;
   }
 
 
-  public void setTarget(String target) {
-    this.target = target;
+  public void setName(String name) {
+    this.name = name;
+  }
+
+
+  public ConnectorArguments args(Object args) {
+    
+    this.args = args;
+    return this;
+  }
+
+   /**
+   * Connector parameters.
+   * @return args
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "Connector parameters.")
+
+  public Object getArgs() {
+    return args;
+  }
+
+
+  public void setArgs(Object args) {
+    this.args = args;
+  }
+
+
+  public ConnectorArguments schedule(String schedule) {
+    
+    this.schedule = schedule;
+    return this;
+  }
+
+   /**
+   * Cron string
+   * @return schedule
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "0 0 * * *", value = "Cron string")
+
+  public String getSchedule() {
+    return schedule;
+  }
+
+
+  public void setSchedule(String schedule) {
+    this.schedule = schedule;
   }
 
 
@@ -90,23 +146,27 @@ public class SegmentUpdateParameters {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    SegmentUpdateParameters segmentUpdateParameters = (SegmentUpdateParameters) o;
-    return Objects.equals(this.id, segmentUpdateParameters.id) &&
-        Objects.equals(this.target, segmentUpdateParameters.target);
+    ConnectorArguments connectorArguments = (ConnectorArguments) o;
+    return Objects.equals(this.id, connectorArguments.id) &&
+        Objects.equals(this.name, connectorArguments.name) &&
+        Objects.equals(this.args, connectorArguments.args) &&
+        Objects.equals(this.schedule, connectorArguments.schedule);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, target);
+    return Objects.hash(id, name, args, schedule);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class SegmentUpdateParameters {\n");
+    sb.append("class ConnectorArguments {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    target: ").append(toIndentedString(target)).append("\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    args: ").append(toIndentedString(args)).append("\n");
+    sb.append("    schedule: ").append(toIndentedString(schedule)).append("\n");
     sb.append("}");
     return sb.toString();
   }
