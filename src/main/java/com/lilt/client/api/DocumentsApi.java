@@ -31,6 +31,7 @@ import com.lilt.client.model.DocumentAssignmentParameters;
 import com.lilt.client.model.DocumentAssignmentResponse;
 import com.lilt.client.model.DocumentDeleteResponse;
 import com.lilt.client.model.DocumentDoneUpdateParameters;
+import com.lilt.client.model.DocumentDoneUpdateParameters1;
 import com.lilt.client.model.DocumentParameters;
 import com.lilt.client.model.DocumentPretranslateParameters;
 import com.lilt.client.model.DocumentPretranslateResponse;
@@ -405,6 +406,116 @@ public class DocumentsApi {
         return localVarCall;
     }
     /**
+     * Build call for documentsDoneReviewPost
+     * @param body  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call documentsDoneReviewPostCall(DocumentDoneUpdateParameters1 body, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/documents/done/review";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call documentsDoneReviewPostValidateBeforeCall(DocumentDoneUpdateParameters1 body, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling documentsDoneReviewPost(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = documentsDoneReviewPostCall(body, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Mark review done
+     * Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return List&lt;String&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<String> documentsDoneReviewPost(DocumentDoneUpdateParameters1 body) throws ApiException {
+        ApiResponse<List<String>> localVarResp = documentsDoneReviewPostWithHttpInfo(body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Mark review done
+     * Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return ApiResponse&lt;List&lt;String&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<String>> documentsDoneReviewPostWithHttpInfo(DocumentDoneUpdateParameters1 body) throws ApiException {
+        okhttp3.Call localVarCall = documentsDoneReviewPostValidateBeforeCall(body, null);
+        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Mark review done (asynchronously)
+     * Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call documentsDoneReviewPostAsync(DocumentDoneUpdateParameters1 body, final ApiCallback<List<String>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = documentsDoneReviewPostValidateBeforeCall(body, _callback);
+        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for documentsDoneTranslationPost
      * @param body  (required)
      * @param _callback Callback for upload/download progress
@@ -461,9 +572,9 @@ public class DocumentsApi {
 
     /**
      * Mark translation done
-     * Mark the translation of documents as done/undone in bulk. When being marked positively as done: - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review. Example curl: &#x60;&#x60;&#x60; curl --location --request POST &#39;https://lilt.com/2/documents/done/translation&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;documentIds\&quot;: [23921, 23922],     \&quot;isDone\&quot;: true }&#39; &#x60;&#x60;&#x60; 
+     * Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
      * @param body  (required)
-     * @return DocumentWithSegments
+     * @return List&lt;String&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -471,16 +582,16 @@ public class DocumentsApi {
         <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentWithSegments documentsDoneTranslationPost(DocumentDoneUpdateParameters body) throws ApiException {
-        ApiResponse<DocumentWithSegments> localVarResp = documentsDoneTranslationPostWithHttpInfo(body);
+    public List<String> documentsDoneTranslationPost(DocumentDoneUpdateParameters body) throws ApiException {
+        ApiResponse<List<String>> localVarResp = documentsDoneTranslationPostWithHttpInfo(body);
         return localVarResp.getData();
     }
 
     /**
      * Mark translation done
-     * Mark the translation of documents as done/undone in bulk. When being marked positively as done: - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review. Example curl: &#x60;&#x60;&#x60; curl --location --request POST &#39;https://lilt.com/2/documents/done/translation&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;documentIds\&quot;: [23921, 23922],     \&quot;isDone\&quot;: true }&#39; &#x60;&#x60;&#x60; 
+     * Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
      * @param body  (required)
-     * @return ApiResponse&lt;DocumentWithSegments&gt;
+     * @return ApiResponse&lt;List&lt;String&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -488,15 +599,15 @@ public class DocumentsApi {
         <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentWithSegments> documentsDoneTranslationPostWithHttpInfo(DocumentDoneUpdateParameters body) throws ApiException {
+    public ApiResponse<List<String>> documentsDoneTranslationPostWithHttpInfo(DocumentDoneUpdateParameters body) throws ApiException {
         okhttp3.Call localVarCall = documentsDoneTranslationPostValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Mark translation done (asynchronously)
-     * Mark the translation of documents as done/undone in bulk. When being marked positively as done: - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review. Example curl: &#x60;&#x60;&#x60; curl --location --request POST &#39;https://lilt.com/2/documents/done/translation&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;documentIds\&quot;: [23921, 23922],     \&quot;isDone\&quot;: true }&#39; &#x60;&#x60;&#x60; 
+     * Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
      * @param body  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -507,10 +618,120 @@ public class DocumentsApi {
         <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call documentsDoneTranslationPostAsync(DocumentDoneUpdateParameters body, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
+    public okhttp3.Call documentsDoneTranslationPostAsync(DocumentDoneUpdateParameters body, final ApiCallback<List<String>> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = documentsDoneTranslationPostValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for documentsDoneUnlockPost
+     * @param body document ids to update (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call documentsDoneUnlockPostCall(Object body, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/documents/done/unlock";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call documentsDoneUnlockPostValidateBeforeCall(Object body, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling documentsDoneUnlockPost(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = documentsDoneUnlockPostCall(body, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Unlock documents
+     * Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body document ids to update (required)
+     * @return List&lt;String&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<String> documentsDoneUnlockPost(Object body) throws ApiException {
+        ApiResponse<List<String>> localVarResp = documentsDoneUnlockPostWithHttpInfo(body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Unlock documents
+     * Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body document ids to update (required)
+     * @return ApiResponse&lt;List&lt;String&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<String>> documentsDoneUnlockPostWithHttpInfo(Object body) throws ApiException {
+        okhttp3.Call localVarCall = documentsDoneUnlockPostValidateBeforeCall(body, null);
+        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Unlock documents (asynchronously)
+     * Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body document ids to update (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call documentsDoneUnlockPostAsync(Object body, final ApiCallback<List<String>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = documentsDoneUnlockPostValidateBeforeCall(body, _callback);
+        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -1123,7 +1344,7 @@ public class DocumentsApi {
 
     /**
      * Upload a File
-     * Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed as JSON object with the header  field &#x60;LILT-API&#x60;. Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/documents/files?key&#x3D;API_KEY \\   --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;introduction.xliff\\\&quot;,\\\&quot;pretranslate\\\&quot;: \\\&quot;tm+mt\\\&quot;,\\\&quot;project_id\\\&quot;: 9}\&quot; \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @Introduction.xliff &#x60;&#x60;&#x60;  
+     * Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  File names in the header can only contain [US-ASCII characters](https://en.wikipedia.org/wiki/ASCII). File names with characters outside of US-ASCII should be [URI encoded](https://en.wikipedia.org/wiki/Percent-encoding) or transliterated to US-ASCII strings.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/documents/files?key&#x3D;API_KEY \\   --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;introduction.xliff\\\&quot;,\\\&quot;pretranslate\\\&quot;: \\\&quot;tm+mt\\\&quot;,\\\&quot;project_id\\\&quot;: 9}\&quot; \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @Introduction.xliff &#x60;&#x60;&#x60;  
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
@@ -1146,7 +1367,7 @@ public class DocumentsApi {
 
     /**
      * Upload a File
-     * Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed as JSON object with the header  field &#x60;LILT-API&#x60;. Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/documents/files?key&#x3D;API_KEY \\   --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;introduction.xliff\\\&quot;,\\\&quot;pretranslate\\\&quot;: \\\&quot;tm+mt\\\&quot;,\\\&quot;project_id\\\&quot;: 9}\&quot; \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @Introduction.xliff &#x60;&#x60;&#x60;  
+     * Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  File names in the header can only contain [US-ASCII characters](https://en.wikipedia.org/wiki/ASCII). File names with characters outside of US-ASCII should be [URI encoded](https://en.wikipedia.org/wiki/Percent-encoding) or transliterated to US-ASCII strings.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/documents/files?key&#x3D;API_KEY \\   --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;introduction.xliff\\\&quot;,\\\&quot;pretranslate\\\&quot;: \\\&quot;tm+mt\\\&quot;,\\\&quot;project_id\\\&quot;: 9}\&quot; \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @Introduction.xliff &#x60;&#x60;&#x60;  
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
@@ -1170,7 +1391,7 @@ public class DocumentsApi {
 
     /**
      * Upload a File (asynchronously)
-     * Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed as JSON object with the header  field &#x60;LILT-API&#x60;. Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/documents/files?key&#x3D;API_KEY \\   --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;introduction.xliff\\\&quot;,\\\&quot;pretranslate\\\&quot;: \\\&quot;tm+mt\\\&quot;,\\\&quot;project_id\\\&quot;: 9}\&quot; \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @Introduction.xliff &#x60;&#x60;&#x60;  
+     * Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  File names in the header can only contain [US-ASCII characters](https://en.wikipedia.org/wiki/ASCII). File names with characters outside of US-ASCII should be [URI encoded](https://en.wikipedia.org/wiki/Percent-encoding) or transliterated to US-ASCII strings.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/documents/files?key&#x3D;API_KEY \\   --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;introduction.xliff\\\&quot;,\\\&quot;pretranslate\\\&quot;: \\\&quot;tm+mt\\\&quot;,\\\&quot;project_id\\\&quot;: 9}\&quot; \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @Introduction.xliff &#x60;&#x60;&#x60;  
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)

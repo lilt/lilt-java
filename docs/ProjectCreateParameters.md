@@ -10,7 +10,7 @@ Name | Type | Description | Notes
 **memoryId** | **Integer** | The Memory to associate with this new Project. | 
 **fileIds** | **List&lt;Integer&gt;** | A list of Files to add to this new Project. |  [optional]
 **dueDate** | **Integer** | The due date. Measured in seconds since the Unix epoch. |  [optional]
-**metadata** | [**Object**](.md) | Metadata associated with a project. This field must be valid JSON. |  [optional]
+**metadata** | [**Object**](.md) | A JSON object of key/value string pairs. Stores custom project information. |  [optional]
 
 
 

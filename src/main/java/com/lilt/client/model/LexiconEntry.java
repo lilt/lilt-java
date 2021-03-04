@@ -32,7 +32,7 @@ import java.util.List;
  * An Lexicon entry for a source term or phrase. 
  */
 @ApiModel(description = "An Lexicon entry for a source term or phrase. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-10-22T17:35:42.609Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-04T23:50:13.754Z[GMT]")
 public class LexiconEntry {
   public static final String SERIALIZED_NAME_TRANSLATIONS = "translations";
   @SerializedName(SERIALIZED_NAME_TRANSLATIONS)

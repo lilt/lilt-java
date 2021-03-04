@@ -25,44 +25,44 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * A ConnectorJob tracks the status of an import or export action. 
+ * Information describing a batch translation process. 
  */
-@ApiModel(description = "A ConnectorJob tracks the status of an import or export action. ")
+@ApiModel(description = "Information describing a batch translation process. ")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-04T23:50:13.754Z[GMT]")
-public class ConnectorJob {
+public class TranslationInfo {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
   private Integer id;
+
+  public static final String SERIALIZED_NAME_FILE_ID = "fileId";
+  @SerializedName(SERIALIZED_NAME_FILE_ID)
+  private Integer fileId;
 
   public static final String SERIALIZED_NAME_STATUS = "status";
   @SerializedName(SERIALIZED_NAME_STATUS)
   private String status;
 
-  public static final String SERIALIZED_NAME_ARGS = "args";
-  @SerializedName(SERIALIZED_NAME_ARGS)
-  private Object args;
-
-  public static final String SERIALIZED_NAME_CREATED_AT = "created_at";
+  public static final String SERIALIZED_NAME_CREATED_AT = "createdAt";
   @SerializedName(SERIALIZED_NAME_CREATED_AT)
-  private String createdAt;
+  private Integer createdAt;
 
-  public static final String SERIALIZED_NAME_UPDATED_AT = "updated_at";
-  @SerializedName(SERIALIZED_NAME_UPDATED_AT)
-  private String updatedAt;
+  public static final String SERIALIZED_NAME_ERROR_MSG = "errorMsg";
+  @SerializedName(SERIALIZED_NAME_ERROR_MSG)
+  private String errorMsg;
 
 
-  public ConnectorJob id(Integer id) {
+  public TranslationInfo id(Integer id) {
     
     this.id = id;
     return this;
   }
 
    /**
-   * Get id
+   * Unique identifier for this translation.
    * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Unique identifier for this translation.")
 
   public Integer getId() {
     return id;
@@ -74,18 +74,41 @@ public class ConnectorJob {
   }
 
 
-  public ConnectorJob status(String status) {
+  public TranslationInfo fileId(Integer fileId) {
+    
+    this.fileId = fileId;
+    return this;
+  }
+
+   /**
+   * id of the File that is being translated.
+   * @return fileId
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "id of the File that is being translated.")
+
+  public Integer getFileId() {
+    return fileId;
+  }
+
+
+  public void setFileId(Integer fileId) {
+    this.fileId = fileId;
+  }
+
+
+  public TranslationInfo status(String status) {
     
     this.status = status;
     return this;
   }
 
    /**
-   * Get status
+   * Status of the translation - &#x60;InProgress&#x60;, &#x60;ReadyForDownload&#x60;, &#x60;Completed&#x60;, &#x60;Failed&#x60;.
    * @return status
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Status of the translation - `InProgress`, `ReadyForDownload`, `Completed`, `Failed`.")
 
   public String getStatus() {
     return status;
@@ -97,72 +120,49 @@ public class ConnectorJob {
   }
 
 
-  public ConnectorJob args(Object args) {
-    
-    this.args = args;
-    return this;
-  }
-
-   /**
-   * Get args
-   * @return args
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
-
-  public Object getArgs() {
-    return args;
-  }
-
-
-  public void setArgs(Object args) {
-    this.args = args;
-  }
-
-
-  public ConnectorJob createdAt(String createdAt) {
+  public TranslationInfo createdAt(Integer createdAt) {
     
     this.createdAt = createdAt;
     return this;
   }
 
    /**
-   * Get createdAt
+   * Time when this translation was started, in seconds since the Unix epoch.
    * @return createdAt
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Time when this translation was started, in seconds since the Unix epoch.")
 
-  public String getCreatedAt() {
+  public Integer getCreatedAt() {
     return createdAt;
   }
 
 
-  public void setCreatedAt(String createdAt) {
+  public void setCreatedAt(Integer createdAt) {
     this.createdAt = createdAt;
   }
 
 
-  public ConnectorJob updatedAt(String updatedAt) {
+  public TranslationInfo errorMsg(String errorMsg) {
     
-    this.updatedAt = updatedAt;
+    this.errorMsg = errorMsg;
     return this;
   }
 
    /**
-   * Get updatedAt
-   * @return updatedAt
+   * Error message, present when status is &#x60;Failed&#x60;.
+   * @return errorMsg
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "Error message, present when status is `Failed`.")
 
-  public String getUpdatedAt() {
-    return updatedAt;
+  public String getErrorMsg() {
+    return errorMsg;
   }
 
 
-  public void setUpdatedAt(String updatedAt) {
-    this.updatedAt = updatedAt;
+  public void setErrorMsg(String errorMsg) {
+    this.errorMsg = errorMsg;
   }
 
 
@@ -174,29 +174,29 @@ public class ConnectorJob {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    ConnectorJob connectorJob = (ConnectorJob) o;
-    return Objects.equals(this.id, connectorJob.id) &&
-        Objects.equals(this.status, connectorJob.status) &&
-        Objects.equals(this.args, connectorJob.args) &&
-        Objects.equals(this.createdAt, connectorJob.createdAt) &&
-        Objects.equals(this.updatedAt, connectorJob.updatedAt);
+    TranslationInfo translationInfo = (TranslationInfo) o;
+    return Objects.equals(this.id, translationInfo.id) &&
+        Objects.equals(this.fileId, translationInfo.fileId) &&
+        Objects.equals(this.status, translationInfo.status) &&
+        Objects.equals(this.createdAt, translationInfo.createdAt) &&
+        Objects.equals(this.errorMsg, translationInfo.errorMsg);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, status, args, createdAt, updatedAt);
+    return Objects.hash(id, fileId, status, createdAt, errorMsg);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class ConnectorJob {\n");
+    sb.append("class TranslationInfo {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    fileId: ").append(toIndentedString(fileId)).append("\n");
     sb.append("    status: ").append(toIndentedString(status)).append("\n");
-    sb.append("    args: ").append(toIndentedString(args)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
-    sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
+    sb.append("    errorMsg: ").append(toIndentedString(errorMsg)).append("\n");
     sb.append("}");
     return sb.toString();
   }

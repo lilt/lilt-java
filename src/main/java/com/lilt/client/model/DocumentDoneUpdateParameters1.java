@@ -25,63 +25,34 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * A source string with tags automatically projected from source to target.
+ * DocumentDoneUpdateParameters1
  */
-@ApiModel(description = "A source string with tags automatically projected from source to target.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-04T23:50:13.754Z[GMT]")
-public class TaggedSegment {
-  public static final String SERIALIZED_NAME_SOURCE_TAGGED = "source_tagged";
-  @SerializedName(SERIALIZED_NAME_SOURCE_TAGGED)
-  private String sourceTagged;
-
-  public static final String SERIALIZED_NAME_TARGET_TAGGED = "target_tagged";
-  @SerializedName(SERIALIZED_NAME_TARGET_TAGGED)
-  private String targetTagged;
+public class DocumentDoneUpdateParameters1 {
+  public static final String SERIALIZED_NAME_IS_DONE = "isDone";
+  @SerializedName(SERIALIZED_NAME_IS_DONE)
+  private Boolean isDone;
 
 
-  public TaggedSegment sourceTagged(String sourceTagged) {
+  public DocumentDoneUpdateParameters1 isDone(Boolean isDone) {
     
-    this.sourceTagged = sourceTagged;
+    this.isDone = isDone;
     return this;
   }
 
    /**
-   * The tagged source string.
-   * @return sourceTagged
+   * Get isDone
+   * @return isDone
   **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "The <b>red bus.</b>", value = "The tagged source string.")
+  @ApiModelProperty(example = "true", required = true, value = "")
 
-  public String getSourceTagged() {
-    return sourceTagged;
+  public Boolean getIsDone() {
+    return isDone;
   }
 
 
-  public void setSourceTagged(String sourceTagged) {
-    this.sourceTagged = sourceTagged;
-  }
-
-
-  public TaggedSegment targetTagged(String targetTagged) {
-    
-    this.targetTagged = targetTagged;
-    return this;
-  }
-
-   /**
-   * The tagged target string.
-   * @return targetTagged
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "Le <b>bus rouge.</b>", value = "The tagged target string.")
-
-  public String getTargetTagged() {
-    return targetTagged;
-  }
-
-
-  public void setTargetTagged(String targetTagged) {
-    this.targetTagged = targetTagged;
+  public void setIsDone(Boolean isDone) {
+    this.isDone = isDone;
   }
 
 
@@ -93,23 +64,21 @@ public class TaggedSegment {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    TaggedSegment taggedSegment = (TaggedSegment) o;
-    return Objects.equals(this.sourceTagged, taggedSegment.sourceTagged) &&
-        Objects.equals(this.targetTagged, taggedSegment.targetTagged);
+    DocumentDoneUpdateParameters1 documentDoneUpdateParameters1 = (DocumentDoneUpdateParameters1) o;
+    return Objects.equals(this.isDone, documentDoneUpdateParameters1.isDone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(sourceTagged, targetTagged);
+    return Objects.hash(isDone);
   }
 
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class TaggedSegment {\n");
-    sb.append("    sourceTagged: ").append(toIndentedString(sourceTagged)).append("\n");
-    sb.append("    targetTagged: ").append(toIndentedString(targetTagged)).append("\n");
+    sb.append("class DocumentDoneUpdateParameters1 {\n");
+    sb.append("    isDone: ").append(toIndentedString(isDone)).append("\n");
     sb.append("}");
     return sb.toString();
   }
