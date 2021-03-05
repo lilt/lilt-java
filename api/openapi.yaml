@@ -198,6 +198,23 @@ paths:
         required: false
         schema:
           type: boolean
+      - description: The project to associate the uploaded file with.
+        in: query
+        name: project_id
+        schema:
+          type: integer
+      - description: The category of the file. The options are `REFERENCE`, or `API`.
+          The default is API. Files with the `REFERENCE` category will be displayed
+          as reference material.
+        in: query
+        name: category
+        schema:
+          type: string
+      - description: Comma-separated list of labels to add to the uploaded document.
+        in: query
+        name: labels
+        schema:
+          type: string
         style: form
       - description: The project to associate the uploaded file with.
         explode: true
@@ -345,6 +362,25 @@ paths:
       operationId: createConnector
       requestBody:
         $ref: '#/components/requestBodies/connector'
+        content:
+          application/json:
+            schema:
+              properties:
+                name:
+                  description: Name of connector.
+                  type: string
+                args:
+                  description: Connector parameters.
+                  properties: {}
+                  type: object
+                schedule:
+                  description: Cron string
+                  example: 0 0 * * *
+                  type: string
+              title: connector
+              type: object
+        description: Connector arguments.
+        required: true
       responses:
         "201":
           content:
@@ -370,6 +406,35 @@ paths:
       operationId: updateConnector
       requestBody:
         $ref: '#/components/requestBodies/ConnectorArguments'
+        content:
+          application/json:
+            schema:
+              example:
+                args: '{}'
+                schedule: 0 0 * * *
+                name: zendesk
+                id: 46530
+              properties:
+                id:
+                  description: A unique Connector identifier.
+                  example: 46530
+                  type: integer
+                name:
+                  description: Name of connector.
+                  example: zendesk
+                  type: string
+                args:
+                  description: Connector parameters.
+                  properties: {}
+                  type: object
+                schedule:
+                  description: Cron string
+                  example: 0 0 * * *
+                  type: string
+              title: ConnectorArguments
+              type: object
+        description: Connector arguments.
+        required: true
       responses:
         "201":
           content:
@@ -581,6 +646,28 @@ paths:
       operationId: createDocument
       requestBody:
         $ref: '#/components/requestBodies/DocumentParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                project_id: 23618
+                name: Introduction.xliff
+              properties:
+                name:
+                  description: The document name.
+                  example: Introduction.xliff
+                  type: string
+                project_id:
+                  description: A unique Project identifier.
+                  example: 23618
+                  type: integer
+              required:
+              - name
+              - project_id
+              title: DocumentParameters
+              type: object
+        description: The Document resource to create.
+        required: false
       responses:
         "200":
           content:
@@ -606,6 +693,28 @@ paths:
       operationId: updateDocument
       requestBody:
         $ref: '#/components/requestBodies/DocumentUpdateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                name: Introduction to our App
+                id: 46530
+              properties:
+                id:
+                  description: A unique Document identifier.
+                  example: 46530
+                  type: integer
+                name:
+                  description: The Document name.
+                  example: Introduction to our App
+                  type: string
+              required:
+              - id
+              - name
+              title: DocumentUpdateParameters
+              type: object
+        description: The Document resource to update.
+        required: true
       responses:
         "200":
           content:
@@ -633,6 +742,44 @@ paths:
       operationId: assignDocument
       requestBody:
         $ref: '#/components/requestBodies/DocumentAssignmentParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                is_reviewer: false
+                due_date: 2000-01-23T04:56:07.000+00:00
+                is_translator: true
+                id: 46530
+                email: user@email.com
+              properties:
+                id:
+                  description: A unique Document identifier.
+                  example: 46530
+                  type: integer
+                email:
+                  description: An email address.
+                  example: user@email.com
+                  type: string
+                is_translator:
+                  description: If true, assign for translating. If false, then unassign.
+                  example: true
+                  type: boolean
+                is_reviewer:
+                  description: If true, assign for reviewing. If false, then unassign.
+                  example: false
+                  type: boolean
+                due_date:
+                  description: Due date for translation or review (set based on `is_translator`
+                    and `is_reviewer` flags).
+                  format: date-time
+                  type: string
+              required:
+              - email
+              - id
+              title: DocumentAssignmentParameters
+              type: object
+        description: Attributes of the Document resource to assign.
+        required: true
       responses:
         "200":
           content:
@@ -720,6 +867,52 @@ paths:
         style: form
       requestBody:
         $ref: '#/components/requestBodies/DocumentPretranslateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                mode: tm+mt
+                attribute_to_creator: false
+                case_sensitive: false
+                id:
+                - 123
+                - 234
+                auto_accept: false
+              properties:
+                id:
+                  description: A list of unique Document identifiers.
+                  example:
+                  - 123
+                  - 234
+                  items:
+                    type: integer
+                  type: array
+                auto_accept:
+                  description: Optional parameter for auto-accepting 100% TM hits.
+                  example: false
+                  type: boolean
+                case_sensitive:
+                  description: Optional for using case matching against TM hits..
+                  example: false
+                  type: boolean
+                attribute_to_creator:
+                  description: Optional parameter for attributing translation authorship
+                    of exact matches to document creator.
+                  example: false
+                  type: boolean
+                mode:
+                  description: |
+                    An optional parameter indicating how the document will be pretranslated.
+
+                    The accepted values are `tm`, or `tm+mt`. Default is `tm`.
+                  example: tm+mt
+                  type: string
+              required:
+              - id
+              title: DocumentPretranslateParameters
+              type: object
+        description: A list of unique Document identifiers.
+        required: true
       responses:
         "202":
           content:
@@ -956,6 +1149,21 @@ paths:
         ```
       requestBody:
         $ref: '#/components/requestBodies/DocumentDoneUpdateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                isDone: true
+              properties:
+                isDone:
+                  example: true
+                  type: boolean
+              required:
+              - isDone
+              title: DocumentDoneUpdateParameters
+              type: object
+        description: document ids to update
+        required: true
       responses:
         "200":
           content:
@@ -995,6 +1203,19 @@ paths:
         ```
       requestBody:
         $ref: '#/components/requestBodies/DocumentDoneUpdateParameters_1'
+        content:
+          application/json:
+            schema:
+              properties:
+                isDone:
+                  example: true
+                  type: boolean
+              required:
+              - isDone
+              title: DocumentDoneUpdateParameters
+              type: object
+        description: document ids to update
+        required: true
       responses:
         "200":
           content:
@@ -1112,6 +1333,34 @@ paths:
       operationId: updateLexicon
       requestBody:
         $ref: '#/components/requestBodies/LexiconUpdateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                memory_id: 10641
+                source: washing machine
+                target: Waschmaschine
+              properties:
+                memory_id:
+                  description: A unique Memory identifier.
+                  example: 10641
+                  type: integer
+                source:
+                  description: The source side of the lexicon entry.
+                  example: washing machine
+                  type: string
+                target:
+                  description: The target side of the lexicon entry.
+                  example: Waschmaschine
+                  type: string
+              required:
+              - memory_id
+              - source
+              - target
+              title: LexiconUpdateParameters
+              type: object
+        description: The lexicon entry.
+        required: true
       responses:
         "200":
           content:
@@ -1211,6 +1460,44 @@ paths:
       operationId: createMemory
       requestBody:
         $ref: '#/components/requestBodies/MemoryCreateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                trglocale: FR
+                name: automotive
+                srclang: en
+                srclocale: US
+                trglang: fr
+              properties:
+                name:
+                  description: A name for the Memory.
+                  example: automotive
+                  type: string
+                srclang:
+                  description: An ISO 639-1 language identifier.
+                  example: en
+                  type: string
+                trglang:
+                  description: An ISO 639-1 language identifier.
+                  example: fr
+                  type: string
+                srclocale:
+                  description: An ISO 3166-1 region name for language locales
+                  example: US
+                  type: string
+                trglocale:
+                  description: An ISO 3166-1 region name for language locales
+                  example: FR
+                  type: string
+              required:
+              - name
+              - srclang
+              - trglang
+              title: MemoryCreateParameters
+              type: object
+        description: The Memory resource to create.
+        required: true
       responses:
         "200":
           content:
@@ -1236,6 +1523,28 @@ paths:
       operationId: updateMemory
       requestBody:
         $ref: '#/components/requestBodies/MemoryUpdateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                name: Automotive Memory
+                id: 7246
+              properties:
+                id:
+                  description: A unique Memory identifier.
+                  example: 7246
+                  type: integer
+                name:
+                  description: The Memory name.
+                  example: Automotive Memory
+                  type: string
+              required:
+              - id
+              - name
+              title: MemoryUpdateParameters
+              type: object
+        description: The Memory resource to update.
+        required: true
       responses:
         "200":
           content:
@@ -1332,13 +1641,10 @@ paths:
         explode: true
         in: query
         name: from_time
-        required: false
         schema:
           type: integer
-        style: form
       - description: Unix time stamp (epoch, in seconds) of the end of the Memory
           section.
-        explode: true
         in: query
         name: to_time
         required: false
@@ -1359,7 +1665,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MemorySyncDeleteResponse'
+                $ref: '#/components/schemas/MemoryInsertResponse'
           description: A status object.
         default:
           content:
@@ -1452,21 +1758,16 @@ paths:
       operationId: syncInsertMemory
       parameters:
       - description: A unique Memory identifier.
-        explode: false
         in: header
         name: id
         required: true
         schema:
           type: integer
-        style: simple
       - description: Name of the TMX file.
-        explode: false
         in: header
         name: name
-        required: false
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           application/octet-stream:
@@ -1510,40 +1811,29 @@ paths:
       operationId: syncUpdateMemory
       parameters:
       - description: A unique Memory identifier.
-        explode: false
         in: header
         name: id
         required: true
         schema:
           type: integer
-        style: simple
       - description: Unix time stamp (epoch, in seconds) of the start of the Memory
           section.
-        explode: false
         in: header
         name: from_time
-        required: false
         schema:
           type: integer
-        style: simple
       - description: Unix time stamp (epoch, in seconds) of the end of the Memory
           section.
-        explode: false
         in: header
         name: to_time
-        required: false
         schema:
           type: integer
-        style: simple
       - description: 'The date field on which retrieved segments match from/to time
           stamps: `created`, `updated`, `deleted`.'
-        explode: false
         in: header
         name: when
-        required: false
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           application/json:
@@ -1588,21 +1878,17 @@ paths:
       operationId: importMemoryFile
       parameters:
       - description: A unique Memory identifier.
-        explode: false
         in: header
         name: memory_id
         required: true
         schema:
           type: integer
-        style: simple
       - description: Name of the TM or termbase file.
-        explode: false
         in: header
         name: name
         required: true
         schema:
           type: string
-        style: simple
       requestBody:
         content:
           application/octet-stream:
@@ -1638,13 +1924,10 @@ paths:
       operationId: deleteProject
       parameters:
       - description: A unique Project identifier.
-        explode: true
         in: query
         name: id
-        required: false
         schema:
           type: integer
-        style: form
       responses:
         "200":
           content:
@@ -1670,72 +1953,48 @@ paths:
       operationId: getProjects
       parameters:
       - description: A unique Project identifier.
-        explode: true
         in: query
         name: id
-        required: false
         schema:
           type: integer
-        style: form
       - description: An ISO 639-1 language code.
-        explode: true
         in: query
         name: srclang
-        required: false
         schema:
           type: string
-        style: form
       - description: An ISO 639-1 language code.
-        explode: true
         in: query
         name: trglang
-        required: false
         schema:
           type: string
-        style: form
       - description: Unix time stamp (epoch, in seconds) of Projects with `created_at`
           greater than or equal to the value.
-        explode: true
         in: query
         name: from_time
-        required: false
         schema:
           type: integer
-        style: form
       - description: Unix time stamp (epoch, in seconds) of Projects with `created_at`
           less than the value.
-        explode: true
         in: query
         name: to_time
-        required: false
         schema:
           type: integer
-        style: form
       - description: A project state (backlog, inProgress, inReview, inQA, done).
-        explode: true
         in: query
         name: state
-        required: false
         schema:
           type: string
-        style: form
       - description: A flag that toggles whether to include archived projects in the
           response (the default is `true`).
-        explode: true
         in: query
         name: archived
-        required: false
         schema:
           type: boolean
-        style: form
       - description: A unique Connector identifier.
-        explode: true
         in: query
         name: connector_id
-        required: false
         schema:
           type: integer
-        style: form
       responses:
         "200":
           content:
@@ -1767,6 +2026,57 @@ paths:
       operationId: createProject
       requestBody:
         $ref: '#/components/requestBodies/ProjectCreateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                metadata:
+                  connectorType: github
+                  notes: example metadata
+                memory_id: 1234
+                name: My new project
+                file_ids:
+                - 123
+                - 124
+                - 125
+                due_date: 1489147692
+              properties:
+                name:
+                  description: A name for the Project.
+                  example: My new project
+                  type: string
+                memory_id:
+                  description: The Memory to associate with this new Project.
+                  example: 1234
+                  type: integer
+                file_ids:
+                  description: A list of Files to add to this new Project.
+                  example:
+                  - 123
+                  - 124
+                  - 125
+                  items:
+                    type: integer
+                  type: array
+                due_date:
+                  description: The due date. Measured in seconds since the Unix epoch.
+                  example: 1489147692
+                  type: integer
+                metadata:
+                  description: A JSON object of key/value string pairs. Stores custom
+                    project information.
+                  example:
+                    connectorType: github
+                    notes: example metadata
+                  properties: {}
+                  type: object
+              required:
+              - memory_id
+              - name
+              title: ProjectCreateParameters
+              type: object
+        description: The Project resource to create.
+        required: true
       responses:
         "200":
           content:
@@ -1792,6 +2102,61 @@ paths:
       operationId: updateProject
       requestBody:
         $ref: '#/components/requestBodies/ProjectUpdateResponse'
+        content:
+          application/json:
+            schema:
+              example:
+                archived: false
+                metadata:
+                  connectorType: github
+                  notes: example metadata
+                sample_review_percentage: 20
+                name: Walker Percy Essays
+                due_date: 1489147692
+                id: 1234
+                state: backlog
+              properties:
+                id:
+                  description: A unique Project identifier.
+                  example: 1234
+                  type: integer
+                name:
+                  description: The Project name.
+                  example: Walker Percy Essays
+                  type: string
+                state:
+                  description: The project's state. The possible states are 'backlog',
+                    'inProgress', 'inReview', 'inQA', and 'done'
+                  example: backlog
+                  type: string
+                due_date:
+                  description: The due date. Measured in seconds since the Unix epoch.
+                  example: 1489147692
+                  type: integer
+                archived:
+                  description: True if the project is archived. Otherwise, false.
+                  example: false
+                  type: boolean
+                metadata:
+                  description: Metadata associated with a project. This field must
+                    be valid JSON.
+                  example:
+                    connectorType: github
+                    notes: example metadata
+                  properties: {}
+                  type: object
+                sample_review_percentage:
+                  description: The Project's sample review percentage. Must be an
+                    integer between 10 and 100, a multiple of 10 and greater than
+                    minimum value (displayed in error message).
+                  example: 20
+                  type: integer
+              required:
+              - id
+              title: ProjectUpdateResponse
+              type: object
+        description: The Project resource to update.
+        required: true
       responses:
         "200":
           content:
@@ -1822,13 +2187,11 @@ paths:
       operationId: getProjectReport
       parameters:
       - description: A unique Project identifier.
-        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
-        style: form
       responses:
         "200":
           content:
@@ -1854,13 +2217,11 @@ paths:
       operationId: getProjectStatus
       parameters:
       - description: A unique Project identifier.
-        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
-        style: form
       responses:
         "200":
           content:
@@ -1885,37 +2246,27 @@ paths:
       operationId: qaCheck
       parameters:
       - description: A target string to be checked.
-        explode: true
         in: query
         name: target
         required: true
         schema:
           type: string
-        style: form
       - description: An ISO 639-1 language code.
-        explode: true
         in: query
         name: trglang
         required: true
         schema:
           type: string
-        style: form
       - description: An optional source string.
-        explode: true
         in: query
         name: source
-        required: false
         schema:
           type: string
-        style: form
       - description: An ISO 639-1 language code.
-        explode: true
         in: query
         name: srclang
-        required: false
         schema:
           type: string
-        style: form
       responses:
         "200":
           content:
@@ -1940,13 +2291,11 @@ paths:
       operationId: deleteSegment
       parameters:
       - description: A unique Segment identifier.
-        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
-        style: form
       responses:
         "200":
           content:
@@ -1971,22 +2320,17 @@ paths:
       operationId: getSegment
       parameters:
       - description: A unique Segment identifier.
-        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
-        style: form
       - description: Include comments in the response.
-        explode: true
         in: query
         name: include_comments
-        required: false
         schema:
           default: false
           type: boolean
-        style: form
       responses:
         "200":
           content:
@@ -2015,6 +2359,43 @@ paths:
       operationId: createSegment
       requestBody:
         $ref: '#/components/requestBodies/SegmentCreateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                memory_id: 10641
+                source: Code zur Fehleranalyse einschalten
+                document_id: 1876
+                target: Enable debugging code
+              properties:
+                memory_id:
+                  description: A unique Memory identifier.
+                  example: 10641
+                  type: integer
+                document_id:
+                  description: A unique Document identifier.
+                  example: 1876
+                  type: integer
+                source:
+                  description: The source string.
+                  example: Code zur Fehleranalyse einschalten
+                  type: string
+                target:
+                  description: The target string.
+                  example: Enable debugging code
+                  type: string
+              required:
+              - source
+              title: SegmentCreateParameters
+              type: object
+        description: |
+          The Segment resource to create.
+
+          To add a Segment to a Memory, include the `memory_id` and `target` parameters.
+
+          To add a Segment to a Document, include the `document_id` and the `source` parameters.
+          The `target` parameter is optional.
+        required: true
       responses:
         "200":
           content:
@@ -2041,6 +2422,28 @@ paths:
       operationId: updateSegment
       requestBody:
         $ref: '#/components/requestBodies/SegmentUpdateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                id: 84480010
+                target: Enable debug code
+              properties:
+                id:
+                  description: A unique Segment identifier.
+                  example: 84480010
+                  type: integer
+                target:
+                  description: The target string.
+                  example: Enable debug code
+                  type: string
+              required:
+              - id
+              - target
+              title: SegmentUpdateParameters
+              type: object
+        description: The Segment resource to update.
+        required: true
       responses:
         "200":
           content:
@@ -2072,29 +2475,23 @@ paths:
       operationId: tagSegment
       parameters:
       - description: The tagged source string.
-        explode: true
         in: query
         name: source_tagged
         required: true
         schema:
           type: string
-        style: form
       - description: The target string.
-        explode: true
         in: query
         name: target
         required: true
         schema:
           type: string
-        style: form
       - description: A unique Memory identifier.
-        explode: true
         in: query
         name: memory_id
         required: true
         schema:
           type: integer
-        style: form
       responses:
         "200":
           content:
@@ -2133,73 +2530,50 @@ paths:
       operationId: translateSegment
       parameters:
       - description: A unique Memory identifier.
-        explode: true
         in: query
         name: memory_id
         required: true
         schema:
           type: integer
-        style: form
       - description: The source text to be translated.
-        explode: true
         in: query
         name: source
-        required: false
         schema:
           type: string
-        style: form
       - description: A source hash code.
-        explode: true
         in: query
         name: source_hash
-        required: false
         schema:
           type: integer
-        style: form
       - description: A target prefix.
-        explode: true
         in: query
         name: prefix
-        required: false
         schema:
           type: string
-        style: form
       - description: Return top n translations (deprecated).
-        explode: true
         in: query
         name: "n"
-        required: false
         schema:
           default: 1
           type: integer
-        style: form
       - description: Returns rich translation information (e.g., with word alignments).
-        explode: true
         in: query
         name: rich
-        required: false
         schema:
           default: false
           type: boolean
-        style: form
       - description: Include translation memory fuzzy matches.
-        explode: true
         in: query
         name: tm_matches
-        required: false
         schema:
           default: true
           type: boolean
-        style: form
       - description: Project tags. Projects tags in source to target if set to true.
-        explode: true
         in: query
         name: project_tags
-        required: false
         schema:
           default: false
           type: boolean
-        style: form
       responses:
         "200":
           content:
@@ -2227,29 +2601,23 @@ paths:
       operationId: registerSegment
       parameters:
       - description: A source string to be registered.
-        explode: true
         in: query
         name: source
         required: true
         schema:
           type: string
-        style: form
       - description: An ISO 639-1 language code.
-        explode: true
         in: query
         name: srclang
         required: true
         schema:
           type: string
-        style: form
       - description: An ISO 639-1 language code.
-        explode: true
         in: query
         name: trglang
         required: true
         schema:
           type: string
-        style: form
       responses:
         "200":
           content:
@@ -2274,46 +2642,35 @@ paths:
 
         Example CURL:
         ```
-        curl --X --request GET 'https://lilt.com/2/translate/file?key=API_KEY&translationIds=1,2&fromTime=1607966744&toTime=1707966744&status=InProgress'
+        curl --X --request GET 'https://lilt.com/2/translate/file?translationIds=1,2&fromTime=1607966744&toTime=1707966744&status=InProgress' \
+        --header 'Authorization: Basic API_KEY='
         ```
 
       operationId: monitorFileTranslation
       parameters:
       - description: List of translation ids, comma separated
-        explode: true
         in: query
         name: translationIds
-        required: false
         schema:
           type: string
-        style: form
       - description: One of the translation statuses - `InProgress`, `Completed`,
           `Failed`, `ReadyForDownload`
-        explode: true
         in: query
         name: status
-        required: false
         schema:
           type: string
-        style: form
       - description: Results after this time (inclusive) will be returned, specified
           as seconds since the Unix epoch.
-        explode: true
         in: query
         name: fromTime
-        required: false
         schema:
           type: number
-        style: form
       - description: Results before this time (exclusive) will be returned, specified
           as seconds since the Unix epoch.
-        explode: true
         in: query
         name: toTime
-        required: false
         schema:
           type: number
-        style: form
       responses:
         "200":
           content:
@@ -2337,27 +2694,24 @@ paths:
 
         Example CURL:
         ```
-        curl --X --request POST 'https://lilt.com/2/translate/file?key=API_KEY&fileId=583&memoryId=2495'
+        curl --X --request POST 'https://lilt.com/2/translate/file?fileId=583&memoryId=2495' \
+        --header 'Authorization: Basic API_KEY='
         ```
 
       operationId: batchTranslateFile
       parameters:
       - description: List of File ids to be translated, comma separated.
-        explode: true
         in: query
         name: fileId
         required: true
         schema:
           type: string
-        style: form
       - description: Id of Memory to use in translation.
-        explode: true
         in: query
         name: memoryId
         required: true
         schema:
           type: string
-        style: form
       responses:
         "200":
           content:
@@ -2382,19 +2736,18 @@ paths:
 
         Example CURL:
         ```
-        curl --X --request GET 'https://lilt.com/2/translate/files?key=API_KEY&id=1'
+        curl --X --request GET 'https://lilt.com/2/translate/files?id=1' \
+        --header 'Authorization: Basic API_KEY='
         ```
 
       operationId: downloadFile
       parameters:
       - description: A translation id.
-        explode: true
         in: query
         name: id
         required: true
         schema:
           type: string
-        style: form
       responses:
         "200":
           content:
@@ -2616,8 +2969,7 @@ components:
           export_in_progress: false
           is_pretranslating: false
           translator_email: translator@example.com
-          status:
-            pretranslation: idle
+          status: '{"pretranslation":"idle"}'
         - srclang: en
           created_at: 1489147692
           reviewer_email: reviewer@example.com
@@ -2634,8 +2986,7 @@ components:
           export_in_progress: false
           is_pretranslating: false
           translator_email: translator@example.com
-          status:
-            pretranslation: idle
+          status: '{"pretranslation":"idle"}'
         srclang: en
         due_date: 1489147692
         created_at: 1489147692
@@ -3122,8 +3473,7 @@ components:
         export_in_progress: false
         is_pretranslating: false
         translator_email: translator@example.com
-        status:
-          pretranslation: idle
+        status: '{"pretranslation":"idle"}'
       properties:
         id:
           description: A unique number identifying the Document.
@@ -3237,8 +3587,7 @@ components:
         export_in_progress: false
         is_pretranslating: false
         translator_email: translator@example.com
-        status:
-          pretranslation: idle
+        status: '{"pretranslation":"idle"}'
       properties:
         id:
           description: A unique number identifying the Document.
@@ -3319,44 +3668,10 @@ components:
         An Lexicon entry for a source term or phrase.
       example:
         examples:
-        - - source: Waschmaschine
-            sourceDelimiters:
-            - ""
-            - ""
-            target:
-            - washing
-            - machine
-            targetDelimiters:
-            - ""
-            - ' '
-            - ""
-            sourceSpan:
-              start: 0
-              length: 1
-            targetSpan:
-              start: 1
-              length: 1
-            similarity: 0
-            memoryId: 10641
-        - - source: Waschmaschine
-            sourceDelimiters:
-            - ""
-            - ""
-            target:
-            - washing
-            - machine
-            targetDelimiters:
-            - ""
-            - ' '
-            - ""
-            sourceSpan:
-              start: 0
-              length: 1
-            targetSpan:
-              start: 1
-              length: 1
-            similarity: 0
-            memoryId: 10641
+        - '[{"source":"Waschmaschine","sourceDelimiters":["",""],"target":["washing","machine"],"targetDelimiters":["","
+          ",""],"sourceSpan":{"start":0,"length":1},"targetSpan":{"start":1,"length":1},"similarity":0,"memoryId":10641}]'
+        - '[{"source":"Waschmaschine","sourceDelimiters":["",""],"target":["washing","machine"],"targetDelimiters":["","
+          ",""],"sourceSpan":{"start":0,"length":1},"targetSpan":{"start":1,"length":1},"similarity":0,"memoryId":10641}]'
         translations: []
       properties:
         translations:
@@ -3381,8 +3696,7 @@ components:
         is_processing: false
         is_pretranslating: true
         import_in_progress: false
-        status:
-          pretranslation: running
+        status: '{"pretranslation":"running"}'
       properties:
         id:
           description: A status object indicating the pretranslation status.
@@ -3921,8 +4235,6 @@ components:
         api_root:
           example: /2
           type: string
-      title: ApiRoot
-      type: object
     FileDeleteResponse:
       example:
         deleted: true
@@ -3936,8 +4248,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: FileDeleteResponse
-      type: object
     ConnectorArguments:
       example:
         args: '{}'
@@ -3991,8 +4301,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: ConnectorDeleteResponse
-      type: object
     DocumentUpdateParameters:
       example:
         name: Introduction to our App
@@ -4042,8 +4350,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: DocumentDeleteResponse
-      type: object
     DocumentAssignmentParameters:
       example:
         is_reviewer: false
@@ -4086,8 +4392,6 @@ components:
           description: A unique Document identifier.
           example: 46530
           type: integer
-      title: DocumentAssignmentResponse
-      type: object
     DocumentPretranslateParameters:
       example:
         mode: tm+mt
@@ -4139,16 +4443,14 @@ components:
           is_processing: false
           is_pretranslating: true
           import_in_progress: false
-          status:
-            pretranslation: running
+          status: '{"pretranslation":"running"}'
         - import_error_message: ""
           import_succeeded: true
           id: 123.0
           is_processing: false
           is_pretranslating: true
           import_in_progress: false
-          status:
-            pretranslation: running
+          status: '{"pretranslation":"running"}'
         id:
         - 123
         - 234
@@ -4171,20 +4473,9 @@ components:
           items:
             $ref: '#/components/schemas/DocumentPretranslating'
           type: array
-      title: DocumentPretranslateResponse
-      type: object
     DocumentDoneUpdateParameters:
       example:
         isDone: true
-      properties:
-        isDone:
-          example: true
-          type: boolean
-      required:
-      - isDone
-      title: DocumentDoneUpdateParameters
-      type: object
-    DocumentDoneUpdateParameters_1:
       properties:
         isDone:
           example: true
@@ -4231,8 +4522,6 @@ components:
             "...": '...'
           properties: {}
           type: object
-      title: LanguagesResponse
-      type: object
     LexiconUpdateParameters:
       example:
         memory_id: 10641
@@ -4270,8 +4559,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: LexiconUpdateResponse
-      type: object
     MemoryUpdateParameters:
       example:
         name: Automotive Memory
@@ -4337,8 +4624,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: MemoryDeleteResponse
-      type: object
     MemoryUpdateResponse:
       example:
         id: 123
@@ -4351,8 +4636,6 @@ components:
         num_updates:
           description: The number of updates to the Memory.
           type: integer
-      title: MemoryUpdateResponse
-      type: object
     MemoryInsertResponse:
       example:
         id: 123
@@ -4366,23 +4649,6 @@ components:
           description: The number of updates to the Memory.
           example: 107
           type: integer
-      title: MemoryInsertResponse
-      type: object
-    MemorySyncDeleteResponse:
-      example:
-        id: 123
-        num_updates: 107
-      properties:
-        id:
-          description: A unique Memory identifier.
-          example: 123
-          type: integer
-        num_updates:
-          description: The number of updates to the Memory.
-          example: 107
-          type: integer
-      title: MemorySyncDeleteResponse
-      type: object
     MemoryImportResponse:
       example:
         isProcessing: 1
@@ -4396,8 +4662,6 @@ components:
           description: The current state of the import.
           example: 1
           type: integer
-      title: MemoryImportResponse
-      type: object
     ProjectUpdateResponse:
       example:
         archived: false
@@ -4509,8 +4773,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: ProjectDeleteResponse
-      type: object
     SegmentUpdateParameters:
       example:
         id: 84480010
@@ -4569,8 +4831,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: SegmentDeleteResponse
-      type: object
     TranslateRegisterResponse:
       example:
         num_words: 88
@@ -4585,21 +4845,18 @@ components:
           description: The number of billed words in the segment.
           example: 88
           type: integer
-      title: TranslateRegisterResponse
-      type: object
     DocumentWithoutSegments_status:
       description: A list of translations for the query term.
-      example:
-        pretranslation: idle
+      example: '{"pretranslation":"idle"}'
       properties:
         pretranslation:
+          description: ""
           enum:
           - idle
           - pending
           - running
           example: idle
           type: string
-      type: object
     LexiconEntry_translations:
       properties:
         source:
@@ -4616,7 +4873,6 @@ components:
             A unique Memory identifier. If this identifier is missing, then
             the term comes from the generic termbase.
           type: number
-      type: object
     LexiconEntry_sourceSpan:
       description: An object that indicates where the query term appears in the source.
       properties:
@@ -4628,7 +4884,6 @@ components:
           description: |
             The length in words after `start` of the source query term.
           type: number
-      type: object
     LexiconEntry_targetSpan:
       description: |
         An object that indicates the location in the target of contiguous
@@ -4643,28 +4898,9 @@ components:
             The length in words after `start` of the target aligned
             phrase.
           type: number
-      type: object
     LexiconEntry_examples:
-      example:
-      - source: Waschmaschine
-        sourceDelimiters:
-        - ""
-        - ""
-        target:
-        - washing
-        - machine
-        targetDelimiters:
-        - ""
-        - ' '
-        - ""
-        sourceSpan:
-          start: 0
-          length: 1
-        targetSpan:
-          start: 1
-          length: 1
-        similarity: 0
-        memoryId: 10641
+      example: '[{"source":"Waschmaschine","sourceDelimiters":["",""],"target":["washing","machine"],"targetDelimiters":["","
+        ",""],"sourceSpan":{"start":0,"length":1},"targetSpan":{"start":1,"length":1},"similarity":0,"memoryId":10641}]'
       properties:
         source:
           description: The source string.
@@ -4697,16 +4933,14 @@ components:
             A unique Memory identifier. If this identifier is missing, then
             the term comes from the generic concordance.
           type: number
-      type: object
     DocumentPretranslating_status:
       description: A status object indicating the pretranslation status.
-      example:
-        pretranslation: running
+      example: '{"pretranslation":"running"}'
       properties:
         pretranslation:
+          description: ""
           example: running
           type: string
-      type: object
     QARuleMatches_context:
       example:
         offset: 19
@@ -4730,13 +4964,11 @@ components:
       - length
       - offset
       - text
-      type: object
     QARuleMatches_replacements:
       properties:
         value:
           description: the replacement string
           type: string
-      type: object
     QARuleMatches_rule_category:
       example:
         name: Possible Typo
@@ -4750,13 +4982,11 @@ components:
           description: A short description of the category.
           example: Possible Typo
           type: string
-      type: object
     QARuleMatches_rule_urls:
       properties:
         value:
           description: the URL
           type: string
-      type: object
     QARuleMatches_rule:
       example:
         issueType: misspelling
@@ -4798,7 +5028,6 @@ components:
       - category
       - description
       - id
-      type: object
     QARuleMatches_matches:
       example:
         offset: 19
@@ -4859,7 +5088,6 @@ components:
       - message
       - offset
       - replacements
-      type: object
   securitySchemes:
     BasicAuth:
       scheme: basic
@@ -4868,5 +5096,4 @@ components:
       in: query
       name: key
       type: apiKey
-x-original-swagger-version: "2.0"
 
