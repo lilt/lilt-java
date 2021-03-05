@@ -163,7 +163,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadFile"></a>
 # **uploadFile**
-> java.io.File uploadFile(name, body, exportUri, fileHash, langId)
+> java.io.File uploadFile(name, body, exportUri, fileHash, langId, projectId, category, labels)
 
 Upload a File
 
@@ -201,8 +201,11 @@ public class Example {
     String exportUri = "exportUri_example"; // String | A webhook endpoint that will export the translated document back to the source repository.
     String fileHash = "fileHash_example"; // String | A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn't provided.
     Boolean langId = true; // Boolean | Flag indicating whether to perform language detection on the uploaded file. Default is false.
+    Integer projectId = 56; // Integer | The project to associate the uploaded file with.
+    String category = "category_example"; // String | The category of the file. The options are `REFERENCE`, or `API`. The default is API. Files with the `REFERENCE` category will be displayed as reference material.
+    String labels = "labels_example"; // String | Comma-separated list of labels to add to the uploaded document.
     try {
-      java.io.File result = apiInstance.uploadFile(name, body, exportUri, fileHash, langId);
+      java.io.File result = apiInstance.uploadFile(name, body, exportUri, fileHash, langId, projectId, category, labels);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling FilesApi#uploadFile");
@@ -224,6 +227,9 @@ Name | Type | Description  | Notes
  **exportUri** | **String**| A webhook endpoint that will export the translated document back to the source repository. | [optional]
  **fileHash** | **String**| A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. | [optional]
  **langId** | **Boolean**| Flag indicating whether to perform language detection on the uploaded file. Default is false. | [optional]
+ **projectId** | **Integer**| The project to associate the uploaded file with. | [optional]
+ **category** | **String**| The category of the file. The options are &#x60;REFERENCE&#x60;, or &#x60;API&#x60;. The default is API. Files with the &#x60;REFERENCE&#x60; category will be displayed as reference material. | [optional]
+ **labels** | **String**| Comma-separated list of labels to add to the uploaded document. | [optional]
 
 ### Return type
 

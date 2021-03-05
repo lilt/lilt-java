@@ -291,6 +291,238 @@ public class ConnectorsApi {
         return localVarCall;
     }
     /**
+     * Build call for exportConnectorJob
+     * @param id A unique Connector Job identifier. (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A success status code. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call exportConnectorJobCall(Integer id, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/connectors/jobs/deliver";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (id != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
+        }
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call exportConnectorJobValidateBeforeCall(Integer id, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'id' is set
+        if (id == null) {
+            throw new ApiException("Missing the required parameter 'id' when calling exportConnectorJob(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = exportConnectorJobCall(id, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Deliver a Connector Job
+     * Request an export job for the given connector job ID. This will check Lilt for completed projects that are associated with this job and deliver them to the target system.  Example CURL command: &#x60;&#x60;&#x60;  curl -X POST https://lilt.com/2/connectors/jobs/deliver?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
+     * @param id A unique Connector Job identifier. (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A success status code. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public void exportConnectorJob(Integer id) throws ApiException {
+        exportConnectorJobWithHttpInfo(id);
+    }
+
+    /**
+     * Deliver a Connector Job
+     * Request an export job for the given connector job ID. This will check Lilt for completed projects that are associated with this job and deliver them to the target system.  Example CURL command: &#x60;&#x60;&#x60;  curl -X POST https://lilt.com/2/connectors/jobs/deliver?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
+     * @param id A unique Connector Job identifier. (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A success status code. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<Void> exportConnectorJobWithHttpInfo(Integer id) throws ApiException {
+        okhttp3.Call localVarCall = exportConnectorJobValidateBeforeCall(id, null);
+        return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * Deliver a Connector Job (asynchronously)
+     * Request an export job for the given connector job ID. This will check Lilt for completed projects that are associated with this job and deliver them to the target system.  Example CURL command: &#x60;&#x60;&#x60;  curl -X POST https://lilt.com/2/connectors/jobs/deliver?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
+     * @param id A unique Connector Job identifier. (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A success status code. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call exportConnectorJobAsync(Integer id, final ApiCallback<Void> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = exportConnectorJobValidateBeforeCall(id, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for getConnectorJobs
+     * @param id A unique Connector Job identifier. (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A list of Connector Jobs. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getConnectorJobsCall(Integer id, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/connectors/jobs";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        if (id != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
+        }
+
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call getConnectorJobsValidateBeforeCall(Integer id, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'id' is set
+        if (id == null) {
+            throw new ApiException("Missing the required parameter 'id' when calling getConnectorJobs(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = getConnectorJobsCall(id, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Retreive a Connector Job
+     * Retrieves a connector job available to your user. Use this to check the status of jobs started by the &#x60;/connectors/sync&#x60; and &#x60;/connectors/jobs/deliver&#x60; endpoints.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/jobs?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
+     * @param id A unique Connector Job identifier. (required)
+     * @return List&lt;ConnectorJob&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A list of Connector Jobs. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<ConnectorJob> getConnectorJobs(Integer id) throws ApiException {
+        ApiResponse<List<ConnectorJob>> localVarResp = getConnectorJobsWithHttpInfo(id);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Retreive a Connector Job
+     * Retrieves a connector job available to your user. Use this to check the status of jobs started by the &#x60;/connectors/sync&#x60; and &#x60;/connectors/jobs/deliver&#x60; endpoints.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/jobs?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
+     * @param id A unique Connector Job identifier. (required)
+     * @return ApiResponse&lt;List&lt;ConnectorJob&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A list of Connector Jobs. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<ConnectorJob>> getConnectorJobsWithHttpInfo(Integer id) throws ApiException {
+        okhttp3.Call localVarCall = getConnectorJobsValidateBeforeCall(id, null);
+        Type localVarReturnType = new TypeToken<List<ConnectorJob>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Retreive a Connector Job (asynchronously)
+     * Retrieves a connector job available to your user. Use this to check the status of jobs started by the &#x60;/connectors/sync&#x60; and &#x60;/connectors/jobs/deliver&#x60; endpoints.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/jobs?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
+     * @param id A unique Connector Job identifier. (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A list of Connector Jobs. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call getConnectorJobsAsync(Integer id, final ApiCallback<List<ConnectorJob>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = getConnectorJobsValidateBeforeCall(id, _callback);
+        Type localVarReturnType = new TypeToken<List<ConnectorJob>>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for getConnectors
      * @param id A unique Connector identifier. (optional)
      * @param _callback Callback for upload/download progress
@@ -473,7 +705,7 @@ public class ConnectorsApi {
 
     /**
      * Sync a Connector
-     * Request an import job for the given connector ID. This will check the target system for new content to pull into Lilt. 
+     * Request an import job for the given connector ID. This will check the target system for new content to pull into Lilt.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/sync?key&#x3D;API_KEY&amp;id&#x3D;128 &#x60;&#x60;&#x60; 
      * @param id A unique Connector identifier. (required)
      * @return ConnectorJob
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -491,7 +723,7 @@ public class ConnectorsApi {
 
     /**
      * Sync a Connector
-     * Request an import job for the given connector ID. This will check the target system for new content to pull into Lilt. 
+     * Request an import job for the given connector ID. This will check the target system for new content to pull into Lilt.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/sync?key&#x3D;API_KEY&amp;id&#x3D;128 &#x60;&#x60;&#x60; 
      * @param id A unique Connector identifier. (required)
      * @return ApiResponse&lt;ConnectorJob&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -510,7 +742,7 @@ public class ConnectorsApi {
 
     /**
      * Sync a Connector (asynchronously)
-     * Request an import job for the given connector ID. This will check the target system for new content to pull into Lilt. 
+     * Request an import job for the given connector ID. This will check the target system for new content to pull into Lilt.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/sync?key&#x3D;API_KEY&amp;id&#x3D;128 &#x60;&#x60;&#x60; 
      * @param id A unique Connector identifier. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

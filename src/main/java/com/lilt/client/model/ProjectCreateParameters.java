@@ -29,7 +29,7 @@ import java.util.List;
 /**
  * ProjectCreateParameters
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-10-22T17:35:42.609Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-04T23:50:13.754Z[GMT]")
 public class ProjectCreateParameters {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
@@ -157,11 +157,11 @@ public class ProjectCreateParameters {
   }
 
    /**
-   * Metadata associated with a project. This field must be valid JSON.
+   * A JSON object of key/value string pairs. Stores custom project information.
    * @return metadata
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "{\"connectorType\":\"github\",\"notes\":\"example metadata\"}", value = "Metadata associated with a project. This field must be valid JSON.")
+  @ApiModelProperty(example = "{\"connectorType\":\"github\",\"notes\":\"example metadata\"}", value = "A JSON object of key/value string pairs. Stores custom project information.")
 
   public Object getMetadata() {
     return metadata;

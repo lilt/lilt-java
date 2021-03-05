@@ -183,6 +183,23 @@ paths:
         name: langId
         schema:
           type: boolean
+      - description: The project to associate the uploaded file with.
+        in: query
+        name: project_id
+        schema:
+          type: integer
+      - description: The category of the file. The options are `REFERENCE`, or `API`.
+          The default is API. Files with the `REFERENCE` category will be displayed
+          as reference material.
+        in: query
+        name: category
+        schema:
+          type: string
+      - description: Comma-separated list of labels to add to the uploaded document.
+        in: query
+        name: labels
+        schema:
+          type: string
       requestBody:
         content:
           application/octet-stream:
@@ -395,6 +412,11 @@ paths:
       description: |
         Request an import job for the given connector ID. This will check the
         target system for new content to pull into Lilt.
+
+        Example CURL command:
+        ```
+         curl -X GET https://lilt.com/2/connectors/sync?key=API_KEY&id=128
+        ```
       operationId: syncConnector
       parameters:
       - description: A unique Connector identifier.
@@ -417,6 +439,78 @@ paths:
                 $ref: '#/components/schemas/Error'
           description: Unexpected error
       summary: Sync a Connector
+      tags:
+      - Connectors
+      x-accepts: application/json
+  /connectors/jobs:
+    get:
+      description: |
+        Retrieves a connector job available to your user. Use this to check the
+        status of jobs started by the `/connectors/sync` and
+        `/connectors/jobs/deliver` endpoints.
+
+        Example CURL command:
+        ```
+         curl -X GET https://lilt.com/2/connectors/jobs?key=API_KEY&id=9274
+        ```
+      operationId: getConnectorJobs
+      parameters:
+      - description: A unique Connector Job identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/ConnectorJob'
+                title: ConnectorJobsList
+                type: array
+          description: A list of Connector Jobs.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retreive a Connector Job
+      tags:
+      - Connectors
+      x-accepts: application/json
+  /connectors/jobs/deliver:
+    post:
+      description: |
+        Request an export job for the given connector job ID. This will check
+        Lilt for completed projects that are associated with this job and
+        deliver them to the target system.
+
+        Example CURL command:
+        ```
+         curl -X POST https://lilt.com/2/connectors/jobs/deliver?key=API_KEY&id=9274
+        ```
+      operationId: exportConnectorJob
+      parameters:
+      - description: A unique Connector Job identifier.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content: {}
+          description: A success status code.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Deliver a Connector Job
       tags:
       - Connectors
       x-accepts: application/json
@@ -816,7 +910,10 @@ paths:
     post:
       description: |+
         Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats).
-        Request parameters should be passed as JSON object with the header  field `LILT-API`.
+        Request parameters should be passed as JSON object with the header field `LILT-API`.
+
+        File names in the header can only contain [US-ASCII characters](https://en.wikipedia.org/wiki/ASCII). File names with characters outside of US-ASCII should be [URI encoded](https://en.wikipedia.org/wiki/Percent-encoding) or transliterated to US-ASCII strings.
+
         Example CURL command:
         ```
           curl -X POST https://lilt.com/2/documents/files?key=API_KEY \
@@ -899,22 +996,66 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/octet-stream
       x-accepts: application/json
+  /documents/done/unlock:
+    post:
+      description: |
+        Unlock documents for translation.
+        Sets document "Translation Done" and "Review Done" to false.
+
+        Example curl:
+        ```
+          curl --X --request POST 'https://lilt.com/2/documents/done/unlock?key=API_KEY' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+              "documentIds": [23921, 23922]
+          }'
+        ```
+      requestBody:
+        content:
+          application/json:
+            schema:
+              title: DocumentDoneUpdateParameters
+              type: object
+        description: document ids to update
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  description: TODO default missing array inner type to string
+                  type: string
+                title: DocumentDoneResponse
+                type: array
+          description: array of updated documents
+      summary: Unlock documents
+      tags:
+      - Documents
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
   /documents/done/translation:
     post:
       description: |
         Mark the translation of documents as done/undone in bulk.
+
         When being marked positively as done:
+
         - Documents must not already be marked as done and all segments must be confirmed.
         - This request will also trigger an email notification to a document's assigned reviewer that the document is ready for review.
+
+        When being marked as un-done:
+        - Documents must not be marked as complete for review.
+
         Example curl:
         ```
-        curl --location --request POST 'https://lilt.com/2/documents/done/translation' \
-        --header 'Authorization: Basic API_KEY=' \
-        --header 'Content-Type: application/json' \
-        --data-raw '{
-            "documentIds": [23921, 23922],
-            "isDone": true
-        }'
+          curl --X --request POST 'https://lilt.com/2/documents/done/translation?key=API_KEY' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+              "documentIds": [23921, 23922],
+              "isDone": true
+          }'
         ```
       requestBody:
         $ref: '#/components/requestBodies/DocumentDoneUpdateParameters'
@@ -938,9 +1079,65 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/DocumentWithSegments'
+                items:
+                  description: TODO default missing array inner type to string
+                  type: string
+                title: DocumentDoneResponse
+                type: array
           description: array of updated documents
       summary: Mark translation done
+      tags:
+      - Documents
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /documents/done/review:
+    post:
+      description: |
+        Mark the review of documents as done/undone in bulk.
+
+        When being marked positively as done:
+
+        - Documents must not already be marked as done for review.
+        - Documents must already be marked as done for translation.
+        - This request will also trigger an email notification.
+
+        Example curl:
+        ```
+          curl --X --request POST 'https://lilt.com/2/documents/done/review?key=API_KEY' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+              "documentIds": [23921, 23922],
+              "isDone": true
+          }'
+        ```
+      requestBody:
+        $ref: '#/components/requestBodies/DocumentDoneUpdateParameters_1'
+        content:
+          application/json:
+            schema:
+              properties:
+                isDone:
+                  example: true
+                  type: boolean
+              required:
+              - isDone
+              title: DocumentDoneUpdateParameters
+              type: object
+        description: document ids to update
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  description: TODO default missing array inner type to string
+                  type: string
+                title: DocumentDoneResponse
+                type: array
+          description: array of updated documents
+      summary: Mark review done
       tags:
       - Documents
       x-codegen-request-body-name: body
@@ -1734,8 +1931,8 @@ paths:
                   example: 1489147692
                   type: integer
                 metadata:
-                  description: Metadata associated with a project. This field must
-                    be valid JSON.
+                  description: A JSON object of key/value string pairs. Stores custom
+                    project information.
                   example:
                     connectorType: github
                     notes: example metadata
@@ -2306,6 +2503,132 @@ paths:
       tags:
       - Translate
       x-accepts: application/json
+  /translate/file:
+    get:
+      description: |+
+        Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.
+
+        Example CURL:
+        ```
+        curl --X --request GET 'https://lilt.com/2/translate/file?translationIds=1,2&fromTime=1607966744&toTime=1707966744&status=InProgress' \
+        --header 'Authorization: Basic API_KEY='
+        ```
+
+      operationId: monitorFileTranslation
+      parameters:
+      - description: List of translation ids, comma separated
+        in: query
+        name: translationIds
+        schema:
+          type: string
+      - description: One of the translation statuses - `InProgress`, `Completed`,
+          `Failed`, `ReadyForDownload`
+        in: query
+        name: status
+        schema:
+          type: string
+      - description: Results after this time (inclusive) will be returned, specified
+          as seconds since the Unix epoch.
+        in: query
+        name: fromTime
+        schema:
+          type: number
+      - description: Results before this time (exclusive) will be returned, specified
+          as seconds since the Unix epoch.
+        in: query
+        name: toTime
+        schema:
+          type: number
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationInfo'
+          description: Translation info
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Monitor file translation
+      tags:
+      - Translate
+      x-accepts: application/json
+    post:
+      description: |+
+        Start machine translation of one or more Files that have previously been uploaded.  The response will include an `id` parameter that can be used to monitor and download the translations in subsequent calls.
+
+        Example CURL:
+        ```
+        curl --X --request POST 'https://lilt.com/2/translate/file?fileId=583&memoryId=2495' \
+        --header 'Authorization: Basic API_KEY='
+        ```
+
+      operationId: batchTranslateFile
+      parameters:
+      - description: List of File ids to be translated, comma separated.
+        in: query
+        name: fileId
+        required: true
+        schema:
+          type: string
+      - description: Id of Memory to use in translation.
+        in: query
+        name: memoryId
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationInfo'
+          description: Translation info
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Translate a File
+      tags:
+      - Translate
+      x-accepts: application/json
+  /translate/files:
+    get:
+      description: |+
+        Download a translated File.
+
+        Example CURL:
+        ```
+        curl --X --request GET 'https://lilt.com/2/translate/files?id=1' \
+        --header 'Authorization: Basic API_KEY='
+        ```
+
+      operationId: downloadFile
+      parameters:
+      - description: A translation id.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/octet-stream:
+              schema:
+                format: byte
+                title: DocumentDownloadResponse
+                type: string
+          description: A file.
+      summary: Download translated file
+      tags:
+      - Translate
+      x-accepts: application/octet-stream
 components:
   requestBodies:
     LexiconUpdateParameters:
@@ -2337,6 +2660,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/SegmentUpdateParameters'
+      required: true
+    DocumentDoneUpdateParameters_1:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DocumentDoneUpdateParameters_1'
       required: true
     MemoryUpdateParameters:
       content:
@@ -2393,6 +2722,33 @@ components:
             $ref: '#/components/schemas/ProjectUpdateResponse'
       required: true
   schemas:
+    TranslationInfo:
+      description: |
+        Information describing a batch translation process.
+      example:
+        id: 1
+        fileId: 2,
+        status: InProgress
+        createdAt: 1609357135
+      properties:
+        id:
+          description: Unique identifier for this translation.
+          type: integer
+        fileId:
+          description: id of the File that is being translated.
+          type: integer
+        status:
+          description: Status of the translation - `InProgress`, `ReadyForDownload`,
+            `Completed`, `Failed`.
+          type: string
+        createdAt:
+          description: Time when this translation was started, in seconds since the
+            Unix epoch.
+          type: integer
+        errorMsg:
+          description: Error message, present when status is `Failed`.
+          type: string
+      type: object
     Error:
       description: |
         Response in the event of an unexpected error.
@@ -2541,8 +2897,8 @@ components:
           example: My New Project
           type: string
         state:
-          description: The project's state. The possible states are 'backlog', 'inProgress',
-            'inReview', 'inQA', and 'done'
+          description: The project's state. The possible states are `backlog`, `inProgress`,
+            `inReview`, `inQA`, and `done`.
           example: backlog
           type: string
         due_date:
@@ -2554,7 +2910,8 @@ components:
           example: false
           type: boolean
         metadata:
-          description: A JSON object for storing various project metadata.
+          description: A JSON object of key/value string pairs. Stores custom project
+            information.
           example:
             connectorType: github
             notes: example metadata
@@ -2911,7 +3268,9 @@ components:
         created_at: 1489147692
         id: 46530
         export_uri: https://example.com/export
+        category: REFERENCE
         detected_lang: de
+        labels: []
       properties:
         id:
           description: A unique number identifying the File.
@@ -2939,6 +3298,18 @@ components:
           description: Confidence score for the language associated with the file.
           example: 0.7
           type: number
+        category:
+          description: The category of the file. The options are `REFERENCE`, or `API`.
+            The default is API. Files with the `REFERENCE` category will be displayed
+            as reference material.
+          example: REFERENCE
+          type: string
+        labels:
+          description: The list of labels associated with the file.
+          example: []
+          items:
+            type: string
+          type: array
         created_at:
           description: Time at which the object was created. Measured in seconds since
             the Unix epoch.
@@ -3981,6 +4352,15 @@ components:
       - isDone
       title: DocumentDoneUpdateParameters
       type: object
+    DocumentDoneUpdateParameters_1:
+      properties:
+        isDone:
+          example: true
+          type: boolean
+      required:
+      - isDone
+      title: DocumentDoneUpdateParameters
+      type: object
     LanguagesResponse:
       example:
         source_to_target:
@@ -4245,8 +4625,8 @@ components:
           example: 1489147692
           type: integer
         metadata:
-          description: Metadata associated with a project. This field must be valid
-            JSON.
+          description: A JSON object of key/value string pairs. Stores custom project
+            information.
           example:
             connectorType: github
             notes: example metadata

@@ -31,7 +31,7 @@ import java.util.List;
  * A Project is a collection of zero or more Documents. It is specific to a language pair, and is associated with exactly one Memory for that language pair. The Memory association cannot be changed after the Project is created. 
  */
 @ApiModel(description = "A Project is a collection of zero or more Documents. It is specific to a language pair, and is associated with exactly one Memory for that language pair. The Memory association cannot be changed after the Project is created. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-10-22T17:35:42.609Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-04T23:50:13.754Z[GMT]")
 public class Project {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -262,11 +262,11 @@ public class Project {
   }
 
    /**
-   * The project&#39;s state. The possible states are &#39;backlog&#39;, &#39;inProgress&#39;, &#39;inReview&#39;, &#39;inQA&#39;, and &#39;done&#39;
+   * The project&#39;s state. The possible states are &#x60;backlog&#x60;, &#x60;inProgress&#x60;, &#x60;inReview&#x60;, &#x60;inQA&#x60;, and &#x60;done&#x60;.
    * @return state
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "backlog", value = "The project's state. The possible states are 'backlog', 'inProgress', 'inReview', 'inQA', and 'done'")
+  @ApiModelProperty(example = "backlog", value = "The project's state. The possible states are `backlog`, `inProgress`, `inReview`, `inQA`, and `done`.")
 
   public String getState() {
     return state;
@@ -331,11 +331,11 @@ public class Project {
   }
 
    /**
-   * A JSON object for storing various project metadata.
+   * A JSON object of key/value string pairs. Stores custom project information.
    * @return metadata
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "{\"connectorType\":\"github\",\"notes\":\"example metadata\"}", value = "A JSON object for storing various project metadata.")
+  @ApiModelProperty(example = "{\"connectorType\":\"github\",\"notes\":\"example metadata\"}", value = "A JSON object of key/value string pairs. Stores custom project information.")
 
   public Object getMetadata() {
     return metadata;

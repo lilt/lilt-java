@@ -7,7 +7,9 @@ Method | HTTP request | Description
 [**assignDocument**](DocumentsApi.md#assignDocument) | **PUT** /documents/share | Assign a Document
 [**createDocument**](DocumentsApi.md#createDocument) | **POST** /documents | Create a Document
 [**deleteDocument**](DocumentsApi.md#deleteDocument) | **DELETE** /documents | Delete a Document
+[**documentsDoneReviewPost**](DocumentsApi.md#documentsDoneReviewPost) | **POST** /documents/done/review | Mark review done
 [**documentsDoneTranslationPost**](DocumentsApi.md#documentsDoneTranslationPost) | **POST** /documents/done/translation | Mark translation done
+[**documentsDoneUnlockPost**](DocumentsApi.md#documentsDoneUnlockPost) | **POST** /documents/done/unlock | Unlock documents
 [**downloadDocument**](DocumentsApi.md#downloadDocument) | **GET** /documents/files | Download a Document
 [**getDocument**](DocumentsApi.md#getDocument) | **GET** /documents | Retrieve a Document
 [**pretranslateDocuments**](DocumentsApi.md#pretranslateDocuments) | **POST** /documents/pretranslate | Pretranslate a Document
@@ -240,13 +242,87 @@ Name | Type | Description  | Notes
 **200** | A status object. |  -  |
 **0** | Unexpected error |  -  |
 
+<a name="documentsDoneReviewPost"></a>
+# **documentsDoneReviewPost**
+> List&lt;String&gt; documentsDoneReviewPost(body)
+
+Mark review done
+
+Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.DocumentsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
+    DocumentDoneUpdateParameters1 body = new DocumentDoneUpdateParameters1(); // DocumentDoneUpdateParameters1 | 
+    try {
+      List<String> result = apiInstance.documentsDoneReviewPost(body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DocumentsApi#documentsDoneReviewPost");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**DocumentDoneUpdateParameters1**](DocumentDoneUpdateParameters1.md)|  |
+
+### Return type
+
+**List&lt;String&gt;**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | array of updated documents |  -  |
+
 <a name="documentsDoneTranslationPost"></a>
 # **documentsDoneTranslationPost**
-> DocumentWithSegments documentsDoneTranslationPost(body)
+> List&lt;String&gt; documentsDoneTranslationPost(body)
 
 Mark translation done
 
-Mark the translation of documents as done/undone in bulk. When being marked positively as done: - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review. Example curl: &#x60;&#x60;&#x60; curl --location --request POST &#39;https://lilt.com/2/documents/done/translation&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;documentIds\&quot;: [23921, 23922],     \&quot;isDone\&quot;: true }&#39; &#x60;&#x60;&#x60; 
+Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
 
 ### Example
 ```java
@@ -277,7 +353,7 @@ public class Example {
     DocumentsApi apiInstance = new DocumentsApi(defaultClient);
     DocumentDoneUpdateParameters body = new DocumentDoneUpdateParameters(); // DocumentDoneUpdateParameters | 
     try {
-      DocumentWithSegments result = apiInstance.documentsDoneTranslationPost(body);
+      List<String> result = apiInstance.documentsDoneTranslationPost(body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling DocumentsApi#documentsDoneTranslationPost");
@@ -298,7 +374,81 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**DocumentWithSegments**](DocumentWithSegments.md)
+**List&lt;String&gt;**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | array of updated documents |  -  |
+
+<a name="documentsDoneUnlockPost"></a>
+# **documentsDoneUnlockPost**
+> List&lt;String&gt; documentsDoneUnlockPost(body)
+
+Unlock documents
+
+Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.DocumentsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
+    Object body = null; // Object | document ids to update
+    try {
+      List<String> result = apiInstance.documentsDoneUnlockPost(body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DocumentsApi#documentsDoneUnlockPost");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | **Object**| document ids to update |
+
+### Return type
+
+**List&lt;String&gt;**
 
 ### Authorization
 
@@ -633,7 +783,7 @@ Name | Type | Description  | Notes
 
 Upload a File
 
-Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed as JSON object with the header  field &#x60;LILT-API&#x60;. Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/documents/files?key&#x3D;API_KEY \\   --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;introduction.xliff\\\&quot;,\\\&quot;pretranslate\\\&quot;: \\\&quot;tm+mt\\\&quot;,\\\&quot;project_id\\\&quot;: 9}\&quot; \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @Introduction.xliff &#x60;&#x60;&#x60;  
+Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  File names in the header can only contain [US-ASCII characters](https://en.wikipedia.org/wiki/ASCII). File names with characters outside of US-ASCII should be [URI encoded](https://en.wikipedia.org/wiki/Percent-encoding) or transliterated to US-ASCII strings.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/documents/files?key&#x3D;API_KEY \\   --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;introduction.xliff\\\&quot;,\\\&quot;pretranslate\\\&quot;: \\\&quot;tm+mt\\\&quot;,\\\&quot;project_id\\\&quot;: 9}\&quot; \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @Introduction.xliff &#x60;&#x60;&#x60;  
 
 ### Example
 ```java

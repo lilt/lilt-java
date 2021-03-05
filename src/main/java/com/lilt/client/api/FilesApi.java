@@ -301,6 +301,9 @@ public class FilesApi {
      * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
+     * @param projectId The project to associate the uploaded file with. (optional)
+     * @param category The category of the file. The options are &#x60;REFERENCE&#x60;, or &#x60;API&#x60;. The default is API. Files with the &#x60;REFERENCE&#x60; category will be displayed as reference material. (optional)
+     * @param labels Comma-separated list of labels to add to the uploaded document. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -311,7 +314,7 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadFileCall(String name, String body, String exportUri, String fileHash, Boolean langId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call uploadFileCall(String name, String body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -333,6 +336,18 @@ public class FilesApi {
 
         if (langId != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("langId", langId));
+        }
+
+        if (projectId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("project_id", projectId));
+        }
+
+        if (category != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("category", category));
+        }
+
+        if (labels != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("labels", labels));
         }
 
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
@@ -357,7 +372,7 @@ public class FilesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call uploadFileValidateBeforeCall(String name, String body, String exportUri, String fileHash, Boolean langId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call uploadFileValidateBeforeCall(String name, String body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
@@ -370,7 +385,7 @@ public class FilesApi {
         }
         
 
-        okhttp3.Call localVarCall = uploadFileCall(name, body, exportUri, fileHash, langId, _callback);
+        okhttp3.Call localVarCall = uploadFileCall(name, body, exportUri, fileHash, langId, projectId, category, labels, _callback);
         return localVarCall;
 
     }
@@ -383,6 +398,9 @@ public class FilesApi {
      * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
+     * @param projectId The project to associate the uploaded file with. (optional)
+     * @param category The category of the file. The options are &#x60;REFERENCE&#x60;, or &#x60;API&#x60;. The default is API. Files with the &#x60;REFERENCE&#x60; category will be displayed as reference material. (optional)
+     * @param labels Comma-separated list of labels to add to the uploaded document. (optional)
      * @return java.io.File
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -392,8 +410,8 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public java.io.File uploadFile(String name, String body, String exportUri, String fileHash, Boolean langId) throws ApiException {
-        ApiResponse<java.io.File> localVarResp = uploadFileWithHttpInfo(name, body, exportUri, fileHash, langId);
+    public java.io.File uploadFile(String name, String body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
+        ApiResponse<java.io.File> localVarResp = uploadFileWithHttpInfo(name, body, exportUri, fileHash, langId, projectId, category, labels);
         return localVarResp.getData();
     }
 
@@ -405,6 +423,9 @@ public class FilesApi {
      * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
+     * @param projectId The project to associate the uploaded file with. (optional)
+     * @param category The category of the file. The options are &#x60;REFERENCE&#x60;, or &#x60;API&#x60;. The default is API. Files with the &#x60;REFERENCE&#x60; category will be displayed as reference material. (optional)
+     * @param labels Comma-separated list of labels to add to the uploaded document. (optional)
      * @return ApiResponse&lt;java.io.File&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -414,8 +435,8 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<java.io.File> uploadFileWithHttpInfo(String name, String body, String exportUri, String fileHash, Boolean langId) throws ApiException {
-        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, null);
+    public ApiResponse<java.io.File> uploadFileWithHttpInfo(String name, String body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
+        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, projectId, category, labels, null);
         Type localVarReturnType = new TypeToken<java.io.File>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -428,6 +449,9 @@ public class FilesApi {
      * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
+     * @param projectId The project to associate the uploaded file with. (optional)
+     * @param category The category of the file. The options are &#x60;REFERENCE&#x60;, or &#x60;API&#x60;. The default is API. Files with the &#x60;REFERENCE&#x60; category will be displayed as reference material. (optional)
+     * @param labels Comma-separated list of labels to add to the uploaded document. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -438,9 +462,9 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadFileAsync(String name, String body, String exportUri, String fileHash, Boolean langId, final ApiCallback<java.io.File> _callback) throws ApiException {
+    public okhttp3.Call uploadFileAsync(String name, String body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback<java.io.File> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, _callback);
+        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, projectId, category, labels, _callback);
         Type localVarReturnType = new TypeToken<java.io.File>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
