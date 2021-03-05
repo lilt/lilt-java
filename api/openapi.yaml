@@ -66,11 +66,13 @@ paths:
       operationId: deleteFile
       parameters:
       - description: A unique File identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       responses:
         "204":
           content:
@@ -100,17 +102,20 @@ paths:
       operationId: getFiles
       parameters:
       - description: A unique File identifier.
+        explode: true
         in: query
         name: id
+        required: false
         schema:
           type: integer
+        style: form
       responses:
         "200":
           content:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/File'
+                  $ref: '#/components/schemas/file'
                 title: FilesList
                 type: array
           description: A list of files.
@@ -160,27 +165,37 @@ paths:
       operationId: uploadFile
       parameters:
       - description: A file name.
+        explode: true
         in: query
         name: name
         required: true
         schema:
           type: string
+        style: form
       - description: A webhook endpoint that will export the translated document back
           to the source repository.
+        explode: true
         in: query
         name: export_uri
+        required: false
         schema:
           type: string
+        style: form
       - description: A hash value to associate with the file. The MD5 hash of the
           body contents will be used by default if a value isn't provided.
+        explode: true
         in: query
         name: file_hash
+        required: false
         schema:
           type: string
+        style: form
       - description: Flag indicating whether to perform language detection on the
           uploaded file. Default is false.
+        explode: true
         in: query
         name: langId
+        required: false
         schema:
           type: boolean
       - description: The project to associate the uploaded file with.
@@ -200,6 +215,33 @@ paths:
         name: labels
         schema:
           type: string
+        style: form
+      - description: The project to associate the uploaded file with.
+        explode: true
+        in: query
+        name: project_id
+        required: false
+        schema:
+          type: integer
+        style: form
+      - description: The category of the file. The options are `REFERENCE`, or `API`.
+          The default is API. Files with the `REFERENCE` category will be displayed
+          as reference material.
+        explode: true
+        in: query
+        name: category
+        required: false
+        schema:
+          type: string
+        style: form
+      - description: Comma-separated list of labels to add to the uploaded document.
+        explode: true
+        in: query
+        name: labels
+        required: false
+        schema:
+          type: string
+        style: form
       requestBody:
         content:
           application/octet-stream:
@@ -219,7 +261,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/File'
+                $ref: '#/components/schemas/file'
           description: A File object.
         default:
           content:
@@ -245,11 +287,13 @@ paths:
       operationId: deleteConnector
       parameters:
       - description: A unique Connector identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       responses:
         "204":
           content:
@@ -279,10 +323,13 @@ paths:
       operationId: getConnectors
       parameters:
       - description: A unique Connector identifier.
+        explode: true
         in: query
         name: id
+        required: false
         schema:
           type: integer
+        style: form
       responses:
         "200":
           content:
@@ -420,11 +467,13 @@ paths:
       operationId: syncConnector
       parameters:
       - description: A unique Connector identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       responses:
         "201":
           content:
@@ -456,11 +505,13 @@ paths:
       operationId: getConnectorJobs
       parameters:
       - description: A unique Connector Job identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       responses:
         "200":
           content:
@@ -495,11 +546,13 @@ paths:
       operationId: exportConnectorJob
       parameters:
       - description: A unique Connector Job identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       responses:
         "200":
           content: {}
@@ -521,11 +574,13 @@ paths:
       operationId: deleteDocument
       parameters:
       - description: A unique Document identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       responses:
         "200":
           content:
@@ -551,16 +606,21 @@ paths:
       operationId: getDocument
       parameters:
       - description: A unique Document identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       - description: Flag indicating whether full segment information should be returned.
+        explode: true
         in: query
         name: with_segments
+        required: false
         schema:
           type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -769,30 +829,42 @@ paths:
       parameters:
       - description: Deprecated, use body param instead. Optional parameter for auto-accepting
           100% TM hits.
+        explode: true
         in: query
         name: auto_accept
+        required: false
         schema:
           type: boolean
+        style: form
       - description: Deprecated, use body param instead. Optional for using case matching
           against TM hits.
+        explode: true
         in: query
         name: case_sensitive
+        required: false
         schema:
           type: boolean
+        style: form
       - description: Deprecated, use body param instead. Optional parameter for attributing
           translation authorship of exact matches to document creator.
+        explode: true
         in: query
         name: attribute_to_creator
+        required: false
         schema:
           type: boolean
+        style: form
       - description: |
           Deprecated, use body param instead. An optional parameter indicating how the document will be pretranslated.
 
           The accepted values are `tm`, or `tm+mt`. Default is `tm`.
+        explode: true
         in: query
         name: mode
+        required: false
         schema:
           type: string
+        style: form
       requestBody:
         $ref: '#/components/requestBodies/DocumentPretranslateParameters'
         content:
@@ -874,17 +946,22 @@ paths:
       operationId: downloadDocument
       parameters:
       - description: An unique Document identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       - description: Download the document in XLIFF 1.2 format.
+        explode: true
         in: query
         name: is_xliff
+        required: false
         schema:
           default: true
           type: boolean
+        style: form
       responses:
         "200":
           content:
@@ -925,43 +1002,56 @@ paths:
       operationId: uploadDocument
       parameters:
       - description: A file name.
+        explode: false
         in: header
         name: name
         required: true
         schema:
           type: string
+        style: simple
       - description: A unique Project identifier.
+        explode: false
         in: header
         name: project_id
         required: true
         schema:
           type: integer
+        style: simple
       - description: |
           An optional parameter indicating if and how the document will be
           pretranslated upon being uploaded.
 
           The accepted values are `null`, `tm`, or `tm+mt`
+        explode: false
         in: header
         name: pretranslate
+        required: false
         schema:
           type: string
+        style: simple
       - description: |
           An optional parameter to auto-accept segments with 100% translation
           memory matches when the `pretranslate` option is also set, or to
           auto-accept any target data that is present when the uploaded file
           is XLIFF. If omitted or set to `false`, no segments will be
           auto-accepted.
+        explode: false
         in: header
         name: auto_accept
+        required: false
         schema:
           type: boolean
+        style: simple
       - description: |
           An optional pararameter to specify an import configuration to
           be applied when extracting translatable content from this file.
+        explode: false
         in: header
         name: config_id
+        required: false
         schema:
           type: integer
+        style: simple
       requestBody:
         content:
           application/octet-stream:
@@ -1175,35 +1265,46 @@ paths:
       operationId: queryLexicon
       parameters:
       - description: A unique Memory identifier.
+        explode: true
         in: query
         name: memory_id
         required: true
         schema:
           type: integer
+        style: form
       - description: An ISO 639-1 language code.
+        explode: true
         in: query
         name: srclang
         required: true
         schema:
           type: string
+        style: form
       - description: An ISO 639-1 language code.
+        explode: true
         in: query
         name: trglang
         required: true
         schema:
           type: string
+        style: form
       - description: The query term.
+        explode: true
         in: query
         name: query
         required: true
         schema:
           type: string
+        style: form
       - description: The maximum number of results to return.
+        explode: true
         in: query
         name: "n"
+        required: false
         schema:
           default: 1
           type: integer
+        style: form
       responses:
         "200":
           content:
@@ -1286,11 +1387,13 @@ paths:
       operationId: deleteMemory
       parameters:
       - description: A unique Memory identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       responses:
         "200":
           content:
@@ -1315,10 +1418,13 @@ paths:
       operationId: getMemory
       parameters:
       - description: An optional Memory identifier.
+        explode: true
         in: query
         name: id
+        required: false
         schema:
           type: integer
+        style: form
       responses:
         "200":
           content:
@@ -1466,23 +1572,30 @@ paths:
       operationId: queryMemory
       parameters:
       - description: A unique Memory identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       - description: A source query.
+        explode: true
         in: query
         name: query
         required: true
         schema:
           type: string
+        style: form
       - description: Maximum number of results to return.
+        explode: true
         in: query
         name: "n"
+        required: false
         schema:
           default: 10
           type: integer
+        style: form
       responses:
         "200":
           content:
@@ -1516,13 +1629,16 @@ paths:
       operationId: syncDeleteMemory
       parameters:
       - description: A unique Memory identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       - description: Unix time stamp (epoch, in seconds) of the start of the Memory
           section.
+        explode: true
         in: query
         name: from_time
         schema:
@@ -1531,14 +1647,19 @@ paths:
           section.
         in: query
         name: to_time
+        required: false
         schema:
           type: integer
+        style: form
       - description: 'The date field on which retrieved segments match from/to time
           stamps: `created`, `updated`, `deleted`.'
+        explode: true
         in: query
         name: when
+        required: false
         schema:
           type: string
+        style: form
       responses:
         "200":
           content:
@@ -1568,30 +1689,41 @@ paths:
       operationId: syncDownMemory
       parameters:
       - description: A unique Memory identifier.
+        explode: true
         in: query
         name: id
         required: true
         schema:
           type: integer
+        style: form
       - description: Unix time stamp (epoch, in seconds) of the start of the Memory
           section.
+        explode: true
         in: query
         name: from_time
+        required: false
         schema:
           type: integer
+        style: form
       - description: Unix time stamp (epoch, in seconds) of the end of the Memory
           section.
+        explode: true
         in: query
         name: to_time
+        required: false
         schema:
           type: integer
+        style: form
       - description: 'The date field on which retrieved segments match from/to time
           stamps: `created`, `updated`, `deleted`. If this parameter is omitted, then
           the whole Memory is returned.'
+        explode: true
         in: query
         name: when
+        required: false
         schema:
           type: string
+        style: form
       responses:
         "200":
           content:
@@ -3257,7 +3389,7 @@ components:
           example: 30
           type: integer
       type: object
-    File:
+    file:
       description: A File is an unprocessed source file that can later be added to
         a project.
       example:
@@ -4344,15 +4476,6 @@ components:
     DocumentDoneUpdateParameters:
       example:
         isDone: true
-      properties:
-        isDone:
-          example: true
-          type: boolean
-      required:
-      - isDone
-      title: DocumentDoneUpdateParameters
-      type: object
-    DocumentDoneUpdateParameters_1:
       properties:
         isDone:
           example: true

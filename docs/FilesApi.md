@@ -86,7 +86,7 @@ Name | Type | Description  | Notes
 
 <a name="getFiles"></a>
 # **getFiles**
-> List&lt;java.io.File&gt; getFiles(id)
+> List&lt;com.lilt.client.model.File&gt; getFiles(id)
 
 Retrieve a File
 
@@ -121,7 +121,7 @@ public class Example {
     FilesApi apiInstance = new FilesApi(defaultClient);
     Integer id = 56; // Integer | A unique File identifier.
     try {
-      List<java.io.File> result = apiInstance.getFiles(id);
+      List<com.lilt.client.model.File> result = apiInstance.getFiles(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling FilesApi#getFiles");
@@ -142,7 +142,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;java.io.File&gt;**](java.io.File.md)
+[**List&lt;com.lilt.client.model.File&gt;**](File.md)
 
 ### Authorization
 
@@ -163,7 +163,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadFile"></a>
 # **uploadFile**
-> java.io.File uploadFile(name, body, exportUri, fileHash, langId, projectId, category, labels)
+> com.lilt.client.model.File uploadFile(name, body, exportUri, fileHash, langId, projectId, category, labels)
 
 Upload a File
 
@@ -205,7 +205,7 @@ public class Example {
     String category = "category_example"; // String | The category of the file. The options are `REFERENCE`, or `API`. The default is API. Files with the `REFERENCE` category will be displayed as reference material.
     String labels = "labels_example"; // String | Comma-separated list of labels to add to the uploaded document.
     try {
-      java.io.File result = apiInstance.uploadFile(name, body, exportUri, fileHash, langId, projectId, category, labels);
+      com.lilt.client.model.File result = apiInstance.uploadFile(name, body, exportUri, fileHash, langId, projectId, category, labels);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling FilesApi#uploadFile");
@@ -233,7 +233,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**java.io.File**](java.io.File.md)
+[**com.lilt.client.model.File**](File.md)
 
 ### Authorization
 
