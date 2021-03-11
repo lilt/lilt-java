@@ -18,12 +18,17 @@ jobs:
           fetch-depth: 0
       - uses: WyriHaximus/github-action-get-previous-tag@0.2.0
         id: latest
+      - name: Download Lilt Schema
+        run : curl -O https://lilt.com/docs/api/public-http-api-swagger.yaml
+      - name: Replace File with file in schema
+        # A fix for the following: https://github.com/OpenAPITools/openapi-generator/issues/5083
+        run: sed 's/definitions\/File"/definitions\/file"/;s/File:/file:/' public-http-api-swagger.yaml > processed.yaml 
       - name: Generate API Bindings
         uses: docker://openapitools/openapi-generator-cli:v4.3.1
         with:
           args: >-
             generate
-            -i https://lilt.com/docs/api/public-http-api-swagger.yaml
+            -i processed.yaml
             -g java
             -p modelPackage=com.lilt.client.model
             -p apiPackage=com.lilt.client.api
