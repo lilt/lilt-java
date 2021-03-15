@@ -71,7 +71,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.lilt.client</groupId>
   <artifactId>lilt-java-client</artifactId>
-  <version>2.0.3</version>
+  <version>2.1.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -86,7 +86,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/lilt-java-client-2.0.3.jar`
+* `target/lilt-java-client-2.1.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
