@@ -9,7 +9,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **Integer** |  |  [optional]
 **status** | **String** |  |  [optional]
-**args** | [**Object**](.md) |  |  [optional]
+**args** | **Object** |  |  [optional]
 **createdAt** | **String** |  |  [optional]
 **updatedAt** | **String** |  |  [optional]
 

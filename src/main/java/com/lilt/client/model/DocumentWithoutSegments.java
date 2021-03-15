@@ -29,7 +29,7 @@ import java.io.IOException;
  * A Document is a collection of zero or more Segments. 
  */
 @ApiModel(description = "A Document is a collection of zero or more Segments. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-04T23:50:13.754Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
 public class DocumentWithoutSegments {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -492,7 +492,7 @@ public class DocumentWithoutSegments {
 
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -524,7 +524,6 @@ public class DocumentWithoutSegments {
     return Objects.hash(id, projectId, srclang, trglang, name, importInProgress, importSucceeded, importErrorMessage, exportInProgress, exportSucceeded, exportErrorMessage, isPretranslating, status, translatorEmail, reviewerEmail, createdAt, updatedAt);
   }
 
-
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -554,7 +553,7 @@ public class DocumentWithoutSegments {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

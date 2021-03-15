@@ -28,11 +28,13 @@ import java.io.IOException;
 
 
 import com.lilt.client.model.Error;
+import java.io.File;
 import com.lilt.client.model.Memory;
 import com.lilt.client.model.MemoryCreateParameters;
 import com.lilt.client.model.MemoryDeleteResponse;
 import com.lilt.client.model.MemoryImportResponse;
 import com.lilt.client.model.MemoryInsertResponse;
+import com.lilt.client.model.MemorySyncDeleteResponse;
 import com.lilt.client.model.MemoryUpdateParameters;
 import com.lilt.client.model.MemoryUpdateResponse;
 import com.lilt.client.model.TranslationMemoryEntry;
@@ -86,6 +88,7 @@ public class MemoriesApi {
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -197,13 +200,14 @@ public class MemoriesApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (id != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -315,13 +319,14 @@ public class MemoriesApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (id != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -422,7 +427,7 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call importMemoryFileCall(Integer memoryId, String name, String body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call importMemoryFileCall(Integer memoryId, String name, File body, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -431,6 +436,9 @@ public class MemoriesApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (memoryId != null) {
             localVarHeaderParams.put("memory_id", localVarApiClient.parameterToString(memoryId));
         }
@@ -439,8 +447,6 @@ public class MemoriesApi {
             localVarHeaderParams.put("name", localVarApiClient.parameterToString(name));
         }
 
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -460,7 +466,7 @@ public class MemoriesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call importMemoryFileValidateBeforeCall(Integer memoryId, String name, String body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call importMemoryFileValidateBeforeCall(Integer memoryId, String name, File body, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'memoryId' is set
         if (memoryId == null) {
@@ -498,7 +504,7 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public MemoryImportResponse importMemoryFile(Integer memoryId, String name, String body) throws ApiException {
+    public MemoryImportResponse importMemoryFile(Integer memoryId, String name, File body) throws ApiException {
         ApiResponse<MemoryImportResponse> localVarResp = importMemoryFileWithHttpInfo(memoryId, name, body);
         return localVarResp.getData();
     }
@@ -518,7 +524,7 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<MemoryImportResponse> importMemoryFileWithHttpInfo(Integer memoryId, String name, String body) throws ApiException {
+    public ApiResponse<MemoryImportResponse> importMemoryFileWithHttpInfo(Integer memoryId, String name, File body) throws ApiException {
         okhttp3.Call localVarCall = importMemoryFileValidateBeforeCall(memoryId, name, body, null);
         Type localVarReturnType = new TypeToken<MemoryImportResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -540,7 +546,7 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call importMemoryFileAsync(Integer memoryId, String name, String body, final ApiCallback<MemoryImportResponse> _callback) throws ApiException {
+    public okhttp3.Call importMemoryFileAsync(Integer memoryId, String name, File body, final ApiCallback<MemoryImportResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = importMemoryFileValidateBeforeCall(memoryId, name, body, _callback);
         Type localVarReturnType = new TypeToken<MemoryImportResponse>(){}.getType();
@@ -570,6 +576,10 @@ public class MemoriesApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (id != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
         }
@@ -582,9 +592,6 @@ public class MemoriesApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("n", n));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -710,6 +717,10 @@ public class MemoriesApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (id != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
         }
@@ -726,9 +737,6 @@ public class MemoriesApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("when", when));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -768,7 +776,7 @@ public class MemoriesApi {
      * @param fromTime Unix time stamp (epoch, in seconds) of the start of the Memory section. (optional)
      * @param toTime Unix time stamp (epoch, in seconds) of the end of the Memory section. (optional)
      * @param when The date field on which retrieved segments match from/to time stamps: &#x60;created&#x60;, &#x60;updated&#x60;, &#x60;deleted&#x60;. (optional)
-     * @return MemoryInsertResponse
+     * @return MemorySyncDeleteResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -777,8 +785,8 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public MemoryInsertResponse syncDeleteMemory(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
-        ApiResponse<MemoryInsertResponse> localVarResp = syncDeleteMemoryWithHttpInfo(id, fromTime, toTime, when);
+    public MemorySyncDeleteResponse syncDeleteMemory(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
+        ApiResponse<MemorySyncDeleteResponse> localVarResp = syncDeleteMemoryWithHttpInfo(id, fromTime, toTime, when);
         return localVarResp.getData();
     }
 
@@ -789,7 +797,7 @@ public class MemoriesApi {
      * @param fromTime Unix time stamp (epoch, in seconds) of the start of the Memory section. (optional)
      * @param toTime Unix time stamp (epoch, in seconds) of the end of the Memory section. (optional)
      * @param when The date field on which retrieved segments match from/to time stamps: &#x60;created&#x60;, &#x60;updated&#x60;, &#x60;deleted&#x60;. (optional)
-     * @return ApiResponse&lt;MemoryInsertResponse&gt;
+     * @return ApiResponse&lt;MemorySyncDeleteResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -798,9 +806,9 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<MemoryInsertResponse> syncDeleteMemoryWithHttpInfo(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
+    public ApiResponse<MemorySyncDeleteResponse> syncDeleteMemoryWithHttpInfo(Integer id, Integer fromTime, Integer toTime, String when) throws ApiException {
         okhttp3.Call localVarCall = syncDeleteMemoryValidateBeforeCall(id, fromTime, toTime, when, null);
-        Type localVarReturnType = new TypeToken<MemoryInsertResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<MemorySyncDeleteResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -821,10 +829,10 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call syncDeleteMemoryAsync(Integer id, Integer fromTime, Integer toTime, String when, final ApiCallback<MemoryInsertResponse> _callback) throws ApiException {
+    public okhttp3.Call syncDeleteMemoryAsync(Integer id, Integer fromTime, Integer toTime, String when, final ApiCallback<MemorySyncDeleteResponse> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = syncDeleteMemoryValidateBeforeCall(id, fromTime, toTime, when, _callback);
-        Type localVarReturnType = new TypeToken<MemoryInsertResponse>(){}.getType();
+        Type localVarReturnType = new TypeToken<MemorySyncDeleteResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -852,6 +860,10 @@ public class MemoriesApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (id != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
         }
@@ -868,9 +880,6 @@ public class MemoriesApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("when", when));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/x-tmx"
         };
@@ -994,6 +1003,9 @@ public class MemoriesApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (id != null) {
             localVarHeaderParams.put("id", localVarApiClient.parameterToString(id));
         }
@@ -1002,8 +1014,6 @@ public class MemoriesApi {
             localVarHeaderParams.put("name", localVarApiClient.parameterToString(name));
         }
 
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1131,6 +1141,9 @@ public class MemoriesApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (id != null) {
             localVarHeaderParams.put("id", localVarApiClient.parameterToString(id));
         }
@@ -1147,8 +1160,6 @@ public class MemoriesApi {
             localVarHeaderParams.put("when", localVarApiClient.parameterToString(when));
         }
 
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1280,6 +1291,7 @@ public class MemoriesApi {
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         final String[] localVarAccepts = {
             "application/json"
         };

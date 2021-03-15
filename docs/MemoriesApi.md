@@ -278,7 +278,7 @@ public class Example {
     MemoriesApi apiInstance = new MemoriesApi(defaultClient);
     Integer memoryId = 56; // Integer | A unique Memory identifier.
     String name = "name_example"; // String | Name of the TM or termbase file.
-    String body = "body_example"; // String | The file contents to be uploaded. The entire POST body will be treated as the file.
+    File body = new File("/path/to/file"); // File | The file contents to be uploaded. The entire POST body will be treated as the file.
     try {
       MemoryImportResponse result = apiInstance.importMemoryFile(memoryId, name, body);
       System.out.println(result);
@@ -299,7 +299,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **memoryId** | **Integer**| A unique Memory identifier. |
  **name** | **String**| Name of the TM or termbase file. |
- **body** | **String**| The file contents to be uploaded. The entire POST body will be treated as the file. |
+ **body** | **File**| The file contents to be uploaded. The entire POST body will be treated as the file. |
 
 ### Return type
 
@@ -401,7 +401,7 @@ Name | Type | Description  | Notes
 
 <a name="syncDeleteMemory"></a>
 # **syncDeleteMemory**
-> MemoryInsertResponse syncDeleteMemory(id, fromTime, toTime, when)
+> MemorySyncDeleteResponse syncDeleteMemory(id, fromTime, toTime, when)
 
 Delete-sync for a Memory
 
@@ -439,7 +439,7 @@ public class Example {
     Integer toTime = 56; // Integer | Unix time stamp (epoch, in seconds) of the end of the Memory section.
     String when = "when_example"; // String | The date field on which retrieved segments match from/to time stamps: `created`, `updated`, `deleted`.
     try {
-      MemoryInsertResponse result = apiInstance.syncDeleteMemory(id, fromTime, toTime, when);
+      MemorySyncDeleteResponse result = apiInstance.syncDeleteMemory(id, fromTime, toTime, when);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling MemoriesApi#syncDeleteMemory");
@@ -463,7 +463,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**MemoryInsertResponse**](MemoryInsertResponse.md)
+[**MemorySyncDeleteResponse**](MemorySyncDeleteResponse.md)
 
 ### Authorization
 
