@@ -86,7 +86,7 @@ Name | Type | Description  | Notes
 
 <a name="getFiles"></a>
 # **getFiles**
-> List&lt;com.lilt.client.model.File&gt; getFiles(id)
+> List&lt;SourceFile&gt; getFiles(id)
 
 Retrieve a File
 
@@ -121,7 +121,7 @@ public class Example {
     FilesApi apiInstance = new FilesApi(defaultClient);
     Integer id = 56; // Integer | A unique File identifier.
     try {
-      List<com.lilt.client.model.File> result = apiInstance.getFiles(id);
+      List<SourceFile> result = apiInstance.getFiles(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling FilesApi#getFiles");
@@ -142,7 +142,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;com.lilt.client.model.File&gt;**](File.md)
+[**List&lt;SourceFile&gt;**](SourceFile.md)
 
 ### Authorization
 
@@ -163,7 +163,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadFile"></a>
 # **uploadFile**
-> com.lilt.client.model.File uploadFile(name, body, exportUri, fileHash, langId, projectId, category, labels)
+> SourceFile uploadFile(name, body, exportUri, fileHash, langId, projectId, category, labels)
 
 Upload a File
 
@@ -197,7 +197,7 @@ public class Example {
 
     FilesApi apiInstance = new FilesApi(defaultClient);
     String name = "name_example"; // String | A file name.
-    String body = "body_example"; // String | The file contents to be uploaded. The entire POST body will be treated as the file.
+    File body = new File("/path/to/file"); // File | The file contents to be uploaded. The entire POST body will be treated as the file.
     String exportUri = "exportUri_example"; // String | A webhook endpoint that will export the translated document back to the source repository.
     String fileHash = "fileHash_example"; // String | A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn't provided.
     Boolean langId = true; // Boolean | Flag indicating whether to perform language detection on the uploaded file. Default is false.
@@ -205,7 +205,7 @@ public class Example {
     String category = "category_example"; // String | The category of the file. The options are `REFERENCE`, or `API`. The default is API. Files with the `REFERENCE` category will be displayed as reference material.
     String labels = "labels_example"; // String | Comma-separated list of labels to add to the uploaded document.
     try {
-      com.lilt.client.model.File result = apiInstance.uploadFile(name, body, exportUri, fileHash, langId, projectId, category, labels);
+      SourceFile result = apiInstance.uploadFile(name, body, exportUri, fileHash, langId, projectId, category, labels);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling FilesApi#uploadFile");
@@ -223,7 +223,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **String**| A file name. |
- **body** | **String**| The file contents to be uploaded. The entire POST body will be treated as the file. |
+ **body** | **File**| The file contents to be uploaded. The entire POST body will be treated as the file. |
  **exportUri** | **String**| A webhook endpoint that will export the translated document back to the source repository. | [optional]
  **fileHash** | **String**| A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. | [optional]
  **langId** | **Boolean**| Flag indicating whether to perform language detection on the uploaded file. Default is false. | [optional]
@@ -233,7 +233,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**com.lilt.client.model.File**](File.md)
+[**SourceFile**](SourceFile.md)
 
 ### Authorization
 
@@ -247,6 +247,6 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**201** | A File object. |  -  |
+**201** | A SourceFile object. |  -  |
 **0** | Unexpected error |  -  |
 

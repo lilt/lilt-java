@@ -28,8 +28,9 @@ import java.io.IOException;
 
 
 import com.lilt.client.model.Error;
-import com.lilt.client.model.File;
+import java.io.File;
 import com.lilt.client.model.FileDeleteResponse;
+import com.lilt.client.model.SourceFile;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -237,7 +238,7 @@ public class FilesApi {
      * Retrieve a File
      * Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.  To retrieve a specific file, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all files, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/files?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
      * @param id A unique File identifier. (optional)
-     * @return List&lt;com.lilt.client.model.File&gt;
+     * @return List&lt;SourceFile&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -248,8 +249,8 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public List<com.lilt.client.model.File> getFiles(Integer id) throws ApiException {
-        ApiResponse<List<com.lilt.client.model.File>> localVarResp = getFilesWithHttpInfo(id);
+    public List<SourceFile> getFiles(Integer id) throws ApiException {
+        ApiResponse<List<SourceFile>> localVarResp = getFilesWithHttpInfo(id);
         return localVarResp.getData();
     }
 
@@ -257,7 +258,7 @@ public class FilesApi {
      * Retrieve a File
      * Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.  To retrieve a specific file, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all files, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/files?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
      * @param id A unique File identifier. (optional)
-     * @return ApiResponse&lt;List&lt;com.lilt.client.model.File&gt;&gt;
+     * @return ApiResponse&lt;List&lt;SourceFile&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -268,9 +269,9 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<com.lilt.client.model.File>> getFilesWithHttpInfo(Integer id) throws ApiException {
+    public ApiResponse<List<SourceFile>> getFilesWithHttpInfo(Integer id) throws ApiException {
         okhttp3.Call localVarCall = getFilesValidateBeforeCall(id, null);
-        Type localVarReturnType = new TypeToken<List<com.lilt.client.model.File>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<SourceFile>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -290,10 +291,10 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getFilesAsync(Integer id, final ApiCallback<List<com.lilt.client.model.File>> _callback) throws ApiException {
+    public okhttp3.Call getFilesAsync(Integer id, final ApiCallback<List<SourceFile>> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getFilesValidateBeforeCall(id, _callback);
-        Type localVarReturnType = new TypeToken<List<com.lilt.client.model.File>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<SourceFile>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -313,11 +314,11 @@ public class FilesApi {
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> A File object. </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> A SourceFile object. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadFileCall(String name, String body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call uploadFileCall(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -376,7 +377,7 @@ public class FilesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call uploadFileValidateBeforeCall(String name, String body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call uploadFileValidateBeforeCall(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
@@ -405,17 +406,17 @@ public class FilesApi {
      * @param projectId The project to associate the uploaded file with. (optional)
      * @param category The category of the file. The options are &#x60;REFERENCE&#x60;, or &#x60;API&#x60;. The default is API. Files with the &#x60;REFERENCE&#x60; category will be displayed as reference material. (optional)
      * @param labels Comma-separated list of labels to add to the uploaded document. (optional)
-     * @return com.lilt.client.model.File
+     * @return SourceFile
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> A File object. </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> A SourceFile object. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public com.lilt.client.model.File uploadFile(String name, String body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
-        ApiResponse<com.lilt.client.model.File> localVarResp = uploadFileWithHttpInfo(name, body, exportUri, fileHash, langId, projectId, category, labels);
+    public SourceFile uploadFile(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
+        ApiResponse<SourceFile> localVarResp = uploadFileWithHttpInfo(name, body, exportUri, fileHash, langId, projectId, category, labels);
         return localVarResp.getData();
     }
 
@@ -430,18 +431,18 @@ public class FilesApi {
      * @param projectId The project to associate the uploaded file with. (optional)
      * @param category The category of the file. The options are &#x60;REFERENCE&#x60;, or &#x60;API&#x60;. The default is API. Files with the &#x60;REFERENCE&#x60; category will be displayed as reference material. (optional)
      * @param labels Comma-separated list of labels to add to the uploaded document. (optional)
-     * @return ApiResponse&lt;com.lilt.client.model.File&gt;
+     * @return ApiResponse&lt;SourceFile&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> A File object. </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> A SourceFile object. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<com.lilt.client.model.File> uploadFileWithHttpInfo(String name, String body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
+    public ApiResponse<SourceFile> uploadFileWithHttpInfo(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
         okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, projectId, category, labels, null);
-        Type localVarReturnType = new TypeToken<com.lilt.client.model.File>(){}.getType();
+        Type localVarReturnType = new TypeToken<SourceFile>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -462,14 +463,14 @@ public class FilesApi {
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 201 </td><td> A File object. </td><td>  -  </td></tr>
+        <tr><td> 201 </td><td> A SourceFile object. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadFileAsync(String name, String body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback<com.lilt.client.model.File> _callback) throws ApiException {
+    public okhttp3.Call uploadFileAsync(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback<SourceFile> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, projectId, category, labels, _callback);
-        Type localVarReturnType = new TypeToken<com.lilt.client.model.File>(){}.getType();
+        Type localVarReturnType = new TypeToken<SourceFile>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

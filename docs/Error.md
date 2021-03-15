@@ -7,7 +7,7 @@ Response in the event of an unexpected error.
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**message** | [**Object**](.md) | A human-readable message describing the error. |  [optional]
+**message** | **Object** | A human-readable message describing the error. |  [optional]
 
 
 

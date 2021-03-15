@@ -13,11 +13,11 @@ Method | HTTP request | Description
 
 <a name="batchTranslateFile"></a>
 # **batchTranslateFile**
-> TranslationInfo batchTranslateFile(fileId, memoryId)
+> TranslationInfo batchTranslateFile(fileId, memoryId, configId)
 
 Translate a File
 
-Start machine translation of one or more Files that have previously been uploaded.  The response will include an &#x60;id&#x60; parameter that can be used to monitor and download the translations in subsequent calls.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/translate/file?fileId&#x3D;583&amp;memoryId&#x3D;2495&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+Start machine translation of one or more Files that have previously been uploaded.  The response will include an &#x60;id&#x60; parameter that can be used to monitor and download the translations in subsequent calls.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/translate/file?key&#x3D;API_KEY&amp;fileId&#x3D;583&amp;memoryId&#x3D;2495&amp;configId&#x3D;123&#39; &#x60;&#x60;&#x60;  
 
 ### Example
 ```java
@@ -48,8 +48,9 @@ public class Example {
     TranslateApi apiInstance = new TranslateApi(defaultClient);
     String fileId = "fileId_example"; // String | List of File ids to be translated, comma separated.
     String memoryId = "memoryId_example"; // String | Id of Memory to use in translation.
+    BigDecimal configId = new BigDecimal(78); // BigDecimal | An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.
     try {
-      TranslationInfo result = apiInstance.batchTranslateFile(fileId, memoryId);
+      TranslationInfo result = apiInstance.batchTranslateFile(fileId, memoryId, configId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#batchTranslateFile");
@@ -68,6 +69,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **fileId** | **String**| List of File ids to be translated, comma separated. |
  **memoryId** | **String**| Id of Memory to use in translation. |
+ **configId** | **BigDecimal**| An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. | [optional]
 
 ### Return type
 
@@ -94,7 +96,7 @@ Name | Type | Description  | Notes
 
 Download translated file
 
-Download a translated File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/files?id&#x3D;1&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+Download a translated File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/files?key&#x3D;API_KEY&amp;id&#x3D;1&#39; &#x60;&#x60;&#x60;  
 
 ### Example
 ```java
@@ -168,7 +170,7 @@ Name | Type | Description  | Notes
 
 Monitor file translation
 
-Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/file?translationIds&#x3D;1,2&amp;fromTime&#x3D;1607966744&amp;toTime&#x3D;1707966744&amp;status&#x3D;InProgress&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/file?key&#x3D;API_KEY&amp;translationIds&#x3D;1,2&amp;fromTime&#x3D;1607966744&amp;toTime&#x3D;1707966744&amp;status&#x3D;InProgress&#39; &#x60;&#x60;&#x60;  
 
 ### Example
 ```java
@@ -199,8 +201,8 @@ public class Example {
     TranslateApi apiInstance = new TranslateApi(defaultClient);
     String translationIds = "translationIds_example"; // String | List of translation ids, comma separated
     String status = "status_example"; // String | One of the translation statuses - `InProgress`, `Completed`, `Failed`, `ReadyForDownload`
-    BigDecimal fromTime = new BigDecimal(); // BigDecimal | Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch.
-    BigDecimal toTime = new BigDecimal(); // BigDecimal | Results before this time (exclusive) will be returned, specified as seconds since the Unix epoch.
+    BigDecimal fromTime = new BigDecimal(78); // BigDecimal | Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch.
+    BigDecimal toTime = new BigDecimal(78); // BigDecimal | Results before this time (exclusive) will be returned, specified as seconds since the Unix epoch.
     try {
       TranslationInfo result = apiInstance.monitorFileTranslation(translationIds, status, fromTime, toTime);
       System.out.println(result);

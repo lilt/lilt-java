@@ -23,66 +23,64 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import java.math.BigDecimal;
 
 /**
- * An object that indicates the location in the target of contiguous words that align with the source query. 
+ * MemorySyncDeleteResponse
  */
-@ApiModel(description = "An object that indicates the location in the target of contiguous words that align with the source query. ")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
-public class LexiconEntryTargetSpan {
-  public static final String SERIALIZED_NAME_START = "start";
-  @SerializedName(SERIALIZED_NAME_START)
-  private BigDecimal start;
+public class MemorySyncDeleteResponse {
+  public static final String SERIALIZED_NAME_ID = "id";
+  @SerializedName(SERIALIZED_NAME_ID)
+  private Integer id;
 
-  public static final String SERIALIZED_NAME_LENGTH = "length";
-  @SerializedName(SERIALIZED_NAME_LENGTH)
-  private BigDecimal length;
+  public static final String SERIALIZED_NAME_NUM_UPDATES = "num_updates";
+  @SerializedName(SERIALIZED_NAME_NUM_UPDATES)
+  private Integer numUpdates;
 
 
-  public LexiconEntryTargetSpan start(BigDecimal start) {
+  public MemorySyncDeleteResponse id(Integer id) {
     
-    this.start = start;
+    this.id = id;
     return this;
   }
 
    /**
-   * The zero-indexed start index when &#x60;target&#x60; is split on whitespace. 
-   * @return start
+   * A unique Memory identifier.
+   * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The zero-indexed start index when `target` is split on whitespace. ")
+  @ApiModelProperty(example = "123", value = "A unique Memory identifier.")
 
-  public BigDecimal getStart() {
-    return start;
+  public Integer getId() {
+    return id;
   }
 
 
-  public void setStart(BigDecimal start) {
-    this.start = start;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
 
-  public LexiconEntryTargetSpan length(BigDecimal length) {
+  public MemorySyncDeleteResponse numUpdates(Integer numUpdates) {
     
-    this.length = length;
+    this.numUpdates = numUpdates;
     return this;
   }
 
    /**
-   * The length in words after &#x60;start&#x60; of the target aligned phrase. 
-   * @return length
+   * The number of updates to the Memory.
+   * @return numUpdates
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "The length in words after `start` of the target aligned phrase. ")
+  @ApiModelProperty(example = "107", value = "The number of updates to the Memory.")
 
-  public BigDecimal getLength() {
-    return length;
+  public Integer getNumUpdates() {
+    return numUpdates;
   }
 
 
-  public void setLength(BigDecimal length) {
-    this.length = length;
+  public void setNumUpdates(Integer numUpdates) {
+    this.numUpdates = numUpdates;
   }
 
 
@@ -94,22 +92,22 @@ public class LexiconEntryTargetSpan {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LexiconEntryTargetSpan lexiconEntryTargetSpan = (LexiconEntryTargetSpan) o;
-    return Objects.equals(this.start, lexiconEntryTargetSpan.start) &&
-        Objects.equals(this.length, lexiconEntryTargetSpan.length);
+    MemorySyncDeleteResponse memorySyncDeleteResponse = (MemorySyncDeleteResponse) o;
+    return Objects.equals(this.id, memorySyncDeleteResponse.id) &&
+        Objects.equals(this.numUpdates, memorySyncDeleteResponse.numUpdates);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(start, length);
+    return Objects.hash(id, numUpdates);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LexiconEntryTargetSpan {\n");
-    sb.append("    start: ").append(toIndentedString(start)).append("\n");
-    sb.append("    length: ").append(toIndentedString(length)).append("\n");
+    sb.append("class MemorySyncDeleteResponse {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("    numUpdates: ").append(toIndentedString(numUpdates)).append("\n");
     sb.append("}");
     return sb.toString();
   }

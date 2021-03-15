@@ -2,7 +2,7 @@
 
 Lilt REST API
 - API version: v2.0
-  - Build date: 2020-04-13T16:28:14.210947-07:00[America/Los_Angeles]
+  - Build date: 2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]
 
 The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:
   * Training of and translating with interactive, adaptive machine translation
@@ -96,12 +96,12 @@ Please follow the [installation](#installation) instruction and execute the foll
 ```java
 
 // Import classes:
-import com.lilt.ApiClient;
-import com.lilt.ApiException;
-import com.lilt.Configuration;
-import com.lilt.auth.*;
-import com.lilt.models.*;
-import com.lilt.api.DocumentsApi;
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.ConnectorsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -119,13 +119,13 @@ public class Example {
     BasicAuth.setUsername("YOUR USERNAME");
     BasicAuth.setPassword("YOUR PASSWORD");
 
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    DocumentAssignmentParameters body = new DocumentAssignmentParameters(); // DocumentAssignmentParameters | 
+    ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
+    Connector body = new Connector(); // Connector | 
     try {
-      DocumentAssignmentResponse result = apiInstance.assignDocument(body);
+      Connector result = apiInstance.createConnector(body);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#assignDocument");
+      System.err.println("Exception when calling ConnectorsApi#createConnector");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -142,14 +142,24 @@ All URIs are relative to *https://lilt.com/2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*ConnectorsApi* | [**createConnector**](docs/ConnectorsApi.md#createConnector) | **POST** /connectors | Upload a Connector
+*ConnectorsApi* | [**deleteConnector**](docs/ConnectorsApi.md#deleteConnector) | **DELETE** /connectors | Delete a Connector
+*ConnectorsApi* | [**exportConnectorJob**](docs/ConnectorsApi.md#exportConnectorJob) | **POST** /connectors/jobs/deliver | Deliver a Connector Job
+*ConnectorsApi* | [**getConnectorJobs**](docs/ConnectorsApi.md#getConnectorJobs) | **GET** /connectors/jobs | Retreive a Connector Job
+*ConnectorsApi* | [**getConnectors**](docs/ConnectorsApi.md#getConnectors) | **GET** /connectors | Retrieve a Connector
+*ConnectorsApi* | [**syncConnector**](docs/ConnectorsApi.md#syncConnector) | **POST** /connectors/sync | Sync a Connector
+*ConnectorsApi* | [**updateConnector**](docs/ConnectorsApi.md#updateConnector) | **PUT** /connectors | Upload a Connector
 *DocumentsApi* | [**assignDocument**](docs/DocumentsApi.md#assignDocument) | **PUT** /documents/share | Assign a Document
 *DocumentsApi* | [**createDocument**](docs/DocumentsApi.md#createDocument) | **POST** /documents | Create a Document
 *DocumentsApi* | [**deleteDocument**](docs/DocumentsApi.md#deleteDocument) | **DELETE** /documents | Delete a Document
-*DocumentsApi* | [**downloadFile**](docs/DocumentsApi.md#downloadFile) | **GET** /documents/files | Download a File
+*DocumentsApi* | [**documentsDoneReviewPost**](docs/DocumentsApi.md#documentsDoneReviewPost) | **POST** /documents/done/review | Mark review done
+*DocumentsApi* | [**documentsDoneTranslationPost**](docs/DocumentsApi.md#documentsDoneTranslationPost) | **POST** /documents/done/translation | Mark translation done
+*DocumentsApi* | [**documentsDoneUnlockPost**](docs/DocumentsApi.md#documentsDoneUnlockPost) | **POST** /documents/done/unlock | Unlock documents
+*DocumentsApi* | [**downloadDocument**](docs/DocumentsApi.md#downloadDocument) | **GET** /documents/files | Download a Document
 *DocumentsApi* | [**getDocument**](docs/DocumentsApi.md#getDocument) | **GET** /documents | Retrieve a Document
-*DocumentsApi* | [**pretranslateDocument**](docs/DocumentsApi.md#pretranslateDocument) | **POST** /documents/pretranslate | Pretranslate a Document
+*DocumentsApi* | [**pretranslateDocuments**](docs/DocumentsApi.md#pretranslateDocuments) | **POST** /documents/pretranslate | Pretranslate a Document
 *DocumentsApi* | [**updateDocument**](docs/DocumentsApi.md#updateDocument) | **PUT** /documents | Update a Document
-*DocumentsApi* | [**uploadDocumentFile**](docs/DocumentsApi.md#uploadDocumentFile) | **POST** /documents/files | Upload a File
+*DocumentsApi* | [**uploadDocument**](docs/DocumentsApi.md#uploadDocument) | **POST** /documents/files | Upload a File
 *FilesApi* | [**deleteFile**](docs/FilesApi.md#deleteFile) | **DELETE** /files | Delete a File
 *FilesApi* | [**getFiles**](docs/FilesApi.md#getFiles) | **GET** /files | Retrieve a File
 *FilesApi* | [**uploadFile**](docs/FilesApi.md#uploadFile) | **POST** /files | Upload a File
@@ -168,9 +178,9 @@ Class | Method | HTTP request | Description
 *MemoriesApi* | [**updateMemory**](docs/MemoriesApi.md#updateMemory) | **PUT** /memories | Update the name of a Memory
 *ProjectsApi* | [**createProject**](docs/ProjectsApi.md#createProject) | **POST** /projects | Create a Project
 *ProjectsApi* | [**deleteProject**](docs/ProjectsApi.md#deleteProject) | **DELETE** /projects | Delete a Project
-*ProjectsApi* | [**getProject**](docs/ProjectsApi.md#getProject) | **GET** /projects | Retrieve a Project
 *ProjectsApi* | [**getProjectReport**](docs/ProjectsApi.md#getProjectReport) | **GET** /projects/quote | Retrieve Project report
 *ProjectsApi* | [**getProjectStatus**](docs/ProjectsApi.md#getProjectStatus) | **GET** /projects/status | Retrieve Project status
+*ProjectsApi* | [**getProjects**](docs/ProjectsApi.md#getProjects) | **GET** /projects | Retrieve a Project
 *ProjectsApi* | [**updateProject**](docs/ProjectsApi.md#updateProject) | **PUT** /projects | Update a Project
 *QaApi* | [**qaCheck**](docs/QaApi.md#qaCheck) | **GET** /qa | Perform QA check
 *RootApi* | [**root**](docs/RootApi.md#root) | **GET** / | Retrieve the REST API root
@@ -179,21 +189,33 @@ Class | Method | HTTP request | Description
 *SegmentsApi* | [**getSegment**](docs/SegmentsApi.md#getSegment) | **GET** /segments | Retrieve a Segment
 *SegmentsApi* | [**tagSegment**](docs/SegmentsApi.md#tagSegment) | **GET** /segments/tag | Tag a Segment
 *SegmentsApi* | [**updateSegment**](docs/SegmentsApi.md#updateSegment) | **PUT** /segments | Update a Segment
+*TranslateApi* | [**batchTranslateFile**](docs/TranslateApi.md#batchTranslateFile) | **POST** /translate/file | Translate a File
+*TranslateApi* | [**downloadFile**](docs/TranslateApi.md#downloadFile) | **GET** /translate/files | Download translated file
+*TranslateApi* | [**monitorFileTranslation**](docs/TranslateApi.md#monitorFileTranslation) | **GET** /translate/file | Monitor file translation
 *TranslateApi* | [**registerSegment**](docs/TranslateApi.md#registerSegment) | **GET** /translate/register | Register a segment
 *TranslateApi* | [**translateSegment**](docs/TranslateApi.md#translateSegment) | **GET** /translate | Translate a segment
 
 
 ## Documentation for Models
 
+ - [Annotation](docs/Annotation.md)
  - [ApiRoot](docs/ApiRoot.md)
+ - [Comment](docs/Comment.md)
+ - [Connector](docs/Connector.md)
+ - [ConnectorArguments](docs/ConnectorArguments.md)
+ - [ConnectorDeleteResponse](docs/ConnectorDeleteResponse.md)
+ - [ConnectorJob](docs/ConnectorJob.md)
  - [DocumentAssignmentParameters](docs/DocumentAssignmentParameters.md)
  - [DocumentAssignmentResponse](docs/DocumentAssignmentResponse.md)
  - [DocumentDeleteResponse](docs/DocumentDeleteResponse.md)
+ - [DocumentDoneUpdateParameters](docs/DocumentDoneUpdateParameters.md)
+ - [DocumentDoneUpdateParameters1](docs/DocumentDoneUpdateParameters1.md)
  - [DocumentParameters](docs/DocumentParameters.md)
  - [DocumentPretranslateParameters](docs/DocumentPretranslateParameters.md)
  - [DocumentPretranslateResponse](docs/DocumentPretranslateResponse.md)
  - [DocumentPretranslating](docs/DocumentPretranslating.md)
  - [DocumentPretranslatingStatus](docs/DocumentPretranslatingStatus.md)
+ - [DocumentQuote](docs/DocumentQuote.md)
  - [DocumentUpdateParameters](docs/DocumentUpdateParameters.md)
  - [DocumentWithSegments](docs/DocumentWithSegments.md)
  - [DocumentWithoutSegments](docs/DocumentWithoutSegments.md)
@@ -214,6 +236,7 @@ Class | Method | HTTP request | Description
  - [MemoryDeleteResponse](docs/MemoryDeleteResponse.md)
  - [MemoryImportResponse](docs/MemoryImportResponse.md)
  - [MemoryInsertResponse](docs/MemoryInsertResponse.md)
+ - [MemorySyncDeleteResponse](docs/MemorySyncDeleteResponse.md)
  - [MemoryUpdateParameters](docs/MemoryUpdateParameters.md)
  - [MemoryUpdateResponse](docs/MemoryUpdateResponse.md)
  - [Project](docs/Project.md)
@@ -234,9 +257,12 @@ Class | Method | HTTP request | Description
  - [SegmentCreateParameters](docs/SegmentCreateParameters.md)
  - [SegmentDeleteResponse](docs/SegmentDeleteResponse.md)
  - [SegmentUpdateParameters](docs/SegmentUpdateParameters.md)
+ - [SegmentWithComments](docs/SegmentWithComments.md)
+ - [SourceFile](docs/SourceFile.md)
  - [TaggedSegment](docs/TaggedSegment.md)
  - [TranslateRegisterResponse](docs/TranslateRegisterResponse.md)
  - [Translation](docs/Translation.md)
+ - [TranslationInfo](docs/TranslationInfo.md)
  - [TranslationList](docs/TranslationList.md)
  - [TranslationMemoryEntry](docs/TranslationMemoryEntry.md)
 

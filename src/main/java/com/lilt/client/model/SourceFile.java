@@ -28,11 +28,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * A File is an unprocessed source file that can later be added to a project.
+ * A SourceFile is an unprocessed source file that can later be added to a project.
  */
-@ApiModel(description = "A File is an unprocessed source file that can later be added to a project.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-10T16:54:28.381768-08:00[America/Los_Angeles]")
-public class File {
+@ApiModel(description = "A SourceFile is an unprocessed source file that can later be added to a project.")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+public class SourceFile {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
   private Integer id;
@@ -74,18 +74,18 @@ public class File {
   private Integer updatedAt;
 
 
-  public File id(Integer id) {
+  public SourceFile id(Integer id) {
     
     this.id = id;
     return this;
   }
 
    /**
-   * A unique number identifying the File.
+   * A unique number identifying the SourceFile.
    * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "46530", value = "A unique number identifying the File.")
+  @ApiModelProperty(example = "46530", value = "A unique number identifying the SourceFile.")
 
   public Integer getId() {
     return id;
@@ -97,7 +97,7 @@ public class File {
   }
 
 
-  public File name(String name) {
+  public SourceFile name(String name) {
     
     this.name = name;
     return this;
@@ -120,7 +120,7 @@ public class File {
   }
 
 
-  public File fileHash(String fileHash) {
+  public SourceFile fileHash(String fileHash) {
     
     this.fileHash = fileHash;
     return this;
@@ -143,7 +143,7 @@ public class File {
   }
 
 
-  public File exportUri(String exportUri) {
+  public SourceFile exportUri(String exportUri) {
     
     this.exportUri = exportUri;
     return this;
@@ -166,7 +166,7 @@ public class File {
   }
 
 
-  public File detectedLang(String detectedLang) {
+  public SourceFile detectedLang(String detectedLang) {
     
     this.detectedLang = detectedLang;
     return this;
@@ -189,7 +189,7 @@ public class File {
   }
 
 
-  public File detectedLangConfidence(BigDecimal detectedLangConfidence) {
+  public SourceFile detectedLangConfidence(BigDecimal detectedLangConfidence) {
     
     this.detectedLangConfidence = detectedLangConfidence;
     return this;
@@ -212,7 +212,7 @@ public class File {
   }
 
 
-  public File category(String category) {
+  public SourceFile category(String category) {
     
     this.category = category;
     return this;
@@ -235,13 +235,13 @@ public class File {
   }
 
 
-  public File labels(List<String> labels) {
+  public SourceFile labels(List<String> labels) {
     
     this.labels = labels;
     return this;
   }
 
-  public File addLabelsItem(String labelsItem) {
+  public SourceFile addLabelsItem(String labelsItem) {
     if (this.labels == null) {
       this.labels = new ArrayList<String>();
     }
@@ -266,7 +266,7 @@ public class File {
   }
 
 
-  public File createdAt(Integer createdAt) {
+  public SourceFile createdAt(Integer createdAt) {
     
     this.createdAt = createdAt;
     return this;
@@ -289,7 +289,7 @@ public class File {
   }
 
 
-  public File updatedAt(Integer updatedAt) {
+  public SourceFile updatedAt(Integer updatedAt) {
     
     this.updatedAt = updatedAt;
     return this;
@@ -320,17 +320,17 @@ public class File {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    File file = (File) o;
-    return Objects.equals(this.id, file.id) &&
-        Objects.equals(this.name, file.name) &&
-        Objects.equals(this.fileHash, file.fileHash) &&
-        Objects.equals(this.exportUri, file.exportUri) &&
-        Objects.equals(this.detectedLang, file.detectedLang) &&
-        Objects.equals(this.detectedLangConfidence, file.detectedLangConfidence) &&
-        Objects.equals(this.category, file.category) &&
-        Objects.equals(this.labels, file.labels) &&
-        Objects.equals(this.createdAt, file.createdAt) &&
-        Objects.equals(this.updatedAt, file.updatedAt);
+    SourceFile sourceFile = (SourceFile) o;
+    return Objects.equals(this.id, sourceFile.id) &&
+        Objects.equals(this.name, sourceFile.name) &&
+        Objects.equals(this.fileHash, sourceFile.fileHash) &&
+        Objects.equals(this.exportUri, sourceFile.exportUri) &&
+        Objects.equals(this.detectedLang, sourceFile.detectedLang) &&
+        Objects.equals(this.detectedLangConfidence, sourceFile.detectedLangConfidence) &&
+        Objects.equals(this.category, sourceFile.category) &&
+        Objects.equals(this.labels, sourceFile.labels) &&
+        Objects.equals(this.createdAt, sourceFile.createdAt) &&
+        Objects.equals(this.updatedAt, sourceFile.updatedAt);
   }
 
   @Override
@@ -341,7 +341,7 @@ public class File {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class File {\n");
+    sb.append("class SourceFile {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    fileHash: ").append(toIndentedString(fileHash)).append("\n");

@@ -62,6 +62,7 @@ public class TranslateApi {
      * Build call for batchTranslateFile
      * @param fileId List of File ids to be translated, comma separated. (required)
      * @param memoryId Id of Memory to use in translation. (required)
+     * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -72,7 +73,7 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call batchTranslateFileCall(String fileId, String memoryId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call batchTranslateFileCall(String fileId, String memoryId, BigDecimal configId, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -80,6 +81,10 @@ public class TranslateApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (fileId != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("fileId", fileId));
         }
@@ -88,9 +93,10 @@ public class TranslateApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("memoryId", memoryId));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+        if (configId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("configId", configId));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -110,7 +116,7 @@ public class TranslateApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call batchTranslateFileValidateBeforeCall(String fileId, String memoryId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call batchTranslateFileValidateBeforeCall(String fileId, String memoryId, BigDecimal configId, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'fileId' is set
         if (fileId == null) {
@@ -123,16 +129,17 @@ public class TranslateApi {
         }
         
 
-        okhttp3.Call localVarCall = batchTranslateFileCall(fileId, memoryId, _callback);
+        okhttp3.Call localVarCall = batchTranslateFileCall(fileId, memoryId, configId, _callback);
         return localVarCall;
 
     }
 
     /**
      * Translate a File
-     * Start machine translation of one or more Files that have previously been uploaded.  The response will include an &#x60;id&#x60; parameter that can be used to monitor and download the translations in subsequent calls.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/translate/file?fileId&#x3D;583&amp;memoryId&#x3D;2495&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+     * Start machine translation of one or more Files that have previously been uploaded.  The response will include an &#x60;id&#x60; parameter that can be used to monitor and download the translations in subsequent calls.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/translate/file?key&#x3D;API_KEY&amp;fileId&#x3D;583&amp;memoryId&#x3D;2495&amp;configId&#x3D;123&#39; &#x60;&#x60;&#x60;  
      * @param fileId List of File ids to be translated, comma separated. (required)
      * @param memoryId Id of Memory to use in translation. (required)
+     * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. (optional)
      * @return TranslationInfo
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -142,16 +149,17 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public TranslationInfo batchTranslateFile(String fileId, String memoryId) throws ApiException {
-        ApiResponse<TranslationInfo> localVarResp = batchTranslateFileWithHttpInfo(fileId, memoryId);
+    public TranslationInfo batchTranslateFile(String fileId, String memoryId, BigDecimal configId) throws ApiException {
+        ApiResponse<TranslationInfo> localVarResp = batchTranslateFileWithHttpInfo(fileId, memoryId, configId);
         return localVarResp.getData();
     }
 
     /**
      * Translate a File
-     * Start machine translation of one or more Files that have previously been uploaded.  The response will include an &#x60;id&#x60; parameter that can be used to monitor and download the translations in subsequent calls.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/translate/file?fileId&#x3D;583&amp;memoryId&#x3D;2495&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+     * Start machine translation of one or more Files that have previously been uploaded.  The response will include an &#x60;id&#x60; parameter that can be used to monitor and download the translations in subsequent calls.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/translate/file?key&#x3D;API_KEY&amp;fileId&#x3D;583&amp;memoryId&#x3D;2495&amp;configId&#x3D;123&#39; &#x60;&#x60;&#x60;  
      * @param fileId List of File ids to be translated, comma separated. (required)
      * @param memoryId Id of Memory to use in translation. (required)
+     * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. (optional)
      * @return ApiResponse&lt;TranslationInfo&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -161,17 +169,18 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<TranslationInfo> batchTranslateFileWithHttpInfo(String fileId, String memoryId) throws ApiException {
-        okhttp3.Call localVarCall = batchTranslateFileValidateBeforeCall(fileId, memoryId, null);
+    public ApiResponse<TranslationInfo> batchTranslateFileWithHttpInfo(String fileId, String memoryId, BigDecimal configId) throws ApiException {
+        okhttp3.Call localVarCall = batchTranslateFileValidateBeforeCall(fileId, memoryId, configId, null);
         Type localVarReturnType = new TypeToken<TranslationInfo>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Translate a File (asynchronously)
-     * Start machine translation of one or more Files that have previously been uploaded.  The response will include an &#x60;id&#x60; parameter that can be used to monitor and download the translations in subsequent calls.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/translate/file?fileId&#x3D;583&amp;memoryId&#x3D;2495&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+     * Start machine translation of one or more Files that have previously been uploaded.  The response will include an &#x60;id&#x60; parameter that can be used to monitor and download the translations in subsequent calls.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/translate/file?key&#x3D;API_KEY&amp;fileId&#x3D;583&amp;memoryId&#x3D;2495&amp;configId&#x3D;123&#39; &#x60;&#x60;&#x60;  
      * @param fileId List of File ids to be translated, comma separated. (required)
      * @param memoryId Id of Memory to use in translation. (required)
+     * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -182,9 +191,9 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call batchTranslateFileAsync(String fileId, String memoryId, final ApiCallback<TranslationInfo> _callback) throws ApiException {
+    public okhttp3.Call batchTranslateFileAsync(String fileId, String memoryId, BigDecimal configId, final ApiCallback<TranslationInfo> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = batchTranslateFileValidateBeforeCall(fileId, memoryId, _callback);
+        okhttp3.Call localVarCall = batchTranslateFileValidateBeforeCall(fileId, memoryId, configId, _callback);
         Type localVarReturnType = new TypeToken<TranslationInfo>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
@@ -209,13 +218,14 @@ public class TranslateApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (id != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/octet-stream"
         };
@@ -250,7 +260,7 @@ public class TranslateApi {
 
     /**
      * Download translated file
-     * Download a translated File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/files?id&#x3D;1&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+     * Download a translated File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/files?key&#x3D;API_KEY&amp;id&#x3D;1&#39; &#x60;&#x60;&#x60;  
      * @param id A translation id. (required)
      * @return byte[]
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -267,7 +277,7 @@ public class TranslateApi {
 
     /**
      * Download translated file
-     * Download a translated File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/files?id&#x3D;1&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+     * Download a translated File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/files?key&#x3D;API_KEY&amp;id&#x3D;1&#39; &#x60;&#x60;&#x60;  
      * @param id A translation id. (required)
      * @return ApiResponse&lt;byte[]&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -285,7 +295,7 @@ public class TranslateApi {
 
     /**
      * Download translated file (asynchronously)
-     * Download a translated File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/files?id&#x3D;1&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+     * Download a translated File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/files?key&#x3D;API_KEY&amp;id&#x3D;1&#39; &#x60;&#x60;&#x60;  
      * @param id A translation id. (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -327,6 +337,10 @@ public class TranslateApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (translationIds != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("translationIds", translationIds));
         }
@@ -343,9 +357,6 @@ public class TranslateApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("toTime", toTime));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -375,7 +386,7 @@ public class TranslateApi {
 
     /**
      * Monitor file translation
-     * Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/file?translationIds&#x3D;1,2&amp;fromTime&#x3D;1607966744&amp;toTime&#x3D;1707966744&amp;status&#x3D;InProgress&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+     * Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/file?key&#x3D;API_KEY&amp;translationIds&#x3D;1,2&amp;fromTime&#x3D;1607966744&amp;toTime&#x3D;1707966744&amp;status&#x3D;InProgress&#39; &#x60;&#x60;&#x60;  
      * @param translationIds List of translation ids, comma separated (optional)
      * @param status One of the translation statuses - &#x60;InProgress&#x60;, &#x60;Completed&#x60;, &#x60;Failed&#x60;, &#x60;ReadyForDownload&#x60; (optional)
      * @param fromTime Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch. (optional)
@@ -396,7 +407,7 @@ public class TranslateApi {
 
     /**
      * Monitor file translation
-     * Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/file?translationIds&#x3D;1,2&amp;fromTime&#x3D;1607966744&amp;toTime&#x3D;1707966744&amp;status&#x3D;InProgress&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+     * Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/file?key&#x3D;API_KEY&amp;translationIds&#x3D;1,2&amp;fromTime&#x3D;1607966744&amp;toTime&#x3D;1707966744&amp;status&#x3D;InProgress&#39; &#x60;&#x60;&#x60;  
      * @param translationIds List of translation ids, comma separated (optional)
      * @param status One of the translation statuses - &#x60;InProgress&#x60;, &#x60;Completed&#x60;, &#x60;Failed&#x60;, &#x60;ReadyForDownload&#x60; (optional)
      * @param fromTime Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch. (optional)
@@ -418,7 +429,7 @@ public class TranslateApi {
 
     /**
      * Monitor file translation (asynchronously)
-     * Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/file?translationIds&#x3D;1,2&amp;fromTime&#x3D;1607966744&amp;toTime&#x3D;1707966744&amp;status&#x3D;InProgress&#39; \\ --header &#39;Authorization: Basic API_KEY&#x3D;&#39; &#x60;&#x60;&#x60;  
+     * Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/translate/file?key&#x3D;API_KEY&amp;translationIds&#x3D;1,2&amp;fromTime&#x3D;1607966744&amp;toTime&#x3D;1707966744&amp;status&#x3D;InProgress&#39; &#x60;&#x60;&#x60;  
      * @param translationIds List of translation ids, comma separated (optional)
      * @param status One of the translation statuses - &#x60;InProgress&#x60;, &#x60;Completed&#x60;, &#x60;Failed&#x60;, &#x60;ReadyForDownload&#x60; (optional)
      * @param fromTime Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch. (optional)
@@ -463,6 +474,10 @@ public class TranslateApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (source != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("source", source));
         }
@@ -475,9 +490,6 @@ public class TranslateApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("trglang", trglang));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -612,6 +624,10 @@ public class TranslateApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
         if (memoryId != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("memory_id", memoryId));
         }
@@ -644,9 +660,6 @@ public class TranslateApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("project_tags", projectTags));
         }
 
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
