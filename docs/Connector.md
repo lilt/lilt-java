@@ -7,7 +7,7 @@
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **name** | **String** | Name of connector. |  [optional]
-**args** | **Object** | Connector parameters. |  [optional]
+**args** | [**Object**](.md) | Connector parameters. |  [optional]
 **schedule** | **String** | Cron string |  [optional]
 
 

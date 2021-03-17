@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * LexiconUpdateParameters
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-17T00:12:38.610Z[GMT]")
 public class LexiconUpdateParameters {
   public static final String SERIALIZED_NAME_MEMORY_ID = "memory_id";
   @SerializedName(SERIALIZED_NAME_MEMORY_ID)
@@ -109,7 +109,7 @@ public class LexiconUpdateParameters {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -127,6 +127,7 @@ public class LexiconUpdateParameters {
     return Objects.hash(memoryId, source, target);
   }
 
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -142,7 +143,7 @@ public class LexiconUpdateParameters {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

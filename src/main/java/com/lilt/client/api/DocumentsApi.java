@@ -38,7 +38,6 @@ import com.lilt.client.model.DocumentPretranslateResponse;
 import com.lilt.client.model.DocumentUpdateParameters;
 import com.lilt.client.model.DocumentWithSegments;
 import com.lilt.client.model.Error;
-import java.io.File;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -89,7 +88,6 @@ public class DocumentsApi {
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -204,7 +202,6 @@ public class DocumentsApi {
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -311,14 +308,13 @@ public class DocumentsApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         if (id != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
         }
 
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -432,7 +428,6 @@ public class DocumentsApi {
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -543,7 +538,6 @@ public class DocumentsApi {
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -654,7 +648,6 @@ public class DocumentsApi {
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -765,10 +758,6 @@ public class DocumentsApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         if (id != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
         }
@@ -777,6 +766,9 @@ public class DocumentsApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("is_xliff", isXliff));
         }
 
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/octet-stream"
         };
@@ -895,10 +887,6 @@ public class DocumentsApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         if (id != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
         }
@@ -907,6 +895,9 @@ public class DocumentsApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("with_segments", withSegments));
         }
 
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1025,10 +1016,6 @@ public class DocumentsApi {
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         if (autoAccept != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("auto_accept", autoAccept));
         }
@@ -1045,6 +1032,9 @@ public class DocumentsApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("mode", mode));
         }
 
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1171,7 +1161,6 @@ public class DocumentsApi {
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
         Map<String, String> localVarCookieParams = new HashMap<String, String>();
         Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1280,7 +1269,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentCall(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1289,9 +1278,6 @@ public class DocumentsApi {
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
         Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
         if (name != null) {
             localVarHeaderParams.put("name", localVarApiClient.parameterToString(name));
         }
@@ -1312,6 +1298,8 @@ public class DocumentsApi {
             localVarHeaderParams.put("config_id", localVarApiClient.parameterToString(configId));
         }
 
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -1331,7 +1319,7 @@ public class DocumentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call uploadDocumentValidateBeforeCall(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call uploadDocumentValidateBeforeCall(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
@@ -1372,7 +1360,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentWithSegments uploadDocument(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
+    public DocumentWithSegments uploadDocument(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
         ApiResponse<DocumentWithSegments> localVarResp = uploadDocumentWithHttpInfo(name, projectId, body, pretranslate, autoAccept, configId);
         return localVarResp.getData();
     }
@@ -1395,7 +1383,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentWithSegments> uploadDocumentWithHttpInfo(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
+    public ApiResponse<DocumentWithSegments> uploadDocumentWithHttpInfo(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
         okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, null);
         Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
@@ -1420,7 +1408,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentAsync(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentAsync(String name, Integer projectId, String body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
         Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();

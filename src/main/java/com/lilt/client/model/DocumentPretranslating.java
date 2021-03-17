@@ -30,7 +30,7 @@ import java.math.BigDecimal;
  * Document object for which pretranslation was requested. 
  */
 @ApiModel(description = "Document object for which pretranslation was requested. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-17T00:12:38.610Z[GMT]")
 public class DocumentPretranslating {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -223,7 +223,7 @@ public class DocumentPretranslating {
 
 
   @Override
-  public boolean equals(Object o) {
+  public boolean equals(java.lang.Object o) {
     if (this == o) {
       return true;
     }
@@ -245,6 +245,7 @@ public class DocumentPretranslating {
     return Objects.hash(id, importInProgress, importSucceeded, importErrorMessage, isProcessing, isPretranslating, status);
   }
 
+
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
@@ -264,7 +265,7 @@ public class DocumentPretranslating {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(Object o) {
+  private String toIndentedString(java.lang.Object o) {
     if (o == null) {
       return "null";
     }

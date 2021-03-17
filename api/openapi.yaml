@@ -110,7 +110,7 @@ paths:
             application/json:
               schema:
                 items:
-                  $ref: '#/components/schemas/SourceFile'
+                  $ref: '#/components/schemas/File'
                 title: FilesList
                 type: array
           description: A list of files.
@@ -209,7 +209,6 @@ paths:
                 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2">
                 ...
                 </xliff>
-              format: binary
               title: FileUploadBody
               type: string
         description: The file contents to be uploaded. The entire POST body will be
@@ -220,8 +219,8 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/SourceFile'
-          description: A SourceFile object.
+                $ref: '#/components/schemas/File'
+          description: A File object.
         default:
           content:
             application/json:
@@ -972,7 +971,6 @@ paths:
                 <xliff xmlns="urn:oasis:names:tc:xliff:document:1.2">
                 ...
                 </xliff>
-              format: binary
               title: DocumentUploadBody
               type: string
         description: |
@@ -1546,7 +1544,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/MemorySyncDeleteResponse'
+                $ref: '#/components/schemas/MemoryInsertResponse'
           description: A status object.
         default:
           content:
@@ -1763,7 +1761,6 @@ paths:
         content:
           application/octet-stream:
             schema:
-              format: binary
               title: MemoryImportBody
               type: string
         description: The file contents to be uploaded. The entire POST body will be
@@ -2564,7 +2561,7 @@ paths:
 
         Example CURL:
         ```
-        curl --X --request POST 'https://lilt.com/2/translate/file?key=API_KEY&fileId=583&memoryId=2495&configId=123'
+        curl --X --request POST 'https://lilt.com/2/translate/file?key=API_KEY&fileId=583&memoryId=2495'
         ```
 
       operationId: batchTranslateFile
@@ -2581,12 +2578,6 @@ paths:
         required: true
         schema:
           type: string
-      - description: An optional pararameter to specify an import configuration to
-          be applied when extracting translatable content from this file.
-        in: query
-        name: configId
-        schema:
-          type: number
       responses:
         "200":
           content:
@@ -2843,8 +2834,7 @@ components:
           export_in_progress: false
           is_pretranslating: false
           translator_email: translator@example.com
-          status:
-            pretranslation: idle
+          status: '{"pretranslation":"idle"}'
         - srclang: en
           created_at: 1489147692
           reviewer_email: reviewer@example.com
@@ -2861,8 +2851,7 @@ components:
           export_in_progress: false
           is_pretranslating: false
           translator_email: translator@example.com
-          status:
-            pretranslation: idle
+          status: '{"pretranslation":"idle"}'
         srclang: en
         due_date: 1489147692
         created_at: 1489147692
@@ -3265,9 +3254,9 @@ components:
           example: 30
           type: integer
       type: object
-    SourceFile:
-      description: A SourceFile is an unprocessed source file that can later be added
-        to a project.
+    File:
+      description: A File is an unprocessed source file that can later be added to
+        a project.
       example:
         detected_lang_confidence: 0.7
         file_hash: 3858f62230ac3c915f300c664312c63f
@@ -3281,7 +3270,7 @@ components:
         labels: []
       properties:
         id:
-          description: A unique number identifying the SourceFile.
+          description: A unique number identifying the File.
           example: 46530
           type: integer
         name:
@@ -3349,8 +3338,7 @@ components:
         export_in_progress: false
         is_pretranslating: false
         translator_email: translator@example.com
-        status:
-          pretranslation: idle
+        status: '{"pretranslation":"idle"}'
       properties:
         id:
           description: A unique number identifying the Document.
@@ -3464,8 +3452,7 @@ components:
         export_in_progress: false
         is_pretranslating: false
         translator_email: translator@example.com
-        status:
-          pretranslation: idle
+        status: '{"pretranslation":"idle"}'
       properties:
         id:
           description: A unique number identifying the Document.
@@ -3546,44 +3533,10 @@ components:
         An Lexicon entry for a source term or phrase.
       example:
         examples:
-        - - source: Waschmaschine
-            sourceDelimiters:
-            - ""
-            - ""
-            target:
-            - washing
-            - machine
-            targetDelimiters:
-            - ""
-            - ' '
-            - ""
-            sourceSpan:
-              start: 0
-              length: 1
-            targetSpan:
-              start: 1
-              length: 1
-            similarity: 0
-            memoryId: 10641
-        - - source: Waschmaschine
-            sourceDelimiters:
-            - ""
-            - ""
-            target:
-            - washing
-            - machine
-            targetDelimiters:
-            - ""
-            - ' '
-            - ""
-            sourceSpan:
-              start: 0
-              length: 1
-            targetSpan:
-              start: 1
-              length: 1
-            similarity: 0
-            memoryId: 10641
+        - '[{"source":"Waschmaschine","sourceDelimiters":["",""],"target":["washing","machine"],"targetDelimiters":["","
+          ",""],"sourceSpan":{"start":0,"length":1},"targetSpan":{"start":1,"length":1},"similarity":0,"memoryId":10641}]'
+        - '[{"source":"Waschmaschine","sourceDelimiters":["",""],"target":["washing","machine"],"targetDelimiters":["","
+          ",""],"sourceSpan":{"start":0,"length":1},"targetSpan":{"start":1,"length":1},"similarity":0,"memoryId":10641}]'
         translations: []
       properties:
         translations:
@@ -3608,8 +3561,7 @@ components:
         is_processing: false
         is_pretranslating: true
         import_in_progress: false
-        status:
-          pretranslation: running
+        status: '{"pretranslation":"running"}'
       properties:
         id:
           description: A status object indicating the pretranslation status.
@@ -4148,8 +4100,6 @@ components:
         api_root:
           example: /2
           type: string
-      title: ApiRoot
-      type: object
     FileDeleteResponse:
       example:
         deleted: true
@@ -4163,8 +4113,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: FileDeleteResponse
-      type: object
     ConnectorArguments:
       example:
         args: '{}'
@@ -4218,8 +4166,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: ConnectorDeleteResponse
-      type: object
     DocumentUpdateParameters:
       example:
         name: Introduction to our App
@@ -4269,8 +4215,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: DocumentDeleteResponse
-      type: object
     DocumentAssignmentParameters:
       example:
         is_reviewer: false
@@ -4313,8 +4257,6 @@ components:
           description: A unique Document identifier.
           example: 46530
           type: integer
-      title: DocumentAssignmentResponse
-      type: object
     DocumentPretranslateParameters:
       example:
         mode: tm+mt
@@ -4366,16 +4308,14 @@ components:
           is_processing: false
           is_pretranslating: true
           import_in_progress: false
-          status:
-            pretranslation: running
+          status: '{"pretranslation":"running"}'
         - import_error_message: ""
           import_succeeded: true
           id: 123.0
           is_processing: false
           is_pretranslating: true
           import_in_progress: false
-          status:
-            pretranslation: running
+          status: '{"pretranslation":"running"}'
         id:
         - 123
         - 234
@@ -4398,8 +4338,6 @@ components:
           items:
             $ref: '#/components/schemas/DocumentPretranslating'
           type: array
-      title: DocumentPretranslateResponse
-      type: object
     DocumentDoneUpdateParameters:
       example:
         isDone: true
@@ -4458,8 +4396,6 @@ components:
             "...": '...'
           properties: {}
           type: object
-      title: LanguagesResponse
-      type: object
     LexiconUpdateParameters:
       example:
         memory_id: 10641
@@ -4497,8 +4433,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: LexiconUpdateResponse
-      type: object
     MemoryUpdateParameters:
       example:
         name: Automotive Memory
@@ -4564,8 +4498,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: MemoryDeleteResponse
-      type: object
     MemoryUpdateResponse:
       example:
         id: 123
@@ -4578,8 +4510,6 @@ components:
         num_updates:
           description: The number of updates to the Memory.
           type: integer
-      title: MemoryUpdateResponse
-      type: object
     MemoryInsertResponse:
       example:
         id: 123
@@ -4593,23 +4523,6 @@ components:
           description: The number of updates to the Memory.
           example: 107
           type: integer
-      title: MemoryInsertResponse
-      type: object
-    MemorySyncDeleteResponse:
-      example:
-        id: 123
-        num_updates: 107
-      properties:
-        id:
-          description: A unique Memory identifier.
-          example: 123
-          type: integer
-        num_updates:
-          description: The number of updates to the Memory.
-          example: 107
-          type: integer
-      title: MemorySyncDeleteResponse
-      type: object
     MemoryImportResponse:
       example:
         isProcessing: 1
@@ -4623,8 +4536,6 @@ components:
           description: The current state of the import.
           example: 1
           type: integer
-      title: MemoryImportResponse
-      type: object
     ProjectUpdateResponse:
       example:
         archived: false
@@ -4736,8 +4647,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: ProjectDeleteResponse
-      type: object
     SegmentUpdateParameters:
       example:
         id: 84480010
@@ -4796,8 +4705,6 @@ components:
           description: If the operation succeeded, then `true`. Otherwise, `false`.
           example: true
           type: boolean
-      title: SegmentDeleteResponse
-      type: object
     TranslateRegisterResponse:
       example:
         num_words: 88
@@ -4812,12 +4719,9 @@ components:
           description: The number of billed words in the segment.
           example: 88
           type: integer
-      title: TranslateRegisterResponse
-      type: object
     DocumentWithoutSegments_status:
       description: A list of translations for the query term.
-      example:
-        pretranslation: idle
+      example: '{"pretranslation":"idle"}'
       properties:
         pretranslation:
           description: ""
@@ -4827,7 +4731,6 @@ components:
           - running
           example: idle
           type: string
-      type: object
     LexiconEntry_translations:
       properties:
         source:
@@ -4844,7 +4747,6 @@ components:
             A unique Memory identifier. If this identifier is missing, then
             the term comes from the generic termbase.
           type: number
-      type: object
     LexiconEntry_sourceSpan:
       description: An object that indicates where the query term appears in the source.
       properties:
@@ -4856,7 +4758,6 @@ components:
           description: |
             The length in words after `start` of the source query term.
           type: number
-      type: object
     LexiconEntry_targetSpan:
       description: |
         An object that indicates the location in the target of contiguous
@@ -4871,28 +4772,9 @@ components:
             The length in words after `start` of the target aligned
             phrase.
           type: number
-      type: object
     LexiconEntry_examples:
-      example:
-      - source: Waschmaschine
-        sourceDelimiters:
-        - ""
-        - ""
-        target:
-        - washing
-        - machine
-        targetDelimiters:
-        - ""
-        - ' '
-        - ""
-        sourceSpan:
-          start: 0
-          length: 1
-        targetSpan:
-          start: 1
-          length: 1
-        similarity: 0
-        memoryId: 10641
+      example: '[{"source":"Waschmaschine","sourceDelimiters":["",""],"target":["washing","machine"],"targetDelimiters":["","
+        ",""],"sourceSpan":{"start":0,"length":1},"targetSpan":{"start":1,"length":1},"similarity":0,"memoryId":10641}]'
       properties:
         source:
           description: The source string.
@@ -4925,17 +4807,14 @@ components:
             A unique Memory identifier. If this identifier is missing, then
             the term comes from the generic concordance.
           type: number
-      type: object
     DocumentPretranslating_status:
       description: A status object indicating the pretranslation status.
-      example:
-        pretranslation: running
+      example: '{"pretranslation":"running"}'
       properties:
         pretranslation:
           description: ""
           example: running
           type: string
-      type: object
     QARuleMatches_context:
       example:
         offset: 19
@@ -4959,13 +4838,11 @@ components:
       - length
       - offset
       - text
-      type: object
     QARuleMatches_replacements:
       properties:
         value:
           description: the replacement string
           type: string
-      type: object
     QARuleMatches_rule_category:
       example:
         name: Possible Typo
@@ -4979,13 +4856,11 @@ components:
           description: A short description of the category.
           example: Possible Typo
           type: string
-      type: object
     QARuleMatches_rule_urls:
       properties:
         value:
           description: the URL
           type: string
-      type: object
     QARuleMatches_rule:
       example:
         issueType: misspelling
@@ -5027,7 +4902,6 @@ components:
       - category
       - description
       - id
-      type: object
     QARuleMatches_matches:
       example:
         offset: 19
@@ -5088,7 +4962,6 @@ components:
       - message
       - offset
       - replacements
-      type: object
   securitySchemes:
     BasicAuth:
       scheme: basic
@@ -5097,5 +4970,4 @@ components:
       in: query
       name: key
       type: apiKey
-x-original-swagger-version: "2.0"
 

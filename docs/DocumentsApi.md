@@ -814,7 +814,7 @@ public class Example {
     DocumentsApi apiInstance = new DocumentsApi(defaultClient);
     String name = "name_example"; // String | A file name.
     Integer projectId = 56; // Integer | A unique Project identifier.
-    File body = new File("/path/to/file"); // File | The file contents to be uploaded. The entire POST body will be treated as the file. 
+    String body = "body_example"; // String | The file contents to be uploaded. The entire POST body will be treated as the file. 
     String pretranslate = "pretranslate_example"; // String | An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are `null`, `tm`, or `tm+mt` 
     Boolean autoAccept = true; // Boolean | An optional parameter to auto-accept segments with 100% translation memory matches when the `pretranslate` option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to `false`, no segments will be auto-accepted. 
     Integer configId = 56; // Integer | An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. 
@@ -838,7 +838,7 @@ Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **name** | **String**| A file name. |
  **projectId** | **Integer**| A unique Project identifier. |
- **body** | **File**| The file contents to be uploaded. The entire POST body will be treated as the file.  |
+ **body** | **String**| The file contents to be uploaded. The entire POST body will be treated as the file.  |
  **pretranslate** | **String**| An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  | [optional]
  **autoAccept** | **Boolean**| An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  | [optional]
  **configId** | **Integer**| An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  | [optional]
