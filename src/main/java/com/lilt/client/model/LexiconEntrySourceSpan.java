@@ -29,7 +29,7 @@ import java.math.BigDecimal;
  * An object that indicates where the query term appears in the source.
  */
 @ApiModel(description = "An object that indicates where the query term appears in the source.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-18T22:45:01.186Z[GMT]")
 public class LexiconEntrySourceSpan {
   public static final String SERIALIZED_NAME_START = "start";
   @SerializedName(SERIALIZED_NAME_START)

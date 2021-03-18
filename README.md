@@ -1,8 +1,8 @@
-# Lilt-java-client
+# openapi-java-client
 
 Lilt REST API
 - API version: v2.0
-  - Build date: 2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]
+  - Build date: 2021-03-18T22:45:01.186Z[GMT]
 
 The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:
   * Training of and translating with interactive, adaptive machine translation
@@ -49,31 +49,23 @@ Refer to the [OSSRH Guide](http://central.sonatype.org/pages/ossrh-guide.html) f
 
 ### Maven users
 
-The library is hosted in GitHub packages, so configure your project's POM
-to point to the correct repository:
-
-```xml
-<repositories>
-  <repository>
-    <id>github</id>
-    <name>Github Packages</name>
-    <url>https://maven.pkg.github.com/lilt/lilt-java</url>
-  </repository>
-</repositories>
- ```
-
-You will also need to authenticate with GitHub Packages by updating
-your `~/.m2/settings.xml` file as described [here](https://docs.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages).
-
 Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-  <groupId>com.lilt.client</groupId>
-  <artifactId>lilt-java-client</artifactId>
+  <groupId>org.openapitools</groupId>
+  <artifactId>openapi-java-client</artifactId>
   <version>2.1.0</version>
   <scope>compile</scope>
 </dependency>
+```
+
+### Gradle users
+
+Add this dependency to your project's build file:
+
+```groovy
+compile "org.openapitools:openapi-java-client:2.1.0"
 ```
 
 ### Others
@@ -86,7 +78,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/lilt-java-client-2.1.0.jar`
+* `target/openapi-java-client-2.1.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
