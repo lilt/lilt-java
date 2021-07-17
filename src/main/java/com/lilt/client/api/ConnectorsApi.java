@@ -30,8 +30,6 @@ import java.io.IOException;
 import com.lilt.client.model.Connector;
 import com.lilt.client.model.ConnectorArguments;
 import com.lilt.client.model.ConnectorDeleteResponse;
-import com.lilt.client.model.ConnectorJob;
-import com.lilt.client.model.Error;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -119,7 +117,7 @@ public class ConnectorsApi {
      * Upload a Connector
      * Create a new connector linked to a supported external cms. 
      * @param body  (required)
-     * @return Connector
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -128,8 +126,8 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public Connector createConnector(Connector body) throws ApiException {
-        ApiResponse<Connector> localVarResp = createConnectorWithHttpInfo(body);
+    public Object createConnector(Connector body) throws ApiException {
+        ApiResponse<Object> localVarResp = createConnectorWithHttpInfo(body);
         return localVarResp.getData();
     }
 
@@ -137,7 +135,7 @@ public class ConnectorsApi {
      * Upload a Connector
      * Create a new connector linked to a supported external cms. 
      * @param body  (required)
-     * @return ApiResponse&lt;Connector&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -146,9 +144,9 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Connector> createConnectorWithHttpInfo(Connector body) throws ApiException {
+    public ApiResponse<Object> createConnectorWithHttpInfo(Connector body) throws ApiException {
         okhttp3.Call localVarCall = createConnectorValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<Connector>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -166,10 +164,10 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createConnectorAsync(Connector body, final ApiCallback<Connector> _callback) throws ApiException {
+    public okhttp3.Call createConnectorAsync(Connector body, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createConnectorValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<Connector>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -469,10 +467,10 @@ public class ConnectorsApi {
     }
 
     /**
-     * Retreive a Connector Job
+     * Retrieve a Connector Job
      * Retrieves a connector job available to your user. Use this to check the status of jobs started by the &#x60;/connectors/sync&#x60; and &#x60;/connectors/jobs/deliver&#x60; endpoints.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/jobs?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
      * @param id A unique Connector Job identifier. (required)
-     * @return List&lt;ConnectorJob&gt;
+     * @return List&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -481,16 +479,16 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public List<ConnectorJob> getConnectorJobs(Integer id) throws ApiException {
-        ApiResponse<List<ConnectorJob>> localVarResp = getConnectorJobsWithHttpInfo(id);
+    public List<Object> getConnectorJobs(Integer id) throws ApiException {
+        ApiResponse<List<Object>> localVarResp = getConnectorJobsWithHttpInfo(id);
         return localVarResp.getData();
     }
 
     /**
-     * Retreive a Connector Job
+     * Retrieve a Connector Job
      * Retrieves a connector job available to your user. Use this to check the status of jobs started by the &#x60;/connectors/sync&#x60; and &#x60;/connectors/jobs/deliver&#x60; endpoints.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/jobs?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
      * @param id A unique Connector Job identifier. (required)
-     * @return ApiResponse&lt;List&lt;ConnectorJob&gt;&gt;
+     * @return ApiResponse&lt;List&lt;Object&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -499,14 +497,14 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<ConnectorJob>> getConnectorJobsWithHttpInfo(Integer id) throws ApiException {
+    public ApiResponse<List<Object>> getConnectorJobsWithHttpInfo(Integer id) throws ApiException {
         okhttp3.Call localVarCall = getConnectorJobsValidateBeforeCall(id, null);
-        Type localVarReturnType = new TypeToken<List<ConnectorJob>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Retreive a Connector Job (asynchronously)
+     * Retrieve a Connector Job (asynchronously)
      * Retrieves a connector job available to your user. Use this to check the status of jobs started by the &#x60;/connectors/sync&#x60; and &#x60;/connectors/jobs/deliver&#x60; endpoints.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/jobs?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
      * @param id A unique Connector Job identifier. (required)
      * @param _callback The callback to be executed when the API call finishes
@@ -519,10 +517,10 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getConnectorJobsAsync(Integer id, final ApiCallback<List<ConnectorJob>> _callback) throws ApiException {
+    public okhttp3.Call getConnectorJobsAsync(Integer id, final ApiCallback<List<Object>> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getConnectorJobsValidateBeforeCall(id, _callback);
-        Type localVarReturnType = new TypeToken<List<ConnectorJob>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -588,7 +586,7 @@ public class ConnectorsApi {
      * Retrieve a Connector
      * Retrieves one or more connectors available to your user. Connectors are not associated with a project or a memory.  To retrieve a specific connector, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all connectors, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
      * @param id A unique Connector identifier. (optional)
-     * @return List&lt;Connector&gt;
+     * @return List&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -599,8 +597,8 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public List<Connector> getConnectors(Integer id) throws ApiException {
-        ApiResponse<List<Connector>> localVarResp = getConnectorsWithHttpInfo(id);
+    public List<Object> getConnectors(Integer id) throws ApiException {
+        ApiResponse<List<Object>> localVarResp = getConnectorsWithHttpInfo(id);
         return localVarResp.getData();
     }
 
@@ -608,7 +606,7 @@ public class ConnectorsApi {
      * Retrieve a Connector
      * Retrieves one or more connectors available to your user. Connectors are not associated with a project or a memory.  To retrieve a specific connector, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all connectors, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
      * @param id A unique Connector identifier. (optional)
-     * @return ApiResponse&lt;List&lt;Connector&gt;&gt;
+     * @return ApiResponse&lt;List&lt;Object&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -619,9 +617,9 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<Connector>> getConnectorsWithHttpInfo(Integer id) throws ApiException {
+    public ApiResponse<List<Object>> getConnectorsWithHttpInfo(Integer id) throws ApiException {
         okhttp3.Call localVarCall = getConnectorsValidateBeforeCall(id, null);
-        Type localVarReturnType = new TypeToken<List<Connector>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -641,10 +639,10 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getConnectorsAsync(Integer id, final ApiCallback<List<Connector>> _callback) throws ApiException {
+    public okhttp3.Call getConnectorsAsync(Integer id, final ApiCallback<List<Object>> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getConnectorsValidateBeforeCall(id, _callback);
-        Type localVarReturnType = new TypeToken<List<Connector>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -713,7 +711,7 @@ public class ConnectorsApi {
      * Sync a Connector
      * Request an import job for the given connector ID. This will check the target system for new content to pull into Lilt.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/sync?key&#x3D;API_KEY&amp;id&#x3D;128 &#x60;&#x60;&#x60; 
      * @param id A unique Connector identifier. (required)
-     * @return ConnectorJob
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -722,8 +720,8 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ConnectorJob syncConnector(Integer id) throws ApiException {
-        ApiResponse<ConnectorJob> localVarResp = syncConnectorWithHttpInfo(id);
+    public Object syncConnector(Integer id) throws ApiException {
+        ApiResponse<Object> localVarResp = syncConnectorWithHttpInfo(id);
         return localVarResp.getData();
     }
 
@@ -731,7 +729,7 @@ public class ConnectorsApi {
      * Sync a Connector
      * Request an import job for the given connector ID. This will check the target system for new content to pull into Lilt.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/sync?key&#x3D;API_KEY&amp;id&#x3D;128 &#x60;&#x60;&#x60; 
      * @param id A unique Connector identifier. (required)
-     * @return ApiResponse&lt;ConnectorJob&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -740,9 +738,9 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<ConnectorJob> syncConnectorWithHttpInfo(Integer id) throws ApiException {
+    public ApiResponse<Object> syncConnectorWithHttpInfo(Integer id) throws ApiException {
         okhttp3.Call localVarCall = syncConnectorValidateBeforeCall(id, null);
-        Type localVarReturnType = new TypeToken<ConnectorJob>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -760,10 +758,10 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call syncConnectorAsync(Integer id, final ApiCallback<ConnectorJob> _callback) throws ApiException {
+    public okhttp3.Call syncConnectorAsync(Integer id, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = syncConnectorValidateBeforeCall(id, _callback);
-        Type localVarReturnType = new TypeToken<ConnectorJob>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -828,7 +826,7 @@ public class ConnectorsApi {
      * Upload a Connector
      * Create a new connector linked to a supported external content source. 
      * @param body  (required)
-     * @return Connector
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -837,8 +835,8 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public Connector updateConnector(ConnectorArguments body) throws ApiException {
-        ApiResponse<Connector> localVarResp = updateConnectorWithHttpInfo(body);
+    public Object updateConnector(ConnectorArguments body) throws ApiException {
+        ApiResponse<Object> localVarResp = updateConnectorWithHttpInfo(body);
         return localVarResp.getData();
     }
 
@@ -846,7 +844,7 @@ public class ConnectorsApi {
      * Upload a Connector
      * Create a new connector linked to a supported external content source. 
      * @param body  (required)
-     * @return ApiResponse&lt;Connector&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -855,9 +853,9 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Connector> updateConnectorWithHttpInfo(ConnectorArguments body) throws ApiException {
+    public ApiResponse<Object> updateConnectorWithHttpInfo(ConnectorArguments body) throws ApiException {
         okhttp3.Call localVarCall = updateConnectorValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<Connector>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -875,10 +873,10 @@ public class ConnectorsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateConnectorAsync(ConnectorArguments body, final ApiCallback<Connector> _callback) throws ApiException {
+    public okhttp3.Call updateConnectorAsync(ConnectorArguments body, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateConnectorValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<Connector>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

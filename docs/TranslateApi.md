@@ -13,7 +13,7 @@ Method | HTTP request | Description
 
 <a name="batchTranslateFile"></a>
 # **batchTranslateFile**
-> TranslationInfo batchTranslateFile(fileId, memoryId, configId)
+> Object batchTranslateFile(fileId, memoryId, configId)
 
 Translate a File
 
@@ -50,7 +50,7 @@ public class Example {
     String memoryId = "memoryId_example"; // String | Id of Memory to use in translation.
     BigDecimal configId = new BigDecimal(78); // BigDecimal | An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.
     try {
-      TranslationInfo result = apiInstance.batchTranslateFile(fileId, memoryId, configId);
+      Object result = apiInstance.batchTranslateFile(fileId, memoryId, configId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#batchTranslateFile");
@@ -73,7 +73,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TranslationInfo**](TranslationInfo.md)
+**Object**
 
 ### Authorization
 
@@ -166,7 +166,7 @@ Name | Type | Description  | Notes
 
 <a name="monitorFileTranslation"></a>
 # **monitorFileTranslation**
-> TranslationInfo monitorFileTranslation(translationIds, status, fromTime, toTime)
+> Object monitorFileTranslation(translationIds, status, fromTime, toTime)
 
 Monitor file translation
 
@@ -204,7 +204,7 @@ public class Example {
     BigDecimal fromTime = new BigDecimal(78); // BigDecimal | Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch.
     BigDecimal toTime = new BigDecimal(78); // BigDecimal | Results before this time (exclusive) will be returned, specified as seconds since the Unix epoch.
     try {
-      TranslationInfo result = apiInstance.monitorFileTranslation(translationIds, status, fromTime, toTime);
+      Object result = apiInstance.monitorFileTranslation(translationIds, status, fromTime, toTime);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#monitorFileTranslation");
@@ -228,7 +228,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TranslationInfo**](TranslationInfo.md)
+**Object**
 
 ### Authorization
 
@@ -326,7 +326,7 @@ Name | Type | Description  | Notes
 
 <a name="translateSegment"></a>
 # **translateSegment**
-> TranslationList translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags)
+> Object translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags)
 
 Translate a segment
 
@@ -368,7 +368,7 @@ public class Example {
     Boolean tmMatches = true; // Boolean | Include translation memory fuzzy matches.
     Boolean projectTags = false; // Boolean | Project tags. Projects tags in source to target if set to true.
     try {
-      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags);
+      Object result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#translateSegment");
@@ -396,7 +396,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TranslationList**](TranslationList.md)
+**Object**
 
 ### Authorization
 

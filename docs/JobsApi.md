@@ -1,29 +1,30 @@
-# DocumentsApi
+# JobsApi
 
 All URIs are relative to *https://lilt.com/2*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**assignDocument**](DocumentsApi.md#assignDocument) | **PUT** /documents/share | Assign a Document
-[**createDocument**](DocumentsApi.md#createDocument) | **POST** /documents | Create a Document
-[**deleteDocument**](DocumentsApi.md#deleteDocument) | **DELETE** /documents | Delete a Document
-[**documentsDoneReviewPost**](DocumentsApi.md#documentsDoneReviewPost) | **POST** /documents/done/review | Mark review done
-[**documentsDoneTranslationPost**](DocumentsApi.md#documentsDoneTranslationPost) | **POST** /documents/done/translation | Mark translation done
-[**documentsDoneUnlockPost**](DocumentsApi.md#documentsDoneUnlockPost) | **POST** /documents/done/unlock | Unlock documents
-[**downloadDocument**](DocumentsApi.md#downloadDocument) | **GET** /documents/files | Download a Document
-[**getDocument**](DocumentsApi.md#getDocument) | **GET** /documents | Retrieve a Document
-[**pretranslateDocuments**](DocumentsApi.md#pretranslateDocuments) | **POST** /documents/pretranslate | Pretranslate a Document
-[**updateDocument**](DocumentsApi.md#updateDocument) | **PUT** /documents | Update a Document
-[**uploadDocument**](DocumentsApi.md#uploadDocument) | **POST** /documents/files | Upload a File
+[**archiveJob**](JobsApi.md#archiveJob) | **POST** /jobs/{jobId}/archive | Archive a Job
+[**createJob**](JobsApi.md#createJob) | **POST** /jobs | Create a Job
+[**deleteJob**](JobsApi.md#deleteJob) | **DELETE** /jobs/{jobId} | Delete a Job
+[**deliverJob**](JobsApi.md#deliverJob) | **POST** /jobs/{jobId}/deliver | Deliver a Job
+[**downloadJob**](JobsApi.md#downloadJob) | **GET** /jobs/{jobId}/downlod | Download a Job
+[**exportJob**](JobsApi.md#exportJob) | **GET** /jobs/{jobId}/export | Export a Job
+[**getJob**](JobsApi.md#getJob) | **GET** /jobs/{jobId} | Retrieve a Job
+[**getJobLeverageStats**](JobsApi.md#getJobLeverageStats) | **POST** /jobs/{jobId}/stats | Retrieve Job Leverage Stats
+[**reactivateJob**](JobsApi.md#reactivateJob) | **POST** /jobs/{jobId}/reactivate | Reactivate a Job
+[**retrieveAllJobs**](JobsApi.md#retrieveAllJobs) | **GET** /jobs | Retrieve all Jobs
+[**unarchiveJob**](JobsApi.md#unarchiveJob) | **POST** /jobs/{jobId}/unarchive | Unarchive a Job
+[**updateJob**](JobsApi.md#updateJob) | **PUT** /jobs/{jobId} | Update a Job
 
 
-<a name="assignDocument"></a>
-# **assignDocument**
-> DocumentAssignmentResponse assignDocument(body)
+<a name="archiveJob"></a>
+# **archiveJob**
+> Object archiveJob(jobId)
 
-Assign a Document
+Archive a Job
 
-Assign and unassign a Document for translation and/or review.  
+Set job to archived, unassign all linguists and archive all projects and documents inside the job.  It will return the archived job.  Example CURL command:   &#x60;&#x60;&#x60; curl -X POST &#39;https://lilt.com/2/jobs/{id}/archive?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -33,7 +34,7 @@ import com.lilt.client.ApiException;
 import com.lilt.client.Configuration;
 import com.lilt.client.auth.*;
 import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
+import com.lilt.client.api.JobsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -51,13 +52,13 @@ public class Example {
     BasicAuth.setUsername("YOUR USERNAME");
     BasicAuth.setPassword("YOUR PASSWORD");
 
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    DocumentAssignmentParameters body = new DocumentAssignmentParameters(); // DocumentAssignmentParameters | 
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    Integer jobId = 56; // Integer | A job id.
     try {
-      DocumentAssignmentResponse result = apiInstance.assignDocument(body);
+      Object result = apiInstance.archiveJob(jobId);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#assignDocument");
+      System.err.println("Exception when calling JobsApi#archiveJob");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -71,11 +72,11 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**DocumentAssignmentParameters**](DocumentAssignmentParameters.md)|  |
+ **jobId** | **Integer**| A job id. |
 
 ### Return type
 
-[**DocumentAssignmentResponse**](DocumentAssignmentResponse.md)
+**Object**
 
 ### Authorization
 
@@ -83,22 +84,22 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | A status object. |  -  |
+**200** | A job object. |  -  |
 **0** | Unexpected error |  -  |
 
-<a name="createDocument"></a>
-# **createDocument**
-> Object createDocument(body)
+<a name="createJob"></a>
+# **createJob**
+> Object createJob(body)
 
-Create a Document
+Create a Job
 
-Create a new Document. A Document is a collection of one or more Segments. Documents are nested inside of Projects, and appear in the Project details view in the web app. Document-level relationships between Segments are considered by the machine translation system during adaptation. If there is no inherent document structure in your data, you still might consider grouping related Segments into Documents to improve translation quality. 
+Create a Job. A Job is a collection of Projects. A Job will contain multiple projects, based on the language pair. A Project is associated with exactly one Memory.  Jobs appear in the Jobs dashboard of the web app.  Example CURL command:   &#x60;&#x60;&#x60; curl -X POST &#39;https://lilt.com/2/jobs?key&#x3D;API_KEY&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{   \&quot;name\&quot;: \&quot;test job\&quot;,   \&quot;fileIds\&quot;: [5009, 5010, 5011],   \&quot;due\&quot;: \&quot;2022-05-05T10:56:44.985Z\&quot;,   \&quot;srcLang\&quot;: \&quot;en\&quot;,   \&quot;srcLocale\&quot;: \&quot;US\&quot;,   \&quot;languagePairs\&quot;: [       { \&quot;memoryId\&quot;: 3121, \&quot;trgLang\&quot;: \&quot;de\&quot; },       { \&quot;memoryId\&quot;: 2508, \&quot;trgLang\&quot;: \&quot;fr\&quot; },       { \&quot;memoryId\&quot;: 3037, \&quot;trgLang\&quot;: \&quot;zh\&quot; }     ] }&#39; &#x60;&#x60;&#x60;  
 
 ### Example
 ```java
@@ -108,7 +109,7 @@ import com.lilt.client.ApiException;
 import com.lilt.client.Configuration;
 import com.lilt.client.auth.*;
 import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
+import com.lilt.client.api.JobsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -126,13 +127,13 @@ public class Example {
     BasicAuth.setUsername("YOUR USERNAME");
     BasicAuth.setPassword("YOUR PASSWORD");
 
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    DocumentParameters body = new DocumentParameters(); // DocumentParameters | 
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    JobCreateParameters body = new JobCreateParameters(); // JobCreateParameters | 
     try {
-      Object result = apiInstance.createDocument(body);
+      Object result = apiInstance.createJob(body);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#createDocument");
+      System.err.println("Exception when calling JobsApi#createJob");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -146,7 +147,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**DocumentParameters**](DocumentParameters.md)|  | [optional]
+ **body** | [**JobCreateParameters**](JobCreateParameters.md)|  |
 
 ### Return type
 
@@ -164,16 +165,16 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | A Document object. |  -  |
+**200** | A Job object. |  -  |
 **0** | Unexpected error |  -  |
 
-<a name="deleteDocument"></a>
-# **deleteDocument**
-> DocumentDeleteResponse deleteDocument(id)
+<a name="deleteJob"></a>
+# **deleteJob**
+> JobDeleteResponse deleteJob(id)
 
-Delete a Document
+Delete a Job
 
-Delete a Document. 
+Delete a job, deletes all projects and documents in the job, deletes all the segments from all the job&#39;s translation memories.  Example CURL command:   &#x60;&#x60;&#x60; curl -X DELETE &#39;https://lilt.com/2/jobs/{id}?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -183,7 +184,7 @@ import com.lilt.client.ApiException;
 import com.lilt.client.Configuration;
 import com.lilt.client.auth.*;
 import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
+import com.lilt.client.api.JobsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -201,13 +202,13 @@ public class Example {
     BasicAuth.setUsername("YOUR USERNAME");
     BasicAuth.setPassword("YOUR PASSWORD");
 
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    Integer id = 56; // Integer | A unique Document identifier.
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    Integer id = 56; // Integer | A job id.
     try {
-      DocumentDeleteResponse result = apiInstance.deleteDocument(id);
+      JobDeleteResponse result = apiInstance.deleteJob(id);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#deleteDocument");
+      System.err.println("Exception when calling JobsApi#deleteJob");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -221,11 +222,11 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Integer**| A unique Document identifier. |
+ **id** | **Integer**| A job id. |
 
 ### Return type
 
-[**DocumentDeleteResponse**](DocumentDeleteResponse.md)
+[**JobDeleteResponse**](JobDeleteResponse.md)
 
 ### Authorization
 
@@ -242,13 +243,13 @@ Name | Type | Description  | Notes
 **200** | A status object. |  -  |
 **0** | Unexpected error |  -  |
 
-<a name="documentsDoneReviewPost"></a>
-# **documentsDoneReviewPost**
-> List&lt;String&gt; documentsDoneReviewPost(body)
+<a name="deliverJob"></a>
+# **deliverJob**
+> Object deliverJob(jobId)
 
-Mark review done
+Deliver a Job
 
-Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+Set the job state to delivered and set all the projects in the job to done  It will return the delivered job.  Example CURL command:   &#x60;&#x60;&#x60; curl -X POST &#39;https://lilt.com/2/jobs/{id}/deliver?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -258,7 +259,7 @@ import com.lilt.client.ApiException;
 import com.lilt.client.Configuration;
 import com.lilt.client.auth.*;
 import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
+import com.lilt.client.api.JobsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -276,13 +277,13 @@ public class Example {
     BasicAuth.setUsername("YOUR USERNAME");
     BasicAuth.setPassword("YOUR PASSWORD");
 
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    DocumentDoneUpdateParameters1 body = new DocumentDoneUpdateParameters1(); // DocumentDoneUpdateParameters1 | 
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    Integer jobId = 56; // Integer | A job id.
     try {
-      List<String> result = apiInstance.documentsDoneReviewPost(body);
+      Object result = apiInstance.deliverJob(jobId);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#documentsDoneReviewPost");
+      System.err.println("Exception when calling JobsApi#deliverJob");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -296,309 +297,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**DocumentDoneUpdateParameters1**](DocumentDoneUpdateParameters1.md)|  |
-
-### Return type
-
-**List&lt;String&gt;**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | array of updated documents |  -  |
-
-<a name="documentsDoneTranslationPost"></a>
-# **documentsDoneTranslationPost**
-> List&lt;String&gt; documentsDoneTranslationPost(body)
-
-Mark translation done
-
-Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    DocumentDoneUpdateParameters body = new DocumentDoneUpdateParameters(); // DocumentDoneUpdateParameters | 
-    try {
-      List<String> result = apiInstance.documentsDoneTranslationPost(body);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#documentsDoneTranslationPost");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**DocumentDoneUpdateParameters**](DocumentDoneUpdateParameters.md)|  |
-
-### Return type
-
-**List&lt;String&gt;**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | array of updated documents |  -  |
-
-<a name="documentsDoneUnlockPost"></a>
-# **documentsDoneUnlockPost**
-> List&lt;String&gt; documentsDoneUnlockPost(body)
-
-Unlock documents
-
-Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    Object body = null; // Object | document ids to update
-    try {
-      List<String> result = apiInstance.documentsDoneUnlockPost(body);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#documentsDoneUnlockPost");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | **Object**| document ids to update |
-
-### Return type
-
-**List&lt;String&gt;**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | array of updated documents |  -  |
-
-<a name="downloadDocument"></a>
-# **downloadDocument**
-> byte[] downloadDocument(id, isXliff)
-
-Download a Document
-
-Export a Document that has been translated in the Lilt web application. Any Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting &#x60;is_xliff&#x3D;false&#x60;. This endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource. Example CURL command: &#x60;&#x60;&#x60;   curl -X GET https://lilt.com/2/documents/files?key&#x3D;API_KEY&amp;id&#x3D;274 -o from_lilt.xliff &#x60;&#x60;&#x60;  
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    Integer id = 56; // Integer | An unique Document identifier.
-    Boolean isXliff = true; // Boolean | Download the document in XLIFF 1.2 format.
-    try {
-      byte[] result = apiInstance.downloadDocument(id, isXliff);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#downloadDocument");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **Integer**| An unique Document identifier. |
- **isXliff** | **Boolean**| Download the document in XLIFF 1.2 format. | [optional] [default to true]
-
-### Return type
-
-**byte[]**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/octet-stream
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A file. |  -  |
-**502** | File in pretranslation. |  -  |
-**0** | Unexpected error |  -  |
-
-<a name="getDocument"></a>
-# **getDocument**
-> Object getDocument(id, withSegments)
-
-Retrieve a Document
-
-List a Document.  The listing will include the pretranslation status for the document. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    Integer id = 56; // Integer | A unique Document identifier.
-    Boolean withSegments = true; // Boolean | Flag indicating whether full segment information should be returned.
-    try {
-      Object result = apiInstance.getDocument(id, withSegments);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#getDocument");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **Integer**| A unique Document identifier. |
- **withSegments** | **Boolean**| Flag indicating whether full segment information should be returned. | [optional]
+ **jobId** | **Integer**| A job id. |
 
 ### Return type
 
@@ -616,16 +315,16 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | A Document object. |  -  |
+**200** | A job object. |  -  |
 **0** | Unexpected error |  -  |
 
-<a name="pretranslateDocuments"></a>
-# **pretranslateDocuments**
-> DocumentPretranslateResponse pretranslateDocuments(body, autoAccept, caseSensitive, attributeToCreator, mode)
+<a name="downloadJob"></a>
+# **downloadJob**
+> downloadJob(jobId)
 
-Pretranslate a Document
+Download a Job
 
-Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
+Make sure you have exported a job with the same id before using this api.    Downloading files requires the exported job &#x60;id&#x60; in the param.  Example CURL command:   &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs/{id}/download?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -635,7 +334,7 @@ import com.lilt.client.ApiException;
 import com.lilt.client.Configuration;
 import com.lilt.client.auth.*;
 import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
+import com.lilt.client.api.JobsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -653,17 +352,12 @@ public class Example {
     BasicAuth.setUsername("YOUR USERNAME");
     BasicAuth.setPassword("YOUR PASSWORD");
 
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    DocumentPretranslateParameters body = new DocumentPretranslateParameters(); // DocumentPretranslateParameters | 
-    Boolean autoAccept = true; // Boolean | Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits.
-    Boolean caseSensitive = true; // Boolean | Deprecated, use body param instead. Optional for using case matching against TM hits.
-    Boolean attributeToCreator = true; // Boolean | Deprecated, use body param instead. Optional parameter for attributing translation authorship of exact matches to document creator.
-    String mode = "mode_example"; // String | Deprecated, use body param instead. An optional parameter indicating how the document will be pretranslated.  The accepted values are `tm`, or `tm+mt`. Default is `tm`. 
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    Integer jobId = 56; // Integer | A job id.
     try {
-      DocumentPretranslateResponse result = apiInstance.pretranslateDocuments(body, autoAccept, caseSensitive, attributeToCreator, mode);
-      System.out.println(result);
+      apiInstance.downloadJob(jobId);
     } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#pretranslateDocuments");
+      System.err.println("Exception when calling JobsApi#downloadJob");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -677,15 +371,11 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**DocumentPretranslateParameters**](DocumentPretranslateParameters.md)|  |
- **autoAccept** | **Boolean**| Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits. | [optional]
- **caseSensitive** | **Boolean**| Deprecated, use body param instead. Optional for using case matching against TM hits. | [optional]
- **attributeToCreator** | **Boolean**| Deprecated, use body param instead. Optional parameter for attributing translation authorship of exact matches to document creator. | [optional]
- **mode** | **String**| Deprecated, use body param instead. An optional parameter indicating how the document will be pretranslated.  The accepted values are &#x60;tm&#x60;, or &#x60;tm+mt&#x60;. Default is &#x60;tm&#x60;.  | [optional]
+ **jobId** | **Integer**| A job id. |
 
 ### Return type
 
-[**DocumentPretranslateResponse**](DocumentPretranslateResponse.md)
+null (empty response body)
 
 ### Authorization
 
@@ -693,22 +383,22 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: application/json
+ - **Content-Type**: Not defined
  - **Accept**: application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**202** | A status object. |  -  |
+**200** | zipped file |  -  |
 **0** | Unexpected error |  -  |
 
-<a name="updateDocument"></a>
-# **updateDocument**
-> Object updateDocument(body)
+<a name="exportJob"></a>
+# **exportJob**
+> exportJob(jobId, type)
 
-Update a Document
+Export a Job
 
-Update a Document. 
+Prepare job files for download. To export translated documents from the job use the query parameter &#x60;type&#x3D;files&#x60;:   Example CURL command:   &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs/{id}/export?key&#x3D;API_KEY&amp;type&#x3D;files&#39; &#x60;&#x60;&#x60;  To export job memories use the query parameter &#x60;type&#x3D;memory&#x60;.  The status of the export can be checked by requesting the job &#x60;GET /jobs/:jobId&#x60;, &#x60;job.isProcessing&#x60; will be &#x60;1&#x60; while in progress, &#x60;0&#x60; when idle and &#x60;-2&#x60; when the export failed.
 
 ### Example
 ```java
@@ -718,7 +408,7 @@ import com.lilt.client.ApiException;
 import com.lilt.client.Configuration;
 import com.lilt.client.auth.*;
 import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
+import com.lilt.client.api.JobsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -736,13 +426,13 @@ public class Example {
     BasicAuth.setUsername("YOUR USERNAME");
     BasicAuth.setPassword("YOUR PASSWORD");
 
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    DocumentUpdateParameters body = new DocumentUpdateParameters(); // DocumentUpdateParameters | 
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    Integer jobId = 56; // Integer | A job id.
+    String type = "type_example"; // String | category for files and memory.
     try {
-      Object result = apiInstance.updateDocument(body);
-      System.out.println(result);
+      apiInstance.exportJob(jobId, type);
     } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#updateDocument");
+      System.err.println("Exception when calling JobsApi#exportJob");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -756,7 +446,460 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**DocumentUpdateParameters**](DocumentUpdateParameters.md)|  |
+ **jobId** | **Integer**| A job id. |
+ **type** | **String**| category for files and memory. |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | 200 status. |  -  |
+**0** | Unexpected error |  -  |
+
+<a name="getJob"></a>
+# **getJob**
+> Object getJob(jobId)
+
+Retrieve a Job
+
+Retrieves a job data along with stats. To retrieve a specific job, you will need the job &#x60;id&#x60; in the url path.  Example CURL command:   &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs/{id}?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.JobsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    Integer jobId = 56; // Integer | A job id.
+    try {
+      Object result = apiInstance.getJob(jobId);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling JobsApi#getJob");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **jobId** | **Integer**| A job id. |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A job object. |  -  |
+**0** | Unexpected error |  -  |
+
+<a name="getJobLeverageStats"></a>
+# **getJobLeverageStats**
+> Object getJobLeverageStats(jobId)
+
+Retrieve Job Leverage Stats
+
+Get the TM leverage stats for the job (new/exact/fuzzy matches).  Example CURL command:  &#x60;&#x60;&#x60; curl -X POST &#39;https://lilt.com/2/jobs/{id}/stats?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.JobsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    Integer jobId = 56; // Integer | A job id.
+    try {
+      Object result = apiInstance.getJobLeverageStats(jobId);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling JobsApi#getJobLeverageStats");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **jobId** | **Integer**| A job id. |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A job leverage stats object. |  -  |
+**0** | Unexpected error |  -  |
+
+<a name="reactivateJob"></a>
+# **reactivateJob**
+> Object reactivateJob(jobId)
+
+Reactivate a Job
+
+Set the job state to active. Does not change the state of projects associated with the given job.  It will return the reactivated job.  Example CURL command:   &#x60;&#x60;&#x60; curl -X POST &#39;https://lilt.com/2/jobs/{id}/reactivate?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.JobsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    Integer jobId = 56; // Integer | A job id.
+    try {
+      Object result = apiInstance.reactivateJob(jobId);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling JobsApi#reactivateJob");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **jobId** | **Integer**| A job id. |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A job object. |  -  |
+**0** | Unexpected error |  -  |
+
+<a name="retrieveAllJobs"></a>
+# **retrieveAllJobs**
+> List&lt;Object&gt; retrieveAllJobs(isArchived)
+
+Retrieve all Jobs
+
+Get all Jobs. You can retrieve all jobs from your account using the above API.  Example CURL command:   &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs?key&#x3D;API_KEY&amp;isArchived&#x3D;false&#39; &#x60;&#x60;&#x60;
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.JobsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    Boolean isArchived = true; // Boolean | Retrieves all jobs that are archived.
+    try {
+      List<Object> result = apiInstance.retrieveAllJobs(isArchived);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling JobsApi#retrieveAllJobs");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **isArchived** | **Boolean**| Retrieves all jobs that are archived. | [optional]
+
+### Return type
+
+**List&lt;Object&gt;**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A list of Job objects. |  -  |
+**0** | Unexpected error |  -  |
+
+<a name="unarchiveJob"></a>
+# **unarchiveJob**
+> Object unarchiveJob(jobId)
+
+Unarchive a Job
+
+Set job to unarchived, the job will move to active status.  Example CURL command:   &#x60;&#x60;&#x60; curl -X POST &#39;https://lilt.com/2/jobs/{id}/unarchive?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.JobsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    Integer jobId = 56; // Integer | A job id.
+    try {
+      Object result = apiInstance.unarchiveJob(jobId);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling JobsApi#unarchiveJob");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **jobId** | **Integer**| A job id. |
+
+### Return type
+
+**Object**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A job object. |  -  |
+**0** | Unexpected error |  -  |
+
+<a name="updateJob"></a>
+# **updateJob**
+> Object updateJob(id, body)
+
+Update a Job
+
+Updates a job with the new job properties. To update a specific job, you will need the job &#x60;id&#x60; in the url path.  You can update job&#39;s name and due date by passing the property and new value in the body.  Example CURL command:   &#x60;&#x60;&#x60; curl -X PUT &#39;https://lilt.com/2/jobs/{id}?key&#x3D;API_KEY&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{   \&quot;name\&quot;: \&quot;test job\&quot;,   \&quot;due\&quot;: \&quot;2022-05-05T10:56:44.985Z\&quot; }&#39; &#x60;&#x60;&#x60;
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.JobsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    JobsApi apiInstance = new JobsApi(defaultClient);
+    Integer id = 56; // Integer | A job id.
+    JobUpdateParameters body = new JobUpdateParameters(); // JobUpdateParameters | 
+    try {
+      Object result = apiInstance.updateJob(id, body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling JobsApi#updateJob");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **Integer**| A job id. |
+ **body** | [**JobUpdateParameters**](JobUpdateParameters.md)|  | [optional]
 
 ### Return type
 
@@ -774,95 +917,6 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | A Document object. |  -  |
-**0** | Unexpected error |  -  |
-
-<a name="uploadDocument"></a>
-# **uploadDocument**
-> Object uploadDocument(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId)
-
-Upload a File
-
-Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  File names in the header can only contain [US-ASCII characters](https://en.wikipedia.org/wiki/ASCII). File names with characters outside of US-ASCII should be [URI encoded](https://en.wikipedia.org/wiki/Percent-encoding) or transliterated to US-ASCII strings.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/documents/files?key&#x3D;API_KEY \\   --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;introduction.xliff\\\&quot;,\\\&quot;pretranslate\\\&quot;: \\\&quot;tm+mt\\\&quot;,\\\&quot;project_id\\\&quot;: 9}\&quot; \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @Introduction.xliff &#x60;&#x60;&#x60;  
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    String name = "name_example"; // String | A file name.
-    Integer projectId = 56; // Integer | A unique Project identifier.
-    File body = new File("/path/to/file"); // File | The file contents to be uploaded. The entire POST body will be treated as the file. 
-    String pretranslate = "pretranslate_example"; // String | An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are `TM`, or `TM+MT` 
-    Boolean autoAccept = true; // Boolean | An optional parameter to auto-accept segments with 100% translation memory matches when the `pretranslate` option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to `false`, no segments will be auto-accepted. 
-    Boolean caseSensitive = true; // Boolean | An optional parameter to use case sensitive translation memory matching when the `pretranslate` option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is `false` 
-    Boolean matchAttribution = true; // Boolean | An optional parameter to attribute translation authorship of exact matches to the author of the file when the `pretranslate` option is also enabled. Default value is `false` 
-    Integer configId = 56; // Integer | An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. 
-    try {
-      Object result = apiInstance.uploadDocument(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#uploadDocument");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **name** | **String**| A file name. |
- **projectId** | **Integer**| A unique Project identifier. |
- **body** | **File**| The file contents to be uploaded. The entire POST body will be treated as the file.  |
- **pretranslate** | **String**| An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  | [optional]
- **autoAccept** | **Boolean**| An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  | [optional]
- **caseSensitive** | **Boolean**| An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  | [optional]
- **matchAttribution** | **Boolean**| An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  | [optional]
- **configId** | **Integer**| An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  | [optional]
-
-### Return type
-
-**Object**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/octet-stream
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A Document object. |  -  |
+**200** | A job object. |  -  |
 **0** | Unexpected error |  -  |
 

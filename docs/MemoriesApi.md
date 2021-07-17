@@ -18,11 +18,11 @@ Method | HTTP request | Description
 
 <a name="createMemory"></a>
 # **createMemory**
-> Memory createMemory(body)
+> Object createMemory(body)
 
 Create a Memory
 
-Create a new Memory. A Memory is a container that collects source/target sentences for a specific language pair (e.g., English&gt;French). The data in the Memory is used to train the MT system, populate the TM, and update the lexicon. Memories are private to your account - the data is not shared across users - unless you explicitly share a Memory with your team (via web app only).  &lt;a href&#x3D;\&quot;https://lilt.com/kb/memory/memories\&quot; target&#x3D;_blank&gt;Refer to our KB&lt;/a&gt; for a more detailed description.  
+Create a new Memory. A Memory is a container that collects source/target sentences for a specific language pair (e.g., English&gt;French). The data in the Memory is used to train the MT system, populate the TM, and update the lexicon. Memories are private to your account - the data is not shared across users - unless you explicitly share a Memory with your team (via web app only).  &lt;a href&#x3D;\&quot;https://support.lilt.com/hc/en-us/sections/360012579193-Lilt-Translate-Engine\&quot; target&#x3D;_blank&gt;Refer to our KB&lt;/a&gt; for a more detailed description.  
 
 ### Example
 ```java
@@ -53,7 +53,7 @@ public class Example {
     MemoriesApi apiInstance = new MemoriesApi(defaultClient);
     MemoryCreateParameters body = new MemoryCreateParameters(); // MemoryCreateParameters | 
     try {
-      Memory result = apiInstance.createMemory(body);
+      Object result = apiInstance.createMemory(body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling MemoriesApi#createMemory");
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Memory**](Memory.md)
+**Object**
 
 ### Authorization
 
@@ -168,7 +168,7 @@ Name | Type | Description  | Notes
 
 <a name="getMemory"></a>
 # **getMemory**
-> List&lt;Memory&gt; getMemory(id)
+> List&lt;Object&gt; getMemory(id)
 
 Retrieve a Memory
 
@@ -203,7 +203,7 @@ public class Example {
     MemoriesApi apiInstance = new MemoriesApi(defaultClient);
     Integer id = 56; // Integer | An optional Memory identifier.
     try {
-      List<Memory> result = apiInstance.getMemory(id);
+      List<Object> result = apiInstance.getMemory(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling MemoriesApi#getMemory");
@@ -224,7 +224,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;Memory&gt;**](Memory.md)
+**List&lt;Object&gt;**
 
 ### Authorization
 
@@ -243,7 +243,7 @@ Name | Type | Description  | Notes
 
 <a name="importMemoryFile"></a>
 # **importMemoryFile**
-> MemoryImportResponse importMemoryFile(memoryId, name, body)
+> MemoryImportResponse importMemoryFile(memoryId, name, body, hasHeaderRow)
 
 File import for a Memory
 
@@ -279,8 +279,9 @@ public class Example {
     Integer memoryId = 56; // Integer | A unique Memory identifier.
     String name = "name_example"; // String | Name of the TM or termbase file.
     File body = new File("/path/to/file"); // File | The file contents to be uploaded. The entire POST body will be treated as the file.
+    Boolean hasHeaderRow = true; // Boolean | A flag indicating whether an imported Termbase CSV has a header row or not (the default value is `false`).
     try {
-      MemoryImportResponse result = apiInstance.importMemoryFile(memoryId, name, body);
+      MemoryImportResponse result = apiInstance.importMemoryFile(memoryId, name, body, hasHeaderRow);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling MemoriesApi#importMemoryFile");
@@ -300,6 +301,7 @@ Name | Type | Description  | Notes
  **memoryId** | **Integer**| A unique Memory identifier. |
  **name** | **String**| Name of the TM or termbase file. |
  **body** | **File**| The file contents to be uploaded. The entire POST body will be treated as the file. |
+ **hasHeaderRow** | **Boolean**| A flag indicating whether an imported Termbase CSV has a header row or not (the default value is &#x60;false&#x60;). | [optional]
 
 ### Return type
 
@@ -322,7 +324,7 @@ Name | Type | Description  | Notes
 
 <a name="queryMemory"></a>
 # **queryMemory**
-> List&lt;TranslationMemoryEntry&gt; queryMemory(id, query, n)
+> List&lt;Object&gt; queryMemory(id, query, n)
 
 Query a Memory
 
@@ -359,7 +361,7 @@ public class Example {
     String query = "query_example"; // String | A source query.
     Integer n = 10; // Integer | Maximum number of results to return.
     try {
-      List<TranslationMemoryEntry> result = apiInstance.queryMemory(id, query, n);
+      List<Object> result = apiInstance.queryMemory(id, query, n);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling MemoriesApi#queryMemory");
@@ -382,7 +384,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;TranslationMemoryEntry&gt;**](TranslationMemoryEntry.md)
+**List&lt;Object&gt;**
 
 ### Authorization
 
@@ -725,7 +727,7 @@ Name | Type | Description  | Notes
 
 <a name="updateMemory"></a>
 # **updateMemory**
-> Memory updateMemory(body)
+> Object updateMemory(body)
 
 Update the name of a Memory
 
@@ -760,7 +762,7 @@ public class Example {
     MemoriesApi apiInstance = new MemoriesApi(defaultClient);
     MemoryUpdateParameters body = new MemoryUpdateParameters(); // MemoryUpdateParameters | 
     try {
-      Memory result = apiInstance.updateMemory(body);
+      Object result = apiInstance.updateMemory(body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling MemoriesApi#updateMemory");
@@ -781,7 +783,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Memory**](Memory.md)
+**Object**
 
 ### Authorization
 

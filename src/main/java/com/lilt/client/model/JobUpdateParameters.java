@@ -25,52 +25,31 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * DocumentUpdateParameters
+ * JobUpdateParameters
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-07-17T00:08:29.722Z[GMT]")
-public class DocumentUpdateParameters {
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
-
+public class JobUpdateParameters {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
 
-
-  public DocumentUpdateParameters id(Integer id) {
-    
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * A unique Document identifier.
-   * @return id
-  **/
-  @ApiModelProperty(example = "46530", required = true, value = "A unique Document identifier.")
-
-  public Integer getId() {
-    return id;
-  }
+  public static final String SERIALIZED_NAME_DUE_DATE = "dueDate";
+  @SerializedName(SERIALIZED_NAME_DUE_DATE)
+  private Integer dueDate;
 
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-
-  public DocumentUpdateParameters name(String name) {
+  public JobUpdateParameters name(String name) {
     
     this.name = name;
     return this;
   }
 
    /**
-   * The Document name.
+   * A name for the Job.
    * @return name
   **/
-  @ApiModelProperty(example = "Introduction to our App", required = true, value = "The Document name.")
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "My new Job", value = "A name for the Job.")
 
   public String getName() {
     return name;
@@ -82,6 +61,29 @@ public class DocumentUpdateParameters {
   }
 
 
+  public JobUpdateParameters dueDate(Integer dueDate) {
+    
+    this.dueDate = dueDate;
+    return this;
+  }
+
+   /**
+   * An ISO string date.
+   * @return dueDate
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "An ISO string date.")
+
+  public Integer getDueDate() {
+    return dueDate;
+  }
+
+
+  public void setDueDate(Integer dueDate) {
+    this.dueDate = dueDate;
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -90,22 +92,22 @@ public class DocumentUpdateParameters {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DocumentUpdateParameters documentUpdateParameters = (DocumentUpdateParameters) o;
-    return Objects.equals(this.id, documentUpdateParameters.id) &&
-        Objects.equals(this.name, documentUpdateParameters.name);
+    JobUpdateParameters jobUpdateParameters = (JobUpdateParameters) o;
+    return Objects.equals(this.name, jobUpdateParameters.name) &&
+        Objects.equals(this.dueDate, jobUpdateParameters.dueDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(name, dueDate);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DocumentUpdateParameters {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
+    sb.append("class JobUpdateParameters {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    dueDate: ").append(toIndentedString(dueDate)).append("\n");
     sb.append("}");
     return sb.toString();
   }

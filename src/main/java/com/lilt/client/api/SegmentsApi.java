@@ -27,13 +27,9 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.lilt.client.model.Error;
-import com.lilt.client.model.Segment;
 import com.lilt.client.model.SegmentCreateParameters;
 import com.lilt.client.model.SegmentDeleteResponse;
 import com.lilt.client.model.SegmentUpdateParameters;
-import com.lilt.client.model.SegmentWithComments;
-import com.lilt.client.model.TaggedSegment;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -121,7 +117,7 @@ public class SegmentsApi {
      * Create a Segment
      * Create a Segment and add it to a Memory. A Segment is a source/target pair that is used to train the machine translation system and populate the translation memory. This is not intended to be used on documents and will throw an error.  The maximum source length is 5,000 characters.  
      * @param body  (required)
-     * @return Segment
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -130,8 +126,8 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public Segment createSegment(SegmentCreateParameters body) throws ApiException {
-        ApiResponse<Segment> localVarResp = createSegmentWithHttpInfo(body);
+    public Object createSegment(SegmentCreateParameters body) throws ApiException {
+        ApiResponse<Object> localVarResp = createSegmentWithHttpInfo(body);
         return localVarResp.getData();
     }
 
@@ -139,7 +135,7 @@ public class SegmentsApi {
      * Create a Segment
      * Create a Segment and add it to a Memory. A Segment is a source/target pair that is used to train the machine translation system and populate the translation memory. This is not intended to be used on documents and will throw an error.  The maximum source length is 5,000 characters.  
      * @param body  (required)
-     * @return ApiResponse&lt;Segment&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -148,9 +144,9 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Segment> createSegmentWithHttpInfo(SegmentCreateParameters body) throws ApiException {
+    public ApiResponse<Object> createSegmentWithHttpInfo(SegmentCreateParameters body) throws ApiException {
         okhttp3.Call localVarCall = createSegmentValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<Segment>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -168,10 +164,10 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createSegmentAsync(SegmentCreateParameters body, final ApiCallback<Segment> _callback) throws ApiException {
+    public okhttp3.Call createSegmentAsync(SegmentCreateParameters body, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createSegmentValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<Segment>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -365,7 +361,7 @@ public class SegmentsApi {
      * Retrieve a Segment.  
      * @param id A unique Segment identifier. (required)
      * @param includeComments Include comments in the response. (optional, default to false)
-     * @return SegmentWithComments
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -374,8 +370,8 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public SegmentWithComments getSegment(Integer id, Boolean includeComments) throws ApiException {
-        ApiResponse<SegmentWithComments> localVarResp = getSegmentWithHttpInfo(id, includeComments);
+    public Object getSegment(Integer id, Boolean includeComments) throws ApiException {
+        ApiResponse<Object> localVarResp = getSegmentWithHttpInfo(id, includeComments);
         return localVarResp.getData();
     }
 
@@ -384,7 +380,7 @@ public class SegmentsApi {
      * Retrieve a Segment.  
      * @param id A unique Segment identifier. (required)
      * @param includeComments Include comments in the response. (optional, default to false)
-     * @return ApiResponse&lt;SegmentWithComments&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -393,9 +389,9 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SegmentWithComments> getSegmentWithHttpInfo(Integer id, Boolean includeComments) throws ApiException {
+    public ApiResponse<Object> getSegmentWithHttpInfo(Integer id, Boolean includeComments) throws ApiException {
         okhttp3.Call localVarCall = getSegmentValidateBeforeCall(id, includeComments, null);
-        Type localVarReturnType = new TypeToken<SegmentWithComments>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -414,10 +410,121 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getSegmentAsync(Integer id, Boolean includeComments, final ApiCallback<SegmentWithComments> _callback) throws ApiException {
+    public okhttp3.Call getSegmentAsync(Integer id, Boolean includeComments, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getSegmentValidateBeforeCall(id, includeComments, _callback);
-        Type localVarReturnType = new TypeToken<SegmentWithComments>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for segmentsReviewUnlockPost
+     * @param body segment ids to update (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated segments </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call segmentsReviewUnlockPostCall(Object body, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/segments/review/unlock";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call segmentsReviewUnlockPostValidateBeforeCall(Object body, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling segmentsReviewUnlockPost(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = segmentsReviewUnlockPostCall(body, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Unaccept and unlock segments
+     * Unaccept and unlock segments. Sets individual segments&#39; \&quot;Review Done\&quot; to false. Confirmed segments will remain confirmed.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/segments/review/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;segmentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body segment ids to update (required)
+     * @return List&lt;String&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated segments </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<String> segmentsReviewUnlockPost(Object body) throws ApiException {
+        ApiResponse<List<String>> localVarResp = segmentsReviewUnlockPostWithHttpInfo(body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Unaccept and unlock segments
+     * Unaccept and unlock segments. Sets individual segments&#39; \&quot;Review Done\&quot; to false. Confirmed segments will remain confirmed.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/segments/review/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;segmentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body segment ids to update (required)
+     * @return ApiResponse&lt;List&lt;String&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated segments </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<String>> segmentsReviewUnlockPostWithHttpInfo(Object body) throws ApiException {
+        okhttp3.Call localVarCall = segmentsReviewUnlockPostValidateBeforeCall(body, null);
+        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Unaccept and unlock segments (asynchronously)
+     * Unaccept and unlock segments. Sets individual segments&#39; \&quot;Review Done\&quot; to false. Confirmed segments will remain confirmed.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/segments/review/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;segmentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body segment ids to update (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated segments </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call segmentsReviewUnlockPostAsync(Object body, final ApiCallback<List<String>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = segmentsReviewUnlockPostValidateBeforeCall(body, _callback);
+        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -508,7 +615,7 @@ public class SegmentsApi {
      * @param sourceTagged The tagged source string. (required)
      * @param target The target string. (required)
      * @param memoryId A unique Memory identifier. (required)
-     * @return TaggedSegment
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -517,8 +624,8 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public TaggedSegment tagSegment(String sourceTagged, String target, Integer memoryId) throws ApiException {
-        ApiResponse<TaggedSegment> localVarResp = tagSegmentWithHttpInfo(sourceTagged, target, memoryId);
+    public Object tagSegment(String sourceTagged, String target, Integer memoryId) throws ApiException {
+        ApiResponse<Object> localVarResp = tagSegmentWithHttpInfo(sourceTagged, target, memoryId);
         return localVarResp.getData();
     }
 
@@ -528,7 +635,7 @@ public class SegmentsApi {
      * @param sourceTagged The tagged source string. (required)
      * @param target The target string. (required)
      * @param memoryId A unique Memory identifier. (required)
-     * @return ApiResponse&lt;TaggedSegment&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -537,9 +644,9 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<TaggedSegment> tagSegmentWithHttpInfo(String sourceTagged, String target, Integer memoryId) throws ApiException {
+    public ApiResponse<Object> tagSegmentWithHttpInfo(String sourceTagged, String target, Integer memoryId) throws ApiException {
         okhttp3.Call localVarCall = tagSegmentValidateBeforeCall(sourceTagged, target, memoryId, null);
-        Type localVarReturnType = new TypeToken<TaggedSegment>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -559,10 +666,10 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call tagSegmentAsync(String sourceTagged, String target, Integer memoryId, final ApiCallback<TaggedSegment> _callback) throws ApiException {
+    public okhttp3.Call tagSegmentAsync(String sourceTagged, String target, Integer memoryId, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = tagSegmentValidateBeforeCall(sourceTagged, target, memoryId, _callback);
-        Type localVarReturnType = new TypeToken<TaggedSegment>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -627,7 +734,7 @@ public class SegmentsApi {
      * Update a Segment
      * Update a Segment in memory. The Memory will be updated with the new target string.  
      * @param body  (required)
-     * @return Segment
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -636,8 +743,8 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public Segment updateSegment(SegmentUpdateParameters body) throws ApiException {
-        ApiResponse<Segment> localVarResp = updateSegmentWithHttpInfo(body);
+    public Object updateSegment(SegmentUpdateParameters body) throws ApiException {
+        ApiResponse<Object> localVarResp = updateSegmentWithHttpInfo(body);
         return localVarResp.getData();
     }
 
@@ -645,7 +752,7 @@ public class SegmentsApi {
      * Update a Segment
      * Update a Segment in memory. The Memory will be updated with the new target string.  
      * @param body  (required)
-     * @return ApiResponse&lt;Segment&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -654,9 +761,9 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Segment> updateSegmentWithHttpInfo(SegmentUpdateParameters body) throws ApiException {
+    public ApiResponse<Object> updateSegmentWithHttpInfo(SegmentUpdateParameters body) throws ApiException {
         okhttp3.Call localVarCall = updateSegmentValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<Segment>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -674,10 +781,10 @@ public class SegmentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateSegmentAsync(SegmentUpdateParameters body, final ApiCallback<Segment> _callback) throws ApiException {
+    public okhttp3.Call updateSegmentAsync(SegmentUpdateParameters body, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateSegmentValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<Segment>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

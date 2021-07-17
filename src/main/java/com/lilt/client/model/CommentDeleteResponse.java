@@ -25,30 +25,27 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * DocumentUpdateParameters
+ * CommentDeleteResponse
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-07-17T00:08:29.722Z[GMT]")
-public class DocumentUpdateParameters {
+public class CommentDeleteResponse {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
   private Integer id;
 
-  public static final String SERIALIZED_NAME_NAME = "name";
-  @SerializedName(SERIALIZED_NAME_NAME)
-  private String name;
 
-
-  public DocumentUpdateParameters id(Integer id) {
+  public CommentDeleteResponse id(Integer id) {
     
     this.id = id;
     return this;
   }
 
    /**
-   * A unique Document identifier.
+   * A unique Comment identifier.
    * @return id
   **/
-  @ApiModelProperty(example = "46530", required = true, value = "A unique Document identifier.")
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "12345", value = "A unique Comment identifier.")
 
   public Integer getId() {
     return id;
@@ -60,28 +57,6 @@ public class DocumentUpdateParameters {
   }
 
 
-  public DocumentUpdateParameters name(String name) {
-    
-    this.name = name;
-    return this;
-  }
-
-   /**
-   * The Document name.
-   * @return name
-  **/
-  @ApiModelProperty(example = "Introduction to our App", required = true, value = "The Document name.")
-
-  public String getName() {
-    return name;
-  }
-
-
-  public void setName(String name) {
-    this.name = name;
-  }
-
-
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -90,22 +65,20 @@ public class DocumentUpdateParameters {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DocumentUpdateParameters documentUpdateParameters = (DocumentUpdateParameters) o;
-    return Objects.equals(this.id, documentUpdateParameters.id) &&
-        Objects.equals(this.name, documentUpdateParameters.name);
+    CommentDeleteResponse commentDeleteResponse = (CommentDeleteResponse) o;
+    return Objects.equals(this.id, commentDeleteResponse.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(id);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DocumentUpdateParameters {\n");
+    sb.append("class CommentDeleteResponse {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("}");
     return sb.toString();
   }
