@@ -36,8 +36,6 @@ import com.lilt.client.model.DocumentParameters;
 import com.lilt.client.model.DocumentPretranslateParameters;
 import com.lilt.client.model.DocumentPretranslateResponse;
 import com.lilt.client.model.DocumentUpdateParameters;
-import com.lilt.client.model.DocumentWithSegments;
-import com.lilt.client.model.Error;
 import java.io.File;
 
 import java.lang.reflect.Type;
@@ -236,7 +234,7 @@ public class DocumentsApi {
      * Create a Document
      * Create a new Document. A Document is a collection of one or more Segments. Documents are nested inside of Projects, and appear in the Project details view in the web app. Document-level relationships between Segments are considered by the machine translation system during adaptation. If there is no inherent document structure in your data, you still might consider grouping related Segments into Documents to improve translation quality. 
      * @param body  (optional)
-     * @return DocumentWithSegments
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -245,8 +243,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentWithSegments createDocument(DocumentParameters body) throws ApiException {
-        ApiResponse<DocumentWithSegments> localVarResp = createDocumentWithHttpInfo(body);
+    public Object createDocument(DocumentParameters body) throws ApiException {
+        ApiResponse<Object> localVarResp = createDocumentWithHttpInfo(body);
         return localVarResp.getData();
     }
 
@@ -254,7 +252,7 @@ public class DocumentsApi {
      * Create a Document
      * Create a new Document. A Document is a collection of one or more Segments. Documents are nested inside of Projects, and appear in the Project details view in the web app. Document-level relationships between Segments are considered by the machine translation system during adaptation. If there is no inherent document structure in your data, you still might consider grouping related Segments into Documents to improve translation quality. 
      * @param body  (optional)
-     * @return ApiResponse&lt;DocumentWithSegments&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -263,9 +261,9 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentWithSegments> createDocumentWithHttpInfo(DocumentParameters body) throws ApiException {
+    public ApiResponse<Object> createDocumentWithHttpInfo(DocumentParameters body) throws ApiException {
         okhttp3.Call localVarCall = createDocumentValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -283,10 +281,10 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createDocumentAsync(DocumentParameters body, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
+    public okhttp3.Call createDocumentAsync(DocumentParameters body, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createDocumentValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -944,7 +942,7 @@ public class DocumentsApi {
      * List a Document.  The listing will include the pretranslation status for the document. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.
      * @param id A unique Document identifier. (required)
      * @param withSegments Flag indicating whether full segment information should be returned. (optional)
-     * @return DocumentWithSegments
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -953,8 +951,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentWithSegments getDocument(Integer id, Boolean withSegments) throws ApiException {
-        ApiResponse<DocumentWithSegments> localVarResp = getDocumentWithHttpInfo(id, withSegments);
+    public Object getDocument(Integer id, Boolean withSegments) throws ApiException {
+        ApiResponse<Object> localVarResp = getDocumentWithHttpInfo(id, withSegments);
         return localVarResp.getData();
     }
 
@@ -963,7 +961,7 @@ public class DocumentsApi {
      * List a Document.  The listing will include the pretranslation status for the document. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.
      * @param id A unique Document identifier. (required)
      * @param withSegments Flag indicating whether full segment information should be returned. (optional)
-     * @return ApiResponse&lt;DocumentWithSegments&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -972,9 +970,9 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentWithSegments> getDocumentWithHttpInfo(Integer id, Boolean withSegments) throws ApiException {
+    public ApiResponse<Object> getDocumentWithHttpInfo(Integer id, Boolean withSegments) throws ApiException {
         okhttp3.Call localVarCall = getDocumentValidateBeforeCall(id, withSegments, null);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -993,10 +991,10 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getDocumentAsync(Integer id, Boolean withSegments, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
+    public okhttp3.Call getDocumentAsync(Integer id, Boolean withSegments, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getDocumentValidateBeforeCall(id, withSegments, _callback);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -1208,7 +1206,7 @@ public class DocumentsApi {
      * Update a Document
      * Update a Document. 
      * @param body  (required)
-     * @return DocumentWithSegments
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1217,8 +1215,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentWithSegments updateDocument(DocumentUpdateParameters body) throws ApiException {
-        ApiResponse<DocumentWithSegments> localVarResp = updateDocumentWithHttpInfo(body);
+    public Object updateDocument(DocumentUpdateParameters body) throws ApiException {
+        ApiResponse<Object> localVarResp = updateDocumentWithHttpInfo(body);
         return localVarResp.getData();
     }
 
@@ -1226,7 +1224,7 @@ public class DocumentsApi {
      * Update a Document
      * Update a Document. 
      * @param body  (required)
-     * @return ApiResponse&lt;DocumentWithSegments&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1235,9 +1233,9 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentWithSegments> updateDocumentWithHttpInfo(DocumentUpdateParameters body) throws ApiException {
+    public ApiResponse<Object> updateDocumentWithHttpInfo(DocumentUpdateParameters body) throws ApiException {
         okhttp3.Call localVarCall = updateDocumentValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -1255,10 +1253,10 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateDocumentAsync(DocumentUpdateParameters body, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
+    public okhttp3.Call updateDocumentAsync(DocumentUpdateParameters body, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateDocumentValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -1267,8 +1265,10 @@ public class DocumentsApi {
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
-     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
+     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -1280,7 +1280,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentCall(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentCall(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Boolean caseSensitive, Boolean matchAttribution, Integer configId, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1308,6 +1308,14 @@ public class DocumentsApi {
             localVarHeaderParams.put("auto_accept", localVarApiClient.parameterToString(autoAccept));
         }
 
+        if (caseSensitive != null) {
+            localVarHeaderParams.put("case_sensitive", localVarApiClient.parameterToString(caseSensitive));
+        }
+
+        if (matchAttribution != null) {
+            localVarHeaderParams.put("match_attribution", localVarApiClient.parameterToString(matchAttribution));
+        }
+
         if (configId != null) {
             localVarHeaderParams.put("config_id", localVarApiClient.parameterToString(configId));
         }
@@ -1331,7 +1339,7 @@ public class DocumentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call uploadDocumentValidateBeforeCall(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call uploadDocumentValidateBeforeCall(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Boolean caseSensitive, Boolean matchAttribution, Integer configId, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
@@ -1349,7 +1357,7 @@ public class DocumentsApi {
         }
         
 
-        okhttp3.Call localVarCall = uploadDocumentCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
+        okhttp3.Call localVarCall = uploadDocumentCall(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId, _callback);
         return localVarCall;
 
     }
@@ -1360,10 +1368,12 @@ public class DocumentsApi {
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
-     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
+     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
-     * @return DocumentWithSegments
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1372,8 +1382,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentWithSegments uploadDocument(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
-        ApiResponse<DocumentWithSegments> localVarResp = uploadDocumentWithHttpInfo(name, projectId, body, pretranslate, autoAccept, configId);
+    public Object uploadDocument(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Boolean caseSensitive, Boolean matchAttribution, Integer configId) throws ApiException {
+        ApiResponse<Object> localVarResp = uploadDocumentWithHttpInfo(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId);
         return localVarResp.getData();
     }
 
@@ -1383,10 +1393,12 @@ public class DocumentsApi {
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
-     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
+     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
-     * @return ApiResponse&lt;DocumentWithSegments&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -1395,9 +1407,9 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentWithSegments> uploadDocumentWithHttpInfo(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
-        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, null);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+    public ApiResponse<Object> uploadDocumentWithHttpInfo(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Boolean caseSensitive, Boolean matchAttribution, Integer configId) throws ApiException {
+        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId, null);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -1407,8 +1419,10 @@ public class DocumentsApi {
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
-     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
+     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1420,10 +1434,10 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentAsync(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentAsync(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Boolean caseSensitive, Boolean matchAttribution, Integer configId, final ApiCallback<Object> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
+        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId, _callback);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

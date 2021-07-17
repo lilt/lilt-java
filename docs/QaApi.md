@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 <a name="qaCheck"></a>
 # **qaCheck**
-> QARuleMatches qaCheck(target, trglang, source, srclang)
+> Object qaCheck(target, trglang, source, srclang)
 
 Perform QA check
 
@@ -47,7 +47,7 @@ public class Example {
     String source = "source_example"; // String | An optional source string.
     String srclang = "srclang_example"; // String | An ISO 639-1 language code.
     try {
-      QARuleMatches result = apiInstance.qaCheck(target, trglang, source, srclang);
+      Object result = apiInstance.qaCheck(target, trglang, source, srclang);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QaApi#qaCheck");
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**QARuleMatches**](QARuleMatches.md)
+**Object**
 
 ### Authorization
 

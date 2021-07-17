@@ -27,8 +27,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.lilt.client.model.Error;
-import com.lilt.client.model.QARuleMatches;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -143,7 +141,7 @@ public class QaApi {
      * @param trglang An ISO 639-1 language code. (required)
      * @param source An optional source string. (optional)
      * @param srclang An ISO 639-1 language code. (optional)
-     * @return QARuleMatches
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -152,8 +150,8 @@ public class QaApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public QARuleMatches qaCheck(String target, String trglang, String source, String srclang) throws ApiException {
-        ApiResponse<QARuleMatches> localVarResp = qaCheckWithHttpInfo(target, trglang, source, srclang);
+    public Object qaCheck(String target, String trglang, String source, String srclang) throws ApiException {
+        ApiResponse<Object> localVarResp = qaCheckWithHttpInfo(target, trglang, source, srclang);
         return localVarResp.getData();
     }
 
@@ -164,7 +162,7 @@ public class QaApi {
      * @param trglang An ISO 639-1 language code. (required)
      * @param source An optional source string. (optional)
      * @param srclang An ISO 639-1 language code. (optional)
-     * @return ApiResponse&lt;QARuleMatches&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -173,9 +171,9 @@ public class QaApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<QARuleMatches> qaCheckWithHttpInfo(String target, String trglang, String source, String srclang) throws ApiException {
+    public ApiResponse<Object> qaCheckWithHttpInfo(String target, String trglang, String source, String srclang) throws ApiException {
         okhttp3.Call localVarCall = qaCheckValidateBeforeCall(target, trglang, source, srclang, null);
-        Type localVarReturnType = new TypeToken<QARuleMatches>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -196,10 +194,10 @@ public class QaApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call qaCheckAsync(String target, String trglang, String source, String srclang, final ApiCallback<QARuleMatches> _callback) throws ApiException {
+    public okhttp3.Call qaCheckAsync(String target, String trglang, String source, String srclang, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = qaCheckValidateBeforeCall(target, trglang, source, srclang, _callback);
-        Type localVarReturnType = new TypeToken<QARuleMatches>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

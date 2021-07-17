@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * DocumentDoneUpdateParameters
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-07-17T00:08:29.722Z[GMT]")
 public class DocumentDoneUpdateParameters {
   public static final String SERIALIZED_NAME_IS_DONE = "isDone";
   @SerializedName(SERIALIZED_NAME_IS_DONE)

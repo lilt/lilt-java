@@ -27,8 +27,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.lilt.client.model.Error;
-import com.lilt.client.model.LexiconEntry;
 import com.lilt.client.model.LexiconUpdateParameters;
 import com.lilt.client.model.LexiconUpdateResponse;
 
@@ -161,7 +159,7 @@ public class LexiconApi {
      * @param trglang An ISO 639-1 language code. (required)
      * @param query The query term. (required)
      * @param n The maximum number of results to return. (optional, default to 1)
-     * @return List&lt;LexiconEntry&gt;
+     * @return List&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -170,8 +168,8 @@ public class LexiconApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public List<LexiconEntry> queryLexicon(Integer memoryId, String srclang, String trglang, String query, Integer n) throws ApiException {
-        ApiResponse<List<LexiconEntry>> localVarResp = queryLexiconWithHttpInfo(memoryId, srclang, trglang, query, n);
+    public List<Object> queryLexicon(Integer memoryId, String srclang, String trglang, String query, Integer n) throws ApiException {
+        ApiResponse<List<Object>> localVarResp = queryLexiconWithHttpInfo(memoryId, srclang, trglang, query, n);
         return localVarResp.getData();
     }
 
@@ -183,7 +181,7 @@ public class LexiconApi {
      * @param trglang An ISO 639-1 language code. (required)
      * @param query The query term. (required)
      * @param n The maximum number of results to return. (optional, default to 1)
-     * @return ApiResponse&lt;List&lt;LexiconEntry&gt;&gt;
+     * @return ApiResponse&lt;List&lt;Object&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -192,9 +190,9 @@ public class LexiconApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<LexiconEntry>> queryLexiconWithHttpInfo(Integer memoryId, String srclang, String trglang, String query, Integer n) throws ApiException {
+    public ApiResponse<List<Object>> queryLexiconWithHttpInfo(Integer memoryId, String srclang, String trglang, String query, Integer n) throws ApiException {
         okhttp3.Call localVarCall = queryLexiconValidateBeforeCall(memoryId, srclang, trglang, query, n, null);
-        Type localVarReturnType = new TypeToken<List<LexiconEntry>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -216,10 +214,10 @@ public class LexiconApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call queryLexiconAsync(Integer memoryId, String srclang, String trglang, String query, Integer n, final ApiCallback<List<LexiconEntry>> _callback) throws ApiException {
+    public okhttp3.Call queryLexiconAsync(Integer memoryId, String srclang, String trglang, String query, Integer n, final ApiCallback<List<Object>> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = queryLexiconValidateBeforeCall(memoryId, srclang, trglang, query, n, _callback);
-        Type localVarReturnType = new TypeToken<List<LexiconEntry>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

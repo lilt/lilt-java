@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**createConnector**](ConnectorsApi.md#createConnector) | **POST** /connectors | Upload a Connector
 [**deleteConnector**](ConnectorsApi.md#deleteConnector) | **DELETE** /connectors | Delete a Connector
 [**exportConnectorJob**](ConnectorsApi.md#exportConnectorJob) | **POST** /connectors/jobs/deliver | Deliver a Connector Job
-[**getConnectorJobs**](ConnectorsApi.md#getConnectorJobs) | **GET** /connectors/jobs | Retreive a Connector Job
+[**getConnectorJobs**](ConnectorsApi.md#getConnectorJobs) | **GET** /connectors/jobs | Retrieve a Connector Job
 [**getConnectors**](ConnectorsApi.md#getConnectors) | **GET** /connectors | Retrieve a Connector
 [**syncConnector**](ConnectorsApi.md#syncConnector) | **POST** /connectors/sync | Sync a Connector
 [**updateConnector**](ConnectorsApi.md#updateConnector) | **PUT** /connectors | Upload a Connector
@@ -15,7 +15,7 @@ Method | HTTP request | Description
 
 <a name="createConnector"></a>
 # **createConnector**
-> Connector createConnector(body)
+> Object createConnector(body)
 
 Upload a Connector
 
@@ -50,7 +50,7 @@ public class Example {
     ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
     Connector body = new Connector(); // Connector | 
     try {
-      Connector result = apiInstance.createConnector(body);
+      Object result = apiInstance.createConnector(body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ConnectorsApi#createConnector");
@@ -71,7 +71,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Connector**](Connector.md)
+**Object**
 
 ### Authorization
 
@@ -239,9 +239,9 @@ null (empty response body)
 
 <a name="getConnectorJobs"></a>
 # **getConnectorJobs**
-> List&lt;ConnectorJob&gt; getConnectorJobs(id)
+> List&lt;Object&gt; getConnectorJobs(id)
 
-Retreive a Connector Job
+Retrieve a Connector Job
 
 Retrieves a connector job available to your user. Use this to check the status of jobs started by the &#x60;/connectors/sync&#x60; and &#x60;/connectors/jobs/deliver&#x60; endpoints.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/jobs?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
 
@@ -274,7 +274,7 @@ public class Example {
     ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
     Integer id = 56; // Integer | A unique Connector Job identifier.
     try {
-      List<ConnectorJob> result = apiInstance.getConnectorJobs(id);
+      List<Object> result = apiInstance.getConnectorJobs(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ConnectorsApi#getConnectorJobs");
@@ -295,7 +295,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;ConnectorJob&gt;**](ConnectorJob.md)
+**List&lt;Object&gt;**
 
 ### Authorization
 
@@ -314,7 +314,7 @@ Name | Type | Description  | Notes
 
 <a name="getConnectors"></a>
 # **getConnectors**
-> List&lt;Connector&gt; getConnectors(id)
+> List&lt;Object&gt; getConnectors(id)
 
 Retrieve a Connector
 
@@ -349,7 +349,7 @@ public class Example {
     ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
     Integer id = 56; // Integer | A unique Connector identifier.
     try {
-      List<Connector> result = apiInstance.getConnectors(id);
+      List<Object> result = apiInstance.getConnectors(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ConnectorsApi#getConnectors");
@@ -370,7 +370,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;Connector&gt;**](Connector.md)
+**List&lt;Object&gt;**
 
 ### Authorization
 
@@ -391,7 +391,7 @@ Name | Type | Description  | Notes
 
 <a name="syncConnector"></a>
 # **syncConnector**
-> ConnectorJob syncConnector(id)
+> Object syncConnector(id)
 
 Sync a Connector
 
@@ -426,7 +426,7 @@ public class Example {
     ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
     Integer id = 56; // Integer | A unique Connector identifier.
     try {
-      ConnectorJob result = apiInstance.syncConnector(id);
+      Object result = apiInstance.syncConnector(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ConnectorsApi#syncConnector");
@@ -447,7 +447,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ConnectorJob**](ConnectorJob.md)
+**Object**
 
 ### Authorization
 
@@ -466,7 +466,7 @@ Name | Type | Description  | Notes
 
 <a name="updateConnector"></a>
 # **updateConnector**
-> Connector updateConnector(body)
+> Object updateConnector(body)
 
 Upload a Connector
 
@@ -501,7 +501,7 @@ public class Example {
     ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
     ConnectorArguments body = new ConnectorArguments(); // ConnectorArguments | 
     try {
-      Connector result = apiInstance.updateConnector(body);
+      Object result = apiInstance.updateConnector(body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ConnectorsApi#updateConnector");
@@ -522,7 +522,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Connector**](Connector.md)
+**Object**
 
 ### Authorization
 
