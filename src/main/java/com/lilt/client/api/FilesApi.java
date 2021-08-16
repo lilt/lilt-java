@@ -27,10 +27,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.lilt.client.model.Error;
 import java.io.File;
 import com.lilt.client.model.FileDeleteResponse;
-import com.lilt.client.model.SourceFile;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -238,7 +236,7 @@ public class FilesApi {
      * Retrieve a File
      * Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.  To retrieve a specific file, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all files, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/files?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
      * @param id A unique File identifier. (optional)
-     * @return List&lt;SourceFile&gt;
+     * @return List&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -249,8 +247,8 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public List<SourceFile> getFiles(Integer id) throws ApiException {
-        ApiResponse<List<SourceFile>> localVarResp = getFilesWithHttpInfo(id);
+    public List<Object> getFiles(Integer id) throws ApiException {
+        ApiResponse<List<Object>> localVarResp = getFilesWithHttpInfo(id);
         return localVarResp.getData();
     }
 
@@ -258,7 +256,7 @@ public class FilesApi {
      * Retrieve a File
      * Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.  To retrieve a specific file, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all files, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/files?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
      * @param id A unique File identifier. (optional)
-     * @return ApiResponse&lt;List&lt;SourceFile&gt;&gt;
+     * @return ApiResponse&lt;List&lt;Object&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -269,9 +267,9 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<SourceFile>> getFilesWithHttpInfo(Integer id) throws ApiException {
+    public ApiResponse<List<Object>> getFilesWithHttpInfo(Integer id) throws ApiException {
         okhttp3.Call localVarCall = getFilesValidateBeforeCall(id, null);
-        Type localVarReturnType = new TypeToken<List<SourceFile>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -291,10 +289,10 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getFilesAsync(Integer id, final ApiCallback<List<SourceFile>> _callback) throws ApiException {
+    public okhttp3.Call getFilesAsync(Integer id, final ApiCallback<List<Object>> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getFilesValidateBeforeCall(id, _callback);
-        Type localVarReturnType = new TypeToken<List<SourceFile>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -302,7 +300,6 @@ public class FilesApi {
      * Build call for uploadFile
      * @param name A file name. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
-     * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @param projectId The project to associate the uploaded file with. (optional)
@@ -318,7 +315,7 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadFileCall(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call uploadFileCall(String name, File body, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -332,10 +329,6 @@ public class FilesApi {
 
         if (name != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("name", name));
-        }
-
-        if (exportUri != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("export_uri", exportUri));
         }
 
         if (fileHash != null) {
@@ -377,7 +370,7 @@ public class FilesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call uploadFileValidateBeforeCall(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call uploadFileValidateBeforeCall(String name, File body, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
@@ -390,23 +383,22 @@ public class FilesApi {
         }
         
 
-        okhttp3.Call localVarCall = uploadFileCall(name, body, exportUri, fileHash, langId, projectId, category, labels, _callback);
+        okhttp3.Call localVarCall = uploadFileCall(name, body, fileHash, langId, projectId, category, labels, _callback);
         return localVarCall;
 
     }
 
     /**
      * Upload a File
-     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  When uploading a file, any parameters needed to issue a request to the specified export_uri can be encoded in the export_uri itself as query parameters. Typical examples of parameters that may be required are an access token to authorize requests to a third-party HTTP API and the unique identifier of a resource available via the third-party HTTP API that corresponds to the file. An example export_uri that encodes a target resource identifier (i.e., source_id) of an associated resource behind a third party HTTP API is given in the CURL command below.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json&amp;export_uri&#x3D;https://example.com/export?source_id&#x3D;12345 \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
+     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
      * @param name A file name. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
-     * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @param projectId The project to associate the uploaded file with. (optional)
      * @param category The category of the file. The options are &#x60;REFERENCE&#x60;, or &#x60;API&#x60;. The default is API. Files with the &#x60;REFERENCE&#x60; category will be displayed as reference material. (optional)
      * @param labels Comma-separated list of labels to add to the uploaded document. (optional)
-     * @return SourceFile
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -415,23 +407,22 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public SourceFile uploadFile(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
-        ApiResponse<SourceFile> localVarResp = uploadFileWithHttpInfo(name, body, exportUri, fileHash, langId, projectId, category, labels);
+    public Object uploadFile(String name, File body, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
+        ApiResponse<Object> localVarResp = uploadFileWithHttpInfo(name, body, fileHash, langId, projectId, category, labels);
         return localVarResp.getData();
     }
 
     /**
      * Upload a File
-     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  When uploading a file, any parameters needed to issue a request to the specified export_uri can be encoded in the export_uri itself as query parameters. Typical examples of parameters that may be required are an access token to authorize requests to a third-party HTTP API and the unique identifier of a resource available via the third-party HTTP API that corresponds to the file. An example export_uri that encodes a target resource identifier (i.e., source_id) of an associated resource behind a third party HTTP API is given in the CURL command below.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json&amp;export_uri&#x3D;https://example.com/export?source_id&#x3D;12345 \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
+     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
      * @param name A file name. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
-     * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @param projectId The project to associate the uploaded file with. (optional)
      * @param category The category of the file. The options are &#x60;REFERENCE&#x60;, or &#x60;API&#x60;. The default is API. Files with the &#x60;REFERENCE&#x60; category will be displayed as reference material. (optional)
      * @param labels Comma-separated list of labels to add to the uploaded document. (optional)
-     * @return ApiResponse&lt;SourceFile&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -440,18 +431,17 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SourceFile> uploadFileWithHttpInfo(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
-        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, projectId, category, labels, null);
-        Type localVarReturnType = new TypeToken<SourceFile>(){}.getType();
+    public ApiResponse<Object> uploadFileWithHttpInfo(String name, File body, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
+        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, fileHash, langId, projectId, category, labels, null);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Upload a File (asynchronously)
-     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  When uploading a file, any parameters needed to issue a request to the specified export_uri can be encoded in the export_uri itself as query parameters. Typical examples of parameters that may be required are an access token to authorize requests to a third-party HTTP API and the unique identifier of a resource available via the third-party HTTP API that corresponds to the file. An example export_uri that encodes a target resource identifier (i.e., source_id) of an associated resource behind a third party HTTP API is given in the CURL command below.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json&amp;export_uri&#x3D;https://example.com/export?source_id&#x3D;12345 \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
+     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
      * @param name A file name. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
-     * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @param projectId The project to associate the uploaded file with. (optional)
@@ -467,10 +457,10 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadFileAsync(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback<SourceFile> _callback) throws ApiException {
+    public okhttp3.Call uploadFileAsync(String name, File body, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback<Object> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, projectId, category, labels, _callback);
-        Type localVarReturnType = new TypeToken<SourceFile>(){}.getType();
+        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, fileHash, langId, projectId, category, labels, _callback);
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

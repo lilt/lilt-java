@@ -23,13 +23,11 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * ProjectCreateParameters
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-08-16T00:09:18.145Z[GMT]")
 public class ProjectCreateParameters {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
@@ -39,9 +37,9 @@ public class ProjectCreateParameters {
   @SerializedName(SERIALIZED_NAME_MEMORY_ID)
   private Integer memoryId;
 
-  public static final String SERIALIZED_NAME_FILE_IDS = "file_ids";
-  @SerializedName(SERIALIZED_NAME_FILE_IDS)
-  private List<Integer> fileIds = null;
+  public static final String SERIALIZED_NAME_JOB_ID = "job_id";
+  @SerializedName(SERIALIZED_NAME_JOB_ID)
+  private Integer jobId;
 
   public static final String SERIALIZED_NAME_DUE_DATE = "due_date";
   @SerializedName(SERIALIZED_NAME_DUE_DATE)
@@ -96,34 +94,26 @@ public class ProjectCreateParameters {
   }
 
 
-  public ProjectCreateParameters fileIds(List<Integer> fileIds) {
+  public ProjectCreateParameters jobId(Integer jobId) {
     
-    this.fileIds = fileIds;
-    return this;
-  }
-
-  public ProjectCreateParameters addFileIdsItem(Integer fileIdsItem) {
-    if (this.fileIds == null) {
-      this.fileIds = new ArrayList<Integer>();
-    }
-    this.fileIds.add(fileIdsItem);
+    this.jobId = jobId;
     return this;
   }
 
    /**
-   * A list of Files to add to this new Project.
-   * @return fileIds
+   * The Job to associate with this new Project. If a Job ID is not provided then a new Job will be created to contain the Project. 
+   * @return jobId
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "[123, 124, 125]", value = "A list of Files to add to this new Project.")
+  @ApiModelProperty(example = "1234", value = "The Job to associate with this new Project. If a Job ID is not provided then a new Job will be created to contain the Project. ")
 
-  public List<Integer> getFileIds() {
-    return fileIds;
+  public Integer getJobId() {
+    return jobId;
   }
 
 
-  public void setFileIds(List<Integer> fileIds) {
-    this.fileIds = fileIds;
+  public void setJobId(Integer jobId) {
+    this.jobId = jobId;
   }
 
 
@@ -184,14 +174,14 @@ public class ProjectCreateParameters {
     ProjectCreateParameters projectCreateParameters = (ProjectCreateParameters) o;
     return Objects.equals(this.name, projectCreateParameters.name) &&
         Objects.equals(this.memoryId, projectCreateParameters.memoryId) &&
-        Objects.equals(this.fileIds, projectCreateParameters.fileIds) &&
+        Objects.equals(this.jobId, projectCreateParameters.jobId) &&
         Objects.equals(this.dueDate, projectCreateParameters.dueDate) &&
         Objects.equals(this.metadata, projectCreateParameters.metadata);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, memoryId, fileIds, dueDate, metadata);
+    return Objects.hash(name, memoryId, jobId, dueDate, metadata);
   }
 
   @Override
@@ -200,7 +190,7 @@ public class ProjectCreateParameters {
     sb.append("class ProjectCreateParameters {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    memoryId: ").append(toIndentedString(memoryId)).append("\n");
-    sb.append("    fileIds: ").append(toIndentedString(fileIds)).append("\n");
+    sb.append("    jobId: ").append(toIndentedString(jobId)).append("\n");
     sb.append("    dueDate: ").append(toIndentedString(dueDate)).append("\n");
     sb.append("    metadata: ").append(toIndentedString(metadata)).append("\n");
     sb.append("}");

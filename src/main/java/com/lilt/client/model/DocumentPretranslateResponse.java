@@ -20,7 +20,6 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.lilt.client.model.DocumentPretranslating;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
@@ -30,7 +29,7 @@ import java.util.List;
 /**
  * DocumentPretranslateResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-08-16T00:09:18.145Z[GMT]")
 public class DocumentPretranslateResponse {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -42,7 +41,7 @@ public class DocumentPretranslateResponse {
 
   public static final String SERIALIZED_NAME_DOCUMENTS = "documents";
   @SerializedName(SERIALIZED_NAME_DOCUMENTS)
-  private List<DocumentPretranslating> documents = null;
+  private List<Object> documents = null;
 
 
   public DocumentPretranslateResponse id(List<Integer> id) {
@@ -99,15 +98,15 @@ public class DocumentPretranslateResponse {
   }
 
 
-  public DocumentPretranslateResponse documents(List<DocumentPretranslating> documents) {
+  public DocumentPretranslateResponse documents(List<Object> documents) {
     
     this.documents = documents;
     return this;
   }
 
-  public DocumentPretranslateResponse addDocumentsItem(DocumentPretranslating documentsItem) {
+  public DocumentPretranslateResponse addDocumentsItem(Object documentsItem) {
     if (this.documents == null) {
-      this.documents = new ArrayList<DocumentPretranslating>();
+      this.documents = new ArrayList<Object>();
     }
     this.documents.add(documentsItem);
     return this;
@@ -120,12 +119,12 @@ public class DocumentPretranslateResponse {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "Document pretranslation status.")
 
-  public List<DocumentPretranslating> getDocuments() {
+  public List<Object> getDocuments() {
     return documents;
   }
 
 
-  public void setDocuments(List<DocumentPretranslating> documents) {
+  public void setDocuments(List<Object> documents) {
     this.documents = documents;
   }
 

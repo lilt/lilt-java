@@ -27,12 +27,8 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.lilt.client.model.Error;
-import com.lilt.client.model.Project;
 import com.lilt.client.model.ProjectCreateParameters;
 import com.lilt.client.model.ProjectDeleteResponse;
-import com.lilt.client.model.ProjectQuote;
-import com.lilt.client.model.ProjectStatus;
 import com.lilt.client.model.ProjectUpdateResponse;
 
 import java.lang.reflect.Type;
@@ -121,7 +117,7 @@ public class ProjectsApi {
      * Create a Project
      * Create a Project. A Project is a collection of Documents.  A Project is associated with exactly one Memory.  Projects appear in the dashboard of the web app.  
      * @param body  (required)
-     * @return Project
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -130,8 +126,8 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public Project createProject(ProjectCreateParameters body) throws ApiException {
-        ApiResponse<Project> localVarResp = createProjectWithHttpInfo(body);
+    public Object createProject(ProjectCreateParameters body) throws ApiException {
+        ApiResponse<Object> localVarResp = createProjectWithHttpInfo(body);
         return localVarResp.getData();
     }
 
@@ -139,7 +135,7 @@ public class ProjectsApi {
      * Create a Project
      * Create a Project. A Project is a collection of Documents.  A Project is associated with exactly one Memory.  Projects appear in the dashboard of the web app.  
      * @param body  (required)
-     * @return ApiResponse&lt;Project&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -148,9 +144,9 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Project> createProjectWithHttpInfo(ProjectCreateParameters body) throws ApiException {
+    public ApiResponse<Object> createProjectWithHttpInfo(ProjectCreateParameters body) throws ApiException {
         okhttp3.Call localVarCall = createProjectValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<Project>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -168,10 +164,10 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call createProjectAsync(ProjectCreateParameters body, final ApiCallback<Project> _callback) throws ApiException {
+    public okhttp3.Call createProjectAsync(ProjectCreateParameters body, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = createProjectValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<Project>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -354,7 +350,7 @@ public class ProjectsApi {
      * Retrieve Project report
      * Get information about a project that can be used for quoting. This includes: * A translation memory leverage report * Word count * Segment count  
      * @param id A unique Project identifier. (required)
-     * @return ProjectQuote
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -363,8 +359,8 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ProjectQuote getProjectReport(Integer id) throws ApiException {
-        ApiResponse<ProjectQuote> localVarResp = getProjectReportWithHttpInfo(id);
+    public Object getProjectReport(Integer id) throws ApiException {
+        ApiResponse<Object> localVarResp = getProjectReportWithHttpInfo(id);
         return localVarResp.getData();
     }
 
@@ -372,7 +368,7 @@ public class ProjectsApi {
      * Retrieve Project report
      * Get information about a project that can be used for quoting. This includes: * A translation memory leverage report * Word count * Segment count  
      * @param id A unique Project identifier. (required)
-     * @return ApiResponse&lt;ProjectQuote&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -381,9 +377,9 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<ProjectQuote> getProjectReportWithHttpInfo(Integer id) throws ApiException {
+    public ApiResponse<Object> getProjectReportWithHttpInfo(Integer id) throws ApiException {
         okhttp3.Call localVarCall = getProjectReportValidateBeforeCall(id, null);
-        Type localVarReturnType = new TypeToken<ProjectQuote>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -401,10 +397,10 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getProjectReportAsync(Integer id, final ApiCallback<ProjectQuote> _callback) throws ApiException {
+    public okhttp3.Call getProjectReportAsync(Integer id, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getProjectReportValidateBeforeCall(id, _callback);
-        Type localVarReturnType = new TypeToken<ProjectQuote>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -473,7 +469,7 @@ public class ProjectsApi {
      * Retrieve Project status
      * Retrieve the status of a Project.  
      * @param id A unique Project identifier. (required)
-     * @return ProjectStatus
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -482,8 +478,8 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ProjectStatus getProjectStatus(Integer id) throws ApiException {
-        ApiResponse<ProjectStatus> localVarResp = getProjectStatusWithHttpInfo(id);
+    public Object getProjectStatus(Integer id) throws ApiException {
+        ApiResponse<Object> localVarResp = getProjectStatusWithHttpInfo(id);
         return localVarResp.getData();
     }
 
@@ -491,7 +487,7 @@ public class ProjectsApi {
      * Retrieve Project status
      * Retrieve the status of a Project.  
      * @param id A unique Project identifier. (required)
-     * @return ApiResponse&lt;ProjectStatus&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -500,9 +496,9 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<ProjectStatus> getProjectStatusWithHttpInfo(Integer id) throws ApiException {
+    public ApiResponse<Object> getProjectStatusWithHttpInfo(Integer id) throws ApiException {
         okhttp3.Call localVarCall = getProjectStatusValidateBeforeCall(id, null);
-        Type localVarReturnType = new TypeToken<ProjectStatus>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -520,10 +516,10 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getProjectStatusAsync(Integer id, final ApiCallback<ProjectStatus> _callback) throws ApiException {
+    public okhttp3.Call getProjectStatusAsync(Integer id, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getProjectStatusValidateBeforeCall(id, _callback);
-        Type localVarReturnType = new TypeToken<ProjectStatus>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -629,7 +625,7 @@ public class ProjectsApi {
      * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
      * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
      * @param connectorId A unique Connector identifier. (optional)
-     * @return List&lt;Project&gt;
+     * @return List&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -638,8 +634,8 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public List<Project> getProjects(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId) throws ApiException {
-        ApiResponse<List<Project>> localVarResp = getProjectsWithHttpInfo(id, srclang, trglang, fromTime, toTime, state, archived, connectorId);
+    public List<Object> getProjects(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId) throws ApiException {
+        ApiResponse<List<Object>> localVarResp = getProjectsWithHttpInfo(id, srclang, trglang, fromTime, toTime, state, archived, connectorId);
         return localVarResp.getData();
     }
 
@@ -654,7 +650,7 @@ public class ProjectsApi {
      * @param state A project state (backlog, inProgress, inReview, inQA, done). (optional)
      * @param archived A flag that toggles whether to include archived projects in the response (the default is &#x60;true&#x60;). (optional)
      * @param connectorId A unique Connector identifier. (optional)
-     * @return ApiResponse&lt;List&lt;Project&gt;&gt;
+     * @return ApiResponse&lt;List&lt;Object&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -663,9 +659,9 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<Project>> getProjectsWithHttpInfo(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId) throws ApiException {
+    public ApiResponse<List<Object>> getProjectsWithHttpInfo(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId) throws ApiException {
         okhttp3.Call localVarCall = getProjectsValidateBeforeCall(id, srclang, trglang, fromTime, toTime, state, archived, connectorId, null);
-        Type localVarReturnType = new TypeToken<List<Project>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -690,10 +686,10 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getProjectsAsync(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId, final ApiCallback<List<Project>> _callback) throws ApiException {
+    public okhttp3.Call getProjectsAsync(Integer id, String srclang, String trglang, Integer fromTime, Integer toTime, String state, Boolean archived, Integer connectorId, final ApiCallback<List<Object>> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = getProjectsValidateBeforeCall(id, srclang, trglang, fromTime, toTime, state, archived, connectorId, _callback);
-        Type localVarReturnType = new TypeToken<List<Project>>(){}.getType();
+        Type localVarReturnType = new TypeToken<List<Object>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -758,7 +754,7 @@ public class ProjectsApi {
      * Update a Project
      * Update a Project. 
      * @param body  (required)
-     * @return Project
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -767,8 +763,8 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public Project updateProject(ProjectUpdateResponse body) throws ApiException {
-        ApiResponse<Project> localVarResp = updateProjectWithHttpInfo(body);
+    public Object updateProject(ProjectUpdateResponse body) throws ApiException {
+        ApiResponse<Object> localVarResp = updateProjectWithHttpInfo(body);
         return localVarResp.getData();
     }
 
@@ -776,7 +772,7 @@ public class ProjectsApi {
      * Update a Project
      * Update a Project. 
      * @param body  (required)
-     * @return ApiResponse&lt;Project&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -785,9 +781,9 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Project> updateProjectWithHttpInfo(ProjectUpdateResponse body) throws ApiException {
+    public ApiResponse<Object> updateProjectWithHttpInfo(ProjectUpdateResponse body) throws ApiException {
         okhttp3.Call localVarCall = updateProjectValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<Project>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -805,10 +801,10 @@ public class ProjectsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateProjectAsync(ProjectUpdateResponse body, final ApiCallback<Project> _callback) throws ApiException {
+    public okhttp3.Call updateProjectAsync(ProjectUpdateResponse body, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = updateProjectValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<Project>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

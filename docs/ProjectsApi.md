@@ -14,7 +14,7 @@ Method | HTTP request | Description
 
 <a name="createProject"></a>
 # **createProject**
-> Project createProject(body)
+> Object createProject(body)
 
 Create a Project
 
@@ -49,7 +49,7 @@ public class Example {
     ProjectsApi apiInstance = new ProjectsApi(defaultClient);
     ProjectCreateParameters body = new ProjectCreateParameters(); // ProjectCreateParameters | 
     try {
-      Project result = apiInstance.createProject(body);
+      Object result = apiInstance.createProject(body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsApi#createProject");
@@ -70,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Project**](Project.md)
+**Object**
 
 ### Authorization
 
@@ -164,7 +164,7 @@ Name | Type | Description  | Notes
 
 <a name="getProjectReport"></a>
 # **getProjectReport**
-> ProjectQuote getProjectReport(id)
+> Object getProjectReport(id)
 
 Retrieve Project report
 
@@ -199,7 +199,7 @@ public class Example {
     ProjectsApi apiInstance = new ProjectsApi(defaultClient);
     Integer id = 56; // Integer | A unique Project identifier.
     try {
-      ProjectQuote result = apiInstance.getProjectReport(id);
+      Object result = apiInstance.getProjectReport(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsApi#getProjectReport");
@@ -220,7 +220,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ProjectQuote**](ProjectQuote.md)
+**Object**
 
 ### Authorization
 
@@ -239,7 +239,7 @@ Name | Type | Description  | Notes
 
 <a name="getProjectStatus"></a>
 # **getProjectStatus**
-> ProjectStatus getProjectStatus(id)
+> Object getProjectStatus(id)
 
 Retrieve Project status
 
@@ -274,7 +274,7 @@ public class Example {
     ProjectsApi apiInstance = new ProjectsApi(defaultClient);
     Integer id = 56; // Integer | A unique Project identifier.
     try {
-      ProjectStatus result = apiInstance.getProjectStatus(id);
+      Object result = apiInstance.getProjectStatus(id);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsApi#getProjectStatus");
@@ -295,7 +295,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**ProjectStatus**](ProjectStatus.md)
+**Object**
 
 ### Authorization
 
@@ -314,7 +314,7 @@ Name | Type | Description  | Notes
 
 <a name="getProjects"></a>
 # **getProjects**
-> List&lt;Project&gt; getProjects(id, srclang, trglang, fromTime, toTime, state, archived, connectorId)
+> List&lt;Object&gt; getProjects(id, srclang, trglang, fromTime, toTime, state, archived, connectorId)
 
 Retrieve a Project
 
@@ -356,7 +356,7 @@ public class Example {
     Boolean archived = true; // Boolean | A flag that toggles whether to include archived projects in the response (the default is `true`).
     Integer connectorId = 56; // Integer | A unique Connector identifier.
     try {
-      List<Project> result = apiInstance.getProjects(id, srclang, trglang, fromTime, toTime, state, archived, connectorId);
+      List<Object> result = apiInstance.getProjects(id, srclang, trglang, fromTime, toTime, state, archived, connectorId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsApi#getProjects");
@@ -384,7 +384,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;Project&gt;**](Project.md)
+**List&lt;Object&gt;**
 
 ### Authorization
 
@@ -403,7 +403,7 @@ Name | Type | Description  | Notes
 
 <a name="updateProject"></a>
 # **updateProject**
-> Project updateProject(body)
+> Object updateProject(body)
 
 Update a Project
 
@@ -438,7 +438,7 @@ public class Example {
     ProjectsApi apiInstance = new ProjectsApi(defaultClient);
     ProjectUpdateResponse body = new ProjectUpdateResponse(); // ProjectUpdateResponse | 
     try {
-      Project result = apiInstance.updateProject(body);
+      Object result = apiInstance.updateProject(body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling ProjectsApi#updateProject");
@@ -459,7 +459,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Project**](Project.md)
+**Object**
 
 ### Authorization
 

@@ -1,8 +1,8 @@
-# Lilt-java-client
+# openapi-java-client
 
 Lilt REST API
 - API version: v2.0
-  - Build date: 2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]
+  - Build date: 2021-08-16T00:09:18.145Z[GMT]
 
 The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:
   * Training of and translating with interactive, adaptive machine translation
@@ -49,31 +49,23 @@ Refer to the [OSSRH Guide](http://central.sonatype.org/pages/ossrh-guide.html) f
 
 ### Maven users
 
-The library is hosted in GitHub packages, so configure your project's POM
-to point to the correct repository:
-
-```xml
-<repositories>
-  <repository>
-    <id>github</id>
-    <name>Github Packages</name>
-    <url>https://maven.pkg.github.com/lilt/lilt-java</url>
-  </repository>
-</repositories>
- ```
-
-You will also need to authenticate with GitHub Packages by updating
-your `~/.m2/settings.xml` file as described [here](https://docs.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages).
-
 Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-  <groupId>com.lilt.client</groupId>
-  <artifactId>lilt-java-client</artifactId>
+  <groupId>org.openapitools</groupId>
+  <artifactId>openapi-java-client</artifactId>
   <version>2.1.0</version>
   <scope>compile</scope>
 </dependency>
+```
+
+### Gradle users
+
+Add this dependency to your project's build file:
+
+```groovy
+compile "org.openapitools:openapi-java-client:2.1.0"
 ```
 
 ### Others
@@ -86,7 +78,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/lilt-java-client-2.1.0.jar`
+* `target/openapi-java-client-2.1.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -101,7 +93,7 @@ import com.lilt.client.ApiException;
 import com.lilt.client.Configuration;
 import com.lilt.client.auth.*;
 import com.lilt.client.models.*;
-import com.lilt.client.api.ConnectorsApi;
+import com.lilt.client.api.CommentsApi;
 
 public class Example {
   public static void main(String[] args) {
@@ -119,13 +111,15 @@ public class Example {
     BasicAuth.setUsername("YOUR USERNAME");
     BasicAuth.setPassword("YOUR PASSWORD");
 
-    ConnectorsApi apiInstance = new ConnectorsApi(defaultClient);
-    Connector body = new Connector(); // Connector | 
+    CommentsApi apiInstance = new CommentsApi(defaultClient);
+    Integer documentId = 56; // Integer | A unique document identifier.
+    Integer segmentId = 56; // Integer | A unique segment identifier.
+    Object body = null; // Object | The comment being created
     try {
-      Connector result = apiInstance.createConnector(body);
+      Object result = apiInstance.createComment(documentId, segmentId, body);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling ConnectorsApi#createConnector");
+      System.err.println("Exception when calling CommentsApi#createComment");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -142,10 +136,14 @@ All URIs are relative to *https://lilt.com/2*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*CommentsApi* | [**createComment**](docs/CommentsApi.md#createComment) | **POST** /comments | Create a new comment
+*CommentsApi* | [**deleteComment**](docs/CommentsApi.md#deleteComment) | **DELETE** /comments | Delete a Comment
+*CommentsApi* | [**getDocumentComments**](docs/CommentsApi.md#getDocumentComments) | **GET** /comments | Retrieve a document&#39;s comments by segment
+*CommentsApi* | [**updateComment**](docs/CommentsApi.md#updateComment) | **PUT** /comments | Update an existing comment
 *ConnectorsApi* | [**createConnector**](docs/ConnectorsApi.md#createConnector) | **POST** /connectors | Upload a Connector
 *ConnectorsApi* | [**deleteConnector**](docs/ConnectorsApi.md#deleteConnector) | **DELETE** /connectors | Delete a Connector
 *ConnectorsApi* | [**exportConnectorJob**](docs/ConnectorsApi.md#exportConnectorJob) | **POST** /connectors/jobs/deliver | Deliver a Connector Job
-*ConnectorsApi* | [**getConnectorJobs**](docs/ConnectorsApi.md#getConnectorJobs) | **GET** /connectors/jobs | Retreive a Connector Job
+*ConnectorsApi* | [**getConnectorJobs**](docs/ConnectorsApi.md#getConnectorJobs) | **GET** /connectors/jobs | Retrieve a Connector Job
 *ConnectorsApi* | [**getConnectors**](docs/ConnectorsApi.md#getConnectors) | **GET** /connectors | Retrieve a Connector
 *ConnectorsApi* | [**syncConnector**](docs/ConnectorsApi.md#syncConnector) | **POST** /connectors/sync | Sync a Connector
 *ConnectorsApi* | [**updateConnector**](docs/ConnectorsApi.md#updateConnector) | **PUT** /connectors | Upload a Connector
@@ -163,6 +161,18 @@ Class | Method | HTTP request | Description
 *FilesApi* | [**deleteFile**](docs/FilesApi.md#deleteFile) | **DELETE** /files | Delete a File
 *FilesApi* | [**getFiles**](docs/FilesApi.md#getFiles) | **GET** /files | Retrieve a File
 *FilesApi* | [**uploadFile**](docs/FilesApi.md#uploadFile) | **POST** /files | Upload a File
+*JobsApi* | [**archiveJob**](docs/JobsApi.md#archiveJob) | **POST** /jobs/{jobId}/archive | Archive a Job
+*JobsApi* | [**createJob**](docs/JobsApi.md#createJob) | **POST** /jobs | Create a Job
+*JobsApi* | [**deleteJob**](docs/JobsApi.md#deleteJob) | **DELETE** /jobs/{jobId} | Delete a Job
+*JobsApi* | [**deliverJob**](docs/JobsApi.md#deliverJob) | **POST** /jobs/{jobId}/deliver | Deliver a Job
+*JobsApi* | [**downloadJob**](docs/JobsApi.md#downloadJob) | **GET** /jobs/{jobId}/downlod | Download a Job
+*JobsApi* | [**exportJob**](docs/JobsApi.md#exportJob) | **GET** /jobs/{jobId}/export | Export a Job
+*JobsApi* | [**getJob**](docs/JobsApi.md#getJob) | **GET** /jobs/{jobId} | Retrieve a Job
+*JobsApi* | [**getJobLeverageStats**](docs/JobsApi.md#getJobLeverageStats) | **POST** /jobs/{jobId}/stats | Retrieve Job Leverage Stats
+*JobsApi* | [**reactivateJob**](docs/JobsApi.md#reactivateJob) | **POST** /jobs/{jobId}/reactivate | Reactivate a Job
+*JobsApi* | [**retrieveAllJobs**](docs/JobsApi.md#retrieveAllJobs) | **GET** /jobs | Retrieve all Jobs
+*JobsApi* | [**unarchiveJob**](docs/JobsApi.md#unarchiveJob) | **POST** /jobs/{jobId}/unarchive | Unarchive a Job
+*JobsApi* | [**updateJob**](docs/JobsApi.md#updateJob) | **PUT** /jobs/{jobId} | Update a Job
 *LanguagesApi* | [**getLanguages**](docs/LanguagesApi.md#getLanguages) | **GET** /languages | Retrieve supported languages
 *LexiconApi* | [**queryLexicon**](docs/LexiconApi.md#queryLexicon) | **GET** /lexicon | Query a Lexicon
 *LexiconApi* | [**updateLexicon**](docs/LexiconApi.md#updateLexicon) | **POST** /lexicon | Update a Lexicon
@@ -187,8 +197,13 @@ Class | Method | HTTP request | Description
 *SegmentsApi* | [**createSegment**](docs/SegmentsApi.md#createSegment) | **POST** /segments | Create a Segment
 *SegmentsApi* | [**deleteSegment**](docs/SegmentsApi.md#deleteSegment) | **DELETE** /segments | Delete a Segment
 *SegmentsApi* | [**getSegment**](docs/SegmentsApi.md#getSegment) | **GET** /segments | Retrieve a Segment
+*SegmentsApi* | [**segmentsReviewUnlockPost**](docs/SegmentsApi.md#segmentsReviewUnlockPost) | **POST** /segments/review/unlock | Unaccept and unlock segments
 *SegmentsApi* | [**tagSegment**](docs/SegmentsApi.md#tagSegment) | **GET** /segments/tag | Tag a Segment
 *SegmentsApi* | [**updateSegment**](docs/SegmentsApi.md#updateSegment) | **PUT** /segments | Update a Segment
+*SettingsApi* | [**getOrganizationSettings**](docs/SettingsApi.md#getOrganizationSettings) | **GET** /settings/organization | Update or create a setting
+*SettingsApi* | [**getProjectSettings**](docs/SettingsApi.md#getProjectSettings) | **GET** /settings/project/{projectId} | Get settings for a project
+*SettingsApi* | [**getUserSettings**](docs/SettingsApi.md#getUserSettings) | **GET** /settings/user | Get settings for a project
+*SettingsApi* | [**upsertSetting**](docs/SettingsApi.md#upsertSetting) | **POST** /settings | Get organization-level settings
 *TranslateApi* | [**batchTranslateFile**](docs/TranslateApi.md#batchTranslateFile) | **POST** /translate/file | Translate a File
 *TranslateApi* | [**downloadFile**](docs/TranslateApi.md#downloadFile) | **GET** /translate/files | Download translated file
 *TranslateApi* | [**monitorFileTranslation**](docs/TranslateApi.md#monitorFileTranslation) | **GET** /translate/file | Monitor file translation
@@ -198,13 +213,11 @@ Class | Method | HTTP request | Description
 
 ## Documentation for Models
 
- - [Annotation](docs/Annotation.md)
  - [ApiRoot](docs/ApiRoot.md)
- - [Comment](docs/Comment.md)
+ - [CommentDeleteResponse](docs/CommentDeleteResponse.md)
  - [Connector](docs/Connector.md)
  - [ConnectorArguments](docs/ConnectorArguments.md)
  - [ConnectorDeleteResponse](docs/ConnectorDeleteResponse.md)
- - [ConnectorJob](docs/ConnectorJob.md)
  - [DocumentAssignmentParameters](docs/DocumentAssignmentParameters.md)
  - [DocumentAssignmentResponse](docs/DocumentAssignmentResponse.md)
  - [DocumentDeleteResponse](docs/DocumentDeleteResponse.md)
@@ -213,25 +226,14 @@ Class | Method | HTTP request | Description
  - [DocumentParameters](docs/DocumentParameters.md)
  - [DocumentPretranslateParameters](docs/DocumentPretranslateParameters.md)
  - [DocumentPretranslateResponse](docs/DocumentPretranslateResponse.md)
- - [DocumentPretranslating](docs/DocumentPretranslating.md)
- - [DocumentPretranslatingStatus](docs/DocumentPretranslatingStatus.md)
- - [DocumentQuote](docs/DocumentQuote.md)
  - [DocumentUpdateParameters](docs/DocumentUpdateParameters.md)
- - [DocumentWithSegments](docs/DocumentWithSegments.md)
- - [DocumentWithoutSegments](docs/DocumentWithoutSegments.md)
- - [DocumentWithoutSegmentsStatus](docs/DocumentWithoutSegmentsStatus.md)
- - [Error](docs/Error.md)
  - [FileDeleteResponse](docs/FileDeleteResponse.md)
+ - [JobCreateParameters](docs/JobCreateParameters.md)
+ - [JobDeleteResponse](docs/JobDeleteResponse.md)
+ - [JobUpdateParameters](docs/JobUpdateParameters.md)
  - [LanguagesResponse](docs/LanguagesResponse.md)
- - [LexiconEntry](docs/LexiconEntry.md)
- - [LexiconEntryExamples](docs/LexiconEntryExamples.md)
- - [LexiconEntrySourceSpan](docs/LexiconEntrySourceSpan.md)
- - [LexiconEntryTargetSpan](docs/LexiconEntryTargetSpan.md)
- - [LexiconEntryTranslations](docs/LexiconEntryTranslations.md)
  - [LexiconUpdateParameters](docs/LexiconUpdateParameters.md)
  - [LexiconUpdateResponse](docs/LexiconUpdateResponse.md)
- - [MatchBand](docs/MatchBand.md)
- - [Memory](docs/Memory.md)
  - [MemoryCreateParameters](docs/MemoryCreateParameters.md)
  - [MemoryDeleteResponse](docs/MemoryDeleteResponse.md)
  - [MemoryImportResponse](docs/MemoryImportResponse.md)
@@ -239,32 +241,13 @@ Class | Method | HTTP request | Description
  - [MemorySyncDeleteResponse](docs/MemorySyncDeleteResponse.md)
  - [MemoryUpdateParameters](docs/MemoryUpdateParameters.md)
  - [MemoryUpdateResponse](docs/MemoryUpdateResponse.md)
- - [Project](docs/Project.md)
  - [ProjectCreateParameters](docs/ProjectCreateParameters.md)
  - [ProjectDeleteResponse](docs/ProjectDeleteResponse.md)
- - [ProjectQuote](docs/ProjectQuote.md)
- - [ProjectStatus](docs/ProjectStatus.md)
  - [ProjectUpdateResponse](docs/ProjectUpdateResponse.md)
- - [QARuleMatches](docs/QARuleMatches.md)
- - [QARuleMatchesContext](docs/QARuleMatchesContext.md)
- - [QARuleMatchesMatches](docs/QARuleMatchesMatches.md)
- - [QARuleMatchesReplacements](docs/QARuleMatchesReplacements.md)
- - [QARuleMatchesRule](docs/QARuleMatchesRule.md)
- - [QARuleMatchesRuleCategory](docs/QARuleMatchesRuleCategory.md)
- - [QARuleMatchesRuleUrls](docs/QARuleMatchesRuleUrls.md)
- - [ResourceStatus](docs/ResourceStatus.md)
- - [Segment](docs/Segment.md)
  - [SegmentCreateParameters](docs/SegmentCreateParameters.md)
  - [SegmentDeleteResponse](docs/SegmentDeleteResponse.md)
  - [SegmentUpdateParameters](docs/SegmentUpdateParameters.md)
- - [SegmentWithComments](docs/SegmentWithComments.md)
- - [SourceFile](docs/SourceFile.md)
- - [TaggedSegment](docs/TaggedSegment.md)
  - [TranslateRegisterResponse](docs/TranslateRegisterResponse.md)
- - [Translation](docs/Translation.md)
- - [TranslationInfo](docs/TranslationInfo.md)
- - [TranslationList](docs/TranslationList.md)
- - [TranslationMemoryEntry](docs/TranslationMemoryEntry.md)
 
 
 ## Documentation for Authorization

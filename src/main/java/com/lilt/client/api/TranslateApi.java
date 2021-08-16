@@ -28,10 +28,7 @@ import java.io.IOException;
 
 
 import java.math.BigDecimal;
-import com.lilt.client.model.Error;
 import com.lilt.client.model.TranslateRegisterResponse;
-import com.lilt.client.model.TranslationInfo;
-import com.lilt.client.model.TranslationList;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -140,7 +137,7 @@ public class TranslateApi {
      * @param fileId List of File ids to be translated, comma separated. (required)
      * @param memoryId Id of Memory to use in translation. (required)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. (optional)
-     * @return TranslationInfo
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -149,8 +146,8 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public TranslationInfo batchTranslateFile(String fileId, String memoryId, BigDecimal configId) throws ApiException {
-        ApiResponse<TranslationInfo> localVarResp = batchTranslateFileWithHttpInfo(fileId, memoryId, configId);
+    public Object batchTranslateFile(String fileId, String memoryId, BigDecimal configId) throws ApiException {
+        ApiResponse<Object> localVarResp = batchTranslateFileWithHttpInfo(fileId, memoryId, configId);
         return localVarResp.getData();
     }
 
@@ -160,7 +157,7 @@ public class TranslateApi {
      * @param fileId List of File ids to be translated, comma separated. (required)
      * @param memoryId Id of Memory to use in translation. (required)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. (optional)
-     * @return ApiResponse&lt;TranslationInfo&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -169,9 +166,9 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<TranslationInfo> batchTranslateFileWithHttpInfo(String fileId, String memoryId, BigDecimal configId) throws ApiException {
+    public ApiResponse<Object> batchTranslateFileWithHttpInfo(String fileId, String memoryId, BigDecimal configId) throws ApiException {
         okhttp3.Call localVarCall = batchTranslateFileValidateBeforeCall(fileId, memoryId, configId, null);
-        Type localVarReturnType = new TypeToken<TranslationInfo>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -191,10 +188,10 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call batchTranslateFileAsync(String fileId, String memoryId, BigDecimal configId, final ApiCallback<TranslationInfo> _callback) throws ApiException {
+    public okhttp3.Call batchTranslateFileAsync(String fileId, String memoryId, BigDecimal configId, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = batchTranslateFileValidateBeforeCall(fileId, memoryId, configId, _callback);
-        Type localVarReturnType = new TypeToken<TranslationInfo>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -391,7 +388,7 @@ public class TranslateApi {
      * @param status One of the translation statuses - &#x60;InProgress&#x60;, &#x60;Completed&#x60;, &#x60;Failed&#x60;, &#x60;ReadyForDownload&#x60; (optional)
      * @param fromTime Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch. (optional)
      * @param toTime Results before this time (exclusive) will be returned, specified as seconds since the Unix epoch. (optional)
-     * @return TranslationInfo
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -400,8 +397,8 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public TranslationInfo monitorFileTranslation(String translationIds, String status, BigDecimal fromTime, BigDecimal toTime) throws ApiException {
-        ApiResponse<TranslationInfo> localVarResp = monitorFileTranslationWithHttpInfo(translationIds, status, fromTime, toTime);
+    public Object monitorFileTranslation(String translationIds, String status, BigDecimal fromTime, BigDecimal toTime) throws ApiException {
+        ApiResponse<Object> localVarResp = monitorFileTranslationWithHttpInfo(translationIds, status, fromTime, toTime);
         return localVarResp.getData();
     }
 
@@ -412,7 +409,7 @@ public class TranslateApi {
      * @param status One of the translation statuses - &#x60;InProgress&#x60;, &#x60;Completed&#x60;, &#x60;Failed&#x60;, &#x60;ReadyForDownload&#x60; (optional)
      * @param fromTime Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch. (optional)
      * @param toTime Results before this time (exclusive) will be returned, specified as seconds since the Unix epoch. (optional)
-     * @return ApiResponse&lt;TranslationInfo&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -421,9 +418,9 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<TranslationInfo> monitorFileTranslationWithHttpInfo(String translationIds, String status, BigDecimal fromTime, BigDecimal toTime) throws ApiException {
+    public ApiResponse<Object> monitorFileTranslationWithHttpInfo(String translationIds, String status, BigDecimal fromTime, BigDecimal toTime) throws ApiException {
         okhttp3.Call localVarCall = monitorFileTranslationValidateBeforeCall(translationIds, status, fromTime, toTime, null);
-        Type localVarReturnType = new TypeToken<TranslationInfo>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -444,10 +441,10 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call monitorFileTranslationAsync(String translationIds, String status, BigDecimal fromTime, BigDecimal toTime, final ApiCallback<TranslationInfo> _callback) throws ApiException {
+    public okhttp3.Call monitorFileTranslationAsync(String translationIds, String status, BigDecimal fromTime, BigDecimal toTime, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = monitorFileTranslationValidateBeforeCall(translationIds, status, fromTime, toTime, _callback);
-        Type localVarReturnType = new TypeToken<TranslationInfo>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }
@@ -703,7 +700,7 @@ public class TranslateApi {
      * @param rich Returns rich translation information (e.g., with word alignments). (optional, default to false)
      * @param tmMatches Include translation memory fuzzy matches. (optional, default to true)
      * @param projectTags Project tags. Projects tags in source to target if set to true. (optional, default to false)
-     * @return TranslationList
+     * @return Object
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -712,8 +709,8 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public TranslationList translateSegment(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags) throws ApiException {
-        ApiResponse<TranslationList> localVarResp = translateSegmentWithHttpInfo(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags);
+    public Object translateSegment(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags) throws ApiException {
+        ApiResponse<Object> localVarResp = translateSegmentWithHttpInfo(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags);
         return localVarResp.getData();
     }
 
@@ -728,7 +725,7 @@ public class TranslateApi {
      * @param rich Returns rich translation information (e.g., with word alignments). (optional, default to false)
      * @param tmMatches Include translation memory fuzzy matches. (optional, default to true)
      * @param projectTags Project tags. Projects tags in source to target if set to true. (optional, default to false)
-     * @return ApiResponse&lt;TranslationList&gt;
+     * @return ApiResponse&lt;Object&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
@@ -737,9 +734,9 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<TranslationList> translateSegmentWithHttpInfo(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags) throws ApiException {
+    public ApiResponse<Object> translateSegmentWithHttpInfo(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags) throws ApiException {
         okhttp3.Call localVarCall = translateSegmentValidateBeforeCall(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, null);
-        Type localVarReturnType = new TypeToken<TranslationList>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
@@ -764,10 +761,10 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call translateSegmentAsync(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, final ApiCallback<TranslationList> _callback) throws ApiException {
+    public okhttp3.Call translateSegmentAsync(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, final ApiCallback<Object> _callback) throws ApiException {
 
         okhttp3.Call localVarCall = translateSegmentValidateBeforeCall(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, _callback);
-        Type localVarReturnType = new TypeToken<TranslationList>(){}.getType();
+        Type localVarReturnType = new TypeToken<Object>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

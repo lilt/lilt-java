@@ -10,7 +10,7 @@ Method | HTTP request | Description
 
 <a name="queryLexicon"></a>
 # **queryLexicon**
-> List&lt;LexiconEntry&gt; queryLexicon(memoryId, srclang, trglang, query, n)
+> List&lt;Object&gt; queryLexicon(memoryId, srclang, trglang, query, n)
 
 Query a Lexicon
 
@@ -49,7 +49,7 @@ public class Example {
     String query = "query_example"; // String | The query term.
     Integer n = 1; // Integer | The maximum number of results to return.
     try {
-      List<LexiconEntry> result = apiInstance.queryLexicon(memoryId, srclang, trglang, query, n);
+      List<Object> result = apiInstance.queryLexicon(memoryId, srclang, trglang, query, n);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling LexiconApi#queryLexicon");
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**List&lt;LexiconEntry&gt;**](LexiconEntry.md)
+**List&lt;Object&gt;**
 
 ### Authorization
 

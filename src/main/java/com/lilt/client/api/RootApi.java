@@ -28,7 +28,6 @@ import java.io.IOException;
 
 
 import com.lilt.client.model.ApiRoot;
-import com.lilt.client.model.Error;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;

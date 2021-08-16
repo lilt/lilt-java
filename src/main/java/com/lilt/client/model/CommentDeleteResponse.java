@@ -25,62 +25,35 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * LexiconUpdateResponse
+ * CommentDeleteResponse
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-08-16T00:09:18.145Z[GMT]")
-public class LexiconUpdateResponse {
-  public static final String SERIALIZED_NAME_MEMORY_ID = "memory_id";
-  @SerializedName(SERIALIZED_NAME_MEMORY_ID)
-  private Integer memoryId;
-
-  public static final String SERIALIZED_NAME_SUCCESS = "success";
-  @SerializedName(SERIALIZED_NAME_SUCCESS)
-  private Boolean success;
+public class CommentDeleteResponse {
+  public static final String SERIALIZED_NAME_ID = "id";
+  @SerializedName(SERIALIZED_NAME_ID)
+  private Integer id;
 
 
-  public LexiconUpdateResponse memoryId(Integer memoryId) {
+  public CommentDeleteResponse id(Integer id) {
     
-    this.memoryId = memoryId;
+    this.id = id;
     return this;
   }
 
    /**
-   * A unique Memory identifier.
-   * @return memoryId
+   * A unique Comment identifier.
+   * @return id
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "46530", value = "A unique Memory identifier.")
+  @ApiModelProperty(example = "12345", value = "A unique Comment identifier.")
 
-  public Integer getMemoryId() {
-    return memoryId;
+  public Integer getId() {
+    return id;
   }
 
 
-  public void setMemoryId(Integer memoryId) {
-    this.memoryId = memoryId;
-  }
-
-
-  public LexiconUpdateResponse success(Boolean success) {
-    
-    this.success = success;
-    return this;
-  }
-
-   /**
-   * If the operation succeeded, then &#x60;true&#x60;. Otherwise, &#x60;false&#x60;.
-   * @return success
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "If the operation succeeded, then `true`. Otherwise, `false`.")
-
-  public Boolean getSuccess() {
-    return success;
-  }
-
-
-  public void setSuccess(Boolean success) {
-    this.success = success;
+  public void setId(Integer id) {
+    this.id = id;
   }
 
 
@@ -92,22 +65,20 @@ public class LexiconUpdateResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LexiconUpdateResponse lexiconUpdateResponse = (LexiconUpdateResponse) o;
-    return Objects.equals(this.memoryId, lexiconUpdateResponse.memoryId) &&
-        Objects.equals(this.success, lexiconUpdateResponse.success);
+    CommentDeleteResponse commentDeleteResponse = (CommentDeleteResponse) o;
+    return Objects.equals(this.id, commentDeleteResponse.id);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(memoryId, success);
+    return Objects.hash(id);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LexiconUpdateResponse {\n");
-    sb.append("    memoryId: ").append(toIndentedString(memoryId)).append("\n");
-    sb.append("    success: ").append(toIndentedString(success)).append("\n");
+    sb.append("class CommentDeleteResponse {\n");
+    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("}");
     return sb.toString();
   }

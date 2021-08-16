@@ -25,62 +25,62 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * LexiconUpdateResponse
+ * JobUpdateParameters
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-08-16T00:09:18.145Z[GMT]")
-public class LexiconUpdateResponse {
-  public static final String SERIALIZED_NAME_MEMORY_ID = "memory_id";
-  @SerializedName(SERIALIZED_NAME_MEMORY_ID)
-  private Integer memoryId;
+public class JobUpdateParameters {
+  public static final String SERIALIZED_NAME_NAME = "name";
+  @SerializedName(SERIALIZED_NAME_NAME)
+  private String name;
 
-  public static final String SERIALIZED_NAME_SUCCESS = "success";
-  @SerializedName(SERIALIZED_NAME_SUCCESS)
-  private Boolean success;
+  public static final String SERIALIZED_NAME_DUE_DATE = "dueDate";
+  @SerializedName(SERIALIZED_NAME_DUE_DATE)
+  private Integer dueDate;
 
 
-  public LexiconUpdateResponse memoryId(Integer memoryId) {
+  public JobUpdateParameters name(String name) {
     
-    this.memoryId = memoryId;
+    this.name = name;
     return this;
   }
 
    /**
-   * A unique Memory identifier.
-   * @return memoryId
+   * A name for the Job.
+   * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "46530", value = "A unique Memory identifier.")
+  @ApiModelProperty(example = "My new Job", value = "A name for the Job.")
 
-  public Integer getMemoryId() {
-    return memoryId;
+  public String getName() {
+    return name;
   }
 
 
-  public void setMemoryId(Integer memoryId) {
-    this.memoryId = memoryId;
+  public void setName(String name) {
+    this.name = name;
   }
 
 
-  public LexiconUpdateResponse success(Boolean success) {
+  public JobUpdateParameters dueDate(Integer dueDate) {
     
-    this.success = success;
+    this.dueDate = dueDate;
     return this;
   }
 
    /**
-   * If the operation succeeded, then &#x60;true&#x60;. Otherwise, &#x60;false&#x60;.
-   * @return success
+   * An ISO string date.
+   * @return dueDate
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "If the operation succeeded, then `true`. Otherwise, `false`.")
+  @ApiModelProperty(value = "An ISO string date.")
 
-  public Boolean getSuccess() {
-    return success;
+  public Integer getDueDate() {
+    return dueDate;
   }
 
 
-  public void setSuccess(Boolean success) {
-    this.success = success;
+  public void setDueDate(Integer dueDate) {
+    this.dueDate = dueDate;
   }
 
 
@@ -92,22 +92,22 @@ public class LexiconUpdateResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LexiconUpdateResponse lexiconUpdateResponse = (LexiconUpdateResponse) o;
-    return Objects.equals(this.memoryId, lexiconUpdateResponse.memoryId) &&
-        Objects.equals(this.success, lexiconUpdateResponse.success);
+    JobUpdateParameters jobUpdateParameters = (JobUpdateParameters) o;
+    return Objects.equals(this.name, jobUpdateParameters.name) &&
+        Objects.equals(this.dueDate, jobUpdateParameters.dueDate);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(memoryId, success);
+    return Objects.hash(name, dueDate);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LexiconUpdateResponse {\n");
-    sb.append("    memoryId: ").append(toIndentedString(memoryId)).append("\n");
-    sb.append("    success: ").append(toIndentedString(success)).append("\n");
+    sb.append("class JobUpdateParameters {\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    dueDate: ").append(toIndentedString(dueDate)).append("\n");
     sb.append("}");
     return sb.toString();
   }

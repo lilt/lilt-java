@@ -7,13 +7,14 @@ Method | HTTP request | Description
 [**createSegment**](SegmentsApi.md#createSegment) | **POST** /segments | Create a Segment
 [**deleteSegment**](SegmentsApi.md#deleteSegment) | **DELETE** /segments | Delete a Segment
 [**getSegment**](SegmentsApi.md#getSegment) | **GET** /segments | Retrieve a Segment
+[**segmentsReviewUnlockPost**](SegmentsApi.md#segmentsReviewUnlockPost) | **POST** /segments/review/unlock | Unaccept and unlock segments
 [**tagSegment**](SegmentsApi.md#tagSegment) | **GET** /segments/tag | Tag a Segment
 [**updateSegment**](SegmentsApi.md#updateSegment) | **PUT** /segments | Update a Segment
 
 
 <a name="createSegment"></a>
 # **createSegment**
-> Segment createSegment(body)
+> Object createSegment(body)
 
 Create a Segment
 
@@ -48,7 +49,7 @@ public class Example {
     SegmentsApi apiInstance = new SegmentsApi(defaultClient);
     SegmentCreateParameters body = new SegmentCreateParameters(); // SegmentCreateParameters | 
     try {
-      Segment result = apiInstance.createSegment(body);
+      Object result = apiInstance.createSegment(body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling SegmentsApi#createSegment");
@@ -69,7 +70,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Segment**](Segment.md)
+**Object**
 
 ### Authorization
 
@@ -163,7 +164,7 @@ Name | Type | Description  | Notes
 
 <a name="getSegment"></a>
 # **getSegment**
-> SegmentWithComments getSegment(id, includeComments)
+> Object getSegment(id, includeComments)
 
 Retrieve a Segment
 
@@ -199,7 +200,7 @@ public class Example {
     Integer id = 56; // Integer | A unique Segment identifier.
     Boolean includeComments = false; // Boolean | Include comments in the response.
     try {
-      SegmentWithComments result = apiInstance.getSegment(id, includeComments);
+      Object result = apiInstance.getSegment(id, includeComments);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling SegmentsApi#getSegment");
@@ -221,7 +222,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**SegmentWithComments**](SegmentWithComments.md)
+**Object**
 
 ### Authorization
 
@@ -238,9 +239,83 @@ Name | Type | Description  | Notes
 **200** | A Segment object. |  -  |
 **0** | Unexpected error |  -  |
 
+<a name="segmentsReviewUnlockPost"></a>
+# **segmentsReviewUnlockPost**
+> List&lt;String&gt; segmentsReviewUnlockPost(body)
+
+Unaccept and unlock segments
+
+Unaccept and unlock segments. Sets individual segments&#39; \&quot;Review Done\&quot; to false. Confirmed segments will remain confirmed.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/segments/review/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;segmentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.SegmentsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    SegmentsApi apiInstance = new SegmentsApi(defaultClient);
+    Object body = null; // Object | segment ids to update
+    try {
+      List<String> result = apiInstance.segmentsReviewUnlockPost(body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling SegmentsApi#segmentsReviewUnlockPost");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | **Object**| segment ids to update |
+
+### Return type
+
+**List&lt;String&gt;**
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | array of updated segments |  -  |
+
 <a name="tagSegment"></a>
 # **tagSegment**
-> TaggedSegment tagSegment(sourceTagged, target, memoryId)
+> Object tagSegment(sourceTagged, target, memoryId)
 
 Tag a Segment
 
@@ -277,7 +352,7 @@ public class Example {
     String target = "target_example"; // String | The target string.
     Integer memoryId = 56; // Integer | A unique Memory identifier.
     try {
-      TaggedSegment result = apiInstance.tagSegment(sourceTagged, target, memoryId);
+      Object result = apiInstance.tagSegment(sourceTagged, target, memoryId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling SegmentsApi#tagSegment");
@@ -300,7 +375,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TaggedSegment**](TaggedSegment.md)
+**Object**
 
 ### Authorization
 
@@ -319,7 +394,7 @@ Name | Type | Description  | Notes
 
 <a name="updateSegment"></a>
 # **updateSegment**
-> Segment updateSegment(body)
+> Object updateSegment(body)
 
 Update a Segment
 
@@ -354,7 +429,7 @@ public class Example {
     SegmentsApi apiInstance = new SegmentsApi(defaultClient);
     SegmentUpdateParameters body = new SegmentUpdateParameters(); // SegmentUpdateParameters | 
     try {
-      Segment result = apiInstance.updateSegment(body);
+      Object result = apiInstance.updateSegment(body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling SegmentsApi#updateSegment");
@@ -375,7 +450,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**Segment**](Segment.md)
+**Object**
 
 ### Authorization
 

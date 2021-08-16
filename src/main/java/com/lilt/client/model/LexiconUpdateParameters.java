@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * LexiconUpdateParameters
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-08-16T00:09:18.145Z[GMT]")
 public class LexiconUpdateParameters {
   public static final String SERIALIZED_NAME_MEMORY_ID = "memory_id";
   @SerializedName(SERIALIZED_NAME_MEMORY_ID)

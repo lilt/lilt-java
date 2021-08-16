@@ -27,7 +27,6 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.lilt.client.model.Error;
 import com.lilt.client.model.LanguagesResponse;
 
 import java.lang.reflect.Type;
