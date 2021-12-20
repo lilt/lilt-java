@@ -469,7 +469,7 @@ public class ConnectorsApi {
     }
 
     /**
-     * Retreive a Connector Job
+     * Retrieve a Connector Job
      * Retrieves a connector job available to your user. Use this to check the status of jobs started by the &#x60;/connectors/sync&#x60; and &#x60;/connectors/jobs/deliver&#x60; endpoints.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/jobs?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
      * @param id A unique Connector Job identifier. (required)
      * @return List&lt;ConnectorJob&gt;
@@ -487,7 +487,7 @@ public class ConnectorsApi {
     }
 
     /**
-     * Retreive a Connector Job
+     * Retrieve a Connector Job
      * Retrieves a connector job available to your user. Use this to check the status of jobs started by the &#x60;/connectors/sync&#x60; and &#x60;/connectors/jobs/deliver&#x60; endpoints.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/jobs?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
      * @param id A unique Connector Job identifier. (required)
      * @return ApiResponse&lt;List&lt;ConnectorJob&gt;&gt;
@@ -506,7 +506,7 @@ public class ConnectorsApi {
     }
 
     /**
-     * Retreive a Connector Job (asynchronously)
+     * Retrieve a Connector Job (asynchronously)
      * Retrieves a connector job available to your user. Use this to check the status of jobs started by the &#x60;/connectors/sync&#x60; and &#x60;/connectors/jobs/deliver&#x60; endpoints.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/jobs?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
      * @param id A unique Connector Job identifier. (required)
      * @param _callback The callback to be executed when the API call finishes

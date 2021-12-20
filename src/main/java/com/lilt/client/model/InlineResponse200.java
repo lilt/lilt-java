@@ -23,97 +23,42 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
-import java.math.BigDecimal;
 
 /**
  * InlineResponse200
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2020-09-09T11:54:15.439-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-20T00:13:26.792Z[GMT]")
 public class InlineResponse200 {
-  public static final String SERIALIZED_NAME_FILE = "File";
-  @SerializedName(SERIALIZED_NAME_FILE)
-  private java.io.File file;
-
-  public static final String SERIALIZED_NAME_DETECTED_LANG = "detected_lang";
-  @SerializedName(SERIALIZED_NAME_DETECTED_LANG)
-  private String detectedLang;
-
-  public static final String SERIALIZED_NAME_DETECTED_LANG_CONFIDENCE = "detected_lang_confidence";
-  @SerializedName(SERIALIZED_NAME_DETECTED_LANG_CONFIDENCE)
-  private BigDecimal detectedLangConfidence;
+  public static final String SERIALIZED_NAME_CONFIG_ID = "configId";
+  @SerializedName(SERIALIZED_NAME_CONFIG_ID)
+  private Integer configId;
 
 
-  public InlineResponse200 file(java.io.File file) {
+  public InlineResponse200 configId(Integer configId) {
     
-    this.file = file;
+    this.configId = configId;
     return this;
   }
 
    /**
-   * Get file
-   * @return file
+   * Get configId
+   * @return configId
   **/
   @javax.annotation.Nullable
   @ApiModelProperty(value = "")
 
-  public java.io.File getFile() {
-    return file;
+  public Integer getConfigId() {
+    return configId;
   }
 
 
-  public void setFile(java.io.File file) {
-    this.file = file;
-  }
-
-
-  public InlineResponse200 detectedLang(String detectedLang) {
-    
-    this.detectedLang = detectedLang;
-    return this;
-  }
-
-   /**
-   * Language associated with the file.
-   * @return detectedLang
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "de", value = "Language associated with the file.")
-
-  public String getDetectedLang() {
-    return detectedLang;
-  }
-
-
-  public void setDetectedLang(String detectedLang) {
-    this.detectedLang = detectedLang;
-  }
-
-
-  public InlineResponse200 detectedLangConfidence(BigDecimal detectedLangConfidence) {
-    
-    this.detectedLangConfidence = detectedLangConfidence;
-    return this;
-  }
-
-   /**
-   * Confidence score for the language associated with the file.
-   * @return detectedLangConfidence
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "0.7", value = "Confidence score for the language associated with the file.")
-
-  public BigDecimal getDetectedLangConfidence() {
-    return detectedLangConfidence;
-  }
-
-
-  public void setDetectedLangConfidence(BigDecimal detectedLangConfidence) {
-    this.detectedLangConfidence = detectedLangConfidence;
+  public void setConfigId(Integer configId) {
+    this.configId = configId;
   }
 
 
   @Override
-  public boolean equals(java.lang.Object o) {
+  public boolean equals(Object o) {
     if (this == o) {
       return true;
     }
@@ -121,24 +66,19 @@ public class InlineResponse200 {
       return false;
     }
     InlineResponse200 inlineResponse200 = (InlineResponse200) o;
-    return Objects.equals(this.file, inlineResponse200.file) &&
-        Objects.equals(this.detectedLang, inlineResponse200.detectedLang) &&
-        Objects.equals(this.detectedLangConfidence, inlineResponse200.detectedLangConfidence);
+    return Objects.equals(this.configId, inlineResponse200.configId);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(file, detectedLang, detectedLangConfidence);
+    return Objects.hash(configId);
   }
-
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class InlineResponse200 {\n");
-    sb.append("    file: ").append(toIndentedString(file)).append("\n");
-    sb.append("    detectedLang: ").append(toIndentedString(detectedLang)).append("\n");
-    sb.append("    detectedLangConfidence: ").append(toIndentedString(detectedLangConfidence)).append("\n");
+    sb.append("    configId: ").append(toIndentedString(configId)).append("\n");
     sb.append("}");
     return sb.toString();
   }
@@ -147,7 +87,7 @@ public class InlineResponse200 {
    * Convert the given object to string with each line indented by 4 spaces
    * (except the first line).
    */
-  private String toIndentedString(java.lang.Object o) {
+  private String toIndentedString(Object o) {
     if (o == null) {
       return "null";
     }

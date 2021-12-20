@@ -8,6 +8,7 @@ Method | HTTP request | Description
 [**deleteSegment**](SegmentsApi.md#deleteSegment) | **DELETE** /segments | Delete a Segment
 [**getSegment**](SegmentsApi.md#getSegment) | **GET** /segments | Retrieve a Segment
 [**tagSegment**](SegmentsApi.md#tagSegment) | **GET** /segments/tag | Tag a Segment
+[**unlockSegments**](SegmentsApi.md#unlockSegments) | **POST** /segments/review/unlock | Unaccept and unlock segments
 [**updateSegment**](SegmentsApi.md#updateSegment) | **PUT** /segments | Update a Segment
 
 
@@ -316,6 +317,80 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | A TaggedSegment object. |  -  |
 **0** | Unexpected error |  -  |
+
+<a name="unlockSegments"></a>
+# **unlockSegments**
+> List&lt;BigDecimal&gt; unlockSegments(body)
+
+Unaccept and unlock segments
+
+Unaccept and unlock segments. Sets individual segments&#39; \&quot;Review Done\&quot; to false. Confirmed segments will remain confirmed.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/segments/review/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;segmentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.SegmentsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    SegmentsApi apiInstance = new SegmentsApi(defaultClient);
+    SegmentDoneResponse body = new SegmentDoneResponse(); // SegmentDoneResponse | 
+    try {
+      List<BigDecimal> result = apiInstance.unlockSegments(body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling SegmentsApi#unlockSegments");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**SegmentDoneResponse**](SegmentDoneResponse.md)|  |
+
+### Return type
+
+[**List&lt;BigDecimal&gt;**](BigDecimal.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | array of updated segments |  -  |
 
 <a name="updateSegment"></a>
 # **updateSegment**

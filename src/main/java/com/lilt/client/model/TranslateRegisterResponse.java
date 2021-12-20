@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * TranslateRegisterResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-20T00:13:26.792Z[GMT]")
 public class TranslateRegisterResponse {
   public static final String SERIALIZED_NAME_SOURCE_HASH = "source_hash";
   @SerializedName(SERIALIZED_NAME_SOURCE_HASH)

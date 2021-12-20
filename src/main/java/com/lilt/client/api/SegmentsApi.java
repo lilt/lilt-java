@@ -27,10 +27,12 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import java.math.BigDecimal;
 import com.lilt.client.model.Error;
 import com.lilt.client.model.Segment;
 import com.lilt.client.model.SegmentCreateParameters;
 import com.lilt.client.model.SegmentDeleteResponse;
+import com.lilt.client.model.SegmentDoneResponse;
 import com.lilt.client.model.SegmentUpdateParameters;
 import com.lilt.client.model.SegmentWithComments;
 import com.lilt.client.model.TaggedSegment;
@@ -563,6 +565,117 @@ public class SegmentsApi {
 
         okhttp3.Call localVarCall = tagSegmentValidateBeforeCall(sourceTagged, target, memoryId, _callback);
         Type localVarReturnType = new TypeToken<TaggedSegment>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for unlockSegments
+     * @param body  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated segments </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call unlockSegmentsCall(SegmentDoneResponse body, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/segments/review/unlock";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call unlockSegmentsValidateBeforeCall(SegmentDoneResponse body, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling unlockSegments(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = unlockSegmentsCall(body, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Unaccept and unlock segments
+     * Unaccept and unlock segments. Sets individual segments&#39; \&quot;Review Done\&quot; to false. Confirmed segments will remain confirmed.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/segments/review/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;segmentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return List&lt;BigDecimal&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated segments </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<BigDecimal> unlockSegments(SegmentDoneResponse body) throws ApiException {
+        ApiResponse<List<BigDecimal>> localVarResp = unlockSegmentsWithHttpInfo(body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Unaccept and unlock segments
+     * Unaccept and unlock segments. Sets individual segments&#39; \&quot;Review Done\&quot; to false. Confirmed segments will remain confirmed.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/segments/review/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;segmentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return ApiResponse&lt;List&lt;BigDecimal&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated segments </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<BigDecimal>> unlockSegmentsWithHttpInfo(SegmentDoneResponse body) throws ApiException {
+        okhttp3.Call localVarCall = unlockSegmentsValidateBeforeCall(body, null);
+        Type localVarReturnType = new TypeToken<List<BigDecimal>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Unaccept and unlock segments (asynchronously)
+     * Unaccept and unlock segments. Sets individual segments&#39; \&quot;Review Done\&quot; to false. Confirmed segments will remain confirmed.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/segments/review/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;segmentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated segments </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call unlockSegmentsAsync(SegmentDoneResponse body, final ApiCallback<List<BigDecimal>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = unlockSegmentsValidateBeforeCall(body, _callback);
+        Type localVarReturnType = new TypeToken<List<BigDecimal>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

@@ -28,7 +28,7 @@ import java.io.IOException;
  * A source string with tags automatically projected from source to target.
  */
 @ApiModel(description = "A source string with tags automatically projected from source to target.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-20T00:13:26.792Z[GMT]")
 public class TaggedSegment {
   public static final String SERIALIZED_NAME_SOURCE_TAGGED = "source_tagged";
   @SerializedName(SERIALIZED_NAME_SOURCE_TAGGED)

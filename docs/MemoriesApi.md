@@ -22,7 +22,7 @@ Method | HTTP request | Description
 
 Create a Memory
 
-Create a new Memory. A Memory is a container that collects source/target sentences for a specific language pair (e.g., English&gt;French). The data in the Memory is used to train the MT system, populate the TM, and update the lexicon. Memories are private to your account - the data is not shared across users - unless you explicitly share a Memory with your team (via web app only).  &lt;a href&#x3D;\&quot;https://lilt.com/kb/memory/memories\&quot; target&#x3D;_blank&gt;Refer to our KB&lt;/a&gt; for a more detailed description.  
+Create a new Memory. A Memory is a container that collects source/target sentences for a specific language pair (e.g., English&gt;French). The data in the Memory is used to train the MT system, populate the TM, and update the lexicon. Memories are private to your account - the data is not shared across users - unless you explicitly share a Memory with your team (via web app only).  &lt;a href&#x3D;\&quot;https://support.lilt.com/hc/en-us/sections/360012579193-Lilt-Translate-Engine\&quot; target&#x3D;_blank&gt;Refer to our KB&lt;/a&gt; for a more detailed description.  
 
 ### Example
 ```java
@@ -243,7 +243,7 @@ Name | Type | Description  | Notes
 
 <a name="importMemoryFile"></a>
 # **importMemoryFile**
-> MemoryImportResponse importMemoryFile(memoryId, name, body)
+> MemoryImportResponse importMemoryFile(memoryId, name, body, hasHeaderRow)
 
 File import for a Memory
 
@@ -279,8 +279,9 @@ public class Example {
     Integer memoryId = 56; // Integer | A unique Memory identifier.
     String name = "name_example"; // String | Name of the TM or termbase file.
     File body = new File("/path/to/file"); // File | The file contents to be uploaded. The entire POST body will be treated as the file.
+    Boolean hasHeaderRow = true; // Boolean | A flag indicating whether an imported Termbase CSV has a header row or not (the default value is `false`).
     try {
-      MemoryImportResponse result = apiInstance.importMemoryFile(memoryId, name, body);
+      MemoryImportResponse result = apiInstance.importMemoryFile(memoryId, name, body, hasHeaderRow);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling MemoriesApi#importMemoryFile");
@@ -300,6 +301,7 @@ Name | Type | Description  | Notes
  **memoryId** | **Integer**| A unique Memory identifier. |
  **name** | **String**| Name of the TM or termbase file. |
  **body** | **File**| The file contents to be uploaded. The entire POST body will be treated as the file. |
+ **hasHeaderRow** | **Boolean**| A flag indicating whether an imported Termbase CSV has a header row or not (the default value is &#x60;false&#x60;). | [optional]
 
 ### Return type
 

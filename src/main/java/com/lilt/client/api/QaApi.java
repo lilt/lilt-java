@@ -61,6 +61,7 @@ public class QaApi {
      * @param trglang An ISO 639-1 language code. (required)
      * @param source An optional source string. (optional)
      * @param srclang An ISO 639-1 language code. (optional)
+     * @param memoryId Any custom rules defined for this Memory will also be applied as part of the QA check.  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -71,7 +72,7 @@ public class QaApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call qaCheckCall(String target, String trglang, String source, String srclang, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call qaCheckCall(String target, String trglang, String source, String srclang, Integer memoryId, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -99,6 +100,10 @@ public class QaApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("srclang", srclang));
         }
 
+        if (memoryId != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("memory_id", memoryId));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -118,7 +123,7 @@ public class QaApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call qaCheckValidateBeforeCall(String target, String trglang, String source, String srclang, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call qaCheckValidateBeforeCall(String target, String trglang, String source, String srclang, Integer memoryId, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'target' is set
         if (target == null) {
@@ -131,7 +136,7 @@ public class QaApi {
         }
         
 
-        okhttp3.Call localVarCall = qaCheckCall(target, trglang, source, srclang, _callback);
+        okhttp3.Call localVarCall = qaCheckCall(target, trglang, source, srclang, memoryId, _callback);
         return localVarCall;
 
     }
@@ -143,6 +148,7 @@ public class QaApi {
      * @param trglang An ISO 639-1 language code. (required)
      * @param source An optional source string. (optional)
      * @param srclang An ISO 639-1 language code. (optional)
+     * @param memoryId Any custom rules defined for this Memory will also be applied as part of the QA check.  (optional)
      * @return QARuleMatches
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -152,8 +158,8 @@ public class QaApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public QARuleMatches qaCheck(String target, String trglang, String source, String srclang) throws ApiException {
-        ApiResponse<QARuleMatches> localVarResp = qaCheckWithHttpInfo(target, trglang, source, srclang);
+    public QARuleMatches qaCheck(String target, String trglang, String source, String srclang, Integer memoryId) throws ApiException {
+        ApiResponse<QARuleMatches> localVarResp = qaCheckWithHttpInfo(target, trglang, source, srclang, memoryId);
         return localVarResp.getData();
     }
 
@@ -164,6 +170,7 @@ public class QaApi {
      * @param trglang An ISO 639-1 language code. (required)
      * @param source An optional source string. (optional)
      * @param srclang An ISO 639-1 language code. (optional)
+     * @param memoryId Any custom rules defined for this Memory will also be applied as part of the QA check.  (optional)
      * @return ApiResponse&lt;QARuleMatches&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -173,8 +180,8 @@ public class QaApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<QARuleMatches> qaCheckWithHttpInfo(String target, String trglang, String source, String srclang) throws ApiException {
-        okhttp3.Call localVarCall = qaCheckValidateBeforeCall(target, trglang, source, srclang, null);
+    public ApiResponse<QARuleMatches> qaCheckWithHttpInfo(String target, String trglang, String source, String srclang, Integer memoryId) throws ApiException {
+        okhttp3.Call localVarCall = qaCheckValidateBeforeCall(target, trglang, source, srclang, memoryId, null);
         Type localVarReturnType = new TypeToken<QARuleMatches>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -186,6 +193,7 @@ public class QaApi {
      * @param trglang An ISO 639-1 language code. (required)
      * @param source An optional source string. (optional)
      * @param srclang An ISO 639-1 language code. (optional)
+     * @param memoryId Any custom rules defined for this Memory will also be applied as part of the QA check.  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -196,9 +204,9 @@ public class QaApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call qaCheckAsync(String target, String trglang, String source, String srclang, final ApiCallback<QARuleMatches> _callback) throws ApiException {
+    public okhttp3.Call qaCheckAsync(String target, String trglang, String source, String srclang, Integer memoryId, final ApiCallback<QARuleMatches> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = qaCheckValidateBeforeCall(target, trglang, source, srclang, _callback);
+        okhttp3.Call localVarCall = qaCheckValidateBeforeCall(target, trglang, source, srclang, memoryId, _callback);
         Type localVarReturnType = new TypeToken<QARuleMatches>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

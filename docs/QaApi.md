@@ -9,7 +9,7 @@ Method | HTTP request | Description
 
 <a name="qaCheck"></a>
 # **qaCheck**
-> QARuleMatches qaCheck(target, trglang, source, srclang)
+> QARuleMatches qaCheck(target, trglang, source, srclang, memoryId)
 
 Perform QA check
 
@@ -46,8 +46,9 @@ public class Example {
     String trglang = "trglang_example"; // String | An ISO 639-1 language code.
     String source = "source_example"; // String | An optional source string.
     String srclang = "srclang_example"; // String | An ISO 639-1 language code.
+    Integer memoryId = 56; // Integer | Any custom rules defined for this Memory will also be applied as part of the QA check. 
     try {
-      QARuleMatches result = apiInstance.qaCheck(target, trglang, source, srclang);
+      QARuleMatches result = apiInstance.qaCheck(target, trglang, source, srclang, memoryId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling QaApi#qaCheck");
@@ -68,6 +69,7 @@ Name | Type | Description  | Notes
  **trglang** | **String**| An ISO 639-1 language code. |
  **source** | **String**| An optional source string. | [optional]
  **srclang** | **String**| An ISO 639-1 language code. | [optional]
+ **memoryId** | **Integer**| Any custom rules defined for this Memory will also be applied as part of the QA check.  | [optional]
 
 ### Return type
 

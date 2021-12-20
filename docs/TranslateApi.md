@@ -13,11 +13,11 @@ Method | HTTP request | Description
 
 <a name="batchTranslateFile"></a>
 # **batchTranslateFile**
-> TranslationInfo batchTranslateFile(fileId, memoryId, configId)
+> TranslationInfo batchTranslateFile(fileId, memoryId, configId, withTM)
 
 Translate a File
 
-Start machine translation of one or more Files that have previously been uploaded.  The response will include an &#x60;id&#x60; parameter that can be used to monitor and download the translations in subsequent calls.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/translate/file?key&#x3D;API_KEY&amp;fileId&#x3D;583&amp;memoryId&#x3D;2495&amp;configId&#x3D;123&#39; &#x60;&#x60;&#x60;  
+Start machine translation of one or more Files that have previously been uploaded.  The response will include an &#x60;id&#x60; parameter that can be used to monitor and download the translations in subsequent calls.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/translate/file?key&#x3D;API_KEY&amp;fileId&#x3D;583&amp;memoryId&#x3D;2495&amp;configId&#x3D;123&amp;withTM&#x3D;true&#39; &#x60;&#x60;&#x60;  
 
 ### Example
 ```java
@@ -49,8 +49,9 @@ public class Example {
     String fileId = "fileId_example"; // String | List of File ids to be translated, comma separated.
     String memoryId = "memoryId_example"; // String | Id of Memory to use in translation.
     BigDecimal configId = new BigDecimal(78); // BigDecimal | An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.
+    Boolean withTM = true; // Boolean | An optional boolean parameter to toggle the use of Translation Memory in the translation of the file.
     try {
-      TranslationInfo result = apiInstance.batchTranslateFile(fileId, memoryId, configId);
+      TranslationInfo result = apiInstance.batchTranslateFile(fileId, memoryId, configId, withTM);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#batchTranslateFile");
@@ -70,6 +71,7 @@ Name | Type | Description  | Notes
  **fileId** | **String**| List of File ids to be translated, comma separated. |
  **memoryId** | **String**| Id of Memory to use in translation. |
  **configId** | **BigDecimal**| An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. | [optional]
+ **withTM** | **Boolean**| An optional boolean parameter to toggle the use of Translation Memory in the translation of the file. | [optional]
 
 ### Return type
 
@@ -326,11 +328,11 @@ Name | Type | Description  | Notes
 
 <a name="translateSegment"></a>
 # **translateSegment**
-> TranslationList translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags)
+> TranslationList translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, body)
 
 Translate a segment
 
-Translate a source string.  Setting the &#x60;rich&#x60; parameter to &#x60;true&#x60; will change the response format to include additional information about each translation including a model score, word alignments,  and formatting information. The rich format can be seen in the example response on this page.  By default, this endpoint also returns translation memory (TM) fuzzy matches, along with associated scores. Fuzzy matches always appear ahead of machine translation output in the response.  The maximum source length is 5,000 characters.  Usage charges apply to this endpoint for production REST API keys.  
+Translate a source string.  Setting the &#x60;rich&#x60; parameter to &#x60;true&#x60; will change the response format to include additional information about each translation including a model score, word alignments,  and formatting information. The rich format can be seen in the example response on this page.  By default, this endpoint also returns translation memory (TM) fuzzy matches, along with associated scores. Fuzzy matches always appear ahead of machine translation output in the response.  The &#x60;source&#x60; parameter may be supplied in the query or in the request body.  The maximum source length is 5,000 characters.  Usage charges apply to this endpoint for production REST API keys.  
 
 ### Example
 ```java
@@ -367,8 +369,9 @@ public class Example {
     Boolean rich = false; // Boolean | Returns rich translation information (e.g., with word alignments).
     Boolean tmMatches = true; // Boolean | Include translation memory fuzzy matches.
     Boolean projectTags = false; // Boolean | Project tags. Projects tags in source to target if set to true.
+    TranslateSegmentBody body = new TranslateSegmentBody(); // TranslateSegmentBody | 
     try {
-      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags);
+      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#translateSegment");
@@ -393,6 +396,7 @@ Name | Type | Description  | Notes
  **rich** | **Boolean**| Returns rich translation information (e.g., with word alignments). | [optional] [default to false]
  **tmMatches** | **Boolean**| Include translation memory fuzzy matches. | [optional] [default to true]
  **projectTags** | **Boolean**| Project tags. Projects tags in source to target if set to true. | [optional] [default to false]
+ **body** | [**TranslateSegmentBody**](TranslateSegmentBody.md)|  | [optional]
 
 ### Return type
 
@@ -404,7 +408,7 @@ Name | Type | Description  | Notes
 
 ### HTTP request headers
 
- - **Content-Type**: Not defined
+ - **Content-Type**: application/json
  - **Accept**: application/json
 
 ### HTTP response details

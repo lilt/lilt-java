@@ -6,7 +6,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**isDone** | **Boolean** |  | 
+**documentIds** | **List&lt;BigDecimal&gt;** | array of document ids | 
 
 
 

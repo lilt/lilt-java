@@ -104,6 +104,17 @@ paths:
         name: id
         schema:
           type: integer
+      - description: |
+          One or more labels. This will return the files which contain all of
+          the given labels.
+        explode: false
+        in: query
+        name: labels
+        schema:
+          items:
+            type: string
+          type: array
+        style: form
       responses:
         "200":
           content:
@@ -136,18 +147,9 @@ paths:
         base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats).
         Request parameters should be passed in as query string parameters.
 
-        When uploading a file, any parameters needed to issue a request to the
-        specified export_uri can be encoded in the export_uri itself as query
-        parameters. Typical examples of parameters that may be required are an
-        access token to authorize requests to a third-party HTTP API and the
-        unique identifier of a resource available via the third-party HTTP API
-        that corresponds to the file. An example export_uri that encodes a
-        target resource identifier (i.e., source_id) of an associated resource
-        behind a third party HTTP API is given in the CURL command below.
-
         Example CURL command:
         ```
-          curl -X POST https://lilt.com/2/files?key=API_KEY&name=en_US.json&export_uri=https://example.com/export?source_id=12345 \
+          curl -X POST https://lilt.com/2/files?key=API_KEY&name=en_US.json \
           --header "Content-Type: application/octet-stream" \
           --data-binary @en_US.json
         ```
@@ -163,12 +165,6 @@ paths:
         in: query
         name: name
         required: true
-        schema:
-          type: string
-      - description: A webhook endpoint that will export the translated document back
-          to the source repository.
-        in: query
-        name: export_uri
         schema:
           type: string
       - description: A hash value to associate with the file. The MD5 hash of the
@@ -233,6 +229,273 @@ paths:
       - Files
       x-codegen-request-body-name: body
       x-contentType: application/octet-stream
+      x-accepts: application/json
+  /files/download:
+    get:
+      description: |
+        Download a File.
+
+        Example CURL:
+        ```
+        curl --X --request GET 'https://lilt.com/2/files/download?key=API_KEY&id=1'
+        ```
+      operationId: download
+      parameters:
+      - description: A File id.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/octet-stream:
+              schema:
+                format: byte
+                title: DocumentDownloadResponse
+                type: string
+          description: A file.
+      summary: Download file
+      tags:
+      - Files
+      x-accepts: application/octet-stream
+  /files/labels:
+    delete:
+      description: |
+        Remove a label from a File.
+
+        Example CURL:
+        ```
+        curl --X --request DELETE 'https://lilt.com/2/files/labels?key=API_KEY&id=1&name=label_name'
+        ```
+      operationId: removeLabel
+      parameters:
+      - description: A File id.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: string
+      - description: A label name.
+        in: query
+        name: name
+        required: true
+        schema:
+          type: string
+      responses:
+        "204":
+          content: {}
+          description: A success response.
+      summary: Remove Label from File
+      tags:
+      - Files
+      x-accepts: application/json
+    post:
+      description: |
+        Add a label to a File.
+
+        Example CURL:
+        ```
+        curl --X --request POST 'https://lilt.com/2/files/labels?key=API_KEY&id=1'
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+            "name": "label_name"
+        }'
+        ```
+      operationId: addLabel
+      parameters:
+      - description: A File id.
+        in: query
+        name: id
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/AddFileLabelRequest'
+        content:
+          application/json:
+            schema:
+              example:
+                name: label_name
+              properties:
+                name:
+                  description: The Label name.
+                  example: label_name
+                  type: string
+              title: AddFileLabelRequest
+              type: object
+        description: A label name.
+        required: true
+      responses:
+        "204":
+          content: {}
+          description: A success response.
+      summary: Add Label to File
+      tags:
+      - Files
+      x-codegen-request-body-name: name
+      x-contentType: application/json
+      x-accepts: application/json
+  /comments:
+    delete:
+      description: |
+        Delete a Comment.
+
+        Example CURL command:
+        ```
+          curl -X DELETE https://lilt.com/2/comments?key=API_KEY&comment_id=123
+        ```
+      operationId: deleteComment
+      parameters:
+      - description: A unique Comment identifier.
+        in: query
+        name: comment_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "204":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CommentDeleteResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete a Comment
+      tags:
+      - Comments
+      x-accepts: application/json
+    get:
+      description: |
+        Retrieves all comments associated with a specified document, grouped by their Segment's ID.
+
+        To retrieve a document's comments, specify the <strong>document_id</strong> request parameter.
+
+        Example CURL command:
+        ```
+          curl -X GET https://lilt.com/2/comments?key=API_KEY&document_id=123
+        ```
+      operationId: getDocumentComments
+      parameters:
+      - description: A unique document identifier.
+        in: query
+        name: document_id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentComments'
+          description: An object containing lists of comments identified by the id
+            of the segment to which they belong.
+        "403":
+          content: {}
+          description: Unauthorized.
+        "410":
+          content: {}
+          description: Comment deleted.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error.
+      summary: Retrieve a document's comments by segment
+      tags:
+      - Comments
+      x-accepts: application/json
+    post:
+      description: Create a new comment for the specified Segment ID.
+      operationId: createComment
+      parameters:
+      - description: A unique document identifier.
+        in: query
+        name: document_id
+        required: true
+        schema:
+          type: integer
+      - description: A unique segment identifier.
+        in: query
+        name: segment_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentBody'
+        description: The comment being created
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: A Comment object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Create a new comment
+      tags:
+      - Comments
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+    put:
+      description: Update an existing comment.
+      operationId: updateComment
+      parameters:
+      - description: A unique comment identifier.
+        in: query
+        name: comment_id
+        required: true
+        schema:
+          type: integer
+      - description: A unique document identifier.
+        in: query
+        name: document_id
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CommentBody'
+        description: The comment being updated.
+        required: true
+      responses:
+        "201":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Comment'
+          description: A Comment object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Update an existing comment
+      tags:
+      - Comments
+      x-codegen-request-body-name: body
+      x-contentType: application/json
       x-accepts: application/json
   /connectors:
     delete:
@@ -478,7 +741,7 @@ paths:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unexpected error
-      summary: Retreive a Connector Job
+      summary: Retrieve a Connector Job
       tags:
       - Connectors
       x-accepts: application/json
@@ -514,6 +777,270 @@ paths:
       summary: Deliver a Connector Job
       tags:
       - Connectors
+      x-accepts: application/json
+  /configs/converter:
+    get:
+      description: |
+        List all file filter configurations for your Organization.
+      operationId: getConverterConfigs
+      parameters:
+      - description: A unique Organization identifier.
+        in: query
+        name: organizationId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConverterConfigMap'
+          description: A map of config id to string escaped config json.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: List Converter Configs
+      tags:
+      - ConverterConfig
+      x-accepts: application/json
+    put:
+      description: |
+        Add a file filter configuration for your Organization.
+      operationId: addConverterConfig
+      parameters:
+      - description: A unique Organization identifier.
+        in: query
+        name: organizationId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/CreateConverterConfigParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                configName: my_config
+                configJson: '{"registry": {".md": {"type": "OkapiFprm", "version":
+                  1, "filterName": "okf_markdown", "filterConfig": "#v1\nuseCodeFinder.b=false\ntranslateUrls.b=true\nurlToTranslatePattern=.+\ntranslateCodeBlocks.b=false\ntranslateInlineCodeBlocks.b=true\ntranslateHeaderMetadata.b=true\ntranslateImageAltText.b=true\nuseLinkSubflow.b=true\ncodeFinderRules.count.i=1\ncodeFinderRules.rule0=\\{\\{[^}]+\\}\\}\ncodeFinderRules.sample={{#test}}
+                  handle bar test {{/test}}$0a${{stand-alone handle bar}}$0a$\ncodeFinderRules.useAllRulesWhenTesting.b=true\n",
+                  "extractAllTags": true, "exportReplacements": {"patterns": [], "replacements":
+                  []}, "importReplacements": {"patterns": [], "replacements": []}}}'
+                configDescription: config for custom markdown escaping
+              properties:
+                configJson:
+                  description: The configuration json blob, string escaped.
+                  example: '{"registry": {".md": {"type": "OkapiFprm", "version":
+                    1, "filterName": "okf_markdown", "filterConfig": "#v1\nuseCodeFinder.b=false\ntranslateUrls.b=true\nurlToTranslatePattern=.+\ntranslateCodeBlocks.b=false\ntranslateInlineCodeBlocks.b=true\ntranslateHeaderMetadata.b=true\ntranslateImageAltText.b=true\nuseLinkSubflow.b=true\ncodeFinderRules.count.i=1\ncodeFinderRules.rule0=\\{\\{[^}]+\\}\\}\ncodeFinderRules.sample={{#test}}
+                    handle bar test {{/test}}$0a${{stand-alone handle bar}}$0a$\ncodeFinderRules.useAllRulesWhenTesting.b=true\n",
+                    "extractAllTags": true, "exportReplacements": {"patterns": [],
+                    "replacements": []}, "importReplacements": {"patterns": [], "replacements":
+                    []}}}'
+                  type: string
+                configName:
+                  description: The user defined name of your configuration.
+                  example: my_config
+                  type: string
+                configDescription:
+                  description: A description for the configuration.
+                  example: config for custom markdown escaping
+                  type: string
+              required:
+              - configDescription
+              - configJson
+              - configName
+              title: CreateConverterConfigParameters
+              type: object
+        description: The file filter configuration to create.
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConverterConfigUpdateResponse'
+          description: The config id of the configuration created.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Add Converter Config
+      tags:
+      - ConverterConfig
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /configs/converter/{configId}:
+    delete:
+      description: |
+        Delete a file filter configuration by id.
+      operationId: deleteConverterConfig
+      parameters:
+      - description: A unique configuration identifier.
+        in: path
+        name: configId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/inline_response_200'
+          description: The config id of the configuration deleted.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete Converter Config
+      tags:
+      - ConverterConfig
+      x-accepts: application/json
+    get:
+      description: |
+        Fetch a file filter configuration by id.
+      operationId: getConverterConfigById
+      parameters:
+      - description: A unique configuration identifier.
+        in: path
+        name: configId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConverterConfigMap'
+          description: A map of config id to string escaped config json.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Fetch Converter Config by Id
+      tags:
+      - ConverterConfig
+      x-accepts: application/json
+  /configs/converter/{configId}/{fileExtension}:
+    delete:
+      description: |
+        Delete a file filter mapping by id and file extension.
+      operationId: deleteFilterMapping
+      parameters:
+      - description: A unique configuration identifier.
+        in: path
+        name: configId
+        required: true
+        schema:
+          type: integer
+      - description: A file extension to delete.
+        in: path
+        name: fileExtension
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConverterConfigMap'
+          description: A map of config id to string escaped config json.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete Filter Mapping
+      tags:
+      - ConverterConfig
+      x-accepts: application/json
+    put:
+      description: |
+        Add a specific filter mapping to your file filter configuration
+      operationId: editFilterMapping
+      parameters:
+      - description: A unique configuration identifier.
+        in: path
+        name: configId
+        required: true
+        schema:
+          type: integer
+      - description: A file extension for the filter mapping.
+        in: path
+        name: fileExtension
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/EditFilterMappingParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                configName: my_config
+                configDescription: config for custom markdown escaping
+                registryEntryJson: '{"type": "OkapiFprm", "version": 1, "filterName":
+                  "okf_markdown", "filterConfig": "#v1\nuseCodeFinder.b=false\ntranslateUrls.b=true\nurlToTranslatePattern=.+\ntranslateCodeBlocks.b=false\ntranslateInlineCodeBlocks.b=true\ntranslateHeaderMetadata.b=true\ntranslateImageAltText.b=true\nuseLinkSubflow.b=true\ncodeFinderRules.count.i=1\ncodeFinderRules.rule0=\\{\\{[^}]+\\}\\}\ncodeFinderRules.sample={{#test}}
+                  handle bar test {{/test}}$0a${{stand-alone handle bar}}$0a$\ncodeFinderRules.useAllRulesWhenTesting.b=true\n",
+                  "extractAllTags": true, "exportReplacements": {"patterns": [], "replacements":
+                  []}, "importReplacements": {"patterns": [], "replacements": []}'
+              properties:
+                registryEntryJson:
+                  description: The filter mapping json blob, string escaped.
+                  example: '{"type": "OkapiFprm", "version": 1, "filterName": "okf_markdown",
+                    "filterConfig": "#v1\nuseCodeFinder.b=false\ntranslateUrls.b=true\nurlToTranslatePattern=.+\ntranslateCodeBlocks.b=false\ntranslateInlineCodeBlocks.b=true\ntranslateHeaderMetadata.b=true\ntranslateImageAltText.b=true\nuseLinkSubflow.b=true\ncodeFinderRules.count.i=1\ncodeFinderRules.rule0=\\{\\{[^}]+\\}\\}\ncodeFinderRules.sample={{#test}}
+                    handle bar test {{/test}}$0a${{stand-alone handle bar}}$0a$\ncodeFinderRules.useAllRulesWhenTesting.b=true\n",
+                    "extractAllTags": true, "exportReplacements": {"patterns": [],
+                    "replacements": []}, "importReplacements": {"patterns": [], "replacements":
+                    []}'
+                  type: string
+                configName:
+                  description: The user defined name of your configuration.
+                  example: my_config
+                  type: string
+                configDescription:
+                  description: A description for the configuration.
+                  example: config for custom markdown escaping
+                  type: string
+              required:
+              - configDescription
+              - configName
+              title: EditFilterMappingParameters
+              type: object
+        description: The file filter mapping to create.
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ConverterConfigMap'
+          description: A map of config id to string escaped config json.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Add Filter Mapping
+      tags:
+      - ConverterConfig
+      x-codegen-request-body-name: body
+      x-contentType: application/json
       x-accepts: application/json
   /documents:
     delete:
@@ -940,8 +1467,7 @@ paths:
       - description: |
           An optional parameter indicating if and how the document will be
           pretranslated upon being uploaded.
-
-          The accepted values are `null`, `tm`, or `tm+mt`
+          The accepted values are `TM`, or `TM+MT`
         in: header
         name: pretranslate
         schema:
@@ -954,6 +1480,21 @@ paths:
           auto-accepted.
         in: header
         name: auto_accept
+        schema:
+          type: boolean
+      - description: |
+          An optional parameter to use case sensitive translation memory matching when the `pretranslate`
+          option is also enabled. Matches must have identical character-by-character case to qualify as matches.
+          Default value is `false`
+        in: header
+        name: case_sensitive
+        schema:
+          type: boolean
+      - description: |
+          An optional parameter to attribute translation authorship of exact matches to the author of the file
+          when the `pretranslate` option is also enabled. Default value is `false`
+        in: header
+        name: match_attribution
         schema:
           type: boolean
       - description: |
@@ -1012,10 +1553,27 @@ paths:
               "documentIds": [23921, 23922]
           }'
         ```
+      operationId: unlockDocuments
       requestBody:
+        $ref: '#/components/requestBodies/DocumentDoneUpdateParameters'
         content:
           application/json:
             schema:
+              example:
+                documentIds:
+                - 10641
+                - 10642
+              properties:
+                documentIds:
+                  description: array of document ids
+                  example:
+                  - 10641
+                  - 10642
+                  items:
+                    type: number
+                  type: array
+              required:
+              - documentIds
               title: DocumentDoneUpdateParameters
               type: object
         description: document ids to update
@@ -1026,8 +1584,7 @@ paths:
             application/json:
               schema:
                 items:
-                  description: TODO default missing array inner type to string
-                  type: string
+                  type: number
                 title: DocumentDoneResponse
                 type: array
           description: array of updated documents
@@ -1059,18 +1616,26 @@ paths:
               "isDone": true
           }'
         ```
+      operationId: markTranslationDone
       requestBody:
-        $ref: '#/components/requestBodies/DocumentDoneUpdateParameters'
+        $ref: '#/components/requestBodies/DocumentDoneUpdateParameters_1'
         content:
           application/json:
             schema:
-              example:
-                isDone: true
               properties:
+                documentIds:
+                  description: array of document ids
+                  example:
+                  - 10641
+                  - 10642
+                  items:
+                    type: number
+                  type: array
                 isDone:
                   example: true
                   type: boolean
               required:
+              - documentIds
               - isDone
               title: DocumentDoneUpdateParameters
               type: object
@@ -1082,8 +1647,7 @@ paths:
             application/json:
               schema:
                 items:
-                  description: TODO default missing array inner type to string
-                  type: string
+                  type: number
                 title: DocumentDoneResponse
                 type: array
           description: array of updated documents
@@ -1113,16 +1677,26 @@ paths:
               "isDone": true
           }'
         ```
+      operationId: markReviewDone
       requestBody:
-        $ref: '#/components/requestBodies/DocumentDoneUpdateParameters_1'
+        $ref: '#/components/requestBodies/DocumentDoneUpdateParameters_2'
         content:
           application/json:
             schema:
               properties:
+                documentIds:
+                  description: array of document ids
+                  example:
+                  - 10641
+                  - 10642
+                  items:
+                    type: number
+                  type: array
                 isDone:
                   example: true
                   type: boolean
               required:
+              - documentIds
               - isDone
               title: DocumentDoneUpdateParameters
               type: object
@@ -1134,8 +1708,7 @@ paths:
             application/json:
               schema:
                 items:
-                  description: TODO default missing array inner type to string
-                  type: string
+                  type: number
                 title: DocumentDoneResponse
                 type: array
           description: array of updated documents
@@ -1350,7 +1923,7 @@ paths:
         not shared across users - unless you explicitly share a Memory with your
         team (via web app only).
 
-        <a href="https://lilt.com/kb/memory/memories" target=_blank>Refer
+        <a href="https://support.lilt.com/hc/en-us/sections/360012579193-Lilt-Translate-Engine" target=_blank>Refer
         to our KB</a> for a more detailed description.
 
       operationId: createMemory
@@ -1759,6 +2332,12 @@ paths:
         required: true
         schema:
           type: string
+      - description: A flag indicating whether an imported Termbase CSV has a header
+          row or not (the default value is `false`).
+        in: header
+        name: has_header_row
+        schema:
+          type: boolean
       requestBody:
         content:
           application/octet-stream:
@@ -1787,6 +2366,547 @@ paths:
       - Memories
       x-codegen-request-body-name: body
       x-contentType: application/octet-stream
+      x-accepts: application/json
+  /jobs:
+    get:
+      description: |-
+        Get all Jobs. You can retrieve all jobs from your account using the above API.
+
+        Example CURL command:
+
+        ```
+        curl -X GET 'https://lilt.com/2/jobs?key=API_KEY&isArchived=false'
+        ```
+      operationId: retrieveAllJobs
+      parameters:
+      - description: Retrieves all jobs that are archived.
+        in: query
+        name: isArchived
+        schema:
+          type: boolean
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/Job'
+                title: JobsResponse
+                type: array
+          description: A list of Job objects.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve all Jobs
+      tags:
+      - Jobs
+      x-accepts: application/json
+    post:
+      description: |+
+        Create a Job. A Job is a collection of Projects.
+        A Job will contain multiple projects, based on the language pair.
+        A Project is associated with exactly one Memory.
+
+        Jobs appear in the Jobs dashboard of the web app.
+
+        Example CURL command:
+
+        ```
+        curl -X POST 'https://lilt.com/2/jobs?key=API_KEY' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+          "name": "test job",
+          "fileIds": [5009, 5010, 5011],
+          "due": "2022-05-05T10:56:44.985Z",
+          "srcLang": "en",
+          "srcLocale": "US",
+          "languagePairs": [
+              { "memoryId": 3121, "trgLang": "de" },
+              { "memoryId": 2508, "trgLang": "fr" },
+              { "memoryId": 3037, "trgLang": "zh" }
+            ]
+        }'
+        ```
+
+      operationId: createJob
+      requestBody:
+        $ref: '#/components/requestBodies/JobCreateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                languagePairs:
+                - pretranslate: true
+                  autoAccept: true
+                  trgLocale: DE
+                  caseSensitive: true
+                  configId: 2332
+                  dueDate: 2021-10-03T13:43:00.000Z
+                  srcLocale: US
+                  memoryId: 1241
+                  trgLang: de
+                  takeMatchAttribution: true
+                  srcLang: en
+                - pretranslate: true
+                  autoAccept: true
+                  trgLocale: DE
+                  caseSensitive: true
+                  configId: 2332
+                  dueDate: 2021-10-03T13:43:00.000Z
+                  srcLocale: US
+                  memoryId: 1241
+                  trgLang: de
+                  takeMatchAttribution: true
+                  srcLang: en
+                due: 2021-10-05T14:48:00.000Z
+                fileIds:
+                - 298
+                - 299
+                name: My new Job
+              properties:
+                name:
+                  description: A name for the Job.
+                  example: My new Job
+                  type: string
+                due:
+                  description: An ISO string date.
+                  example: 2021-10-05T14:48:00.000Z
+                  type: string
+                languagePairs:
+                  description: Language pairs is a set of one or more pairs that includes
+                    source language, source locale(optional), target language, target
+                    locale(optional), and memoryId.
+                  items:
+                    $ref: '#/components/schemas/LanguagePair'
+                  type: array
+                fileIds:
+                  description: A list of file ids to upload to job creation.
+                  example:
+                  - 298
+                  - 299
+                  items:
+                    type: integer
+                  type: array
+              required:
+              - fileIds
+              - languagePairs
+              - name
+              title: JobCreateParameters
+              type: object
+        description: The Job resource to create.
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: A Job object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Create a Job
+      tags:
+      - Jobs
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /jobs/{jobId}:
+    delete:
+      description: |-
+        Delete a job, deletes all projects and documents in the job, deletes all the segments from all the job's translation memories.
+
+        Example CURL command:
+
+        ```
+        curl -X DELETE 'https://lilt.com/2/jobs/{id}?key=API_KEY'
+        ```
+      operationId: deleteJob
+      parameters:
+      - description: A job id.
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobDeleteResponse'
+          description: A status object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete a Job
+      tags:
+      - Jobs
+      x-accepts: application/json
+    get:
+      description: |-
+        Retrieves a job data along with stats. To retrieve a specific job, you will need the job `id` in the url path.
+
+        Example CURL command:
+
+        ```
+        curl -X GET 'https://lilt.com/2/jobs/{id}?key=API_KEY'
+        ```
+      operationId: getJob
+      parameters:
+      - description: A job id.
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: A job object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve a Job
+      tags:
+      - Jobs
+      x-accepts: application/json
+    put:
+      description: |-
+        Updates a job with the new job properties. To update a specific job, you will need the job `id` in the url path.
+
+        You can update job's name and due date by passing the property and new value in the body.
+
+        Example CURL command:
+
+        ```
+        curl -X PUT 'https://lilt.com/2/jobs/{id}?key=API_KEY' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+          "name": "test job",
+          "due": "2022-05-05T10:56:44.985Z"
+        }'
+        ```
+      operationId: updateJob
+      parameters:
+      - description: A job id.
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/JobUpdateParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                dueDate: 0
+                name: My new Job
+              properties:
+                name:
+                  description: A name for the Job.
+                  example: My new Job
+                  type: string
+                dueDate:
+                  description: An ISO string date.
+                  type: integer
+              title: JobUpdateParameters
+              type: object
+        description: The Job resource to update.
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: A job object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Update a Job
+      tags:
+      - Jobs
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /jobs/{jobId}/stats:
+    post:
+      description: |-
+        Get the TM leverage stats for the job (new/exact/fuzzy matches).
+
+        Example CURL command:
+
+        ```
+        curl -X POST 'https://lilt.com/2/jobs/{id}/stats?key=API_KEY'
+        ```
+      operationId: getJobLeverageStats
+      parameters:
+      - description: A job id.
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/JobLeverageStats'
+          description: A job leverage stats object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve Job Leverage Stats
+      tags:
+      - Jobs
+      x-accepts: application/json
+  /jobs/{jobId}/archive:
+    post:
+      description: |-
+        Set job to archived, unassign all linguists and archive all projects and documents inside the job.
+
+        It will return the archived job.
+
+        Example CURL command:
+
+        ```
+        curl -X POST 'https://lilt.com/2/jobs/{id}/archive?key=API_KEY'
+        ```
+      operationId: archiveJob
+      parameters:
+      - description: A job id.
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: A job object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Archive a Job
+      tags:
+      - Jobs
+      x-accepts: application/json
+  /jobs/{jobId}/unarchive:
+    post:
+      description: |-
+        Set job to unarchived, the job will move to active status.
+
+        Example CURL command:
+
+        ```
+        curl -X POST 'https://lilt.com/2/jobs/{id}/unarchive?key=API_KEY'
+        ```
+      operationId: unarchiveJob
+      parameters:
+      - description: A job id.
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: A job object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Unarchive a Job
+      tags:
+      - Jobs
+      x-accepts: application/json
+  /jobs/{jobId}/deliver:
+    post:
+      description: |-
+        Set the job state to delivered and set all the projects in the job to done
+
+        It will return the delivered job.
+
+        Example CURL command:
+
+        ```
+        curl -X POST 'https://lilt.com/2/jobs/{id}/deliver?key=API_KEY'
+        ```
+      operationId: deliverJob
+      parameters:
+      - description: A job id.
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: A job object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Deliver a Job
+      tags:
+      - Jobs
+      x-accepts: application/json
+  /jobs/{jobId}/reactivate:
+    post:
+      description: |-
+        Set the job state to active. Does not change the state of projects associated with the given job.
+
+        It will return the reactivated job.
+
+        Example CURL command:
+
+        ```
+        curl -X POST 'https://lilt.com/2/jobs/{id}/reactivate?key=API_KEY'
+        ```
+      operationId: reactivateJob
+      parameters:
+      - description: A job id.
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Job'
+          description: A job object.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Reactivate a Job
+      tags:
+      - Jobs
+      x-accepts: application/json
+  /jobs/{jobId}/export:
+    get:
+      description: |-
+        Prepare job files for download.
+        To export translated documents from the job use the query parameter `type=files`:
+
+        Example CURL command:
+
+        ```
+        curl -X GET 'https://lilt.com/2/jobs/{id}/export?key=API_KEY&type=files'
+        ```
+
+        To export job memories use the query parameter `type=memory`.
+
+        The status of the export can be checked by requesting the job `GET /jobs/:jobId`, `job.isProcessing` will be `1` while in progress,
+        `0` when idle and `-2` when the export failed.
+      operationId: exportJob
+      parameters:
+      - description: A job id.
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: integer
+      - description: category for files and memory.
+        in: query
+        name: type
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          content: {}
+          description: 200 status.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Export a Job
+      tags:
+      - Jobs
+      x-accepts: application/json
+  /jobs/{jobId}/downlod:
+    get:
+      description: |-
+        Make sure you have exported a job with the same id before using this api.
+
+        Downloading files requires the exported job `id` in the param.
+
+        Example CURL command:
+
+        ```
+        curl -X GET 'https://lilt.com/2/jobs/{id}/download?key=API_KEY'
+        ```
+      operationId: downloadJob
+      parameters:
+      - description: A job id.
+        in: path
+        name: jobId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content: {}
+          description: zipped file
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Download a Job
+      tags:
+      - Jobs
       x-accepts: application/json
   /projects:
     delete:
@@ -1905,11 +3025,8 @@ paths:
                   connectorType: github
                   notes: example metadata
                 memory_id: 1234
+                job_id: 1234
                 name: My new project
-                file_ids:
-                - 123
-                - 124
-                - 125
                 due_date: 1489147692
               properties:
                 name:
@@ -1920,15 +3037,13 @@ paths:
                   description: The Memory to associate with this new Project.
                   example: 1234
                   type: integer
-                file_ids:
-                  description: A list of Files to add to this new Project.
-                  example:
-                  - 123
-                  - 124
-                  - 125
-                  items:
-                    type: integer
-                  type: array
+                job_id:
+                  description: |
+                    The Job to associate with this new Project. If a Job ID is not
+                    provided then a new Job will be created to contain the
+                    Project.
+                  example: 1234
+                  type: integer
                 due_date:
                   description: The due date. Measured in seconds since the Unix epoch.
                   example: 1489147692
@@ -2080,6 +3195,36 @@ paths:
       tags:
       - Projects
       x-accepts: application/json
+  /projects/{id}/revision:
+    get:
+      description: |+
+        Get information about a project's revision report. This includes:
+        * Stats on accepted segments
+        * reviewer details
+        * Error rate
+
+      operationId: getProjectRevisionReport
+      parameters:
+      - description: A unique Project identifier.
+        in: path
+        name: id
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content: {}
+          description: A csv file containing revision report.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve Project revision report
+      tags:
+      - Projects
+      x-accepts: application/json
   /projects/status:
     get:
       description: |+
@@ -2138,6 +3283,13 @@ paths:
         name: srclang
         schema:
           type: string
+      - description: |
+          Any custom rules defined for this Memory will also be applied as part
+          of the QA check.
+        in: query
+        name: memory_id
+        schema:
+          type: integer
       responses:
         "200":
           content:
@@ -2334,6 +3486,61 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
+  /segments/review/unlock:
+    post:
+      description: |
+        Unaccept and unlock segments.
+        Sets individual segments' "Review Done" to false. Confirmed segments will remain confirmed.
+
+        Example curl:
+        ```
+          curl --X --request POST 'https://lilt.com/2/segments/review/unlock?key=API_KEY' \
+          --header 'Content-Type: application/json' \
+          --data-raw '{
+              "segmentIds": [23921, 23922]
+          }'
+        ```
+      operationId: unlockSegments
+      requestBody:
+        $ref: '#/components/requestBodies/SegmentDoneResponse'
+        content:
+          application/json:
+            schema:
+              example:
+                documentIds:
+                - 30032
+                - 30125
+              properties:
+                documentIds:
+                  description: array of segment ids
+                  example:
+                  - 30032
+                  - 30125
+                  items:
+                    type: number
+                  type: array
+              required:
+              - documentIds
+              title: SegmentDoneResponse
+              type: object
+        description: segment ids to update
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  type: number
+                title: SegmentDoneResponse
+                type: array
+          description: array of updated segments
+      summary: Unaccept and unlock segments
+      tags:
+      - Segments
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
   /segments/tag:
     get:
       description: |+
@@ -2380,6 +3587,145 @@ paths:
       tags:
       - Segments
       x-accepts: application/json
+  /settings:
+    post:
+      description: |+
+        Create or update the value for the given setting and setting scope.
+
+        Example CURL to set an organization-level setting:
+
+        ```
+        curl --location --request POST 'https://lilt.com/2/settings?key=<API_KEY>' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+            "settingName": "requireBatchQaTranslator",
+            "value": false,
+            "organizationId": 285,
+            "scope": "Organization"
+        }'
+        ```
+
+      operationId: upsertSetting
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/SettingUpsertBody'
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingUpsertResponse'
+          description: Updated settings object and updated active settings.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Update or create a setting
+      tags:
+      - Settings
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /settings/organization:
+    get:
+      description: |+
+        Get the organization-level settings for the active users organization
+
+        Example CURL:
+
+        ```
+        curl --location --request GET 'https://lilt.com/2/settings/organization?key=<API_KEY>' \
+        ```
+
+      operationId: getOrganizationSettings
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingDictionary'
+          description: Organization settings dictionary.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Get organization-level settings
+      tags:
+      - Settings
+      x-accepts: application/json
+  /settings/project/{projectId}:
+    get:
+      description: |+
+        Get the settings as applied to a specific project.
+        Active settings will combine project-level settings, organization-level settings and fallback to setting default values.
+
+        Example CURL:
+
+        ```
+        curl --location --request GET 'https://lilt.com/2/settings/project/123?key=<API_KEY>' \
+        ```
+
+      operationId: getProjectSettings
+      parameters:
+      - description: A project id.
+        in: path
+        name: projectId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingDictionary'
+          description: Project settings dictionary.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Get settings for a project
+      tags:
+      - Settings
+      x-accepts: application/json
+  /settings/user:
+    get:
+      description: |+
+        Get the active settings applied to the authenticated user.
+
+        Example CURL:
+
+        ```
+        curl --location --request GET 'https://lilt.com/2/settings/user?key=<API_KEY>' \
+        ```
+
+      operationId: getUserSettings
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/SettingDictionary'
+          description: Settings dictionary.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Get settings for the authenticated  user
+      tags:
+      - Settings
+      x-accepts: application/json
   /translate:
     get:
       description: |+
@@ -2393,6 +3739,8 @@ paths:
         By default, this endpoint also returns translation memory (TM) fuzzy matches, along
         with associated scores. Fuzzy matches always appear ahead of machine translation
         output in the response.
+
+        The `source` parameter may be supplied in the query or in the request body.
 
         The maximum source length is 5,000 characters.
 
@@ -2445,6 +3793,21 @@ paths:
         schema:
           default: false
           type: boolean
+      requestBody:
+        $ref: '#/components/requestBodies/TranslateSegmentBody'
+        content:
+          application/json:
+            schema:
+              example:
+                source: source
+              properties:
+                source:
+                  description: A unique Segment identifier.
+                  type: string
+              title: TranslateSegmentBody
+              type: object
+        description: The source text to be translated.
+        required: false
       responses:
         "200":
           content:
@@ -2461,6 +3824,8 @@ paths:
       summary: Translate a segment
       tags:
       - Translate
+      x-codegen-request-body-name: body
+      x-contentType: application/json
       x-accepts: application/json
   /translate/register:
     get:
@@ -2564,7 +3929,7 @@ paths:
 
         Example CURL:
         ```
-        curl --X --request POST 'https://lilt.com/2/translate/file?key=API_KEY&fileId=583&memoryId=2495&configId=123'
+        curl --X --request POST 'https://lilt.com/2/translate/file?key=API_KEY&fileId=583&memoryId=2495&configId=123&withTM=true'
         ```
 
       operationId: batchTranslateFile
@@ -2587,6 +3952,12 @@ paths:
         name: configId
         schema:
           type: number
+      - description: An optional boolean parameter to toggle the use of Translation
+          Memory in the translation of the file.
+        in: query
+        name: withTM
+        schema:
+          type: boolean
       responses:
         "200":
           content:
@@ -2649,12 +4020,24 @@ components:
           schema:
             $ref: '#/components/schemas/MemoryCreateParameters'
       required: true
+    SegmentDoneResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SegmentDoneResponse'
+      required: true
     DocumentDoneUpdateParameters:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/DocumentDoneUpdateParameters'
       required: true
+    CreateConverterConfigParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateConverterConfigParameters'
+      required: false
     DocumentUpdateParameters:
       content:
         application/json:
@@ -2673,6 +4056,12 @@ components:
           schema:
             $ref: '#/components/schemas/DocumentDoneUpdateParameters_1'
       required: true
+    DocumentDoneUpdateParameters_2:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DocumentDoneUpdateParameters_2'
+      required: true
     MemoryUpdateParameters:
       content:
         application/json:
@@ -2685,6 +4074,18 @@ components:
           schema:
             $ref: '#/components/schemas/DocumentAssignmentParameters'
       required: true
+    EditFilterMappingParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/EditFilterMappingParameters'
+      required: false
+    TranslateSegmentBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TranslateSegmentBody'
+      required: false
     SegmentCreateParameters:
       content:
         application/json:
@@ -2697,6 +4098,18 @@ components:
           schema:
             $ref: '#/components/schemas/DocumentPretranslateParameters'
       required: true
+    JobCreateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/JobCreateParameters'
+      required: true
+    JobUpdateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/JobUpdateParameters'
+      required: false
     DocumentParameters:
       content:
         application/json:
@@ -2726,6 +4139,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ProjectUpdateResponse'
+      required: true
+    AddFileLabelRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AddFileLabelRequest'
       required: true
   schemas:
     TranslationInfo:
@@ -2818,6 +4237,378 @@ components:
         updated_at:
           type: string
       type: object
+    Job:
+      description: |
+        A Job is a collection of multiple Projects. Each project is specific to a language pair, and is associated with exactly one Memory for that language pair. The Memory association cannot be changed after the Project is created.
+      example:
+        due: 2021-06-03T13:43:00Z
+        stats:
+          exactWords: 0
+          percentReviewed: 0
+          projects:
+          - trgLocale: CA
+            isArchived: false
+            numSourceTokens: 2134
+            createdAt: 2021-04-01T13:43:00.000Z
+            isDeleted: false
+            due: 2021-10-03T13:43:00.000Z
+            name: My new project
+            srcLocale: US
+            id: 0
+            state: inProgress
+            memoryId: 2134
+            trgLang: fr
+            srcLang: en
+            isComplete: false
+            updatedAt: 2021-06-03T13:43:00.000Z
+          - trgLocale: CA
+            isArchived: false
+            numSourceTokens: 2134
+            createdAt: 2021-04-01T13:43:00.000Z
+            isDeleted: false
+            due: 2021-10-03T13:43:00.000Z
+            name: My new project
+            srcLocale: US
+            id: 0
+            state: inProgress
+            memoryId: 2134
+            trgLang: fr
+            srcLang: en
+            isComplete: false
+            updatedAt: 2021-06-03T13:43:00.000Z
+          uniqueLanguagePairs: 1
+          percentTranslated: 0
+          fuzzyWords: 0
+          numLanguagePairs: 0
+          newWords: 0
+          numProjects: 0
+          numDeliveredProjects: 0
+          uniqueLinguists: 1
+          sourceWords: 0
+        creationStatus: COMPLETE
+        name: My New Job
+        isProcessing: 0
+        id: 241
+        deliveredAt: 2021-06-03T13:43:00Z
+        status: active
+      properties:
+        name:
+          description: A name for the job.
+          example: My New Job
+          type: string
+        creationStatus:
+          description: Status of job creation process that includes PENDING, COMPLETE,
+            and FAILED.
+          example: COMPLETE
+          type: string
+        deliveredAt:
+          example: 2021-06-03T13:43:00Z
+          format: date-time
+          type: string
+        status:
+          description: Current status of job that includes archived, delivered, and
+            active.
+          example: active
+          type: string
+        due:
+          description: An ISO string date.
+          example: 2021-06-03T13:43:00Z
+          format: date-time
+          type: string
+        id:
+          description: An id for the job.
+          example: 241
+          type: integer
+        isProcessing:
+          description: Values include `1` while in progress, `0` when idle and `-2`
+            when processing failed.
+          example: 0
+          type: integer
+        stats:
+          $ref: '#/components/schemas/JobStats'
+      type: object
+    JobStats:
+      description: |
+        A job stats shows an overview of job's statistical data including total number of exact words, fuzzy words, language pairs, projects, etc.
+      example:
+        exactWords: 0
+        percentReviewed: 0
+        projects:
+        - trgLocale: CA
+          isArchived: false
+          numSourceTokens: 2134
+          createdAt: 2021-04-01T13:43:00.000Z
+          isDeleted: false
+          due: 2021-10-03T13:43:00.000Z
+          name: My new project
+          srcLocale: US
+          id: 0
+          state: inProgress
+          memoryId: 2134
+          trgLang: fr
+          srcLang: en
+          isComplete: false
+          updatedAt: 2021-06-03T13:43:00.000Z
+        - trgLocale: CA
+          isArchived: false
+          numSourceTokens: 2134
+          createdAt: 2021-04-01T13:43:00.000Z
+          isDeleted: false
+          due: 2021-10-03T13:43:00.000Z
+          name: My new project
+          srcLocale: US
+          id: 0
+          state: inProgress
+          memoryId: 2134
+          trgLang: fr
+          srcLang: en
+          isComplete: false
+          updatedAt: 2021-06-03T13:43:00.000Z
+        uniqueLanguagePairs: 1
+        percentTranslated: 0
+        fuzzyWords: 0
+        numLanguagePairs: 0
+        newWords: 0
+        numProjects: 0
+        numDeliveredProjects: 0
+        uniqueLinguists: 1
+        sourceWords: 0
+      properties:
+        exactWords:
+          description: Total number of exact words.
+          example: 0
+          type: integer
+        fuzzyWords:
+          description: Total number of fuzzy words.
+          example: 0
+          type: integer
+        newWords:
+          description: Total number of fuzzy words.
+          example: 0
+          type: integer
+        numDeliveredProjects:
+          description: Total number of delivered projects.
+          example: 0
+          type: integer
+        numLanguagePairs:
+          description: Total number of delivered projects.
+          example: 0
+          type: integer
+        numProjects:
+          description: Total number of projects.
+          example: 0
+          type: integer
+        percentReviewed:
+          description: Overall percentage of documents reviewed.
+          example: 0
+          type: integer
+        percentTranslated:
+          example: 0
+          type: integer
+        projects:
+          items:
+            $ref: '#/components/schemas/JobProject'
+          type: array
+        sourceWords:
+          description: Total number of source words.
+          example: 0
+          type: integer
+        uniqueLanguagePairs:
+          description: Number of unique language pairs.
+          example: 1
+          type: integer
+        uniqueLinguists:
+          description: Number of unique linguists.
+          example: 1
+          type: integer
+      type: object
+    JobLeverageStats:
+      description: |
+        A job leverage stats object shows an overview of job's statistical data
+        including total number of exact words, fuzzy words, and exact words for
+        the job in total and for each project.
+      example:
+        exactWords: 0
+        projects:
+        - exactWords: 0
+          fuzzyWords: 0
+          id: 0
+          newWords: 0
+          sourceWords: 0
+        - exactWords: 0
+          fuzzyWords: 0
+          id: 0
+          newWords: 0
+          sourceWords: 0
+        fuzzyWords: 0
+        newWords: 0
+        sourceWords: 0
+      properties:
+        sourceWords:
+          description: Total number of source words.
+          example: 0
+          type: integer
+        exactWords:
+          description: Total number of exact words.
+          example: 0
+          type: integer
+        fuzzyWords:
+          description: Total number of fuzzy words.
+          example: 0
+          type: integer
+        newWords:
+          description: Total number of new words.
+          example: 0
+          type: integer
+        projects:
+          items:
+            $ref: '#/components/schemas/JobLeverageStats_projects'
+          type: array
+      type: object
+    JobProject:
+      description: |
+        A job project contains project statistcal data that belongs to a specific job.
+      example:
+        trgLocale: CA
+        isArchived: false
+        numSourceTokens: 2134
+        createdAt: 2021-04-01T13:43:00.000Z
+        isDeleted: false
+        due: 2021-10-03T13:43:00.000Z
+        name: My new project
+        srcLocale: US
+        id: 0
+        state: inProgress
+        memoryId: 2134
+        trgLang: fr
+        srcLang: en
+        isComplete: false
+        updatedAt: 2021-06-03T13:43:00.000Z
+      properties:
+        id:
+          description: An id for the project.
+          type: integer
+        srcLang:
+          description: Source langauge, an ISO 639-1 language identifier.
+          example: en
+          type: string
+        srcLocale:
+          description: A locale identifier, supported for source langauge.
+          example: US
+          type: string
+        trgLang:
+          description: Target langauge, an ISO 639-1 language identifier.
+          example: fr
+          type: string
+        trgLocale:
+          description: A locale identifier, supported for target langauge.
+          example: CA
+          type: string
+        name:
+          description: A name for the project.
+          example: My new project
+          type: string
+        due:
+          description: An ISO date.
+          example: 2021-10-03T13:43:00.000Z
+          type: string
+        isComplete:
+          description: A state that checks project was completed.
+          example: false
+          type: boolean
+        isArchived:
+          description: The archived state of the project.
+          example: false
+          type: boolean
+        state:
+          description: Current state of the project. Example, backlog, inProgress,
+            inReview, done.
+          example: inProgress
+          type: string
+        numSourceTokens:
+          description: Total number of source tokens.
+          example: 2134
+          type: integer
+        createdAt:
+          description: Time at which the object was created.
+          example: 2021-04-01T13:43:00.000Z
+          type: string
+        updatedAt:
+          description: Time at which the object was updated.
+          example: 2021-06-03T13:43:00.000Z
+          type: string
+        isDeleted:
+          description: A state that checks project was deleted.
+          example: false
+          type: boolean
+        memoryId:
+          description: A unique number identifying the associated Memory.
+          example: 2134
+          type: integer
+      type: object
+    LanguagePair:
+      description: |
+        A language pair couples the source and target language along with memory and pre-translations settings associated to a project.
+      example:
+        pretranslate: true
+        autoAccept: true
+        trgLocale: DE
+        caseSensitive: true
+        configId: 2332
+        dueDate: 2021-10-03T13:43:00.000Z
+        srcLocale: US
+        memoryId: 1241
+        trgLang: de
+        takeMatchAttribution: true
+        srcLang: en
+      properties:
+        srcLang:
+          description: Source langauge, an ISO 639-1 language identifier.
+          example: en
+          type: string
+        srcLocale:
+          description: A locale identifier, supported for source langauge.
+          example: US
+          type: string
+        trgLang:
+          description: Target langauge, an ISO 639-1 language identifier.
+          example: de
+          type: string
+        trgLocale:
+          description: A locale identifier, supported for target language.
+          example: DE
+          type: string
+        dueDate:
+          description: An ISO date.
+          example: 2021-10-03T13:43:00.000Z
+          type: string
+        memoryId:
+          description: A unique number identifying the associated Memory.
+          example: 1241
+          type: integer
+        pretranslate:
+          description: Attribute translation authorship of exact matches to the creator
+            of the document being pretranslated.
+          type: boolean
+        autoAccept:
+          description: Accept and lock exact matches.
+          example: true
+          type: boolean
+        caseSensitive:
+          description: Use case sensitive translation memory matching.
+          type: boolean
+        takeMatchAttribution:
+          description: Use MT for unmatched segments.
+          example: true
+          type: boolean
+        configId:
+          description: Configuration id
+          example: 2332
+          type: integer
+      required:
+      - memoryId
+      - trgLang
+      type: object
     Project:
       description: |
         A Project is a collection of zero or more Documents. It is specific to a language pair, and is associated with exactly one Memory for that language pair. The Memory association cannot be changed after the Project is created.
@@ -2871,6 +4662,7 @@ components:
         memory_id: 1234
         updated_at: 1489147692
         sample_review_percentage: 20
+        job_id: 1234
         name: My New Project
         id: 448
         state: backlog
@@ -2882,6 +4674,10 @@ components:
           type: integer
         memory_id:
           description: A unique number identifying the associated Memory.
+          example: 1234
+          type: integer
+        job_id:
+          description: A unique number identifying the associated Job.
           example: 1234
           type: integer
         srclang:
@@ -3271,11 +5067,10 @@ components:
       example:
         detected_lang_confidence: 0.7
         file_hash: 3858f62230ac3c915f300c664312c63f
-        updated_at: 1489147692
+        updated_at: 2000-01-23T04:56:07.000+00:00
         name: en_US.json
-        created_at: 1489147692
+        created_at: 2000-01-23T04:56:07.000+00:00
         id: 46530
-        export_uri: https://example.com/export
         category: REFERENCE
         detected_lang: de
         labels: []
@@ -3292,11 +5087,6 @@ components:
           description: A unique hash value associated with the file. An MD5 hash of
             the file content will be used by default.
           example: 3858f62230ac3c915f300c664312c63f
-          type: string
-        export_uri:
-          description: A webhook endpoint that will export the translated document
-            back to the source repository.
-          example: https://example.com/export
           type: string
         detected_lang:
           description: Language associated with the file.
@@ -3319,15 +5109,13 @@ components:
             type: string
           type: array
         created_at:
-          description: Time at which the object was created. Measured in seconds since
-            the Unix epoch.
-          example: 1489147692
-          type: integer
+          description: Time at which the object was created.
+          format: date-time
+          type: string
         updated_at:
-          description: Time at which the object was created. Measured in seconds since
-            the Unix epoch.
-          example: 1489147692
-          type: integer
+          description: Time at which the object was created.
+          format: date-time
+          type: string
       type: object
     DocumentWithoutSegments:
       description: |
@@ -3540,6 +5328,22 @@ components:
           items:
             $ref: '#/components/schemas/Segment'
           type: array
+      type: object
+    ConverterConfigMap:
+      additionalProperties:
+        type: string
+      description: |
+        A map of config ids to converter configs.
+      example:
+        "145": '{"registry": {".xlsx": {"type": "OkapiFprm", "version": 1, "filterName":
+          "okf_openxml", "filterConfig": "#v1\nbPreferenceTranslateDocProperties.b=false\nbPreferenceTranslateComments.b=true\nbPreferenceTranslatePowerpointNotes.b=true\nbPreferenceTranslatePowerpointMasters.b=true\nbPreferenceIgnorePlaceholdersInPowerpointMasters.b=false\nbPreferenceTranslateWordHeadersFooters.b=true\nbPreferenceTranslateWordHidden.b=false\nbPreferenceTranslateWordExcludeGraphicMetaData.b=true\nbPreferenceTranslatePowerpointHidden.b=false\nbPreferenceTranslateExcelHidden.b=false\nbPreferenceTranslateExcelExcludeColors.b=false\nbPreferenceTranslateExcelExcludeColumns.b=false\nbPreferenceTranslateExcelSheetNames.b=false\nbPreferenceAddLineSeparatorAsCharacter.b=false\nsPreferenceLineSeparatorReplacement=$0a$\nbPreferenceReplaceNoBreakHyphenTag.b=false\nbPreferenceIgnoreSoftHyphenTag.b=false\nbPreferenceAddTabAsCharacter.b=false\nbPreferenceAggressiveCleanup.b=true\nbPreferenceAutomaticallyAcceptRevisions.b=true\nbPreferencePowerpointIncludedSlideNumbersOnly.b=false\nbPreferenceTranslateExcelDiagramData.b=false\nbPreferenceTranslateExcelDrawings.b=false\nsubfilter=okf_plaintext\nbInExcludeMode.b=true\nbInExcludeHighlightMode.b=true\nbPreferenceTranslateWordExcludeColors.b=false\nbReorderPowerpointNotesAndComments.b=true\ntsComplexFieldDefinitionsToExtract.i=1\ncfd0=HYPERLINK\ntsExcelExcludedColors.i=0\ntsExcelExcludedColumns.i=0\ntsExcludeWordStyles.i=0\ntsWordHighlightColors.i=0\ntsWordExcludedColors.i=0\ntsPowerpointIncludedSlideNumbers.i=0\nbExtractExternalHyperlinks.b=false\n",
+          "extractAllTags": true, "exportReplacements": {"patterns": [], "replacements":
+          []}, "importReplacements": {"patterns": [], "replacements": []}}}}'
+        "432": '{"registry": {".md": {"type": "OkapiFprm", "version": 1, "filterName":
+          "okf_markdown", "filterConfig": "#v1\nuseCodeFinder.b=false\ntranslateUrls.b=true\nurlToTranslatePattern=.+\ntranslateCodeBlocks.b=false\ntranslateInlineCodeBlocks.b=true\ntranslateHeaderMetadata.b=true\ntranslateImageAltText.b=true\nuseLinkSubflow.b=true\ncodeFinderRules.count.i=1\ncodeFinderRules.rule0=\\{\\{[^}]+\\}\\}\ncodeFinderRules.sample={{#test}}
+          handle bar test {{/test}}$0a${{stand-alone handle bar}}$0a$\ncodeFinderRules.useAllRulesWhenTesting.b=true\n",
+          "extractAllTags": true, "exportReplacements": {"patterns": [], "replacements":
+          []}, "importReplacements": {"patterns": [], "replacements": []}}}'
       type: object
     LexiconEntry:
       description: |
@@ -3914,22 +5718,28 @@ components:
         is_reviewed: true
         memory_id: 5678
         comments:
-        - user_id: 5678
-          is_resolved: true
+        - is_resolved: true
+          user_id: 5678
+          segment_revision_id: 5678
           annotations:
           - text: mistranslation
           - text: mistranslation
           created_at: 1489147692
           id: 84480010
           text: This is incorrect.
-        - user_id: 5678
-          is_resolved: true
+          document_id: 5678
+          segment_id: 5678
+        - is_resolved: true
+          user_id: 5678
+          segment_revision_id: 5678
           annotations:
           - text: mistranslation
           - text: mistranslation
           created_at: 1489147692
           id: 84480010
           text: This is incorrect.
+          document_id: 5678
+          segment_id: 5678
         updated_at: 1489147692
         is_confirmed: true
         srclang: en
@@ -3996,14 +5806,17 @@ components:
       description: |
         A Comment is a translator's or a reviewer's comment on a segment.
       example:
-        user_id: 5678
         is_resolved: true
+        user_id: 5678
+        segment_revision_id: 5678
         annotations:
         - text: mistranslation
         - text: mistranslation
         created_at: 1489147692
         id: 84480010
         text: This is incorrect.
+        document_id: 5678
+        segment_id: 5678
       properties:
         id:
           description: A unique number identifying the Comment.
@@ -4013,24 +5826,93 @@ components:
           description: The comment text.
           example: This is incorrect.
           type: string
-        user_id:
-          description: The User who created this Comment.
-          example: 5678
-          type: integer
-        is_resolved:
-          description: Whether the Comment is resolved.
-          example: true
-          type: boolean
         annotations:
           description: A list of optional Annotations.
           items:
             $ref: '#/components/schemas/Annotation'
           type: array
+        is_resolved:
+          description: Whether the Comment is resolved.
+          example: true
+          type: boolean
+        document_id:
+          description: The document to which the comment belongs.
+          example: 5678
+          type: integer
+        segment_id:
+          description: The individual segment to which the comment applies.
+          example: 5678
+          type: integer
+        segment_revision_id:
+          description: The revision of the individual segment to which the comment
+            applies.
+          example: 5678
+          type: integer
+        user_id:
+          description: The user who created this comment.
+          example: 5678
+          type: integer
         created_at:
           description: Time at which the object was created. Measured in seconds since
             the Unix epoch.
           example: 1489147692
           type: integer
+      type: object
+    CommentBody:
+      description: |
+        The body of a comment being created or updated.
+      example:
+        annotations:
+        - text: mistranslation
+        - text: mistranslation
+        text: Please update this segment
+        isResolved: "false"
+      properties:
+        text:
+          description: The main comment value.
+          example: Please update this segment
+          type: string
+        annotations:
+          description: A list of optional Annotations.
+          items:
+            $ref: '#/components/schemas/Annotation'
+          type: array
+        isResolved:
+          example: "false"
+          type: string
+      type: object
+    DocumentComments:
+      description: |
+        A set of comments for a given document, grouped with Segment ID as the key.
+      example:
+        "1234567":
+        - is_resolved: true
+          user_id: 5678
+          segment_revision_id: 5678
+          annotations:
+          - text: mistranslation
+          - text: mistranslation
+          created_at: 1489147692
+          id: 84480010
+          text: This is incorrect.
+          document_id: 5678
+          segment_id: 5678
+        - is_resolved: true
+          user_id: 5678
+          segment_revision_id: 5678
+          annotations:
+          - text: mistranslation
+          - text: mistranslation
+          created_at: 1489147692
+          id: 84480010
+          text: This is incorrect.
+          document_id: 5678
+          segment_id: 5678
+      properties:
+        "1234567":
+          items:
+            $ref: '#/components/schemas/Comment'
+          type: array
       type: object
     Annotation:
       description: |
@@ -4088,6 +5970,9 @@ components:
     QARuleMatches:
       description: QA rules describing the errors in the text.
       example:
+        custom_rules:
+        - description: Mistake detected by a custom rule.
+        - description: Mistake detected by a custom rule.
         matches:
         - offset: 19
           context:
@@ -4136,6 +6021,98 @@ components:
           items:
             $ref: '#/components/schemas/QARuleMatches_matches'
           type: array
+        custom_rules:
+          items:
+            $ref: '#/components/schemas/QARuleMatches_custom_rules'
+          type: array
+      type: object
+    SettingDictionary:
+      additionalProperties:
+        $ref: '#/components/schemas/Setting'
+      description: A dictionary of configuration settings, keyed by setting name
+      type: object
+    SettingUpsertResponse:
+      description: Response from upserting a setting
+      example:
+        activeSettings:
+          key:
+            isUserFacing: true
+            isDefault: true
+            valueType: valueType
+            name: name
+            id: 0
+        scopedSetting:
+          isUserFacing: true
+          isDefault: true
+          valueType: valueType
+          name: name
+          id: 0
+      properties:
+        scopedSetting:
+          $ref: '#/components/schemas/Setting'
+        activeSettings:
+          additionalProperties:
+            $ref: '#/components/schemas/Setting'
+          description: A dictionary of configuration settings, keyed by setting name
+          type: object
+      type: object
+    Setting:
+      description: A configuration setting.
+      example:
+        isUserFacing: true
+        isDefault: true
+        valueType: valueType
+        name: name
+        id: 0
+      properties:
+        id:
+          description: The identifier of the setting.
+          format: int32
+          type: integer
+        name:
+          description: The name of the setting.
+          type: string
+        valueType:
+          description: the type of value the setting may have - Boolean, Json, Number,
+            String.
+          type: string
+        isUserFacing:
+          description: Whether the setting is editable by the user.
+          type: boolean
+        isDefault:
+          description: True when the setting value is inherited from the default setting.
+          type: boolean
+      type: object
+    SettingUpsertBody:
+      description: Body to create or update a setting.
+      example:
+        organizationId: 123.0
+        scope: Organization
+        isEnforced: true
+        projectId: 0.8008281904610115
+        settingName: requireBatchQaTranslator
+      properties:
+        settingName:
+          description: The name of the setting.
+          example: requireBatchQaTranslator
+          type: string
+        scope:
+          description: The entity scope the setting should be applied to.
+          example: Organization
+          type: string
+        isEnforced:
+          description: |
+            Whether this value should override others set for the same setting key.
+          type: boolean
+        projectId:
+          description: |
+            Id of the the project the setting will be applied to. Required when scope is `Project`.
+          type: number
+        organizationId:
+          description: |
+            Id of the the project the setting will be applied to. Required when scope is `Organization`.
+          example: 123.0
+          type: number
       type: object
     ApiRoot:
       example:
@@ -4164,6 +6141,26 @@ components:
           example: true
           type: boolean
       title: FileDeleteResponse
+      type: object
+    AddFileLabelRequest:
+      example:
+        name: label_name
+      properties:
+        name:
+          description: The Label name.
+          example: label_name
+          type: string
+      title: AddFileLabelRequest
+      type: object
+    CommentDeleteResponse:
+      example:
+        id: 12345
+      properties:
+        id:
+          description: A unique Comment identifier.
+          example: 12345
+          type: integer
+      title: CommentDeleteResponse
       type: object
     ConnectorArguments:
       example:
@@ -4219,6 +6216,84 @@ components:
           example: true
           type: boolean
       title: ConnectorDeleteResponse
+      type: object
+    CreateConverterConfigParameters:
+      example:
+        configName: my_config
+        configJson: '{"registry": {".md": {"type": "OkapiFprm", "version": 1, "filterName":
+          "okf_markdown", "filterConfig": "#v1\nuseCodeFinder.b=false\ntranslateUrls.b=true\nurlToTranslatePattern=.+\ntranslateCodeBlocks.b=false\ntranslateInlineCodeBlocks.b=true\ntranslateHeaderMetadata.b=true\ntranslateImageAltText.b=true\nuseLinkSubflow.b=true\ncodeFinderRules.count.i=1\ncodeFinderRules.rule0=\\{\\{[^}]+\\}\\}\ncodeFinderRules.sample={{#test}}
+          handle bar test {{/test}}$0a${{stand-alone handle bar}}$0a$\ncodeFinderRules.useAllRulesWhenTesting.b=true\n",
+          "extractAllTags": true, "exportReplacements": {"patterns": [], "replacements":
+          []}, "importReplacements": {"patterns": [], "replacements": []}}}'
+        configDescription: config for custom markdown escaping
+      properties:
+        configJson:
+          description: The configuration json blob, string escaped.
+          example: '{"registry": {".md": {"type": "OkapiFprm", "version": 1, "filterName":
+            "okf_markdown", "filterConfig": "#v1\nuseCodeFinder.b=false\ntranslateUrls.b=true\nurlToTranslatePattern=.+\ntranslateCodeBlocks.b=false\ntranslateInlineCodeBlocks.b=true\ntranslateHeaderMetadata.b=true\ntranslateImageAltText.b=true\nuseLinkSubflow.b=true\ncodeFinderRules.count.i=1\ncodeFinderRules.rule0=\\{\\{[^}]+\\}\\}\ncodeFinderRules.sample={{#test}}
+            handle bar test {{/test}}$0a${{stand-alone handle bar}}$0a$\ncodeFinderRules.useAllRulesWhenTesting.b=true\n",
+            "extractAllTags": true, "exportReplacements": {"patterns": [], "replacements":
+            []}, "importReplacements": {"patterns": [], "replacements": []}}}'
+          type: string
+        configName:
+          description: The user defined name of your configuration.
+          example: my_config
+          type: string
+        configDescription:
+          description: A description for the configuration.
+          example: config for custom markdown escaping
+          type: string
+      required:
+      - configDescription
+      - configJson
+      - configName
+      title: CreateConverterConfigParameters
+      type: object
+    ConverterConfigUpdateResponse:
+      example:
+        configId: 0
+      properties:
+        configId:
+          type: integer
+      title: ConverterConfigUpdateResponse
+      type: object
+    inline_response_200:
+      example:
+        configId: 0
+      properties:
+        configId:
+          type: integer
+      type: object
+    EditFilterMappingParameters:
+      example:
+        configName: my_config
+        configDescription: config for custom markdown escaping
+        registryEntryJson: '{"type": "OkapiFprm", "version": 1, "filterName": "okf_markdown",
+          "filterConfig": "#v1\nuseCodeFinder.b=false\ntranslateUrls.b=true\nurlToTranslatePattern=.+\ntranslateCodeBlocks.b=false\ntranslateInlineCodeBlocks.b=true\ntranslateHeaderMetadata.b=true\ntranslateImageAltText.b=true\nuseLinkSubflow.b=true\ncodeFinderRules.count.i=1\ncodeFinderRules.rule0=\\{\\{[^}]+\\}\\}\ncodeFinderRules.sample={{#test}}
+          handle bar test {{/test}}$0a${{stand-alone handle bar}}$0a$\ncodeFinderRules.useAllRulesWhenTesting.b=true\n",
+          "extractAllTags": true, "exportReplacements": {"patterns": [], "replacements":
+          []}, "importReplacements": {"patterns": [], "replacements": []}'
+      properties:
+        registryEntryJson:
+          description: The filter mapping json blob, string escaped.
+          example: '{"type": "OkapiFprm", "version": 1, "filterName": "okf_markdown",
+            "filterConfig": "#v1\nuseCodeFinder.b=false\ntranslateUrls.b=true\nurlToTranslatePattern=.+\ntranslateCodeBlocks.b=false\ntranslateInlineCodeBlocks.b=true\ntranslateHeaderMetadata.b=true\ntranslateImageAltText.b=true\nuseLinkSubflow.b=true\ncodeFinderRules.count.i=1\ncodeFinderRules.rule0=\\{\\{[^}]+\\}\\}\ncodeFinderRules.sample={{#test}}
+            handle bar test {{/test}}$0a${{stand-alone handle bar}}$0a$\ncodeFinderRules.useAllRulesWhenTesting.b=true\n",
+            "extractAllTags": true, "exportReplacements": {"patterns": [], "replacements":
+            []}, "importReplacements": {"patterns": [], "replacements": []}'
+          type: string
+        configName:
+          description: The user defined name of your configuration.
+          example: my_config
+          type: string
+        configDescription:
+          description: A description for the configuration.
+          example: config for custom markdown escaping
+          type: string
+      required:
+      - configDescription
+      - configName
+      title: EditFilterMappingParameters
       type: object
     DocumentUpdateParameters:
       example:
@@ -4402,21 +6477,55 @@ components:
       type: object
     DocumentDoneUpdateParameters:
       example:
-        isDone: true
+        documentIds:
+        - 10641
+        - 10642
       properties:
-        isDone:
-          example: true
-          type: boolean
+        documentIds:
+          description: array of document ids
+          example:
+          - 10641
+          - 10642
+          items:
+            type: number
+          type: array
       required:
-      - isDone
+      - documentIds
       title: DocumentDoneUpdateParameters
       type: object
     DocumentDoneUpdateParameters_1:
       properties:
+        documentIds:
+          description: array of document ids
+          example:
+          - 10641
+          - 10642
+          items:
+            type: number
+          type: array
         isDone:
           example: true
           type: boolean
       required:
+      - documentIds
+      - isDone
+      title: DocumentDoneUpdateParameters
+      type: object
+    DocumentDoneUpdateParameters_2:
+      properties:
+        documentIds:
+          description: array of document ids
+          example:
+          - 10641
+          - 10642
+          items:
+            type: number
+          type: array
+        isDone:
+          example: true
+          type: boolean
+      required:
+      - documentIds
       - isDone
       title: DocumentDoneUpdateParameters
       type: object
@@ -4625,6 +6734,90 @@ components:
           type: integer
       title: MemoryImportResponse
       type: object
+    JobCreateParameters:
+      example:
+        languagePairs:
+        - pretranslate: true
+          autoAccept: true
+          trgLocale: DE
+          caseSensitive: true
+          configId: 2332
+          dueDate: 2021-10-03T13:43:00.000Z
+          srcLocale: US
+          memoryId: 1241
+          trgLang: de
+          takeMatchAttribution: true
+          srcLang: en
+        - pretranslate: true
+          autoAccept: true
+          trgLocale: DE
+          caseSensitive: true
+          configId: 2332
+          dueDate: 2021-10-03T13:43:00.000Z
+          srcLocale: US
+          memoryId: 1241
+          trgLang: de
+          takeMatchAttribution: true
+          srcLang: en
+        due: 2021-10-05T14:48:00.000Z
+        fileIds:
+        - 298
+        - 299
+        name: My new Job
+      properties:
+        name:
+          description: A name for the Job.
+          example: My new Job
+          type: string
+        due:
+          description: An ISO string date.
+          example: 2021-10-05T14:48:00.000Z
+          type: string
+        languagePairs:
+          description: Language pairs is a set of one or more pairs that includes
+            source language, source locale(optional), target language, target locale(optional),
+            and memoryId.
+          items:
+            $ref: '#/components/schemas/LanguagePair'
+          type: array
+        fileIds:
+          description: A list of file ids to upload to job creation.
+          example:
+          - 298
+          - 299
+          items:
+            type: integer
+          type: array
+      required:
+      - fileIds
+      - languagePairs
+      - name
+      title: JobCreateParameters
+      type: object
+    JobUpdateParameters:
+      example:
+        dueDate: 0
+        name: My new Job
+      properties:
+        name:
+          description: A name for the Job.
+          example: My new Job
+          type: string
+        dueDate:
+          description: An ISO string date.
+          type: integer
+      title: JobUpdateParameters
+      type: object
+    JobDeleteResponse:
+      example:
+        id: 241
+      properties:
+        id:
+          description: A unique Project identifier.
+          example: 241
+          type: integer
+      title: JobDeleteResponse
+      type: object
     ProjectUpdateResponse:
       example:
         archived: false
@@ -4682,11 +6875,8 @@ components:
           connectorType: github
           notes: example metadata
         memory_id: 1234
+        job_id: 1234
         name: My new project
-        file_ids:
-        - 123
-        - 124
-        - 125
         due_date: 1489147692
       properties:
         name:
@@ -4697,15 +6887,13 @@ components:
           description: The Memory to associate with this new Project.
           example: 1234
           type: integer
-        file_ids:
-          description: A list of Files to add to this new Project.
-          example:
-          - 123
-          - 124
-          - 125
-          items:
-            type: integer
-          type: array
+        job_id:
+          description: |
+            The Job to associate with this new Project. If a Job ID is not
+            provided then a new Job will be created to contain the
+            Project.
+          example: 1234
+          type: integer
         due_date:
           description: The due date. Measured in seconds since the Unix epoch.
           example: 1489147692
@@ -4798,6 +6986,33 @@ components:
           type: boolean
       title: SegmentDeleteResponse
       type: object
+    SegmentDoneResponse:
+      example:
+        documentIds:
+        - 30032
+        - 30125
+      properties:
+        documentIds:
+          description: array of segment ids
+          example:
+          - 30032
+          - 30125
+          items:
+            type: number
+          type: array
+      required:
+      - documentIds
+      title: SegmentDoneResponse
+      type: object
+    TranslateSegmentBody:
+      example:
+        source: source
+      properties:
+        source:
+          description: A unique Segment identifier.
+          type: string
+      title: TranslateSegmentBody
+      type: object
     TranslateRegisterResponse:
       example:
         num_words: 88
@@ -4813,6 +7028,35 @@ components:
           example: 88
           type: integer
       title: TranslateRegisterResponse
+      type: object
+    JobLeverageStats_projects:
+      example:
+        exactWords: 0
+        fuzzyWords: 0
+        id: 0
+        newWords: 0
+        sourceWords: 0
+      properties:
+        id:
+          description: The Project ID.
+          example: 0
+          type: integer
+        sourceWords:
+          description: Total number of source words.
+          example: 0
+          type: integer
+        exactWords:
+          description: Total number of exact words.
+          example: 0
+          type: integer
+        fuzzyWords:
+          description: Total number of fuzzy words.
+          example: 0
+          type: integer
+        newWords:
+          description: Total number of fuzzy words.
+          example: 0
+          type: integer
       type: object
     DocumentWithoutSegments_status:
       description: A list of translations for the query term.
@@ -5088,6 +7332,15 @@ components:
       - message
       - offset
       - replacements
+      type: object
+    QARuleMatches_custom_rules:
+      example:
+        description: Mistake detected by a custom rule.
+      properties:
+        description:
+          description: A QA warning defined by a custom rule.
+          example: Mistake detected by a custom rule.
+          type: string
       type: object
   securitySchemes:
     BasicAuth:

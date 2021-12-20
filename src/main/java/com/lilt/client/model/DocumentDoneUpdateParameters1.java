@@ -23,15 +23,49 @@ import com.google.gson.stream.JsonWriter;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * DocumentDoneUpdateParameters1
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-20T00:13:26.792Z[GMT]")
 public class DocumentDoneUpdateParameters1 {
+  public static final String SERIALIZED_NAME_DOCUMENT_IDS = "documentIds";
+  @SerializedName(SERIALIZED_NAME_DOCUMENT_IDS)
+  private List<BigDecimal> documentIds = new ArrayList<BigDecimal>();
+
   public static final String SERIALIZED_NAME_IS_DONE = "isDone";
   @SerializedName(SERIALIZED_NAME_IS_DONE)
   private Boolean isDone;
+
+
+  public DocumentDoneUpdateParameters1 documentIds(List<BigDecimal> documentIds) {
+    
+    this.documentIds = documentIds;
+    return this;
+  }
+
+  public DocumentDoneUpdateParameters1 addDocumentIdsItem(BigDecimal documentIdsItem) {
+    this.documentIds.add(documentIdsItem);
+    return this;
+  }
+
+   /**
+   * array of document ids
+   * @return documentIds
+  **/
+  @ApiModelProperty(example = "[10641, 10642]", required = true, value = "array of document ids")
+
+  public List<BigDecimal> getDocumentIds() {
+    return documentIds;
+  }
+
+
+  public void setDocumentIds(List<BigDecimal> documentIds) {
+    this.documentIds = documentIds;
+  }
 
 
   public DocumentDoneUpdateParameters1 isDone(Boolean isDone) {
@@ -65,18 +99,20 @@ public class DocumentDoneUpdateParameters1 {
       return false;
     }
     DocumentDoneUpdateParameters1 documentDoneUpdateParameters1 = (DocumentDoneUpdateParameters1) o;
-    return Objects.equals(this.isDone, documentDoneUpdateParameters1.isDone);
+    return Objects.equals(this.documentIds, documentDoneUpdateParameters1.documentIds) &&
+        Objects.equals(this.isDone, documentDoneUpdateParameters1.isDone);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(isDone);
+    return Objects.hash(documentIds, isDone);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class DocumentDoneUpdateParameters1 {\n");
+    sb.append("    documentIds: ").append(toIndentedString(documentIds)).append("\n");
     sb.append("    isDone: ").append(toIndentedString(isDone)).append("\n");
     sb.append("}");
     return sb.toString();

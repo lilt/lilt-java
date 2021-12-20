@@ -31,7 +31,7 @@ import java.util.List;
  * A Comment is a translator&#39;s or a reviewer&#39;s comment on a segment. 
  */
 @ApiModel(description = "A Comment is a translator's or a reviewer's comment on a segment. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-20T00:13:26.792Z[GMT]")
 public class Comment {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -41,17 +41,29 @@ public class Comment {
   @SerializedName(SERIALIZED_NAME_TEXT)
   private String text;
 
-  public static final String SERIALIZED_NAME_USER_ID = "user_id";
-  @SerializedName(SERIALIZED_NAME_USER_ID)
-  private Integer userId;
+  public static final String SERIALIZED_NAME_ANNOTATIONS = "annotations";
+  @SerializedName(SERIALIZED_NAME_ANNOTATIONS)
+  private List<Annotation> annotations = null;
 
   public static final String SERIALIZED_NAME_IS_RESOLVED = "is_resolved";
   @SerializedName(SERIALIZED_NAME_IS_RESOLVED)
   private Boolean isResolved;
 
-  public static final String SERIALIZED_NAME_ANNOTATIONS = "annotations";
-  @SerializedName(SERIALIZED_NAME_ANNOTATIONS)
-  private List<Annotation> annotations = null;
+  public static final String SERIALIZED_NAME_DOCUMENT_ID = "document_id";
+  @SerializedName(SERIALIZED_NAME_DOCUMENT_ID)
+  private Integer documentId;
+
+  public static final String SERIALIZED_NAME_SEGMENT_ID = "segment_id";
+  @SerializedName(SERIALIZED_NAME_SEGMENT_ID)
+  private Integer segmentId;
+
+  public static final String SERIALIZED_NAME_SEGMENT_REVISION_ID = "segment_revision_id";
+  @SerializedName(SERIALIZED_NAME_SEGMENT_REVISION_ID)
+  private Integer segmentRevisionId;
+
+  public static final String SERIALIZED_NAME_USER_ID = "user_id";
+  @SerializedName(SERIALIZED_NAME_USER_ID)
+  private Integer userId;
 
   public static final String SERIALIZED_NAME_CREATED_AT = "created_at";
   @SerializedName(SERIALIZED_NAME_CREATED_AT)
@@ -104,52 +116,6 @@ public class Comment {
   }
 
 
-  public Comment userId(Integer userId) {
-    
-    this.userId = userId;
-    return this;
-  }
-
-   /**
-   * The User who created this Comment.
-   * @return userId
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "5678", value = "The User who created this Comment.")
-
-  public Integer getUserId() {
-    return userId;
-  }
-
-
-  public void setUserId(Integer userId) {
-    this.userId = userId;
-  }
-
-
-  public Comment isResolved(Boolean isResolved) {
-    
-    this.isResolved = isResolved;
-    return this;
-  }
-
-   /**
-   * Whether the Comment is resolved.
-   * @return isResolved
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "Whether the Comment is resolved.")
-
-  public Boolean getIsResolved() {
-    return isResolved;
-  }
-
-
-  public void setIsResolved(Boolean isResolved) {
-    this.isResolved = isResolved;
-  }
-
-
   public Comment annotations(List<Annotation> annotations) {
     
     this.annotations = annotations;
@@ -178,6 +144,121 @@ public class Comment {
 
   public void setAnnotations(List<Annotation> annotations) {
     this.annotations = annotations;
+  }
+
+
+  public Comment isResolved(Boolean isResolved) {
+    
+    this.isResolved = isResolved;
+    return this;
+  }
+
+   /**
+   * Whether the Comment is resolved.
+   * @return isResolved
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "true", value = "Whether the Comment is resolved.")
+
+  public Boolean getIsResolved() {
+    return isResolved;
+  }
+
+
+  public void setIsResolved(Boolean isResolved) {
+    this.isResolved = isResolved;
+  }
+
+
+  public Comment documentId(Integer documentId) {
+    
+    this.documentId = documentId;
+    return this;
+  }
+
+   /**
+   * The document to which the comment belongs.
+   * @return documentId
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "5678", value = "The document to which the comment belongs.")
+
+  public Integer getDocumentId() {
+    return documentId;
+  }
+
+
+  public void setDocumentId(Integer documentId) {
+    this.documentId = documentId;
+  }
+
+
+  public Comment segmentId(Integer segmentId) {
+    
+    this.segmentId = segmentId;
+    return this;
+  }
+
+   /**
+   * The individual segment to which the comment applies.
+   * @return segmentId
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "5678", value = "The individual segment to which the comment applies.")
+
+  public Integer getSegmentId() {
+    return segmentId;
+  }
+
+
+  public void setSegmentId(Integer segmentId) {
+    this.segmentId = segmentId;
+  }
+
+
+  public Comment segmentRevisionId(Integer segmentRevisionId) {
+    
+    this.segmentRevisionId = segmentRevisionId;
+    return this;
+  }
+
+   /**
+   * The revision of the individual segment to which the comment applies.
+   * @return segmentRevisionId
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "5678", value = "The revision of the individual segment to which the comment applies.")
+
+  public Integer getSegmentRevisionId() {
+    return segmentRevisionId;
+  }
+
+
+  public void setSegmentRevisionId(Integer segmentRevisionId) {
+    this.segmentRevisionId = segmentRevisionId;
+  }
+
+
+  public Comment userId(Integer userId) {
+    
+    this.userId = userId;
+    return this;
+  }
+
+   /**
+   * The user who created this comment.
+   * @return userId
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "5678", value = "The user who created this comment.")
+
+  public Integer getUserId() {
+    return userId;
+  }
+
+
+  public void setUserId(Integer userId) {
+    this.userId = userId;
   }
 
 
@@ -215,15 +296,18 @@ public class Comment {
     Comment comment = (Comment) o;
     return Objects.equals(this.id, comment.id) &&
         Objects.equals(this.text, comment.text) &&
-        Objects.equals(this.userId, comment.userId) &&
-        Objects.equals(this.isResolved, comment.isResolved) &&
         Objects.equals(this.annotations, comment.annotations) &&
+        Objects.equals(this.isResolved, comment.isResolved) &&
+        Objects.equals(this.documentId, comment.documentId) &&
+        Objects.equals(this.segmentId, comment.segmentId) &&
+        Objects.equals(this.segmentRevisionId, comment.segmentRevisionId) &&
+        Objects.equals(this.userId, comment.userId) &&
         Objects.equals(this.createdAt, comment.createdAt);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, text, userId, isResolved, annotations, createdAt);
+    return Objects.hash(id, text, annotations, isResolved, documentId, segmentId, segmentRevisionId, userId, createdAt);
   }
 
   @Override
@@ -232,9 +316,12 @@ public class Comment {
     sb.append("class Comment {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    text: ").append(toIndentedString(text)).append("\n");
-    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
-    sb.append("    isResolved: ").append(toIndentedString(isResolved)).append("\n");
     sb.append("    annotations: ").append(toIndentedString(annotations)).append("\n");
+    sb.append("    isResolved: ").append(toIndentedString(isResolved)).append("\n");
+    sb.append("    documentId: ").append(toIndentedString(documentId)).append("\n");
+    sb.append("    segmentId: ").append(toIndentedString(segmentId)).append("\n");
+    sb.append("    segmentRevisionId: ").append(toIndentedString(segmentRevisionId)).append("\n");
+    sb.append("    userId: ").append(toIndentedString(userId)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("}");
     return sb.toString();

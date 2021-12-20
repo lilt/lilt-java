@@ -7,7 +7,7 @@ Method | HTTP request | Description
 [**createConnector**](ConnectorsApi.md#createConnector) | **POST** /connectors | Upload a Connector
 [**deleteConnector**](ConnectorsApi.md#deleteConnector) | **DELETE** /connectors | Delete a Connector
 [**exportConnectorJob**](ConnectorsApi.md#exportConnectorJob) | **POST** /connectors/jobs/deliver | Deliver a Connector Job
-[**getConnectorJobs**](ConnectorsApi.md#getConnectorJobs) | **GET** /connectors/jobs | Retreive a Connector Job
+[**getConnectorJobs**](ConnectorsApi.md#getConnectorJobs) | **GET** /connectors/jobs | Retrieve a Connector Job
 [**getConnectors**](ConnectorsApi.md#getConnectors) | **GET** /connectors | Retrieve a Connector
 [**syncConnector**](ConnectorsApi.md#syncConnector) | **POST** /connectors/sync | Sync a Connector
 [**updateConnector**](ConnectorsApi.md#updateConnector) | **PUT** /connectors | Upload a Connector
@@ -241,7 +241,7 @@ null (empty response body)
 # **getConnectorJobs**
 > List&lt;ConnectorJob&gt; getConnectorJobs(id)
 
-Retreive a Connector Job
+Retrieve a Connector Job
 
 Retrieves a connector job available to your user. Use this to check the status of jobs started by the &#x60;/connectors/sync&#x60; and &#x60;/connectors/jobs/deliver&#x60; endpoints.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/connectors/jobs?key&#x3D;API_KEY&amp;id&#x3D;9274 &#x60;&#x60;&#x60; 
 
