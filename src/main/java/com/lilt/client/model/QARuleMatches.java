@@ -20,6 +20,7 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.lilt.client.model.QARuleMatchesCustomRules;
 import com.lilt.client.model.QARuleMatchesMatches;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,11 +32,15 @@ import java.util.List;
  * QA rules describing the errors in the text.
  */
 @ApiModel(description = "QA rules describing the errors in the text.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-20T00:13:26.792Z[GMT]")
 public class QARuleMatches {
   public static final String SERIALIZED_NAME_MATCHES = "matches";
   @SerializedName(SERIALIZED_NAME_MATCHES)
   private List<QARuleMatchesMatches> matches = null;
+
+  public static final String SERIALIZED_NAME_CUSTOM_RULES = "custom_rules";
+  @SerializedName(SERIALIZED_NAME_CUSTOM_RULES)
+  private List<QARuleMatchesCustomRules> customRules = null;
 
 
   public QARuleMatches matches(List<QARuleMatchesMatches> matches) {
@@ -69,6 +74,37 @@ public class QARuleMatches {
   }
 
 
+  public QARuleMatches customRules(List<QARuleMatchesCustomRules> customRules) {
+    
+    this.customRules = customRules;
+    return this;
+  }
+
+  public QARuleMatches addCustomRulesItem(QARuleMatchesCustomRules customRulesItem) {
+    if (this.customRules == null) {
+      this.customRules = new ArrayList<QARuleMatchesCustomRules>();
+    }
+    this.customRules.add(customRulesItem);
+    return this;
+  }
+
+   /**
+   * Get customRules
+   * @return customRules
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<QARuleMatchesCustomRules> getCustomRules() {
+    return customRules;
+  }
+
+
+  public void setCustomRules(List<QARuleMatchesCustomRules> customRules) {
+    this.customRules = customRules;
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -78,12 +114,13 @@ public class QARuleMatches {
       return false;
     }
     QARuleMatches qaRuleMatches = (QARuleMatches) o;
-    return Objects.equals(this.matches, qaRuleMatches.matches);
+    return Objects.equals(this.matches, qaRuleMatches.matches) &&
+        Objects.equals(this.customRules, qaRuleMatches.customRules);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(matches);
+    return Objects.hash(matches, customRules);
   }
 
   @Override
@@ -91,6 +128,7 @@ public class QARuleMatches {
     StringBuilder sb = new StringBuilder();
     sb.append("class QARuleMatches {\n");
     sb.append("    matches: ").append(toIndentedString(matches)).append("\n");
+    sb.append("    customRules: ").append(toIndentedString(customRules)).append("\n");
     sb.append("}");
     return sb.toString();
   }

@@ -26,12 +26,13 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
+import org.threeten.bp.OffsetDateTime;
 
 /**
  * A SourceFile is an unprocessed source file that can later be added to a project.
  */
 @ApiModel(description = "A SourceFile is an unprocessed source file that can later be added to a project.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-20T00:13:26.792Z[GMT]")
 public class SourceFile {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -44,10 +45,6 @@ public class SourceFile {
   public static final String SERIALIZED_NAME_FILE_HASH = "file_hash";
   @SerializedName(SERIALIZED_NAME_FILE_HASH)
   private String fileHash;
-
-  public static final String SERIALIZED_NAME_EXPORT_URI = "export_uri";
-  @SerializedName(SERIALIZED_NAME_EXPORT_URI)
-  private String exportUri;
 
   public static final String SERIALIZED_NAME_DETECTED_LANG = "detected_lang";
   @SerializedName(SERIALIZED_NAME_DETECTED_LANG)
@@ -67,11 +64,11 @@ public class SourceFile {
 
   public static final String SERIALIZED_NAME_CREATED_AT = "created_at";
   @SerializedName(SERIALIZED_NAME_CREATED_AT)
-  private Integer createdAt;
+  private OffsetDateTime createdAt;
 
   public static final String SERIALIZED_NAME_UPDATED_AT = "updated_at";
   @SerializedName(SERIALIZED_NAME_UPDATED_AT)
-  private Integer updatedAt;
+  private OffsetDateTime updatedAt;
 
 
   public SourceFile id(Integer id) {
@@ -140,29 +137,6 @@ public class SourceFile {
 
   public void setFileHash(String fileHash) {
     this.fileHash = fileHash;
-  }
-
-
-  public SourceFile exportUri(String exportUri) {
-    
-    this.exportUri = exportUri;
-    return this;
-  }
-
-   /**
-   * A webhook endpoint that will export the translated document back to the source repository.
-   * @return exportUri
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "https://example.com/export", value = "A webhook endpoint that will export the translated document back to the source repository.")
-
-  public String getExportUri() {
-    return exportUri;
-  }
-
-
-  public void setExportUri(String exportUri) {
-    this.exportUri = exportUri;
   }
 
 
@@ -266,48 +240,48 @@ public class SourceFile {
   }
 
 
-  public SourceFile createdAt(Integer createdAt) {
+  public SourceFile createdAt(OffsetDateTime createdAt) {
     
     this.createdAt = createdAt;
     return this;
   }
 
    /**
-   * Time at which the object was created. Measured in seconds since the Unix epoch.
+   * Time at which the object was created.
    * @return createdAt
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "1489147692", value = "Time at which the object was created. Measured in seconds since the Unix epoch.")
+  @ApiModelProperty(value = "Time at which the object was created.")
 
-  public Integer getCreatedAt() {
+  public OffsetDateTime getCreatedAt() {
     return createdAt;
   }
 
 
-  public void setCreatedAt(Integer createdAt) {
+  public void setCreatedAt(OffsetDateTime createdAt) {
     this.createdAt = createdAt;
   }
 
 
-  public SourceFile updatedAt(Integer updatedAt) {
+  public SourceFile updatedAt(OffsetDateTime updatedAt) {
     
     this.updatedAt = updatedAt;
     return this;
   }
 
    /**
-   * Time at which the object was created. Measured in seconds since the Unix epoch.
+   * Time at which the object was created.
    * @return updatedAt
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "1489147692", value = "Time at which the object was created. Measured in seconds since the Unix epoch.")
+  @ApiModelProperty(value = "Time at which the object was created.")
 
-  public Integer getUpdatedAt() {
+  public OffsetDateTime getUpdatedAt() {
     return updatedAt;
   }
 
 
-  public void setUpdatedAt(Integer updatedAt) {
+  public void setUpdatedAt(OffsetDateTime updatedAt) {
     this.updatedAt = updatedAt;
   }
 
@@ -324,7 +298,6 @@ public class SourceFile {
     return Objects.equals(this.id, sourceFile.id) &&
         Objects.equals(this.name, sourceFile.name) &&
         Objects.equals(this.fileHash, sourceFile.fileHash) &&
-        Objects.equals(this.exportUri, sourceFile.exportUri) &&
         Objects.equals(this.detectedLang, sourceFile.detectedLang) &&
         Objects.equals(this.detectedLangConfidence, sourceFile.detectedLangConfidence) &&
         Objects.equals(this.category, sourceFile.category) &&
@@ -335,7 +308,7 @@ public class SourceFile {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, fileHash, exportUri, detectedLang, detectedLangConfidence, category, labels, createdAt, updatedAt);
+    return Objects.hash(id, name, fileHash, detectedLang, detectedLangConfidence, category, labels, createdAt, updatedAt);
   }
 
   @Override
@@ -345,7 +318,6 @@ public class SourceFile {
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    fileHash: ").append(toIndentedString(fileHash)).append("\n");
-    sb.append("    exportUri: ").append(toIndentedString(exportUri)).append("\n");
     sb.append("    detectedLang: ").append(toIndentedString(detectedLang)).append("\n");
     sb.append("    detectedLangConfidence: ").append(toIndentedString(detectedLangConfidence)).append("\n");
     sb.append("    category: ").append(toIndentedString(category)).append("\n");

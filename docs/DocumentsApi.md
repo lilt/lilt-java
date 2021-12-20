@@ -7,12 +7,12 @@ Method | HTTP request | Description
 [**assignDocument**](DocumentsApi.md#assignDocument) | **PUT** /documents/share | Assign a Document
 [**createDocument**](DocumentsApi.md#createDocument) | **POST** /documents | Create a Document
 [**deleteDocument**](DocumentsApi.md#deleteDocument) | **DELETE** /documents | Delete a Document
-[**documentsDoneReviewPost**](DocumentsApi.md#documentsDoneReviewPost) | **POST** /documents/done/review | Mark review done
-[**documentsDoneTranslationPost**](DocumentsApi.md#documentsDoneTranslationPost) | **POST** /documents/done/translation | Mark translation done
-[**documentsDoneUnlockPost**](DocumentsApi.md#documentsDoneUnlockPost) | **POST** /documents/done/unlock | Unlock documents
 [**downloadDocument**](DocumentsApi.md#downloadDocument) | **GET** /documents/files | Download a Document
 [**getDocument**](DocumentsApi.md#getDocument) | **GET** /documents | Retrieve a Document
+[**markReviewDone**](DocumentsApi.md#markReviewDone) | **POST** /documents/done/review | Mark review done
+[**markTranslationDone**](DocumentsApi.md#markTranslationDone) | **POST** /documents/done/translation | Mark translation done
 [**pretranslateDocuments**](DocumentsApi.md#pretranslateDocuments) | **POST** /documents/pretranslate | Pretranslate a Document
+[**unlockDocuments**](DocumentsApi.md#unlockDocuments) | **POST** /documents/done/unlock | Unlock documents
 [**updateDocument**](DocumentsApi.md#updateDocument) | **PUT** /documents | Update a Document
 [**uploadDocument**](DocumentsApi.md#uploadDocument) | **POST** /documents/files | Upload a File
 
@@ -242,228 +242,6 @@ Name | Type | Description  | Notes
 **200** | A status object. |  -  |
 **0** | Unexpected error |  -  |
 
-<a name="documentsDoneReviewPost"></a>
-# **documentsDoneReviewPost**
-> List&lt;String&gt; documentsDoneReviewPost(body)
-
-Mark review done
-
-Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    DocumentDoneUpdateParameters1 body = new DocumentDoneUpdateParameters1(); // DocumentDoneUpdateParameters1 | 
-    try {
-      List<String> result = apiInstance.documentsDoneReviewPost(body);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#documentsDoneReviewPost");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**DocumentDoneUpdateParameters1**](DocumentDoneUpdateParameters1.md)|  |
-
-### Return type
-
-**List&lt;String&gt;**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | array of updated documents |  -  |
-
-<a name="documentsDoneTranslationPost"></a>
-# **documentsDoneTranslationPost**
-> List&lt;String&gt; documentsDoneTranslationPost(body)
-
-Mark translation done
-
-Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    DocumentDoneUpdateParameters body = new DocumentDoneUpdateParameters(); // DocumentDoneUpdateParameters | 
-    try {
-      List<String> result = apiInstance.documentsDoneTranslationPost(body);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#documentsDoneTranslationPost");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**DocumentDoneUpdateParameters**](DocumentDoneUpdateParameters.md)|  |
-
-### Return type
-
-**List&lt;String&gt;**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | array of updated documents |  -  |
-
-<a name="documentsDoneUnlockPost"></a>
-# **documentsDoneUnlockPost**
-> List&lt;String&gt; documentsDoneUnlockPost(body)
-
-Unlock documents
-
-Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    Object body = null; // Object | document ids to update
-    try {
-      List<String> result = apiInstance.documentsDoneUnlockPost(body);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#documentsDoneUnlockPost");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | **Object**| document ids to update |
-
-### Return type
-
-**List&lt;String&gt;**
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | array of updated documents |  -  |
-
 <a name="downloadDocument"></a>
 # **downloadDocument**
 > byte[] downloadDocument(id, isXliff)
@@ -619,6 +397,154 @@ Name | Type | Description  | Notes
 **200** | A Document object. |  -  |
 **0** | Unexpected error |  -  |
 
+<a name="markReviewDone"></a>
+# **markReviewDone**
+> List&lt;BigDecimal&gt; markReviewDone(body)
+
+Mark review done
+
+Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.DocumentsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
+    DocumentDoneUpdateParameters2 body = new DocumentDoneUpdateParameters2(); // DocumentDoneUpdateParameters2 | 
+    try {
+      List<BigDecimal> result = apiInstance.markReviewDone(body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DocumentsApi#markReviewDone");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**DocumentDoneUpdateParameters2**](DocumentDoneUpdateParameters2.md)|  |
+
+### Return type
+
+[**List&lt;BigDecimal&gt;**](BigDecimal.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | array of updated documents |  -  |
+
+<a name="markTranslationDone"></a>
+# **markTranslationDone**
+> List&lt;BigDecimal&gt; markTranslationDone(body)
+
+Mark translation done
+
+Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.DocumentsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
+    DocumentDoneUpdateParameters1 body = new DocumentDoneUpdateParameters1(); // DocumentDoneUpdateParameters1 | 
+    try {
+      List<BigDecimal> result = apiInstance.markTranslationDone(body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DocumentsApi#markTranslationDone");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**DocumentDoneUpdateParameters1**](DocumentDoneUpdateParameters1.md)|  |
+
+### Return type
+
+[**List&lt;BigDecimal&gt;**](BigDecimal.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | array of updated documents |  -  |
+
 <a name="pretranslateDocuments"></a>
 # **pretranslateDocuments**
 > DocumentPretranslateResponse pretranslateDocuments(body, autoAccept, caseSensitive, attributeToCreator, mode)
@@ -702,6 +628,80 @@ Name | Type | Description  | Notes
 **202** | A status object. |  -  |
 **0** | Unexpected error |  -  |
 
+<a name="unlockDocuments"></a>
+# **unlockDocuments**
+> List&lt;BigDecimal&gt; unlockDocuments(body)
+
+Unlock documents
+
+Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.DocumentsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
+    DocumentDoneUpdateParameters body = new DocumentDoneUpdateParameters(); // DocumentDoneUpdateParameters | 
+    try {
+      List<BigDecimal> result = apiInstance.unlockDocuments(body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling DocumentsApi#unlockDocuments");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**DocumentDoneUpdateParameters**](DocumentDoneUpdateParameters.md)|  |
+
+### Return type
+
+[**List&lt;BigDecimal&gt;**](BigDecimal.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | array of updated documents |  -  |
+
 <a name="updateDocument"></a>
 # **updateDocument**
 > DocumentWithSegments updateDocument(body)
@@ -779,7 +779,7 @@ Name | Type | Description  | Notes
 
 <a name="uploadDocument"></a>
 # **uploadDocument**
-> DocumentWithSegments uploadDocument(name, projectId, body, pretranslate, autoAccept, configId)
+> DocumentWithSegments uploadDocument(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId)
 
 Upload a File
 
@@ -815,11 +815,13 @@ public class Example {
     String name = "name_example"; // String | A file name.
     Integer projectId = 56; // Integer | A unique Project identifier.
     File body = new File("/path/to/file"); // File | The file contents to be uploaded. The entire POST body will be treated as the file. 
-    String pretranslate = "pretranslate_example"; // String | An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are `null`, `tm`, or `tm+mt` 
+    String pretranslate = "pretranslate_example"; // String | An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are `TM`, or `TM+MT` 
     Boolean autoAccept = true; // Boolean | An optional parameter to auto-accept segments with 100% translation memory matches when the `pretranslate` option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to `false`, no segments will be auto-accepted. 
+    Boolean caseSensitive = true; // Boolean | An optional parameter to use case sensitive translation memory matching when the `pretranslate` option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is `false` 
+    Boolean matchAttribution = true; // Boolean | An optional parameter to attribute translation authorship of exact matches to the author of the file when the `pretranslate` option is also enabled. Default value is `false` 
     Integer configId = 56; // Integer | An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. 
     try {
-      DocumentWithSegments result = apiInstance.uploadDocument(name, projectId, body, pretranslate, autoAccept, configId);
+      DocumentWithSegments result = apiInstance.uploadDocument(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling DocumentsApi#uploadDocument");
@@ -839,8 +841,10 @@ Name | Type | Description  | Notes
  **name** | **String**| A file name. |
  **projectId** | **Integer**| A unique Project identifier. |
  **body** | **File**| The file contents to be uploaded. The entire POST body will be treated as the file.  |
- **pretranslate** | **String**| An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  | [optional]
+ **pretranslate** | **String**| An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  | [optional]
  **autoAccept** | **Boolean**| An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  | [optional]
+ **caseSensitive** | **Boolean**| An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  | [optional]
+ **matchAttribution** | **Boolean**| An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  | [optional]
  **configId** | **Integer**| An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  | [optional]
 
 ### Return type

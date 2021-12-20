@@ -31,7 +31,7 @@ import java.util.List;
  * A Project is a collection of zero or more Documents. It is specific to a language pair, and is associated with exactly one Memory for that language pair. The Memory association cannot be changed after the Project is created. 
  */
 @ApiModel(description = "A Project is a collection of zero or more Documents. It is specific to a language pair, and is associated with exactly one Memory for that language pair. The Memory association cannot be changed after the Project is created. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-20T00:13:26.792Z[GMT]")
 public class Project {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -40,6 +40,10 @@ public class Project {
   public static final String SERIALIZED_NAME_MEMORY_ID = "memory_id";
   @SerializedName(SERIALIZED_NAME_MEMORY_ID)
   private Integer memoryId;
+
+  public static final String SERIALIZED_NAME_JOB_ID = "job_id";
+  @SerializedName(SERIALIZED_NAME_JOB_ID)
+  private Integer jobId;
 
   public static final String SERIALIZED_NAME_SRCLANG = "srclang";
   @SerializedName(SERIALIZED_NAME_SRCLANG)
@@ -137,6 +141,29 @@ public class Project {
 
   public void setMemoryId(Integer memoryId) {
     this.memoryId = memoryId;
+  }
+
+
+  public Project jobId(Integer jobId) {
+    
+    this.jobId = jobId;
+    return this;
+  }
+
+   /**
+   * A unique number identifying the associated Job.
+   * @return jobId
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "1234", value = "A unique number identifying the associated Job.")
+
+  public Integer getJobId() {
+    return jobId;
+  }
+
+
+  public void setJobId(Integer jobId) {
+    this.jobId = jobId;
   }
 
 
@@ -458,6 +485,7 @@ public class Project {
     Project project = (Project) o;
     return Objects.equals(this.id, project.id) &&
         Objects.equals(this.memoryId, project.memoryId) &&
+        Objects.equals(this.jobId, project.jobId) &&
         Objects.equals(this.srclang, project.srclang) &&
         Objects.equals(this.trglang, project.trglang) &&
         Objects.equals(this.srclocale, project.srclocale) &&
@@ -475,7 +503,7 @@ public class Project {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, memoryId, srclang, trglang, srclocale, trglocale, name, state, dueDate, archived, metadata, sampleReviewPercentage, createdAt, updatedAt, document);
+    return Objects.hash(id, memoryId, jobId, srclang, trglang, srclocale, trglocale, name, state, dueDate, archived, metadata, sampleReviewPercentage, createdAt, updatedAt, document);
   }
 
   @Override
@@ -484,6 +512,7 @@ public class Project {
     sb.append("class Project {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    memoryId: ").append(toIndentedString(memoryId)).append("\n");
+    sb.append("    jobId: ").append(toIndentedString(jobId)).append("\n");
     sb.append("    srclang: ").append(toIndentedString(srclang)).append("\n");
     sb.append("    trglang: ").append(toIndentedString(trglang)).append("\n");
     sb.append("    srclocale: ").append(toIndentedString(srclocale)).append("\n");

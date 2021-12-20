@@ -7,6 +7,7 @@ Method | HTTP request | Description
 [**createProject**](ProjectsApi.md#createProject) | **POST** /projects | Create a Project
 [**deleteProject**](ProjectsApi.md#deleteProject) | **DELETE** /projects | Delete a Project
 [**getProjectReport**](ProjectsApi.md#getProjectReport) | **GET** /projects/quote | Retrieve Project report
+[**getProjectRevisionReport**](ProjectsApi.md#getProjectRevisionReport) | **GET** /projects/{id}/revision | Retrieve Project revision report
 [**getProjectStatus**](ProjectsApi.md#getProjectStatus) | **GET** /projects/status | Retrieve Project status
 [**getProjects**](ProjectsApi.md#getProjects) | **GET** /projects | Retrieve a Project
 [**updateProject**](ProjectsApi.md#updateProject) | **PUT** /projects | Update a Project
@@ -235,6 +236,80 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | An object that represents a Project quote. |  -  |
+**0** | Unexpected error |  -  |
+
+<a name="getProjectRevisionReport"></a>
+# **getProjectRevisionReport**
+> getProjectRevisionReport(id)
+
+Retrieve Project revision report
+
+Get information about a project&#39;s revision report. This includes: * Stats on accepted segments * reviewer details * Error rate  
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.ProjectsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    ProjectsApi apiInstance = new ProjectsApi(defaultClient);
+    Integer id = 56; // Integer | A unique Project identifier.
+    try {
+      apiInstance.getProjectRevisionReport(id);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ProjectsApi#getProjectRevisionReport");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **id** | **Integer**| A unique Project identifier. |
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: Not defined
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A csv file containing revision report. |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="getProjectStatus"></a>

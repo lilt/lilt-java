@@ -27,6 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import com.lilt.client.model.AddFileLabelRequest;
 import com.lilt.client.model.Error;
 import java.io.File;
 import com.lilt.client.model.FileDeleteResponse;
@@ -57,6 +58,126 @@ public class FilesApi {
         this.localVarApiClient = apiClient;
     }
 
+    /**
+     * Build call for addLabel
+     * @param id A File id. (required)
+     * @param name  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 204 </td><td> A success response. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call addLabelCall(String id, AddFileLabelRequest name, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = name;
+
+        // create path and map variables
+        String localVarPath = "/files/labels";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (id != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
+        }
+
+        final String[] localVarAccepts = {
+            
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call addLabelValidateBeforeCall(String id, AddFileLabelRequest name, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'id' is set
+        if (id == null) {
+            throw new ApiException("Missing the required parameter 'id' when calling addLabel(Async)");
+        }
+        
+        // verify the required parameter 'name' is set
+        if (name == null) {
+            throw new ApiException("Missing the required parameter 'name' when calling addLabel(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = addLabelCall(id, name, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Add Label to File
+     * Add a label to a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/files/labels?key&#x3D;API_KEY&amp;id&#x3D;1&#39; --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;name\&quot;: \&quot;label_name\&quot; }&#39; &#x60;&#x60;&#x60; 
+     * @param id A File id. (required)
+     * @param name  (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 204 </td><td> A success response. </td><td>  -  </td></tr>
+     </table>
+     */
+    public void addLabel(String id, AddFileLabelRequest name) throws ApiException {
+        addLabelWithHttpInfo(id, name);
+    }
+
+    /**
+     * Add Label to File
+     * Add a label to a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/files/labels?key&#x3D;API_KEY&amp;id&#x3D;1&#39; --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;name\&quot;: \&quot;label_name\&quot; }&#39; &#x60;&#x60;&#x60; 
+     * @param id A File id. (required)
+     * @param name  (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 204 </td><td> A success response. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<Void> addLabelWithHttpInfo(String id, AddFileLabelRequest name) throws ApiException {
+        okhttp3.Call localVarCall = addLabelValidateBeforeCall(id, name, null);
+        return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * Add Label to File (asynchronously)
+     * Add a label to a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://lilt.com/2/files/labels?key&#x3D;API_KEY&amp;id&#x3D;1&#39; --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;name\&quot;: \&quot;label_name\&quot; }&#39; &#x60;&#x60;&#x60; 
+     * @param id A File id. (required)
+     * @param name  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 204 </td><td> A success response. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call addLabelAsync(String id, AddFileLabelRequest name, final ApiCallback<Void> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = addLabelValidateBeforeCall(id, name, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
+        return localVarCall;
+    }
     /**
      * Build call for deleteFile
      * @param id A unique File identifier. (required)
@@ -177,8 +298,124 @@ public class FilesApi {
         return localVarCall;
     }
     /**
+     * Build call for download
+     * @param id A File id. (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A file. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call downloadCall(String id, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/files/download";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (id != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
+        }
+
+        final String[] localVarAccepts = {
+            "application/octet-stream"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call downloadValidateBeforeCall(String id, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'id' is set
+        if (id == null) {
+            throw new ApiException("Missing the required parameter 'id' when calling download(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = downloadCall(id, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Download file
+     * Download a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/files/download?key&#x3D;API_KEY&amp;id&#x3D;1&#39; &#x60;&#x60;&#x60; 
+     * @param id A File id. (required)
+     * @return byte[]
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A file. </td><td>  -  </td></tr>
+     </table>
+     */
+    public byte[] download(String id) throws ApiException {
+        ApiResponse<byte[]> localVarResp = downloadWithHttpInfo(id);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Download file
+     * Download a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/files/download?key&#x3D;API_KEY&amp;id&#x3D;1&#39; &#x60;&#x60;&#x60; 
+     * @param id A File id. (required)
+     * @return ApiResponse&lt;byte[]&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A file. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<byte[]> downloadWithHttpInfo(String id) throws ApiException {
+        okhttp3.Call localVarCall = downloadValidateBeforeCall(id, null);
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Download file (asynchronously)
+     * Download a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://lilt.com/2/files/download?key&#x3D;API_KEY&amp;id&#x3D;1&#39; &#x60;&#x60;&#x60; 
+     * @param id A File id. (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A file. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call downloadAsync(String id, final ApiCallback<byte[]> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = downloadValidateBeforeCall(id, _callback);
+        Type localVarReturnType = new TypeToken<byte[]>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for getFiles
      * @param id A unique File identifier. (optional)
+     * @param labels One or more labels. This will return the files which contain all of the given labels.  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -191,7 +428,7 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getFilesCall(Integer id, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getFilesCall(Integer id, List<String> labels, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -205,6 +442,10 @@ public class FilesApi {
 
         if (id != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
+        }
+
+        if (labels != null) {
+            localVarCollectionQueryParams.addAll(localVarApiClient.parameterToPairs("csv", "labels", labels));
         }
 
         final String[] localVarAccepts = {
@@ -226,10 +467,10 @@ public class FilesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getFilesValidateBeforeCall(Integer id, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getFilesValidateBeforeCall(Integer id, List<String> labels, final ApiCallback _callback) throws ApiException {
         
 
-        okhttp3.Call localVarCall = getFilesCall(id, _callback);
+        okhttp3.Call localVarCall = getFilesCall(id, labels, _callback);
         return localVarCall;
 
     }
@@ -238,6 +479,7 @@ public class FilesApi {
      * Retrieve a File
      * Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.  To retrieve a specific file, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all files, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/files?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
      * @param id A unique File identifier. (optional)
+     * @param labels One or more labels. This will return the files which contain all of the given labels.  (optional)
      * @return List&lt;SourceFile&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -249,8 +491,8 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public List<SourceFile> getFiles(Integer id) throws ApiException {
-        ApiResponse<List<SourceFile>> localVarResp = getFilesWithHttpInfo(id);
+    public List<SourceFile> getFiles(Integer id, List<String> labels) throws ApiException {
+        ApiResponse<List<SourceFile>> localVarResp = getFilesWithHttpInfo(id, labels);
         return localVarResp.getData();
     }
 
@@ -258,6 +500,7 @@ public class FilesApi {
      * Retrieve a File
      * Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.  To retrieve a specific file, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all files, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/files?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
      * @param id A unique File identifier. (optional)
+     * @param labels One or more labels. This will return the files which contain all of the given labels.  (optional)
      * @return ApiResponse&lt;List&lt;SourceFile&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -269,8 +512,8 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<SourceFile>> getFilesWithHttpInfo(Integer id) throws ApiException {
-        okhttp3.Call localVarCall = getFilesValidateBeforeCall(id, null);
+    public ApiResponse<List<SourceFile>> getFilesWithHttpInfo(Integer id, List<String> labels) throws ApiException {
+        okhttp3.Call localVarCall = getFilesValidateBeforeCall(id, labels, null);
         Type localVarReturnType = new TypeToken<List<SourceFile>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -279,6 +522,7 @@ public class FilesApi {
      * Retrieve a File (asynchronously)
      * Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.  To retrieve a specific file, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all files, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://lilt.com/2/files?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
      * @param id A unique File identifier. (optional)
+     * @param labels One or more labels. This will return the files which contain all of the given labels.  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -291,18 +535,141 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getFilesAsync(Integer id, final ApiCallback<List<SourceFile>> _callback) throws ApiException {
+    public okhttp3.Call getFilesAsync(Integer id, List<String> labels, final ApiCallback<List<SourceFile>> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getFilesValidateBeforeCall(id, _callback);
+        okhttp3.Call localVarCall = getFilesValidateBeforeCall(id, labels, _callback);
         Type localVarReturnType = new TypeToken<List<SourceFile>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for removeLabel
+     * @param id A File id. (required)
+     * @param name A label name. (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 204 </td><td> A success response. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call removeLabelCall(String id, String name, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = null;
+
+        // create path and map variables
+        String localVarPath = "/files/labels";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (id != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("id", id));
+        }
+
+        if (name != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("name", name));
+        }
+
+        final String[] localVarAccepts = {
+            
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "DELETE", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call removeLabelValidateBeforeCall(String id, String name, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'id' is set
+        if (id == null) {
+            throw new ApiException("Missing the required parameter 'id' when calling removeLabel(Async)");
+        }
+        
+        // verify the required parameter 'name' is set
+        if (name == null) {
+            throw new ApiException("Missing the required parameter 'name' when calling removeLabel(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = removeLabelCall(id, name, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Remove Label from File
+     * Remove a label from a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request DELETE &#39;https://lilt.com/2/files/labels?key&#x3D;API_KEY&amp;id&#x3D;1&amp;name&#x3D;label_name&#39; &#x60;&#x60;&#x60; 
+     * @param id A File id. (required)
+     * @param name A label name. (required)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 204 </td><td> A success response. </td><td>  -  </td></tr>
+     </table>
+     */
+    public void removeLabel(String id, String name) throws ApiException {
+        removeLabelWithHttpInfo(id, name);
+    }
+
+    /**
+     * Remove Label from File
+     * Remove a label from a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request DELETE &#39;https://lilt.com/2/files/labels?key&#x3D;API_KEY&amp;id&#x3D;1&amp;name&#x3D;label_name&#39; &#x60;&#x60;&#x60; 
+     * @param id A File id. (required)
+     * @param name A label name. (required)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 204 </td><td> A success response. </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<Void> removeLabelWithHttpInfo(String id, String name) throws ApiException {
+        okhttp3.Call localVarCall = removeLabelValidateBeforeCall(id, name, null);
+        return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * Remove Label from File (asynchronously)
+     * Remove a label from a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request DELETE &#39;https://lilt.com/2/files/labels?key&#x3D;API_KEY&amp;id&#x3D;1&amp;name&#x3D;label_name&#39; &#x60;&#x60;&#x60; 
+     * @param id A File id. (required)
+     * @param name A label name. (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 204 </td><td> A success response. </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call removeLabelAsync(String id, String name, final ApiCallback<Void> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = removeLabelValidateBeforeCall(id, name, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
      * Build call for uploadFile
      * @param name A file name. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
-     * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @param projectId The project to associate the uploaded file with. (optional)
@@ -318,7 +685,7 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadFileCall(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call uploadFileCall(String name, File body, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -332,10 +699,6 @@ public class FilesApi {
 
         if (name != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("name", name));
-        }
-
-        if (exportUri != null) {
-            localVarQueryParams.addAll(localVarApiClient.parameterToPair("export_uri", exportUri));
         }
 
         if (fileHash != null) {
@@ -377,7 +740,7 @@ public class FilesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call uploadFileValidateBeforeCall(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call uploadFileValidateBeforeCall(String name, File body, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
@@ -390,17 +753,16 @@ public class FilesApi {
         }
         
 
-        okhttp3.Call localVarCall = uploadFileCall(name, body, exportUri, fileHash, langId, projectId, category, labels, _callback);
+        okhttp3.Call localVarCall = uploadFileCall(name, body, fileHash, langId, projectId, category, labels, _callback);
         return localVarCall;
 
     }
 
     /**
      * Upload a File
-     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  When uploading a file, any parameters needed to issue a request to the specified export_uri can be encoded in the export_uri itself as query parameters. Typical examples of parameters that may be required are an access token to authorize requests to a third-party HTTP API and the unique identifier of a resource available via the third-party HTTP API that corresponds to the file. An example export_uri that encodes a target resource identifier (i.e., source_id) of an associated resource behind a third party HTTP API is given in the CURL command below.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json&amp;export_uri&#x3D;https://example.com/export?source_id&#x3D;12345 \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
+     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
      * @param name A file name. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
-     * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @param projectId The project to associate the uploaded file with. (optional)
@@ -415,17 +777,16 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public SourceFile uploadFile(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
-        ApiResponse<SourceFile> localVarResp = uploadFileWithHttpInfo(name, body, exportUri, fileHash, langId, projectId, category, labels);
+    public SourceFile uploadFile(String name, File body, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
+        ApiResponse<SourceFile> localVarResp = uploadFileWithHttpInfo(name, body, fileHash, langId, projectId, category, labels);
         return localVarResp.getData();
     }
 
     /**
      * Upload a File
-     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  When uploading a file, any parameters needed to issue a request to the specified export_uri can be encoded in the export_uri itself as query parameters. Typical examples of parameters that may be required are an access token to authorize requests to a third-party HTTP API and the unique identifier of a resource available via the third-party HTTP API that corresponds to the file. An example export_uri that encodes a target resource identifier (i.e., source_id) of an associated resource behind a third party HTTP API is given in the CURL command below.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json&amp;export_uri&#x3D;https://example.com/export?source_id&#x3D;12345 \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
+     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
      * @param name A file name. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
-     * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @param projectId The project to associate the uploaded file with. (optional)
@@ -440,18 +801,17 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<SourceFile> uploadFileWithHttpInfo(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
-        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, projectId, category, labels, null);
+    public ApiResponse<SourceFile> uploadFileWithHttpInfo(String name, File body, String fileHash, Boolean langId, Integer projectId, String category, String labels) throws ApiException {
+        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, fileHash, langId, projectId, category, labels, null);
         Type localVarReturnType = new TypeToken<SourceFile>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Upload a File (asynchronously)
-     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  When uploading a file, any parameters needed to issue a request to the specified export_uri can be encoded in the export_uri itself as query parameters. Typical examples of parameters that may be required are an access token to authorize requests to a third-party HTTP API and the unique identifier of a resource available via the third-party HTTP API that corresponds to the file. An example export_uri that encodes a target resource identifier (i.e., source_id) of an associated resource behind a third party HTTP API is given in the CURL command below.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json&amp;export_uri&#x3D;https://example.com/export?source_id&#x3D;12345 \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
+     * Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
      * @param name A file name. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
-     * @param exportUri A webhook endpoint that will export the translated document back to the source repository. (optional)
      * @param fileHash A hash value to associate with the file. The MD5 hash of the body contents will be used by default if a value isn&#39;t provided. (optional)
      * @param langId Flag indicating whether to perform language detection on the uploaded file. Default is false. (optional)
      * @param projectId The project to associate the uploaded file with. (optional)
@@ -467,9 +827,9 @@ public class FilesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadFileAsync(String name, File body, String exportUri, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback<SourceFile> _callback) throws ApiException {
+    public okhttp3.Call uploadFileAsync(String name, File body, String fileHash, Boolean langId, Integer projectId, String category, String labels, final ApiCallback<SourceFile> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, exportUri, fileHash, langId, projectId, category, labels, _callback);
+        okhttp3.Call localVarCall = uploadFileValidateBeforeCall(name, body, fileHash, langId, projectId, category, labels, _callback);
         Type localVarReturnType = new TypeToken<SourceFile>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

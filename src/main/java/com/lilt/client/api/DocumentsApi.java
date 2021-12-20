@@ -27,11 +27,13 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import java.math.BigDecimal;
 import com.lilt.client.model.DocumentAssignmentParameters;
 import com.lilt.client.model.DocumentAssignmentResponse;
 import com.lilt.client.model.DocumentDeleteResponse;
 import com.lilt.client.model.DocumentDoneUpdateParameters;
 import com.lilt.client.model.DocumentDoneUpdateParameters1;
+import com.lilt.client.model.DocumentDoneUpdateParameters2;
 import com.lilt.client.model.DocumentParameters;
 import com.lilt.client.model.DocumentPretranslateParameters;
 import com.lilt.client.model.DocumentPretranslateResponse;
@@ -410,339 +412,6 @@ public class DocumentsApi {
         return localVarCall;
     }
     /**
-     * Build call for documentsDoneReviewPost
-     * @param body  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call documentsDoneReviewPostCall(DocumentDoneUpdateParameters1 body, final ApiCallback _callback) throws ApiException {
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/documents/done/review";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
-        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call documentsDoneReviewPostValidateBeforeCall(DocumentDoneUpdateParameters1 body, final ApiCallback _callback) throws ApiException {
-        
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling documentsDoneReviewPost(Async)");
-        }
-        
-
-        okhttp3.Call localVarCall = documentsDoneReviewPostCall(body, _callback);
-        return localVarCall;
-
-    }
-
-    /**
-     * Mark review done
-     * Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
-     * @param body  (required)
-     * @return List&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public List<String> documentsDoneReviewPost(DocumentDoneUpdateParameters1 body) throws ApiException {
-        ApiResponse<List<String>> localVarResp = documentsDoneReviewPostWithHttpInfo(body);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Mark review done
-     * Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
-     * @param body  (required)
-     * @return ApiResponse&lt;List&lt;String&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<List<String>> documentsDoneReviewPostWithHttpInfo(DocumentDoneUpdateParameters1 body) throws ApiException {
-        okhttp3.Call localVarCall = documentsDoneReviewPostValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Mark review done (asynchronously)
-     * Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
-     * @param body  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call documentsDoneReviewPostAsync(DocumentDoneUpdateParameters1 body, final ApiCallback<List<String>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = documentsDoneReviewPostValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for documentsDoneTranslationPost
-     * @param body  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call documentsDoneTranslationPostCall(DocumentDoneUpdateParameters body, final ApiCallback _callback) throws ApiException {
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/documents/done/translation";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
-        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call documentsDoneTranslationPostValidateBeforeCall(DocumentDoneUpdateParameters body, final ApiCallback _callback) throws ApiException {
-        
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling documentsDoneTranslationPost(Async)");
-        }
-        
-
-        okhttp3.Call localVarCall = documentsDoneTranslationPostCall(body, _callback);
-        return localVarCall;
-
-    }
-
-    /**
-     * Mark translation done
-     * Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
-     * @param body  (required)
-     * @return List&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public List<String> documentsDoneTranslationPost(DocumentDoneUpdateParameters body) throws ApiException {
-        ApiResponse<List<String>> localVarResp = documentsDoneTranslationPostWithHttpInfo(body);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Mark translation done
-     * Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
-     * @param body  (required)
-     * @return ApiResponse&lt;List&lt;String&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<List<String>> documentsDoneTranslationPostWithHttpInfo(DocumentDoneUpdateParameters body) throws ApiException {
-        okhttp3.Call localVarCall = documentsDoneTranslationPostValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Mark translation done (asynchronously)
-     * Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
-     * @param body  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call documentsDoneTranslationPostAsync(DocumentDoneUpdateParameters body, final ApiCallback<List<String>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = documentsDoneTranslationPostValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
-     * Build call for documentsDoneUnlockPost
-     * @param body document ids to update (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call documentsDoneUnlockPostCall(Object body, final ApiCallback _callback) throws ApiException {
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/documents/done/unlock";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
-        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call documentsDoneUnlockPostValidateBeforeCall(Object body, final ApiCallback _callback) throws ApiException {
-        
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling documentsDoneUnlockPost(Async)");
-        }
-        
-
-        okhttp3.Call localVarCall = documentsDoneUnlockPostCall(body, _callback);
-        return localVarCall;
-
-    }
-
-    /**
-     * Unlock documents
-     * Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
-     * @param body document ids to update (required)
-     * @return List&lt;String&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public List<String> documentsDoneUnlockPost(Object body) throws ApiException {
-        ApiResponse<List<String>> localVarResp = documentsDoneUnlockPostWithHttpInfo(body);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Unlock documents
-     * Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
-     * @param body document ids to update (required)
-     * @return ApiResponse&lt;List&lt;String&gt;&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<List<String>> documentsDoneUnlockPostWithHttpInfo(Object body) throws ApiException {
-        okhttp3.Call localVarCall = documentsDoneUnlockPostValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Unlock documents (asynchronously)
-     * Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
-     * @param body document ids to update (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call documentsDoneUnlockPostAsync(Object body, final ApiCallback<List<String>> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = documentsDoneUnlockPostValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<List<String>>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
      * Build call for downloadDocument
      * @param id An unique Document identifier. (required)
      * @param isXliff Download the document in XLIFF 1.2 format. (optional, default to true)
@@ -1001,6 +670,228 @@ public class DocumentsApi {
         return localVarCall;
     }
     /**
+     * Build call for markReviewDone
+     * @param body  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call markReviewDoneCall(DocumentDoneUpdateParameters2 body, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/documents/done/review";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call markReviewDoneValidateBeforeCall(DocumentDoneUpdateParameters2 body, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling markReviewDone(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = markReviewDoneCall(body, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Mark review done
+     * Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return List&lt;BigDecimal&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<BigDecimal> markReviewDone(DocumentDoneUpdateParameters2 body) throws ApiException {
+        ApiResponse<List<BigDecimal>> localVarResp = markReviewDoneWithHttpInfo(body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Mark review done
+     * Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return ApiResponse&lt;List&lt;BigDecimal&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<BigDecimal>> markReviewDoneWithHttpInfo(DocumentDoneUpdateParameters2 body) throws ApiException {
+        okhttp3.Call localVarCall = markReviewDoneValidateBeforeCall(body, null);
+        Type localVarReturnType = new TypeToken<List<BigDecimal>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Mark review done (asynchronously)
+     * Mark the review of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done for review. - Documents must already be marked as done for translation. - This request will also trigger an email notification.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/review?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call markReviewDoneAsync(DocumentDoneUpdateParameters2 body, final ApiCallback<List<BigDecimal>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = markReviewDoneValidateBeforeCall(body, _callback);
+        Type localVarReturnType = new TypeToken<List<BigDecimal>>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for markTranslationDone
+     * @param body  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call markTranslationDoneCall(DocumentDoneUpdateParameters1 body, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/documents/done/translation";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call markTranslationDoneValidateBeforeCall(DocumentDoneUpdateParameters1 body, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling markTranslationDone(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = markTranslationDoneCall(body, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Mark translation done
+     * Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return List&lt;BigDecimal&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<BigDecimal> markTranslationDone(DocumentDoneUpdateParameters1 body) throws ApiException {
+        ApiResponse<List<BigDecimal>> localVarResp = markTranslationDoneWithHttpInfo(body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Mark translation done
+     * Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return ApiResponse&lt;List&lt;BigDecimal&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<BigDecimal>> markTranslationDoneWithHttpInfo(DocumentDoneUpdateParameters1 body) throws ApiException {
+        okhttp3.Call localVarCall = markTranslationDoneValidateBeforeCall(body, null);
+        Type localVarReturnType = new TypeToken<List<BigDecimal>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Mark translation done (asynchronously)
+     * Mark the translation of documents as done/undone in bulk.  When being marked positively as done:  - Documents must not already be marked as done and all segments must be confirmed. - This request will also trigger an email notification to a document&#39;s assigned reviewer that the document is ready for review.  When being marked as un-done: - Documents must not be marked as complete for review.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/translation?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922],       \&quot;isDone\&quot;: true   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call markTranslationDoneAsync(DocumentDoneUpdateParameters1 body, final ApiCallback<List<BigDecimal>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = markTranslationDoneValidateBeforeCall(body, _callback);
+        Type localVarReturnType = new TypeToken<List<BigDecimal>>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for pretranslateDocuments
      * @param body  (required)
      * @param autoAccept Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits. (optional)
@@ -1148,6 +1039,117 @@ public class DocumentsApi {
         return localVarCall;
     }
     /**
+     * Build call for unlockDocuments
+     * @param body  (required)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call unlockDocumentsCall(DocumentDoneUpdateParameters body, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/documents/done/unlock";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call unlockDocumentsValidateBeforeCall(DocumentDoneUpdateParameters body, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling unlockDocuments(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = unlockDocumentsCall(body, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Unlock documents
+     * Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return List&lt;BigDecimal&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<BigDecimal> unlockDocuments(DocumentDoneUpdateParameters body) throws ApiException {
+        ApiResponse<List<BigDecimal>> localVarResp = unlockDocumentsWithHttpInfo(body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Unlock documents
+     * Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @return ApiResponse&lt;List&lt;BigDecimal&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<BigDecimal>> unlockDocumentsWithHttpInfo(DocumentDoneUpdateParameters body) throws ApiException {
+        okhttp3.Call localVarCall = unlockDocumentsValidateBeforeCall(body, null);
+        Type localVarReturnType = new TypeToken<List<BigDecimal>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Unlock documents (asynchronously)
+     * Unlock documents for translation. Sets document \&quot;Translation Done\&quot; and \&quot;Review Done\&quot; to false.  Example curl: &#x60;&#x60;&#x60;   curl --X --request POST &#39;https://lilt.com/2/documents/done/unlock?key&#x3D;API_KEY&#39; \\   --header &#39;Content-Type: application/json&#39; \\   --data-raw &#39;{       \&quot;documentIds\&quot;: [23921, 23922]   }&#39; &#x60;&#x60;&#x60; 
+     * @param body  (required)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call unlockDocumentsAsync(DocumentDoneUpdateParameters body, final ApiCallback<List<BigDecimal>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = unlockDocumentsValidateBeforeCall(body, _callback);
+        Type localVarReturnType = new TypeToken<List<BigDecimal>>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
      * Build call for updateDocument
      * @param body  (required)
      * @param _callback Callback for upload/download progress
@@ -1267,8 +1269,10 @@ public class DocumentsApi {
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
-     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
+     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -1280,7 +1284,7 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentCall(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentCall(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Boolean caseSensitive, Boolean matchAttribution, Integer configId, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -1308,6 +1312,14 @@ public class DocumentsApi {
             localVarHeaderParams.put("auto_accept", localVarApiClient.parameterToString(autoAccept));
         }
 
+        if (caseSensitive != null) {
+            localVarHeaderParams.put("case_sensitive", localVarApiClient.parameterToString(caseSensitive));
+        }
+
+        if (matchAttribution != null) {
+            localVarHeaderParams.put("match_attribution", localVarApiClient.parameterToString(matchAttribution));
+        }
+
         if (configId != null) {
             localVarHeaderParams.put("config_id", localVarApiClient.parameterToString(configId));
         }
@@ -1331,7 +1343,7 @@ public class DocumentsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call uploadDocumentValidateBeforeCall(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call uploadDocumentValidateBeforeCall(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Boolean caseSensitive, Boolean matchAttribution, Integer configId, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'name' is set
         if (name == null) {
@@ -1349,7 +1361,7 @@ public class DocumentsApi {
         }
         
 
-        okhttp3.Call localVarCall = uploadDocumentCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
+        okhttp3.Call localVarCall = uploadDocumentCall(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId, _callback);
         return localVarCall;
 
     }
@@ -1360,8 +1372,10 @@ public class DocumentsApi {
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
-     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
+     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @return DocumentWithSegments
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1372,8 +1386,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public DocumentWithSegments uploadDocument(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
-        ApiResponse<DocumentWithSegments> localVarResp = uploadDocumentWithHttpInfo(name, projectId, body, pretranslate, autoAccept, configId);
+    public DocumentWithSegments uploadDocument(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Boolean caseSensitive, Boolean matchAttribution, Integer configId) throws ApiException {
+        ApiResponse<DocumentWithSegments> localVarResp = uploadDocumentWithHttpInfo(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId);
         return localVarResp.getData();
     }
 
@@ -1383,8 +1397,10 @@ public class DocumentsApi {
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
-     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
+     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @return ApiResponse&lt;DocumentWithSegments&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1395,8 +1411,8 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<DocumentWithSegments> uploadDocumentWithHttpInfo(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId) throws ApiException {
-        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, null);
+    public ApiResponse<DocumentWithSegments> uploadDocumentWithHttpInfo(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Boolean caseSensitive, Boolean matchAttribution, Integer configId) throws ApiException {
+        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId, null);
         Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -1407,8 +1423,10 @@ public class DocumentsApi {
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
-     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded.  The accepted values are &#x60;null&#x60;, &#x60;tm&#x60;, or &#x60;tm+mt&#x60;  (optional)
+     * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
      * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -1420,9 +1438,9 @@ public class DocumentsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call uploadDocumentAsync(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Integer configId, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
+    public okhttp3.Call uploadDocumentAsync(String name, Integer projectId, File body, String pretranslate, Boolean autoAccept, Boolean caseSensitive, Boolean matchAttribution, Integer configId, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, configId, _callback);
+        okhttp3.Call localVarCall = uploadDocumentValidateBeforeCall(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId, _callback);
         Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

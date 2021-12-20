@@ -9,6 +9,7 @@ Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
 **id** | **Integer** | A unique number identifying the Project. |  [optional]
 **memoryId** | **Integer** | A unique number identifying the associated Memory. |  [optional]
+**jobId** | **Integer** | A unique number identifying the associated Job. |  [optional]
 **srclang** | **String** | An ISO 639-1 language identifier. |  [optional]
 **trglang** | **String** | An ISO 639-1 language identifier. |  [optional]
 **srclocale** | **String** | A locale identifier, supported for srclang. |  [optional]

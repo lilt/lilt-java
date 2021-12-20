@@ -123,7 +123,7 @@ public class MemoriesApi {
 
     /**
      * Create a Memory
-     * Create a new Memory. A Memory is a container that collects source/target sentences for a specific language pair (e.g., English&gt;French). The data in the Memory is used to train the MT system, populate the TM, and update the lexicon. Memories are private to your account - the data is not shared across users - unless you explicitly share a Memory with your team (via web app only).  &lt;a href&#x3D;\&quot;https://lilt.com/kb/memory/memories\&quot; target&#x3D;_blank&gt;Refer to our KB&lt;/a&gt; for a more detailed description.  
+     * Create a new Memory. A Memory is a container that collects source/target sentences for a specific language pair (e.g., English&gt;French). The data in the Memory is used to train the MT system, populate the TM, and update the lexicon. Memories are private to your account - the data is not shared across users - unless you explicitly share a Memory with your team (via web app only).  &lt;a href&#x3D;\&quot;https://support.lilt.com/hc/en-us/sections/360012579193-Lilt-Translate-Engine\&quot; target&#x3D;_blank&gt;Refer to our KB&lt;/a&gt; for a more detailed description.  
      * @param body  (required)
      * @return Memory
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -141,7 +141,7 @@ public class MemoriesApi {
 
     /**
      * Create a Memory
-     * Create a new Memory. A Memory is a container that collects source/target sentences for a specific language pair (e.g., English&gt;French). The data in the Memory is used to train the MT system, populate the TM, and update the lexicon. Memories are private to your account - the data is not shared across users - unless you explicitly share a Memory with your team (via web app only).  &lt;a href&#x3D;\&quot;https://lilt.com/kb/memory/memories\&quot; target&#x3D;_blank&gt;Refer to our KB&lt;/a&gt; for a more detailed description.  
+     * Create a new Memory. A Memory is a container that collects source/target sentences for a specific language pair (e.g., English&gt;French). The data in the Memory is used to train the MT system, populate the TM, and update the lexicon. Memories are private to your account - the data is not shared across users - unless you explicitly share a Memory with your team (via web app only).  &lt;a href&#x3D;\&quot;https://support.lilt.com/hc/en-us/sections/360012579193-Lilt-Translate-Engine\&quot; target&#x3D;_blank&gt;Refer to our KB&lt;/a&gt; for a more detailed description.  
      * @param body  (required)
      * @return ApiResponse&lt;Memory&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -160,7 +160,7 @@ public class MemoriesApi {
 
     /**
      * Create a Memory (asynchronously)
-     * Create a new Memory. A Memory is a container that collects source/target sentences for a specific language pair (e.g., English&gt;French). The data in the Memory is used to train the MT system, populate the TM, and update the lexicon. Memories are private to your account - the data is not shared across users - unless you explicitly share a Memory with your team (via web app only).  &lt;a href&#x3D;\&quot;https://lilt.com/kb/memory/memories\&quot; target&#x3D;_blank&gt;Refer to our KB&lt;/a&gt; for a more detailed description.  
+     * Create a new Memory. A Memory is a container that collects source/target sentences for a specific language pair (e.g., English&gt;French). The data in the Memory is used to train the MT system, populate the TM, and update the lexicon. Memories are private to your account - the data is not shared across users - unless you explicitly share a Memory with your team (via web app only).  &lt;a href&#x3D;\&quot;https://support.lilt.com/hc/en-us/sections/360012579193-Lilt-Translate-Engine\&quot; target&#x3D;_blank&gt;Refer to our KB&lt;/a&gt; for a more detailed description.  
      * @param body  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -417,6 +417,7 @@ public class MemoriesApi {
      * @param memoryId A unique Memory identifier. (required)
      * @param name Name of the TM or termbase file. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
+     * @param hasHeaderRow A flag indicating whether an imported Termbase CSV has a header row or not (the default value is &#x60;false&#x60;). (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -427,7 +428,7 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call importMemoryFileCall(Integer memoryId, String name, File body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call importMemoryFileCall(Integer memoryId, String name, File body, Boolean hasHeaderRow, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -445,6 +446,10 @@ public class MemoriesApi {
 
         if (name != null) {
             localVarHeaderParams.put("name", localVarApiClient.parameterToString(name));
+        }
+
+        if (hasHeaderRow != null) {
+            localVarHeaderParams.put("has_header_row", localVarApiClient.parameterToString(hasHeaderRow));
         }
 
         final String[] localVarAccepts = {
@@ -466,7 +471,7 @@ public class MemoriesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call importMemoryFileValidateBeforeCall(Integer memoryId, String name, File body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call importMemoryFileValidateBeforeCall(Integer memoryId, String name, File body, Boolean hasHeaderRow, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'memoryId' is set
         if (memoryId == null) {
@@ -484,7 +489,7 @@ public class MemoriesApi {
         }
         
 
-        okhttp3.Call localVarCall = importMemoryFileCall(memoryId, name, body, _callback);
+        okhttp3.Call localVarCall = importMemoryFileCall(memoryId, name, body, hasHeaderRow, _callback);
         return localVarCall;
 
     }
@@ -495,6 +500,7 @@ public class MemoriesApi {
      * @param memoryId A unique Memory identifier. (required)
      * @param name Name of the TM or termbase file. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
+     * @param hasHeaderRow A flag indicating whether an imported Termbase CSV has a header row or not (the default value is &#x60;false&#x60;). (optional)
      * @return MemoryImportResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -504,8 +510,8 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public MemoryImportResponse importMemoryFile(Integer memoryId, String name, File body) throws ApiException {
-        ApiResponse<MemoryImportResponse> localVarResp = importMemoryFileWithHttpInfo(memoryId, name, body);
+    public MemoryImportResponse importMemoryFile(Integer memoryId, String name, File body, Boolean hasHeaderRow) throws ApiException {
+        ApiResponse<MemoryImportResponse> localVarResp = importMemoryFileWithHttpInfo(memoryId, name, body, hasHeaderRow);
         return localVarResp.getData();
     }
 
@@ -515,6 +521,7 @@ public class MemoriesApi {
      * @param memoryId A unique Memory identifier. (required)
      * @param name Name of the TM or termbase file. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
+     * @param hasHeaderRow A flag indicating whether an imported Termbase CSV has a header row or not (the default value is &#x60;false&#x60;). (optional)
      * @return ApiResponse&lt;MemoryImportResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -524,8 +531,8 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<MemoryImportResponse> importMemoryFileWithHttpInfo(Integer memoryId, String name, File body) throws ApiException {
-        okhttp3.Call localVarCall = importMemoryFileValidateBeforeCall(memoryId, name, body, null);
+    public ApiResponse<MemoryImportResponse> importMemoryFileWithHttpInfo(Integer memoryId, String name, File body, Boolean hasHeaderRow) throws ApiException {
+        okhttp3.Call localVarCall = importMemoryFileValidateBeforeCall(memoryId, name, body, hasHeaderRow, null);
         Type localVarReturnType = new TypeToken<MemoryImportResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -536,6 +543,7 @@ public class MemoriesApi {
      * @param memoryId A unique Memory identifier. (required)
      * @param name Name of the TM or termbase file. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
+     * @param hasHeaderRow A flag indicating whether an imported Termbase CSV has a header row or not (the default value is &#x60;false&#x60;). (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -546,9 +554,9 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call importMemoryFileAsync(Integer memoryId, String name, File body, final ApiCallback<MemoryImportResponse> _callback) throws ApiException {
+    public okhttp3.Call importMemoryFileAsync(Integer memoryId, String name, File body, Boolean hasHeaderRow, final ApiCallback<MemoryImportResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = importMemoryFileValidateBeforeCall(memoryId, name, body, _callback);
+        okhttp3.Call localVarCall = importMemoryFileValidateBeforeCall(memoryId, name, body, hasHeaderRow, _callback);
         Type localVarReturnType = new TypeToken<MemoryImportResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
