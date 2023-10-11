@@ -1,6 +1,6 @@
 /*
  * Lilt REST API
- * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests. ## Authentication Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use. 
+ * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.  ## Authentication  Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.  ## Quotas  Our services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request. 
  *
  * The version of the OpenAPI document: v2.0
  * Contact: support@lilt.com
@@ -20,15 +20,18 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.lilt.client.model.WorkflowStageAssignment;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * A language pair couples the source and target language along with memory and pre-translations settings associated to a project. 
  */
 @ApiModel(description = "A language pair couples the source and target language along with memory and pre-translations settings associated to a project. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-20T00:13:26.792Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-10-11T00:19:44.343Z[GMT]")
 public class LanguagePair {
   public static final String SERIALIZED_NAME_SRC_LANG = "srcLang";
   @SerializedName(SERIALIZED_NAME_SRC_LANG)
@@ -74,6 +77,14 @@ public class LanguagePair {
   @SerializedName(SERIALIZED_NAME_CONFIG_ID)
   private Integer configId;
 
+  public static final String SERIALIZED_NAME_WORKFLOW_TEMPLATE_ID = "workflowTemplateId";
+  @SerializedName(SERIALIZED_NAME_WORKFLOW_TEMPLATE_ID)
+  private Integer workflowTemplateId;
+
+  public static final String SERIALIZED_NAME_WORKFLOW_STAGE_ASSIGNMENTS = "workflowStageAssignments";
+  @SerializedName(SERIALIZED_NAME_WORKFLOW_STAGE_ASSIGNMENTS)
+  private List<WorkflowStageAssignment> workflowStageAssignments = null;
+
 
   public LanguagePair srcLang(String srcLang) {
     
@@ -82,11 +93,11 @@ public class LanguagePair {
   }
 
    /**
-   * Source langauge, an ISO 639-1 language identifier.
+   * Source language, an ISO 639-1 language identifier.
    * @return srcLang
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "en", value = "Source langauge, an ISO 639-1 language identifier.")
+  @ApiModelProperty(example = "en", value = "Source language, an ISO 639-1 language identifier.")
 
   public String getSrcLang() {
     return srcLang;
@@ -105,11 +116,11 @@ public class LanguagePair {
   }
 
    /**
-   * A locale identifier, supported for source langauge.
+   * A locale identifier, supported for source language.
    * @return srcLocale
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "US", value = "A locale identifier, supported for source langauge.")
+  @ApiModelProperty(example = "US", value = "A locale identifier, supported for source language.")
 
   public String getSrcLocale() {
     return srcLocale;
@@ -128,10 +139,10 @@ public class LanguagePair {
   }
 
    /**
-   * Target langauge, an ISO 639-1 language identifier.
+   * Target language, an ISO 639-1 language identifier.
    * @return trgLang
   **/
-  @ApiModelProperty(example = "de", required = true, value = "Target langauge, an ISO 639-1 language identifier.")
+  @ApiModelProperty(example = "de", required = true, value = "Target language, an ISO 639-1 language identifier.")
 
   public String getTrgLang() {
     return trgLang;
@@ -326,6 +337,60 @@ public class LanguagePair {
   }
 
 
+  public LanguagePair workflowTemplateId(Integer workflowTemplateId) {
+    
+    this.workflowTemplateId = workflowTemplateId;
+    return this;
+  }
+
+   /**
+   * Workflow Template id, to assign a specific Workflow to the project created out of this Language Pair. WorkflowTemplateIds can be retrieved via the /workflows/templates endpoint. If not specified then the Job level workflowTemplateId will be used.
+   * @return workflowTemplateId
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "14", value = "Workflow Template id, to assign a specific Workflow to the project created out of this Language Pair. WorkflowTemplateIds can be retrieved via the /workflows/templates endpoint. If not specified then the Job level workflowTemplateId will be used.")
+
+  public Integer getWorkflowTemplateId() {
+    return workflowTemplateId;
+  }
+
+
+  public void setWorkflowTemplateId(Integer workflowTemplateId) {
+    this.workflowTemplateId = workflowTemplateId;
+  }
+
+
+  public LanguagePair workflowStageAssignments(List<WorkflowStageAssignment> workflowStageAssignments) {
+    
+    this.workflowStageAssignments = workflowStageAssignments;
+    return this;
+  }
+
+  public LanguagePair addWorkflowStageAssignmentsItem(WorkflowStageAssignment workflowStageAssignmentsItem) {
+    if (this.workflowStageAssignments == null) {
+      this.workflowStageAssignments = new ArrayList<WorkflowStageAssignment>();
+    }
+    this.workflowStageAssignments.add(workflowStageAssignmentsItem);
+    return this;
+  }
+
+   /**
+   * Get workflowStageAssignments
+   * @return workflowStageAssignments
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "")
+
+  public List<WorkflowStageAssignment> getWorkflowStageAssignments() {
+    return workflowStageAssignments;
+  }
+
+
+  public void setWorkflowStageAssignments(List<WorkflowStageAssignment> workflowStageAssignments) {
+    this.workflowStageAssignments = workflowStageAssignments;
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -345,12 +410,14 @@ public class LanguagePair {
         Objects.equals(this.autoAccept, languagePair.autoAccept) &&
         Objects.equals(this.caseSensitive, languagePair.caseSensitive) &&
         Objects.equals(this.takeMatchAttribution, languagePair.takeMatchAttribution) &&
-        Objects.equals(this.configId, languagePair.configId);
+        Objects.equals(this.configId, languagePair.configId) &&
+        Objects.equals(this.workflowTemplateId, languagePair.workflowTemplateId) &&
+        Objects.equals(this.workflowStageAssignments, languagePair.workflowStageAssignments);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(srcLang, srcLocale, trgLang, trgLocale, dueDate, memoryId, pretranslate, autoAccept, caseSensitive, takeMatchAttribution, configId);
+    return Objects.hash(srcLang, srcLocale, trgLang, trgLocale, dueDate, memoryId, pretranslate, autoAccept, caseSensitive, takeMatchAttribution, configId, workflowTemplateId, workflowStageAssignments);
   }
 
   @Override
@@ -368,6 +435,8 @@ public class LanguagePair {
     sb.append("    caseSensitive: ").append(toIndentedString(caseSensitive)).append("\n");
     sb.append("    takeMatchAttribution: ").append(toIndentedString(takeMatchAttribution)).append("\n");
     sb.append("    configId: ").append(toIndentedString(configId)).append("\n");
+    sb.append("    workflowTemplateId: ").append(toIndentedString(workflowTemplateId)).append("\n");
+    sb.append("    workflowStageAssignments: ").append(toIndentedString(workflowStageAssignments)).append("\n");
     sb.append("}");
     return sb.toString();
   }

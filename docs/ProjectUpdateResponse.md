@@ -6,7 +6,6 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **Integer** | A unique Project identifier. | 
 **name** | **String** | The Project name. |  [optional]
 **state** | **String** | The project&#39;s state. The possible states are &#39;backlog&#39;, &#39;inProgress&#39;, &#39;inReview&#39;, &#39;inQA&#39;, and &#39;done&#39; |  [optional]
 **dueDate** | **Integer** | The due date. Measured in seconds since the Unix epoch. |  [optional]

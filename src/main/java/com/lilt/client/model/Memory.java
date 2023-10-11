@@ -1,6 +1,6 @@
 /*
  * Lilt REST API
- * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests. ## Authentication Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use. 
+ * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.  ## Authentication  Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.  ## Quotas  Our services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request. 
  *
  * The version of the OpenAPI document: v2.0
  * Contact: support@lilt.com
@@ -30,7 +30,7 @@ import java.util.List;
  * A Memory is a collection of parallel (source/target) segments from which a MT/TM model is trained. When a translator confirms a segment in the Interface, a parallel segment is added to the Memory. Parallel segments from existing translation memories and bitexts can also be added to the Memory via the REST API. 
  */
 @ApiModel(description = "A Memory is a collection of parallel (source/target) segments from which a MT/TM model is trained. When a translator confirms a segment in the Interface, a parallel segment is added to the Memory. Parallel segments from existing translation memories and bitexts can also be added to the Memory via the REST API. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-20T00:13:26.792Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-10-11T00:19:44.343Z[GMT]")
 public class Memory {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
@@ -67,10 +67,6 @@ public class Memory {
   public static final String SERIALIZED_NAME_UPDATED_AT = "updated_at";
   @SerializedName(SERIALIZED_NAME_UPDATED_AT)
   private Integer updatedAt;
-
-  public static final String SERIALIZED_NAME_NUM_SEGMENTS = "num_segments";
-  @SerializedName(SERIALIZED_NAME_NUM_SEGMENTS)
-  private Integer numSegments;
 
   public static final String SERIALIZED_NAME_RESOURCES = "resources";
   @SerializedName(SERIALIZED_NAME_RESOURCES)
@@ -284,29 +280,6 @@ public class Memory {
   }
 
 
-  public Memory numSegments(Integer numSegments) {
-    
-    this.numSegments = numSegments;
-    return this;
-  }
-
-   /**
-   * The number of confirmed Segments incorporated into this Memory.
-   * @return numSegments
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "1028", value = "The number of confirmed Segments incorporated into this Memory.")
-
-  public Integer getNumSegments() {
-    return numSegments;
-  }
-
-
-  public void setNumSegments(Integer numSegments) {
-    this.numSegments = numSegments;
-  }
-
-
   public Memory resources(List<String> resources) {
     
     this.resources = resources;
@@ -356,13 +329,12 @@ public class Memory {
         Objects.equals(this.version, memory.version) &&
         Objects.equals(this.createdAt, memory.createdAt) &&
         Objects.equals(this.updatedAt, memory.updatedAt) &&
-        Objects.equals(this.numSegments, memory.numSegments) &&
         Objects.equals(this.resources, memory.resources);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, srclang, trglang, srclocale, trglocale, name, version, createdAt, updatedAt, numSegments, resources);
+    return Objects.hash(id, srclang, trglang, srclocale, trglocale, name, version, createdAt, updatedAt, resources);
   }
 
   @Override
@@ -378,7 +350,6 @@ public class Memory {
     sb.append("    version: ").append(toIndentedString(version)).append("\n");
     sb.append("    createdAt: ").append(toIndentedString(createdAt)).append("\n");
     sb.append("    updatedAt: ").append(toIndentedString(updatedAt)).append("\n");
-    sb.append("    numSegments: ").append(toIndentedString(numSegments)).append("\n");
     sb.append("    resources: ").append(toIndentedString(resources)).append("\n");
     sb.append("}");
     return sb.toString();

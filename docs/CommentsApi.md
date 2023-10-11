@@ -237,7 +237,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | An object containing lists of comments identified by the id of the segment to which they belong. |  -  |
-**403** | Unauthorized. |  -  |
+**403** | User does not have permission for provided document. |  -  |
 **410** | Comment deleted. |  -  |
 **0** | Unexpected error. |  -  |
 

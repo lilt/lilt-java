@@ -695,11 +695,11 @@ Name | Type | Description  | Notes
 
 <a name="retrieveAllJobs"></a>
 # **retrieveAllJobs**
-> List&lt;Job&gt; retrieveAllJobs(isArchived)
+> List&lt;Job&gt; retrieveAllJobs(isArchived, isDelivered, offset, limit)
 
 Retrieve all Jobs
 
-Get all Jobs. You can retrieve all jobs from your account using the above API.  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs?key&#x3D;API_KEY&amp;isArchived&#x3D;false&#39; &#x60;&#x60;&#x60;
+Get all Jobs within a given offset and limit. You can retrieve jobs from your account using the above API.  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs?key&#x3D;API_KEY&amp;isArchived&#x3D;false&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -729,8 +729,11 @@ public class Example {
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Boolean isArchived = true; // Boolean | Retrieves all jobs that are archived.
+    Boolean isDelivered = true; // Boolean | Retrieves all jobs that are delivered.
+    Integer offset = 56; // Integer | Return jobs starting at the offset row. If not given the default offset will be 0.
+    Integer limit = 56; // Integer | The maximum number of jobs to be returned. If not given the default limit will be 25.
     try {
-      List<Job> result = apiInstance.retrieveAllJobs(isArchived);
+      List<Job> result = apiInstance.retrieveAllJobs(isArchived, isDelivered, offset, limit);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling JobsApi#retrieveAllJobs");
@@ -748,6 +751,9 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **isArchived** | **Boolean**| Retrieves all jobs that are archived. | [optional]
+ **isDelivered** | **Boolean**| Retrieves all jobs that are delivered. | [optional]
+ **offset** | **Integer**| Return jobs starting at the offset row. If not given the default offset will be 0. | [optional]
+ **limit** | **Integer**| The maximum number of jobs to be returned. If not given the default limit will be 25. | [optional]
 
 ### Return type
 

@@ -13,12 +13,18 @@ info:
       * Translation memory synchronization
 
     Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.
+
     ## Authentication
+
     Requests are authenticated via REST API key, which requires the Business plan.
 
     Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.
 
     For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.
+
+    ## Quotas
+
+    Our services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.
   title: Lilt REST API
   version: v2.0
 servers:
@@ -26,6 +32,11 @@ servers:
 security:
 - ApiKeyAuth: []
 - BasicAuth: []
+tags:
+- description: These endpoints are only relevant if Lilt Workflows are enabled for
+    your organization. Any other Workflow related topics you notice within these docs
+    will also only be relevant for a Workflows enabled organization.
+  name: Workflows
 paths:
   /:
     get:
@@ -127,7 +138,7 @@ paths:
           description: A list of files.
         "403":
           content: {}
-          description: Unauthorized.
+          description: User does not have permission for provided file.
         "410":
           content: {}
           description: File deleted.
@@ -399,7 +410,7 @@ paths:
             of the segment to which they belong.
         "403":
           content: {}
-          description: Unauthorized.
+          description: User does not have permission for provided document.
         "410":
           content: {}
           description: Comment deleted.
@@ -559,7 +570,7 @@ paths:
           description: A list of Connectors.
         "403":
           content: {}
-          description: Unauthorized.
+          description: User does not have permission for provided connector.
         "410":
           content: {}
           description: Connector deleted.
@@ -1155,53 +1166,6 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
-    put:
-      description: |
-        Update a Document.
-      operationId: updateDocument
-      requestBody:
-        $ref: '#/components/requestBodies/DocumentUpdateParameters'
-        content:
-          application/json:
-            schema:
-              example:
-                name: Introduction to our App
-                id: 46530
-              properties:
-                id:
-                  description: A unique Document identifier.
-                  example: 46530
-                  type: integer
-                name:
-                  description: The Document name.
-                  example: Introduction to our App
-                  type: string
-              required:
-              - id
-              - name
-              title: DocumentUpdateParameters
-              type: object
-        description: The Document resource to update.
-        required: true
-      responses:
-        "200":
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/DocumentWithSegments'
-          description: A Document object.
-        default:
-          content:
-            application/json:
-              schema:
-                $ref: '#/components/schemas/Error'
-          description: Unexpected error
-      summary: Update a Document
-      tags:
-      - Documents
-      x-codegen-request-body-name: body
-      x-contentType: application/json
-      x-accepts: application/json
   /documents/share:
     put:
       description: |+
@@ -1279,7 +1243,7 @@ paths:
 
         Example CURL command:
         ```
-        curl -X POST https://lilt.com/2/documents/pretranslate?key=API_KEY -d {"id": [123]} -H "Content-Type: application/json"
+        curl -X POST https://lilt.com/2/documents/pretranslate?key=API_KEY -d '{"id": [123]}' -H "Content-Type: application/json"
         ```
 
         Document translation is an asynchronous process that, in effect, is
@@ -1476,8 +1440,8 @@ paths:
           An optional parameter to auto-accept segments with 100% translation
           memory matches when the `pretranslate` option is also set, or to
           auto-accept any target data that is present when the uploaded file
-          is XLIFF. If omitted or set to `false`, no segments will be
-          auto-accepted.
+          is XLIFF. If omitted it will default to your organization settings for `Accept and lock exact matches`,
+          if set to `false`, no segments will be auto-accepted.
         in: header
         name: auto_accept
         schema:
@@ -1485,14 +1449,14 @@ paths:
       - description: |
           An optional parameter to use case sensitive translation memory matching when the `pretranslate`
           option is also enabled. Matches must have identical character-by-character case to qualify as matches.
-          Default value is `false`
+          Default value matches your organization settings for `Use case sensitive translation memory matching` setting
         in: header
         name: case_sensitive
         schema:
           type: boolean
       - description: |
           An optional parameter to attribute translation authorship of exact matches to the author of the file
-          when the `pretranslate` option is also enabled. Default value is `false`
+          when the `pretranslate` option is also enabled. Default value matches your organization settings for `Translation authorship` setting
         in: header
         name: match_attribution
         schema:
@@ -1651,6 +1615,12 @@ paths:
                 title: DocumentDoneResponse
                 type: array
           description: array of updated documents
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslateCompletionTypeError'
+          description: Unexpected error
       summary: Mark translation done
       tags:
       - Documents
@@ -1712,6 +1682,12 @@ paths:
                 title: DocumentDoneResponse
                 type: array
           description: array of updated documents
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ReviewCompletionTypeError'
+          description: Unexpected error
       summary: Mark review done
       tags:
       - Documents
@@ -2308,7 +2284,7 @@ paths:
   /memories/import:
     post:
       description: |+
-        Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are `*.tmx`, `*.sdltm` and `*.tmq` for TM data; `*.csv` and `*.tbx` for termbase data. Request parameters should be passed as JSON object with the header field `LILT-API`.
+        Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are `*.tmx`, `*.sdltm`, `*.sdlxliff`(With custom Filters), '*.xliff', and `*.tmq` for TM data; `*.csv` and `*.tbx` for termbase data. Request parameters should be passed as JSON object with the header field `LILT-API`.
 
         Example CURL command to upload a translation memory file named `my_memory.sdltm` in the current working directory:
         ```
@@ -2317,6 +2293,14 @@ paths:
             --header "Content-Type: application/octet-stream" \
             --data-binary @my_memory.sdltm
         ```
+
+        Example CURL command to upload a translation memory file named `my_memory.sdlxliff` in the current working directory, with Custom Filters based on SDLXLIFF fields, conf_name which maps to, percentage, and whether we should ignore unlocked segments.
+        ```
+          curl -X POST https://lilt.com/2/memories/import?key=API_KEY \
+            --header "LILT-API: {\"name\": \"my_memory.sdlxliff\",\"memory_id\": 12,\"sdlxliff_filters\":[{\"conf_name\": \"Translated\", \"percentage\": 100, \"allow_unlocked\": false}]"}" \
+            --header "Content-Type: application/octet-stream" \
+            --data-binary @my_memory.sdlxliff
+
 
       operationId: importMemoryFile
       parameters:
@@ -2332,10 +2316,26 @@ paths:
         required: true
         schema:
           type: string
+      - description: Contains Filter information Unique to SDLXLIFF
+        explode: false
+        in: header
+        name: sdlxliff_filters
+        schema:
+          items:
+            $ref: '#/components/schemas/SDLXLIFFFilter'
+          type: array
+        style: simple
       - description: A flag indicating whether an imported Termbase CSV has a header
           row or not (the default value is `false`).
         in: header
         name: has_header_row
+        schema:
+          type: boolean
+      - description: |
+          A flag indicating whether or not to skip the import of segments
+          which already exist in the memory. (the default value is `false`).
+        in: header
+        name: skip_duplicates
         schema:
           type: boolean
       requestBody:
@@ -2370,7 +2370,7 @@ paths:
   /jobs:
     get:
       description: |-
-        Get all Jobs. You can retrieve all jobs from your account using the above API.
+        Get all Jobs within a given offset and limit. You can retrieve jobs from your account using the above API.
 
         Example CURL command:
 
@@ -2384,6 +2384,25 @@ paths:
         name: isArchived
         schema:
           type: boolean
+      - description: Retrieves all jobs that are delivered.
+        in: query
+        name: isDelivered
+        schema:
+          type: boolean
+      - description: Return jobs starting at the offset row. If not given the default
+          offset will be 0.
+        in: query
+        name: offset
+        schema:
+          minimum: 0
+          type: integer
+      - description: The maximum number of jobs to be returned. If not given the default
+          limit will be 25.
+        in: query
+        name: limit
+        schema:
+          maximum: 50
+          type: integer
       responses:
         "200":
           content:
@@ -2439,41 +2458,57 @@ paths:
             schema:
               example:
                 languagePairs:
-                - pretranslate: true
-                  autoAccept: true
+                - workflowStageAssignments:
+                  - workflowStageTemplateId: 12345
+                    userId: 123
+                    email: username@domain.com
+                  - workflowStageTemplateId: 12345
+                    userId: 123
+                    email: username@domain.com
+                  pretranslate: true
                   trgLocale: DE
                   caseSensitive: true
-                  configId: 2332
                   dueDate: 2021-10-03T13:43:00.000Z
+                  takeMatchAttribution: true
+                  workflowTemplateId: 14
+                  autoAccept: true
+                  configId: 2332
                   srcLocale: US
                   memoryId: 1241
                   trgLang: de
-                  takeMatchAttribution: true
                   srcLang: en
-                - pretranslate: true
-                  autoAccept: true
+                - workflowStageAssignments:
+                  - workflowStageTemplateId: 12345
+                    userId: 123
+                    email: username@domain.com
+                  - workflowStageTemplateId: 12345
+                    userId: 123
+                    email: username@domain.com
+                  pretranslate: true
                   trgLocale: DE
                   caseSensitive: true
-                  configId: 2332
                   dueDate: 2021-10-03T13:43:00.000Z
+                  takeMatchAttribution: true
+                  workflowTemplateId: 14
+                  autoAccept: true
+                  configId: 2332
                   srcLocale: US
                   memoryId: 1241
                   trgLang: de
-                  takeMatchAttribution: true
                   srcLang: en
-                due: 2021-10-05T14:48:00.000Z
+                workflowTemplateId: 123
                 fileIds:
                 - 298
                 - 299
+                due: 2021-10-05T14:48:00.000Z
                 name: My new Job
+                srcLocale: US
+                isPlural: true
+                srcLang: en
               properties:
                 name:
                   description: A name for the Job.
                   example: My new Job
-                  type: string
-                due:
-                  description: An ISO string date.
-                  example: 2021-10-05T14:48:00.000Z
                   type: string
                 languagePairs:
                   description: Language pairs is a set of one or more pairs that includes
@@ -2490,10 +2525,34 @@ paths:
                   items:
                     type: integer
                   type: array
+                due:
+                  description: An ISO string date representing job due date.
+                  example: 2021-10-05T14:48:00.000Z
+                  type: string
+                srcLang:
+                  description: 2-letter ISO source language code
+                  example: en
+                  type: string
+                srcLocale:
+                  description: 2-letter source language code
+                  example: US
+                  type: string
+                isPlural:
+                  description: A boolean value representing if the files have plurals.
+                  example: true
+                  type: boolean
+                workflowTemplateId:
+                  description: Identifier of the workflow template to be used when
+                    creating a job. If not passed the organization default will be
+                    used.
+                  example: 123
+                  type: integer
               required:
               - fileIds
               - languagePairs
               - name
+              - srcLang
+              - srcLocale
               title: JobCreateParameters
               type: object
         description: The Job resource to create.
@@ -2938,12 +2997,13 @@ paths:
       x-accepts: application/json
     get:
       description: |-
-        Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.
+        Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project, multiple projects or a list of all available projects.
 
-        To retrieve a specific project, specify the `id` request parameter. To retrieve all projects, omit the `id` request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the `srclang` and `trglang` request parameters, respectively.
+        To retrieve a specific project, specify the `id` request parameter or you can retrieve multiple projects by adding comma (,) between ids eg. `?id=1234,5678`. To retrieve all projects, omit the `id` request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the `srclang` and `trglang` request parameters, respectively.
       operationId: getProjects
       parameters:
-      - description: A unique Project identifier.
+      - description: A unique Project identifier. It can be a single id or multiple
+          ids separated by a comma
         in: query
         name: id
         schema:
@@ -3025,6 +3085,7 @@ paths:
                   connectorType: github
                   notes: example metadata
                 memory_id: 1234
+                workflowTemplateId: 14
                 job_id: 1234
                 name: My new project
                 due_date: 1489147692
@@ -3056,6 +3117,13 @@ paths:
                     notes: example metadata
                   properties: {}
                   type: object
+                workflowTemplateId:
+                  description: The workflow template used to create this project.
+                    WorkflowTemplateIds can be retrieved via the /workflows/templates
+                    endpoint. If not specified then the organization default workflowTemplateId
+                    will be used.
+                  example: 14
+                  type: integer
               required:
               - memory_id
               - name
@@ -3082,81 +3150,93 @@ paths:
       x-codegen-request-body-name: body
       x-contentType: application/json
       x-accepts: application/json
+  /projects/bulk-update:
     put:
       description: |
-        Update a Project.
-      operationId: updateProject
+        Update multiple Projects with a single payload.
+      operationId: updateProjectsBulk
       requestBody:
-        $ref: '#/components/requestBodies/ProjectUpdateResponse'
+        $ref: '#/components/requestBodies/Projects_to_update'
         content:
           application/json:
             schema:
-              example:
-                archived: false
-                metadata:
-                  connectorType: github
-                  notes: example metadata
-                sample_review_percentage: 20
-                name: Walker Percy Essays
-                due_date: 1489147692
-                id: 1234
-                state: backlog
               properties:
-                id:
-                  description: A unique Project identifier.
-                  example: 1234
-                  type: integer
-                name:
-                  description: The Project name.
-                  example: Walker Percy Essays
-                  type: string
-                state:
-                  description: The project's state. The possible states are 'backlog',
-                    'inProgress', 'inReview', 'inQA', and 'done'
-                  example: backlog
-                  type: string
-                due_date:
-                  description: The due date. Measured in seconds since the Unix epoch.
-                  example: 1489147692
-                  type: integer
-                archived:
-                  description: True if the project is archived. Otherwise, false.
-                  example: false
-                  type: boolean
-                metadata:
-                  description: Metadata associated with a project. This field must
-                    be valid JSON.
-                  example:
-                    connectorType: github
-                    notes: example metadata
-                  properties: {}
-                  type: object
-                sample_review_percentage:
-                  description: The Project's sample review percentage. Must be an
-                    integer between 10 and 100, a multiple of 10 and greater than
-                    minimum value (displayed in error message).
-                  example: 20
-                  type: integer
+                projectIds:
+                  items:
+                    description: A unique Project identifier.
+                    example: 1234
+                    type: integer
+                  type: array
+                project:
+                  $ref: '#/components/schemas/ProjectUpdateResponse'
               required:
-              - id
-              title: ProjectUpdateResponse
+              - project
+              - projectIds
+              title: Projects to update
               type: object
-        description: The Project resource to update.
+        description: The Project resources to update.
         required: true
       responses:
         "200":
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Project'
-          description: A Project object.
+                items:
+                  $ref: '#/components/schemas/Project'
+                type: array
+          description: The updated Project objects.
         default:
           content:
             application/json:
               schema:
                 $ref: '#/components/schemas/Error'
           description: Unexpected error
-      summary: Update a Project
+      summary: Update multiple Projects with a single payload
+      tags:
+      - Projects
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+  /projects/bulk-deliver:
+    post:
+      description: |
+        Deliver mulitple projects apart from their jobs.
+      operationId: deliverProjectsBulk
+      parameters:
+      - description: Whether the project has or not workflows enabled. (not used)
+        in: query
+        name: workflowEnabled
+        schema:
+          type: boolean
+      requestBody:
+        $ref: '#/components/requestBodies/Projects_to_deliver'
+        content:
+          application/json:
+            schema:
+              properties:
+                projectIds:
+                  items:
+                    description: A unique Project identifier.
+                    example: 1234
+                    type: integer
+                  type: array
+              required:
+              - projectIds
+              title: Projects to deliver
+              type: object
+        description: The Project resources to update.
+        required: true
+      responses:
+        "200":
+          content: {}
+          description: Empty response if succeed.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Deliver multiple projects apart from their jobs.
       tags:
       - Projects
       x-codegen-request-body-name: body
@@ -3254,6 +3334,72 @@ paths:
       summary: Retrieve Project status
       tags:
       - Projects
+      x-accepts: application/json
+  /autoAssignment:
+    post:
+      description: |
+        Trigger automatic assignment of linguists.
+
+        Requires auto-assignment to be enabled as a setting on the origanization level.
+      operationId: triggerAutoAssignment
+      parameters:
+      - description: |
+          The comma separated list of project ids to auto-assign.
+          Can be sent in the body as an alternative but if both are specified the query has precedence.
+        in: query
+        name: projectIds
+        required: true
+        schema:
+          type: string
+      requestBody:
+        $ref: '#/components/requestBodies/AutoAssignmentParameters'
+        content:
+          application/json:
+            schema:
+              example:
+                projectIds:
+                - 0
+                - 0
+              properties:
+                projectIds:
+                  items:
+                    type: integer
+                  type: array
+              required:
+              - projectIds
+              title: AutoAssignmentParameters
+              type: object
+        description: |
+          An array of project ids to auto-assign. (optional)
+          If projectIds is specified in the querystring it will have precedence.
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/AutoAssignmentResponse'
+                type: array
+          description: An auto assignment response.
+        "400":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadRequest'
+          description: Bad request. Possible causes include no permission to the projects
+            and the auto-assignment setting not being enabled.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Auto Assignment
+      tags:
+      - Projects
+      x-codegen-request-body-name: body
+      x-contentType: application/json
       x-accepts: application/json
   /qa:
     get:
@@ -3728,6 +3874,7 @@ paths:
       x-accepts: application/json
   /translate:
     get:
+      deprecated: true
       description: |+
         Translate a source string.
 
@@ -3793,6 +3940,13 @@ paths:
         schema:
           default: false
           type: boolean
+      - description: Contains ICU data. If true then tags in the source following
+          the ICU standard will be parsed and retained.
+        in: query
+        name: contains_icu_data
+        schema:
+          default: false
+          type: boolean
       requestBody:
         $ref: '#/components/requestBodies/TranslateSegmentBody'
         content:
@@ -3807,6 +3961,94 @@ paths:
               title: TranslateSegmentBody
               type: object
         description: The source text to be translated.
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationList'
+          description: A TranslationList object.
+        "202":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TranslationList'
+          description: When the ML model is loading.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Translate a segment
+      tags:
+      - Translate
+      x-codegen-request-body-name: body
+      x-contentType: application/json
+      x-accepts: application/json
+    post:
+      description: |+
+        Translate a source string.
+
+        Setting the `rich` parameter to `true` will change the response format
+        to include additional information about each translation including a
+        model score, word alignments,  and formatting information. The rich
+        format can be seen in the example response on this page.
+
+        By default, this endpoint also returns translation memory (TM) fuzzy matches, along
+        with associated scores. Fuzzy matches always appear ahead of machine translation
+        output in the response.
+
+        The maximum source length is 5,000 characters.
+
+        Usage charges apply to this endpoint for production REST API keys.
+
+      operationId: translateSegmentPost
+      requestBody:
+        $ref: '#/components/requestBodies/TranslateSegmentBody_1'
+        content:
+          application/json:
+            schema:
+              properties:
+                source:
+                  description: A unique Segment identifier.
+                  type: string
+                memory_id:
+                  description: A unique Memory identifier.
+                  type: integer
+                source_hash:
+                  description: A source hash code.
+                  type: integer
+                n:
+                  description: Return top n translations (deprecated).
+                  type: integer
+                prefix:
+                  description: A target prefix
+                  type: string
+                rich:
+                  default: false
+                  description: Returns rich translation information (e.g., with word
+                    alignments).
+                  type: boolean
+                tm_matches:
+                  default: true
+                  description: Include translation memory fuzzy matches.
+                  type: boolean
+                project_tags:
+                  default: false
+                  description: Project tags. Projects tags in source to target if
+                    set to true.
+                  type: boolean
+                containsICUData:
+                  default: false
+                  description: Contains ICU data. If true then tags in the source
+                    following the ICU standard will be parsed and retained.
+                  type: boolean
+              required:
+              - memory_id
+              title: TranslateSegmentBody
+              type: object
         required: false
       responses:
         "200":
@@ -3917,7 +4159,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/Error'
+                $ref: '#/components/schemas/MonitorFileTranslationTypeError'
           description: Unexpected error
       summary: Monitor file translation
       tags:
@@ -4006,43 +4248,190 @@ paths:
       tags:
       - Translate
       x-accepts: application/octet-stream
+  /workflows/templates:
+    get:
+      description: |+
+        Get all the possible Workflow Templates owned by the team. Useful for retrieving the ids corresponding
+        to each workflow tables, and passing them to subsequent requests, for example, creating a new Job with
+        a specific Workflow.
+
+        Example CURL:
+        ```
+        curl --X --request GET 'https://lilt.com/2/workflows/templates?key=API_KEY'
+        ```
+
+      operationId: getWorkflowTemplates
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WorkflowTemplate'
+                type: array
+          description: An array with a team's available WorkflowTemplates.
+      summary: Retrieve workflow templates
+      tags:
+      - Workflows
+      x-accepts: application/json
+  /workflows/document/{documentId}:
+    get:
+      description: |+
+        Get Workflow metadata related to a document. This is useful for gathering information about the current Workflow stage of a document.
+
+        Example CURL:
+        ```
+        curl --X --request GET 'https://lilt.com/2/workflows/document/{documentId}?key=API_KEY'
+        ```
+
+      operationId: getDocumentWorkflow
+      parameters:
+      - description: A document id.
+        in: path
+        name: documentId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/DocumentWorkflow'
+          description: An object with document Workflow metadata.
+      summary: Retrieve document Workflow metadata
+      tags:
+      - Workflows
+      x-accepts: application/json
+  /workflows/{documentId}/stage:
+    put:
+      description: |+
+        Set the Workflow stage for a document. You can find the stage information required for this request from the "Retrieve document Workflow metadata" endpoint.
+
+        Example CURL:
+        ```
+        curl --X --request PUT 'https://lilt.com/2/workflows/document/{documentId}/stage?key=API_KEY' \
+        --header 'Content-Type: application/json' \
+        --data-raw '{
+          "workflowStageId": {workflowStageId}
+        }'
+        ```
+
+      operationId: setDocumentStage
+      parameters:
+      - description: A document id.
+        in: path
+        name: documentId
+        required: true
+        schema:
+          type: integer
+      requestBody:
+        $ref: '#/components/requestBodies/SetDocumentStageRequest'
+        content:
+          application/json:
+            schema:
+              example:
+                workflowStageId: "1234"
+              properties:
+                workflowStageId:
+                  description: A workflow stage id. Can be found in "Retrieve document
+                    Workflow metadata" endpoint. To set the document stage to 'Done',
+                    pass through an empty request body.
+                  example: "1234"
+                  type: string
+              title: SetDocumentStageRequest
+              type: object
+        required: false
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NextWorkflowTask'
+          description: An object with a documents next task Workflow metadata.
+      summary: Set Workflow stage for a document
+      tags:
+      - Workflows
+      x-codegen-request-body-name: workflowStageId
+      x-contentType: application/json
+      x-accepts: application/json
+  /document/{documentId}/task/{taskId}/advance:
+    post:
+      description: |+
+        Advance a workflow to the next stage and mark current workflow task as complete.
+
+        Example CURL:
+        ```
+        curl --X --request POST 'https://lilt.com/2/workflows/document/{documentId}/task/{taskId}/advance?key=API_KEY'
+        ```
+
+      operationId: advanceWorkflowStage
+      parameters:
+      - description: A document id.
+        in: path
+        name: documentId
+        required: true
+        schema:
+          type: integer
+      - description: The task id of the current workflow stage.
+        in: path
+        name: taskId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NextWorkflowTask'
+          description: An object with a documents next task Workflow metadata.
+      summary: Advance workflow to the next stage
+      tags:
+      - Workflows
+      x-accepts: application/json
+  /document/{documentId}/task/{taskId}/reject:
+    post:
+      description: |+
+        Move a workflow to the previous stage and mark current workflow task as rejected.
+
+        Example CURL:
+        ```
+        curl --X --request POST 'https://lilt.com/2/workflows/document/{documentId}/task/{taskId}/reject?key=API_KEY'
+        ```
+
+      operationId: rejectWorkflowStage
+      parameters:
+      - description: A document id.
+        in: path
+        name: documentId
+        required: true
+        schema:
+          type: integer
+      - description: The task id of the current workflow stage.
+        in: path
+        name: taskId
+        required: true
+        schema:
+          type: integer
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/NextWorkflowTask'
+          description: An object with a documents next task Workflow metadata.
+      summary: Move workflow to the previous stage
+      tags:
+      - Workflows
+      x-accepts: application/json
 components:
   requestBodies:
-    LexiconUpdateParameters:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/LexiconUpdateParameters'
-      required: true
     MemoryCreateParameters:
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/MemoryCreateParameters'
-      required: true
-    SegmentDoneResponse:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/SegmentDoneResponse'
-      required: true
-    DocumentDoneUpdateParameters:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DocumentDoneUpdateParameters'
-      required: true
-    CreateConverterConfigParameters:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/CreateConverterConfigParameters'
-      required: false
-    DocumentUpdateParameters:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DocumentUpdateParameters'
       required: true
     SegmentUpdateParameters:
       content:
@@ -4062,6 +4451,66 @@ components:
           schema:
             $ref: '#/components/schemas/DocumentDoneUpdateParameters_2'
       required: true
+    TranslateSegmentBody:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TranslateSegmentBody'
+      required: false
+    AutoAssignmentParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/AutoAssignmentParameters'
+      required: false
+    DocumentParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DocumentParameters'
+      required: false
+    SetDocumentStageRequest:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SetDocumentStageRequest'
+      required: false
+    ConnectorArguments:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ConnectorArguments'
+      required: true
+    TranslateSegmentBody_1:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/TranslateSegmentBody_1'
+      required: false
+    LexiconUpdateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/LexiconUpdateParameters'
+      required: true
+    SegmentDoneResponse:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/SegmentDoneResponse'
+      required: true
+    DocumentDoneUpdateParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/DocumentDoneUpdateParameters'
+      required: true
+    CreateConverterConfigParameters:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/CreateConverterConfigParameters'
+      required: false
     MemoryUpdateParameters:
       content:
         application/json:
@@ -4079,12 +4528,6 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/EditFilterMappingParameters'
-      required: false
-    TranslateSegmentBody:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/TranslateSegmentBody'
       required: false
     SegmentCreateParameters:
       content:
@@ -4110,12 +4553,6 @@ components:
           schema:
             $ref: '#/components/schemas/JobUpdateParameters'
       required: false
-    DocumentParameters:
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/DocumentParameters'
-      required: false
     connector:
       content:
         application/json:
@@ -4128,17 +4565,17 @@ components:
           schema:
             $ref: '#/components/schemas/ProjectCreateParameters'
       required: true
-    ConnectorArguments:
+    Projects_to_deliver:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ConnectorArguments'
+            $ref: '#/components/schemas/Projects_to_deliver'
       required: true
-    ProjectUpdateResponse:
+    Projects_to_update:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ProjectUpdateResponse'
+            $ref: '#/components/schemas/Projects_to_update'
       required: true
     AddFileLabelRequest:
       content:
@@ -4179,6 +4616,61 @@ components:
         Response in the event of an unexpected error.
       example:
         message: Internal server error.
+      properties:
+        message:
+          description: A human-readable message describing the error.
+          type: object
+      type: object
+    BadRequest:
+      description: |
+        Response in the event of a malformed request.
+      example:
+        message: Bad Request.
+      properties:
+        message:
+          description: A human-readable message describing the error.
+          type: object
+      type: object
+    MonitorFileTranslationTypeError:
+      description: |
+        Monitor file translation can have different errors based on reasons explained in the examples.
+      example:
+        Unsupported_file_type:
+          message: Customer gave us garbage.
+        File_extraction_error:
+          message: Customer gave us garbage.
+        No_translatable_content:
+          message: Customer gave us an empty file.
+        Batch_MT_initiation_failure:
+          message: Something is wrong with MT.
+        Batch_MT_response_failure:
+          message: Something is wrong with MT.
+        File_reassembly_error:
+          message: We couldn't put the translated file back together.(okapi error)
+        Billing_error:
+          message: We couldn't log the information about the MT to our billing system.
+        Invalid_memory:
+          message: Something is wrong with the memory.
+        Storage_error:
+          message: Error occurred interacting with file storage.
+      type: object
+    TranslateCompletionTypeError:
+      description: |
+        Response in the event of a malformed error.
+      example:
+        message: Some documents are already marked as complete for review. DocumentIds
+          22322, 23343
+      properties:
+        message:
+          description: A human-readable message describing the error.
+          type: object
+      type: object
+    ReviewCompletionTypeError:
+      description: |
+        Response in the event of a malformed error.
+      example:
+        message: Some documents' translation is not marked as complete. Complete translation
+          before completing review. DocumentIds 22322, 23343
       properties:
         message:
           description: A human-readable message describing the error.
@@ -4243,11 +4735,12 @@ components:
       example:
         due: 2021-06-03T13:43:00Z
         stats:
-          exactWords: 0
           percentReviewed: 0
           projects:
           - trgLocale: CA
             isArchived: false
+            workflowStatus: READY_TO_START
+            workflowName: Translate > Review > Analyst Review
             numSourceTokens: 2134
             createdAt: 2021-04-01T13:43:00.000Z
             isDeleted: false
@@ -4263,6 +4756,8 @@ components:
             updatedAt: 2021-06-03T13:43:00.000Z
           - trgLocale: CA
             isArchived: false
+            workflowStatus: READY_TO_START
+            workflowName: Translate > Review > Analyst Review
             numSourceTokens: 2134
             createdAt: 2021-04-01T13:43:00.000Z
             isDeleted: false
@@ -4277,14 +4772,16 @@ components:
             isComplete: false
             updatedAt: 2021-06-03T13:43:00.000Z
           uniqueLanguagePairs: 1
-          percentTranslated: 0
-          fuzzyWords: 0
+          workflowStatus: READY_TO_START
           numLanguagePairs: 0
           newWords: 0
           numProjects: 0
           numDeliveredProjects: 0
           uniqueLinguists: 1
           sourceWords: 0
+          exactWords: 0
+          percentTranslated: 0
+          fuzzyWords: 0
         creationStatus: COMPLETE
         name: My New Job
         isProcessing: 0
@@ -4331,11 +4828,12 @@ components:
       description: |
         A job stats shows an overview of job's statistical data including total number of exact words, fuzzy words, language pairs, projects, etc.
       example:
-        exactWords: 0
         percentReviewed: 0
         projects:
         - trgLocale: CA
           isArchived: false
+          workflowStatus: READY_TO_START
+          workflowName: Translate > Review > Analyst Review
           numSourceTokens: 2134
           createdAt: 2021-04-01T13:43:00.000Z
           isDeleted: false
@@ -4351,6 +4849,8 @@ components:
           updatedAt: 2021-06-03T13:43:00.000Z
         - trgLocale: CA
           isArchived: false
+          workflowStatus: READY_TO_START
+          workflowName: Translate > Review > Analyst Review
           numSourceTokens: 2134
           createdAt: 2021-04-01T13:43:00.000Z
           isDeleted: false
@@ -4365,14 +4865,16 @@ components:
           isComplete: false
           updatedAt: 2021-06-03T13:43:00.000Z
         uniqueLanguagePairs: 1
-        percentTranslated: 0
-        fuzzyWords: 0
+        workflowStatus: READY_TO_START
         numLanguagePairs: 0
         newWords: 0
         numProjects: 0
         numDeliveredProjects: 0
         uniqueLinguists: 1
         sourceWords: 0
+        exactWords: 0
+        percentTranslated: 0
+        fuzzyWords: 0
       properties:
         exactWords:
           description: Total number of exact words.
@@ -4403,6 +4905,7 @@ components:
           example: 0
           type: integer
         percentTranslated:
+          description: Overall percentage of documents translated.
           example: 0
           type: integer
         projects:
@@ -4421,6 +4924,14 @@ components:
           description: Number of unique linguists.
           example: 1
           type: integer
+        workflowStatus:
+          description: The status of the Workflow for the current job.
+          enum:
+          - READY_TO_START
+          - IN_PROGRESS
+          - DONE
+          example: READY_TO_START
+          type: string
       type: object
     JobLeverageStats:
       description: |
@@ -4430,16 +4941,16 @@ components:
       example:
         exactWords: 0
         projects:
-        - exactWords: 0
-          fuzzyWords: 0
-          id: 0
-          newWords: 0
-          sourceWords: 0
-        - exactWords: 0
-          fuzzyWords: 0
-          id: 0
-          newWords: 0
-          sourceWords: 0
+        - exactWords: 800
+          fuzzyWords: 150
+          id: 1
+          newWords: 50
+          sourceWords: 1000
+        - exactWords: 800
+          fuzzyWords: 150
+          id: 1
+          newWords: 50
+          sourceWords: 1000
         fuzzyWords: 0
         newWords: 0
         sourceWords: 0
@@ -4462,15 +4973,47 @@ components:
           type: integer
         projects:
           items:
-            $ref: '#/components/schemas/JobLeverageStats_projects'
+            $ref: '#/components/schemas/ProjectStats'
           type: array
+      type: object
+    ProjectStats:
+      example:
+        exactWords: 800
+        fuzzyWords: 150
+        id: 1
+        newWords: 50
+        sourceWords: 1000
+      properties:
+        id:
+          example: 1
+          type: integer
+        sourceWords:
+          example: 1000
+          type: integer
+        exactWords:
+          example: 800
+          type: integer
+        fuzzyWords:
+          example: 150
+          type: integer
+        newWords:
+          example: 50
+          type: integer
+      required:
+      - exactWords
+      - fuzzyWords
+      - id
+      - newWords
+      - sourceWords
       type: object
     JobProject:
       description: |
-        A job project contains project statistcal data that belongs to a specific job.
+        A job project contains project statistical data that belongs to a specific job.
       example:
         trgLocale: CA
         isArchived: false
+        workflowStatus: READY_TO_START
+        workflowName: Translate > Review > Analyst Review
         numSourceTokens: 2134
         createdAt: 2021-04-01T13:43:00.000Z
         isDeleted: false
@@ -4489,19 +5032,19 @@ components:
           description: An id for the project.
           type: integer
         srcLang:
-          description: Source langauge, an ISO 639-1 language identifier.
+          description: Source language, an ISO 639-1 language identifier.
           example: en
           type: string
         srcLocale:
-          description: A locale identifier, supported for source langauge.
+          description: A locale identifier, supported for source language.
           example: US
           type: string
         trgLang:
-          description: Target langauge, an ISO 639-1 language identifier.
+          description: Target language, an ISO 639-1 language identifier.
           example: fr
           type: string
         trgLocale:
-          description: A locale identifier, supported for target langauge.
+          description: A locale identifier, supported for target language.
           example: CA
           type: string
         name:
@@ -4545,33 +5088,54 @@ components:
           description: A unique number identifying the associated Memory.
           example: 2134
           type: integer
+        workflowStatus:
+          description: The status of the Workflow for the current project.
+          enum:
+          - READY_TO_START
+          - IN_PROGRESS
+          - DONE
+          example: READY_TO_START
+          type: string
+        workflowName:
+          description: Human readable name of the workflow associated with the current
+            project.
+          example: Translate > Review > Analyst Review
+          type: string
       type: object
     LanguagePair:
       description: |
         A language pair couples the source and target language along with memory and pre-translations settings associated to a project.
       example:
+        workflowStageAssignments:
+        - workflowStageTemplateId: 12345
+          userId: 123
+          email: username@domain.com
+        - workflowStageTemplateId: 12345
+          userId: 123
+          email: username@domain.com
         pretranslate: true
-        autoAccept: true
         trgLocale: DE
         caseSensitive: true
-        configId: 2332
         dueDate: 2021-10-03T13:43:00.000Z
+        takeMatchAttribution: true
+        workflowTemplateId: 14
+        autoAccept: true
+        configId: 2332
         srcLocale: US
         memoryId: 1241
         trgLang: de
-        takeMatchAttribution: true
         srcLang: en
       properties:
         srcLang:
-          description: Source langauge, an ISO 639-1 language identifier.
+          description: Source language, an ISO 639-1 language identifier.
           example: en
           type: string
         srcLocale:
-          description: A locale identifier, supported for source langauge.
+          description: A locale identifier, supported for source language.
           example: US
           type: string
         trgLang:
-          description: Target langauge, an ISO 639-1 language identifier.
+          description: Target language, an ISO 639-1 language identifier.
           example: de
           type: string
         trgLocale:
@@ -4605,6 +5169,17 @@ components:
           description: Configuration id
           example: 2332
           type: integer
+        workflowTemplateId:
+          description: Workflow Template id, to assign a specific Workflow to the
+            project created out of this Language Pair. WorkflowTemplateIds can be
+            retrieved via the /workflows/templates endpoint. If not specified then
+            the Job level workflowTemplateId will be used.
+          example: 14
+          type: integer
+        workflowStageAssignments:
+          items:
+            $ref: '#/components/schemas/WorkflowStageAssignment'
+          type: array
       required:
       - memoryId
       - trgLang
@@ -4617,12 +5192,14 @@ components:
           connectorType: github
           notes: example metadata
         trglocale: FR
+        workflowStatus: READY_TO_START
         document:
         - srclang: en
           created_at: 1489147692
           reviewer_email: reviewer@example.com
           export_succeeded: false
           trglang: de
+          is_review_complete: true
           import_in_progress: false
           import_error_message: Could not parse XML.
           import_succeeded: false
@@ -4641,6 +5218,7 @@ components:
           reviewer_email: reviewer@example.com
           export_succeeded: false
           trglang: de
+          is_review_complete: true
           import_in_progress: false
           import_error_message: Could not parse XML.
           import_succeeded: false
@@ -4735,6 +5313,15 @@ components:
             the Unix epoch.
           example: 1489147692
           type: integer
+        workflowStatus:
+          description: The status of the Workflow for the current project. This may
+            not be present for all project endpoints even with workflows enabled.
+          enum:
+          - READY_TO_START
+          - IN_PROGRESS
+          - DONE
+          example: READY_TO_START
+          type: string
         document:
           description: A list of Documents.
           items:
@@ -4913,6 +5500,7 @@ components:
         time_elapsed_translation: 33487
         time_elapsed_review: 66521
         num_words_reviewed: 12
+        updated_at: 1656513752
         num_source_words: 6039
         time_elapsed: 2980000
         resources:
@@ -4981,6 +5569,10 @@ components:
           description: The total time spent on reviewing by all resources. Measured
             in milliseconds.
           example: 66521
+          type: integer
+        updated_at:
+          description: The project update date and time. Measured in seconds.
+          example: 1656513752
           type: integer
         resources:
           description: A list of ResourceStatus objects that represent per-resource
@@ -5126,6 +5718,7 @@ components:
         reviewer_email: reviewer@example.com
         export_succeeded: false
         trglang: de
+        is_review_complete: true
         import_in_progress: false
         import_error_message: Could not parse XML.
         import_succeeded: false
@@ -5208,6 +5801,10 @@ components:
             the Unix epoch.
           example: 1489147692
           type: integer
+        is_review_complete:
+          description: Document review status.
+          example: true
+          type: boolean
       type: object
     DocumentWithSegments:
       description: |
@@ -5218,6 +5815,7 @@ components:
         reviewer_email: reviewer@example.com
         export_succeeded: false
         trglang: de
+        is_review_complete: true
         import_in_progress: false
         segments:
         - is_reviewed: true
@@ -5323,6 +5921,10 @@ components:
             the Unix epoch.
           example: 1489147692
           type: integer
+        is_review_complete:
+          description: Document review status.
+          example: true
+          type: boolean
         segments:
           description: A list of Segments.
           items:
@@ -5461,7 +6063,6 @@ components:
         id: 1234
         srclocale: US
         version: 78
-        num_segments: 1028
         trglang: fr
       properties:
         id:
@@ -5503,16 +6104,36 @@ components:
             the Unix epoch.
           example: 1489147692
           type: integer
-        num_segments:
-          description: The number of confirmed Segments incorporated into this Memory.
-          example: 1028
-          type: integer
         resources:
           description: The resource files (translation memories and termbases) associated
             with this Memory.
           items:
             type: string
           type: array
+      type: object
+    SDLXLIFFFilter:
+      properties:
+        confName:
+          description: the current state of the SDLXLIFF Trans Unit.
+          enum:
+          - Translated
+          - Draft
+          - ApprovedTranslation
+          - Locked
+          - SignedOff
+          type: string
+        allowablePercentage:
+          description: This represents for the current conf_name what percentage the
+            filter applies to.  If you pass -1 it will take any value for this field
+            and won't ignore blank values. If you pass 50, Lilt will only import Segments
+            that have a 50 percent match or better.
+          type: integer
+        allowUnlockedSegments:
+          description: Boolean that tells Lilt whether we should allow unlocked Segments
+            for this conf_name.
+          type: boolean
+      required:
+      - confName
       type: object
     Translation:
       description: A machine translation (MT) or a translation memory (TM) match of
@@ -5878,6 +6499,9 @@ components:
             $ref: '#/components/schemas/Annotation'
           type: array
         isResolved:
+          description: An optional value indicating whether the comment has been resolved,
+            defaults to `false`. Resolved comments will not be returned in subsequent
+            requests.
           example: "false"
           type: string
       type: object
@@ -6113,6 +6737,364 @@ components:
             Id of the the project the setting will be applied to. Required when scope is `Organization`.
           example: 123.0
           type: number
+      required:
+      - scope
+      - settingName
+      type: object
+    AutoAssignmentResponse:
+      description: Auto assignment status.
+      example:
+        assignments:
+        - reviewerUserId: 56
+          isPreferredTranslator: true
+          wordsLeftAveragedTranslator: 56
+          isAutoAssigned: true
+          wordsLeftAveragedReviewer: 56
+          translatorDueDate: 2023-03-28T16:00:00Z
+          docId: 56
+          translatorUserId: 56
+          translatorRoleId: 56
+          projectId: 56
+          assignmentErrors:
+          - Error message
+          - Error message
+        - reviewerUserId: 56
+          isPreferredTranslator: true
+          wordsLeftAveragedTranslator: 56
+          isAutoAssigned: true
+          wordsLeftAveragedReviewer: 56
+          translatorDueDate: 2023-03-28T16:00:00Z
+          docId: 56
+          translatorUserId: 56
+          translatorRoleId: 56
+          projectId: 56
+          assignmentErrors:
+          - Error message
+          - Error message
+        success: true
+        error: error
+        projectId: 123.0
+        errors:
+        - errorType: LINGUIST_MAY_BE_DELETED
+          documentId: 456
+          error: Linguist may be deleted
+          projectId: 123
+        - errorType: LINGUIST_MAY_BE_DELETED
+          documentId: 456
+          error: Linguist may be deleted
+          projectId: 123
+      properties:
+        projectId:
+          description: The id of the project.
+          example: 123.0
+          type: number
+        success:
+          description: True if the operation was successful for this project.
+          type: boolean
+        error:
+          description: An optional error message if success = false
+          type: string
+        errors:
+          description: A list of errors if there were any.
+          items:
+            $ref: '#/components/schemas/AssignmentError'
+          type: array
+        assignments:
+          description: Assignment details, like which user was assigned and which
+            role.
+          items:
+            $ref: '#/components/schemas/AssignmentDetails'
+          type: array
+      required:
+      - projectId
+      - success
+      type: object
+    AssignmentError:
+      example:
+        errorType: LINGUIST_MAY_BE_DELETED
+        documentId: 456
+        error: Linguist may be deleted
+        projectId: 123
+      properties:
+        errorType:
+          example: LINGUIST_MAY_BE_DELETED
+          type: string
+        projectId:
+          example: 123
+          type: integer
+        documentId:
+          example: 456
+          type: integer
+        error:
+          example: Linguist may be deleted
+          type: string
+      required:
+      - documentId
+      - error
+      - errorType
+      - projectId
+      type: object
+    AssignmentDetails:
+      example:
+        reviewerUserId: 56
+        isPreferredTranslator: true
+        wordsLeftAveragedTranslator: 56
+        isAutoAssigned: true
+        wordsLeftAveragedReviewer: 56
+        translatorDueDate: 2023-03-28T16:00:00Z
+        docId: 56
+        translatorUserId: 56
+        translatorRoleId: 56
+        projectId: 56
+        assignmentErrors:
+        - Error message
+        - Error message
+      properties:
+        isPreferredTranslator:
+          example: true
+          type: boolean
+        wordsLeftAveragedTranslator:
+          example: 56
+          type: integer
+        wordsLeftAveragedReviewer:
+          example: 56
+          type: integer
+        assignmentErrors:
+          items:
+            example: Error message
+            type: string
+          type: array
+        docId:
+          example: 56
+          type: integer
+        projectId:
+          example: 56
+          type: integer
+        isAutoAssigned:
+          example: true
+          type: boolean
+        translatorUserId:
+          example: 56
+          type: integer
+        translatorRoleId:
+          example: 56
+          type: integer
+        translatorDueDate:
+          example: 2023-03-28T16:00:00Z
+          type: string
+        reviewerUserId:
+          example: 56
+          type: integer
+      type: object
+    WorkflowTemplate:
+      description: A workflow template which defines the workflow's possible steps
+        (combination of Translation, Review and Customer Review).
+      example:
+        name: Translate > Review > Customer Review
+        stages:
+        - name: Translate
+          assignmentType: TRANSLATE
+        - name: Translate
+          assignmentType: TRANSLATE
+        id: 15.0
+        TeamId: 100.0
+      properties:
+        id:
+          description: Identifier of a teams Workflow template. Can be used during
+            Job creation for specifying the workflow used for a job or language pair.
+          example: 15.0
+          type: number
+        name:
+          example: Translate > Review > Customer Review
+          type: string
+        TeamId:
+          description: The name of a given Workflow template.
+          example: 100.0
+          type: number
+        stages:
+          description: The stages in this workflow template.
+          items:
+            $ref: '#/components/schemas/WorkflowStageTemplate'
+          type: array
+      type: object
+    WorkflowStageTemplate:
+      description: A single stage within a Workflow Template.
+      example:
+        name: Translate
+        assignmentType: TRANSLATE
+      properties:
+        name:
+          description: The human readable name of a Workflow stage.
+          example: Translate
+          type: string
+        assignmentType:
+          description: An enum to represent all possible types of Workflow stage.
+          enum:
+          - READY_TO_START
+          - TRANSLATE
+          - REVIEW
+          - SECONDARY_REVIEW
+          - DONE
+          example: TRANSLATE
+          type: string
+      type: object
+    WorkflowStageAssignment:
+      description: An assignment object that associates a user to a workflow stage
+        template.
+      example:
+        workflowStageTemplateId: 12345
+        userId: 123
+        email: username@domain.com
+      properties:
+        workflowStageTemplateId:
+          example: 12345
+          type: integer
+        userId:
+          example: 123
+          type: integer
+        email:
+          example: username@domain.com
+          type: string
+      required:
+      - workflowStageTemplateId
+      type: object
+    DocumentWorkflow:
+      description: Workflow metadata related to a document.
+      example:
+        stages:
+        - name: Translate
+          active: true
+          id: 1
+          assignmentType: TRANSLATE
+        - name: Translate
+          active: true
+          id: 1
+          assignmentType: TRANSLATE
+        currentTask:
+          name: Review
+          workflowStageId: 123
+          enteredAt: 2022-09-09T21:33:21.000Z
+          startedAt: 2022-09-09T21:33:21.000Z
+          id: 1
+        documentId: 12345
+        workflowId: 1111
+      properties:
+        documentId:
+          description: Identifier of a document.
+          example: 12345
+          type: integer
+        workflowId:
+          description: Identifier for a Workflow that the document is using.
+          example: 1111
+          type: integer
+        stages:
+          description: The stages in the document's workflow.
+          items:
+            $ref: '#/components/schemas/WorkflowStage'
+          type: array
+        currentTask:
+          $ref: '#/components/schemas/WorkflowTask'
+      type: object
+    WorkflowStage:
+      description: Workflow stage information.
+      example:
+        name: Translate
+        active: true
+        id: 1
+        assignmentType: TRANSLATE
+      properties:
+        id:
+          description: Identifier of the stage.
+          example: 1
+          type: integer
+        name:
+          description: Name of the stage.
+          example: Translate
+          type: string
+        active:
+          description: Flag which is set to true when the stage is active for a document.
+          example: true
+          type: boolean
+        assignmentType:
+          description: An enum to represent all possible types of Workflow stage.
+          enum:
+          - READY_TO_START
+          - TRANSLATE
+          - REVIEW
+          - SECONDARY_REVIEW
+          - DONE
+          example: TRANSLATE
+          type: string
+      required:
+      - assignmentType
+      - name
+      type: object
+    WorkflowTask:
+      description: Information about a workflow task.
+      example:
+        name: Review
+        workflowStageId: 123
+        enteredAt: 2022-09-09T21:33:21.000Z
+        startedAt: 2022-09-09T21:33:21.000Z
+        id: 1
+      properties:
+        id:
+          description: Identifier of the current workflow task.
+          example: 1
+          type: integer
+        workflowStageId:
+          description: Identifier of the current workflow stage.
+          example: 123
+          type: integer
+        name:
+          description: Name of the current workflow stage.
+          example: Review
+          type: string
+        enteredAt:
+          description: Date and time when task was created.
+          example: 2022-09-09T21:33:21.000Z
+          format: Date
+          type: string
+        startedAt:
+          description: Date and time when task was started.
+          example: 2022-09-09T21:33:21.000Z
+          format: Date
+          type: string
+      required:
+      - enteredAt
+      - id
+      - name
+      - workflowStageId
+      type: object
+    NextWorkflowTask:
+      description: Information about a document workflow task after it has moved a
+        stage.
+      example:
+        newStageName: Review
+        newTaskId: 123
+        status: SUCCESS
+      properties:
+        status:
+          description: Identifier of the current workflow task.
+          enum:
+          - SUCCESS
+          - WORKFLOW_FINISHED
+          - ALREADY_AT_START
+          - INVALID_ARGUMENT
+          - POSTCONDITIONS_FAILED
+          - UNKNOWN_ERROR
+          example: SUCCESS
+          type: string
+        newTaskId:
+          description: The identifier of the workflow task that is now currently active.
+          example: 123
+          type: integer
+        newStageName:
+          description: The name of the workflow task that is now currently active.
+          example: Review
+          type: string
+      required:
+      - status
       type: object
     ApiRoot:
       example:
@@ -6294,24 +7276,6 @@ components:
       - configDescription
       - configName
       title: EditFilterMappingParameters
-      type: object
-    DocumentUpdateParameters:
-      example:
-        name: Introduction to our App
-        id: 46530
-      properties:
-        id:
-          description: A unique Document identifier.
-          example: 46530
-          type: integer
-        name:
-          description: The Document name.
-          example: Introduction to our App
-          type: string
-      required:
-      - id
-      - name
-      title: DocumentUpdateParameters
       type: object
     DocumentParameters:
       example:
@@ -6737,41 +7701,57 @@ components:
     JobCreateParameters:
       example:
         languagePairs:
-        - pretranslate: true
-          autoAccept: true
+        - workflowStageAssignments:
+          - workflowStageTemplateId: 12345
+            userId: 123
+            email: username@domain.com
+          - workflowStageTemplateId: 12345
+            userId: 123
+            email: username@domain.com
+          pretranslate: true
           trgLocale: DE
           caseSensitive: true
-          configId: 2332
           dueDate: 2021-10-03T13:43:00.000Z
+          takeMatchAttribution: true
+          workflowTemplateId: 14
+          autoAccept: true
+          configId: 2332
           srcLocale: US
           memoryId: 1241
           trgLang: de
-          takeMatchAttribution: true
           srcLang: en
-        - pretranslate: true
-          autoAccept: true
+        - workflowStageAssignments:
+          - workflowStageTemplateId: 12345
+            userId: 123
+            email: username@domain.com
+          - workflowStageTemplateId: 12345
+            userId: 123
+            email: username@domain.com
+          pretranslate: true
           trgLocale: DE
           caseSensitive: true
-          configId: 2332
           dueDate: 2021-10-03T13:43:00.000Z
+          takeMatchAttribution: true
+          workflowTemplateId: 14
+          autoAccept: true
+          configId: 2332
           srcLocale: US
           memoryId: 1241
           trgLang: de
-          takeMatchAttribution: true
           srcLang: en
-        due: 2021-10-05T14:48:00.000Z
+        workflowTemplateId: 123
         fileIds:
         - 298
         - 299
+        due: 2021-10-05T14:48:00.000Z
         name: My new Job
+        srcLocale: US
+        isPlural: true
+        srcLang: en
       properties:
         name:
           description: A name for the Job.
           example: My new Job
-          type: string
-        due:
-          description: An ISO string date.
-          example: 2021-10-05T14:48:00.000Z
           type: string
         languagePairs:
           description: Language pairs is a set of one or more pairs that includes
@@ -6788,10 +7768,33 @@ components:
           items:
             type: integer
           type: array
+        due:
+          description: An ISO string date representing job due date.
+          example: 2021-10-05T14:48:00.000Z
+          type: string
+        srcLang:
+          description: 2-letter ISO source language code
+          example: en
+          type: string
+        srcLocale:
+          description: 2-letter source language code
+          example: US
+          type: string
+        isPlural:
+          description: A boolean value representing if the files have plurals.
+          example: true
+          type: boolean
+        workflowTemplateId:
+          description: Identifier of the workflow template to be used when creating
+            a job. If not passed the organization default will be used.
+          example: 123
+          type: integer
       required:
       - fileIds
       - languagePairs
       - name
+      - srcLang
+      - srcLocale
       title: JobCreateParameters
       type: object
     JobUpdateParameters:
@@ -6818,63 +7821,13 @@ components:
           type: integer
       title: JobDeleteResponse
       type: object
-    ProjectUpdateResponse:
-      example:
-        archived: false
-        metadata:
-          connectorType: github
-          notes: example metadata
-        sample_review_percentage: 20
-        name: Walker Percy Essays
-        due_date: 1489147692
-        id: 1234
-        state: backlog
-      properties:
-        id:
-          description: A unique Project identifier.
-          example: 1234
-          type: integer
-        name:
-          description: The Project name.
-          example: Walker Percy Essays
-          type: string
-        state:
-          description: The project's state. The possible states are 'backlog', 'inProgress',
-            'inReview', 'inQA', and 'done'
-          example: backlog
-          type: string
-        due_date:
-          description: The due date. Measured in seconds since the Unix epoch.
-          example: 1489147692
-          type: integer
-        archived:
-          description: True if the project is archived. Otherwise, false.
-          example: false
-          type: boolean
-        metadata:
-          description: Metadata associated with a project. This field must be valid
-            JSON.
-          example:
-            connectorType: github
-            notes: example metadata
-          properties: {}
-          type: object
-        sample_review_percentage:
-          description: The Project's sample review percentage. Must be an integer
-            between 10 and 100, a multiple of 10 and greater than minimum value (displayed
-            in error message).
-          example: 20
-          type: integer
-      required:
-      - id
-      title: ProjectUpdateResponse
-      type: object
     ProjectCreateParameters:
       example:
         metadata:
           connectorType: github
           notes: example metadata
         memory_id: 1234
+        workflowTemplateId: 14
         job_id: 1234
         name: My new project
         due_date: 1489147692
@@ -6906,6 +7859,12 @@ components:
             notes: example metadata
           properties: {}
           type: object
+        workflowTemplateId:
+          description: The workflow template used to create this project. WorkflowTemplateIds
+            can be retrieved via the /workflows/templates endpoint. If not specified
+            then the organization default workflowTemplateId will be used.
+          example: 14
+          type: integer
       required:
       - memory_id
       - name
@@ -6925,6 +7884,82 @@ components:
           example: true
           type: boolean
       title: ProjectDeleteResponse
+      type: object
+    ProjectUpdateResponse:
+      properties:
+        name:
+          description: The Project name.
+          example: Walker Percy Essays
+          type: string
+        state:
+          description: The project's state. The possible states are 'backlog', 'inProgress',
+            'inReview', 'inQA', and 'done'
+          example: backlog
+          type: string
+        due_date:
+          description: The due date. Measured in seconds since the Unix epoch.
+          example: 1489147692
+          type: integer
+        archived:
+          description: True if the project is archived. Otherwise, false.
+          example: false
+          type: boolean
+        metadata:
+          description: Metadata associated with a project. This field must be valid
+            JSON.
+          example:
+            connectorType: github
+            notes: example metadata
+          properties: {}
+          type: object
+        sample_review_percentage:
+          description: The Project's sample review percentage. Must be an integer
+            between 10 and 100, a multiple of 10 and greater than minimum value (displayed
+            in error message).
+          example: 20
+          type: integer
+      title: ProjectUpdateResponse
+      type: object
+    Projects_to_update:
+      properties:
+        projectIds:
+          items:
+            description: A unique Project identifier.
+            example: 1234
+            type: integer
+          type: array
+        project:
+          $ref: '#/components/schemas/ProjectUpdateResponse'
+      required:
+      - project
+      - projectIds
+      title: Projects to update
+      type: object
+    Projects_to_deliver:
+      properties:
+        projectIds:
+          items:
+            description: A unique Project identifier.
+            example: 1234
+            type: integer
+          type: array
+      required:
+      - projectIds
+      title: Projects to deliver
+      type: object
+    AutoAssignmentParameters:
+      example:
+        projectIds:
+        - 0
+        - 0
+      properties:
+        projectIds:
+          items:
+            type: integer
+          type: array
+      required:
+      - projectIds
+      title: AutoAssignmentParameters
       type: object
     SegmentUpdateParameters:
       example:
@@ -7013,6 +8048,44 @@ components:
           type: string
       title: TranslateSegmentBody
       type: object
+    TranslateSegmentBody_1:
+      properties:
+        source:
+          description: A unique Segment identifier.
+          type: string
+        memory_id:
+          description: A unique Memory identifier.
+          type: integer
+        source_hash:
+          description: A source hash code.
+          type: integer
+        n:
+          description: Return top n translations (deprecated).
+          type: integer
+        prefix:
+          description: A target prefix
+          type: string
+        rich:
+          default: false
+          description: Returns rich translation information (e.g., with word alignments).
+          type: boolean
+        tm_matches:
+          default: true
+          description: Include translation memory fuzzy matches.
+          type: boolean
+        project_tags:
+          default: false
+          description: Project tags. Projects tags in source to target if set to true.
+          type: boolean
+        containsICUData:
+          default: false
+          description: Contains ICU data. If true then tags in the source following
+            the ICU standard will be parsed and retained.
+          type: boolean
+      required:
+      - memory_id
+      title: TranslateSegmentBody
+      type: object
     TranslateRegisterResponse:
       example:
         num_words: 88
@@ -7029,34 +8102,17 @@ components:
           type: integer
       title: TranslateRegisterResponse
       type: object
-    JobLeverageStats_projects:
+    SetDocumentStageRequest:
       example:
-        exactWords: 0
-        fuzzyWords: 0
-        id: 0
-        newWords: 0
-        sourceWords: 0
+        workflowStageId: "1234"
       properties:
-        id:
-          description: The Project ID.
-          example: 0
-          type: integer
-        sourceWords:
-          description: Total number of source words.
-          example: 0
-          type: integer
-        exactWords:
-          description: Total number of exact words.
-          example: 0
-          type: integer
-        fuzzyWords:
-          description: Total number of fuzzy words.
-          example: 0
-          type: integer
-        newWords:
-          description: Total number of fuzzy words.
-          example: 0
-          type: integer
+        workflowStageId:
+          description: A workflow stage id. Can be found in "Retrieve document Workflow
+            metadata" endpoint. To set the document stage to 'Done', pass through
+            an empty request body.
+          example: "1234"
+          type: string
+      title: SetDocumentStageRequest
       type: object
     DocumentWithoutSegments_status:
       description: A list of translations for the query term.

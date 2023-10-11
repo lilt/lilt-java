@@ -385,7 +385,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of Connectors. |  -  |
-**403** | Unauthorized. |  -  |
+**403** | User does not have permission for provided connector. |  -  |
 **410** | Connector deleted. |  -  |
 **0** | Unexpected error. |  -  |
 

@@ -1,8 +1,8 @@
-# Lilt-java-client
+# openapi-java-client
 
 Lilt REST API
 - API version: v2.0
-  - Build date: 2021-03-15T14:22:49.219647-07:00[America/Los_Angeles]
+  - Build date: 2023-10-11T00:19:44.343Z[GMT]
 
 The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:
   * Training of and translating with interactive, adaptive machine translation
@@ -12,12 +12,18 @@ The Lilt REST API enables programmatic access to the full-range of Lilt backend 
   * Translation memory synchronization
 
 Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.
+
 ## Authentication
+
 Requests are authenticated via REST API key, which requires the Business plan.
 
 Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.
 
 For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.
+
+## Quotas
+
+Our services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.
 
 
   For more information, please visit [https://lilt.com/docs/api](https://lilt.com/docs/api)
@@ -49,31 +55,23 @@ Refer to the [OSSRH Guide](http://central.sonatype.org/pages/ossrh-guide.html) f
 
 ### Maven users
 
-The library is hosted in GitHub packages, so configure your project's POM
-to point to the correct repository:
-
-```xml
-<repositories>
-  <repository>
-    <id>github</id>
-    <name>Github Packages</name>
-    <url>https://maven.pkg.github.com/lilt/lilt-java</url>
-  </repository>
-</repositories>
- ```
-
-You will also need to authenticate with GitHub Packages by updating
-your `~/.m2/settings.xml` file as described [here](https://docs.github.com/en/packages/using-github-packages-with-your-projects-ecosystem/configuring-apache-maven-for-use-with-github-packages#authenticating-to-github-packages).
-
 Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-  <groupId>com.lilt.client</groupId>
-  <artifactId>lilt-java-client</artifactId>
+  <groupId>org.openapitools</groupId>
+  <artifactId>openapi-java-client</artifactId>
   <version>2.2.0</version>
   <scope>compile</scope>
 </dependency>
+```
+
+### Gradle users
+
+Add this dependency to your project's build file:
+
+```groovy
+compile "org.openapitools:openapi-java-client:2.2.0"
 ```
 
 ### Others
@@ -86,7 +84,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/lilt-java-client-2.2.0.jar`
+* `target/openapi-java-client-2.2.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -170,7 +168,6 @@ Class | Method | HTTP request | Description
 *DocumentsApi* | [**markTranslationDone**](docs/DocumentsApi.md#markTranslationDone) | **POST** /documents/done/translation | Mark translation done
 *DocumentsApi* | [**pretranslateDocuments**](docs/DocumentsApi.md#pretranslateDocuments) | **POST** /documents/pretranslate | Pretranslate a Document
 *DocumentsApi* | [**unlockDocuments**](docs/DocumentsApi.md#unlockDocuments) | **POST** /documents/done/unlock | Unlock documents
-*DocumentsApi* | [**updateDocument**](docs/DocumentsApi.md#updateDocument) | **PUT** /documents | Update a Document
 *DocumentsApi* | [**uploadDocument**](docs/DocumentsApi.md#uploadDocument) | **POST** /documents/files | Upload a File
 *FilesApi* | [**addLabel**](docs/FilesApi.md#addLabel) | **POST** /files/labels | Add Label to File
 *FilesApi* | [**deleteFile**](docs/FilesApi.md#deleteFile) | **DELETE** /files | Delete a File
@@ -205,11 +202,13 @@ Class | Method | HTTP request | Description
 *MemoriesApi* | [**updateMemory**](docs/MemoriesApi.md#updateMemory) | **PUT** /memories | Update the name of a Memory
 *ProjectsApi* | [**createProject**](docs/ProjectsApi.md#createProject) | **POST** /projects | Create a Project
 *ProjectsApi* | [**deleteProject**](docs/ProjectsApi.md#deleteProject) | **DELETE** /projects | Delete a Project
+*ProjectsApi* | [**deliverProjectsBulk**](docs/ProjectsApi.md#deliverProjectsBulk) | **POST** /projects/bulk-deliver | Deliver multiple projects apart from their jobs.
 *ProjectsApi* | [**getProjectReport**](docs/ProjectsApi.md#getProjectReport) | **GET** /projects/quote | Retrieve Project report
 *ProjectsApi* | [**getProjectRevisionReport**](docs/ProjectsApi.md#getProjectRevisionReport) | **GET** /projects/{id}/revision | Retrieve Project revision report
 *ProjectsApi* | [**getProjectStatus**](docs/ProjectsApi.md#getProjectStatus) | **GET** /projects/status | Retrieve Project status
 *ProjectsApi* | [**getProjects**](docs/ProjectsApi.md#getProjects) | **GET** /projects | Retrieve a Project
-*ProjectsApi* | [**updateProject**](docs/ProjectsApi.md#updateProject) | **PUT** /projects | Update a Project
+*ProjectsApi* | [**triggerAutoAssignment**](docs/ProjectsApi.md#triggerAutoAssignment) | **POST** /autoAssignment | Auto Assignment
+*ProjectsApi* | [**updateProjectsBulk**](docs/ProjectsApi.md#updateProjectsBulk) | **PUT** /projects/bulk-update | Update multiple Projects with a single payload
 *QaApi* | [**qaCheck**](docs/QaApi.md#qaCheck) | **GET** /qa | Perform QA check
 *RootApi* | [**root**](docs/RootApi.md#root) | **GET** / | Retrieve the REST API root
 *SegmentsApi* | [**createSegment**](docs/SegmentsApi.md#createSegment) | **POST** /segments | Create a Segment
@@ -227,6 +226,12 @@ Class | Method | HTTP request | Description
 *TranslateApi* | [**monitorFileTranslation**](docs/TranslateApi.md#monitorFileTranslation) | **GET** /translate/file | Monitor file translation
 *TranslateApi* | [**registerSegment**](docs/TranslateApi.md#registerSegment) | **GET** /translate/register | Register a segment
 *TranslateApi* | [**translateSegment**](docs/TranslateApi.md#translateSegment) | **GET** /translate | Translate a segment
+*TranslateApi* | [**translateSegmentPost**](docs/TranslateApi.md#translateSegmentPost) | **POST** /translate | Translate a segment
+*WorkflowsApi* | [**advanceWorkflowStage**](docs/WorkflowsApi.md#advanceWorkflowStage) | **POST** /document/{documentId}/task/{taskId}/advance | Advance workflow to the next stage
+*WorkflowsApi* | [**getDocumentWorkflow**](docs/WorkflowsApi.md#getDocumentWorkflow) | **GET** /workflows/document/{documentId} | Retrieve document Workflow metadata
+*WorkflowsApi* | [**getWorkflowTemplates**](docs/WorkflowsApi.md#getWorkflowTemplates) | **GET** /workflows/templates | Retrieve workflow templates
+*WorkflowsApi* | [**rejectWorkflowStage**](docs/WorkflowsApi.md#rejectWorkflowStage) | **POST** /document/{documentId}/task/{taskId}/reject | Move workflow to the previous stage
+*WorkflowsApi* | [**setDocumentStage**](docs/WorkflowsApi.md#setDocumentStage) | **PUT** /workflows/{documentId}/stage | Set Workflow stage for a document
 
 
 ## Documentation for Models
@@ -234,6 +239,11 @@ Class | Method | HTTP request | Description
  - [AddFileLabelRequest](docs/AddFileLabelRequest.md)
  - [Annotation](docs/Annotation.md)
  - [ApiRoot](docs/ApiRoot.md)
+ - [AssignmentDetails](docs/AssignmentDetails.md)
+ - [AssignmentError](docs/AssignmentError.md)
+ - [AutoAssignmentParameters](docs/AutoAssignmentParameters.md)
+ - [AutoAssignmentResponse](docs/AutoAssignmentResponse.md)
+ - [BadRequest](docs/BadRequest.md)
  - [Comment](docs/Comment.md)
  - [CommentBody](docs/CommentBody.md)
  - [CommentDeleteResponse](docs/CommentDeleteResponse.md)
@@ -256,10 +266,10 @@ Class | Method | HTTP request | Description
  - [DocumentPretranslating](docs/DocumentPretranslating.md)
  - [DocumentPretranslatingStatus](docs/DocumentPretranslatingStatus.md)
  - [DocumentQuote](docs/DocumentQuote.md)
- - [DocumentUpdateParameters](docs/DocumentUpdateParameters.md)
  - [DocumentWithSegments](docs/DocumentWithSegments.md)
  - [DocumentWithoutSegments](docs/DocumentWithoutSegments.md)
  - [DocumentWithoutSegmentsStatus](docs/DocumentWithoutSegmentsStatus.md)
+ - [DocumentWorkflow](docs/DocumentWorkflow.md)
  - [EditFilterMappingParameters](docs/EditFilterMappingParameters.md)
  - [Error](docs/Error.md)
  - [FileDeleteResponse](docs/FileDeleteResponse.md)
@@ -268,7 +278,6 @@ Class | Method | HTTP request | Description
  - [JobCreateParameters](docs/JobCreateParameters.md)
  - [JobDeleteResponse](docs/JobDeleteResponse.md)
  - [JobLeverageStats](docs/JobLeverageStats.md)
- - [JobLeverageStatsProjects](docs/JobLeverageStatsProjects.md)
  - [JobProject](docs/JobProject.md)
  - [JobStats](docs/JobStats.md)
  - [JobUpdateParameters](docs/JobUpdateParameters.md)
@@ -290,12 +299,16 @@ Class | Method | HTTP request | Description
  - [MemorySyncDeleteResponse](docs/MemorySyncDeleteResponse.md)
  - [MemoryUpdateParameters](docs/MemoryUpdateParameters.md)
  - [MemoryUpdateResponse](docs/MemoryUpdateResponse.md)
+ - [NextWorkflowTask](docs/NextWorkflowTask.md)
  - [Project](docs/Project.md)
  - [ProjectCreateParameters](docs/ProjectCreateParameters.md)
  - [ProjectDeleteResponse](docs/ProjectDeleteResponse.md)
  - [ProjectQuote](docs/ProjectQuote.md)
+ - [ProjectStats](docs/ProjectStats.md)
  - [ProjectStatus](docs/ProjectStatus.md)
  - [ProjectUpdateResponse](docs/ProjectUpdateResponse.md)
+ - [ProjectsToDeliver](docs/ProjectsToDeliver.md)
+ - [ProjectsToUpdate](docs/ProjectsToUpdate.md)
  - [QARuleMatches](docs/QARuleMatches.md)
  - [QARuleMatchesContext](docs/QARuleMatchesContext.md)
  - [QARuleMatchesCustomRules](docs/QARuleMatchesCustomRules.md)
@@ -305,23 +318,33 @@ Class | Method | HTTP request | Description
  - [QARuleMatchesRuleCategory](docs/QARuleMatchesRuleCategory.md)
  - [QARuleMatchesRuleUrls](docs/QARuleMatchesRuleUrls.md)
  - [ResourceStatus](docs/ResourceStatus.md)
+ - [ReviewCompletionTypeError](docs/ReviewCompletionTypeError.md)
+ - [SDLXLIFFFilter](docs/SDLXLIFFFilter.md)
  - [Segment](docs/Segment.md)
  - [SegmentCreateParameters](docs/SegmentCreateParameters.md)
  - [SegmentDeleteResponse](docs/SegmentDeleteResponse.md)
  - [SegmentDoneResponse](docs/SegmentDoneResponse.md)
  - [SegmentUpdateParameters](docs/SegmentUpdateParameters.md)
  - [SegmentWithComments](docs/SegmentWithComments.md)
+ - [SetDocumentStageRequest](docs/SetDocumentStageRequest.md)
  - [Setting](docs/Setting.md)
  - [SettingUpsertBody](docs/SettingUpsertBody.md)
  - [SettingUpsertResponse](docs/SettingUpsertResponse.md)
  - [SourceFile](docs/SourceFile.md)
  - [TaggedSegment](docs/TaggedSegment.md)
+ - [TranslateCompletionTypeError](docs/TranslateCompletionTypeError.md)
  - [TranslateRegisterResponse](docs/TranslateRegisterResponse.md)
  - [TranslateSegmentBody](docs/TranslateSegmentBody.md)
+ - [TranslateSegmentBody1](docs/TranslateSegmentBody1.md)
  - [Translation](docs/Translation.md)
  - [TranslationInfo](docs/TranslationInfo.md)
  - [TranslationList](docs/TranslationList.md)
  - [TranslationMemoryEntry](docs/TranslationMemoryEntry.md)
+ - [WorkflowStage](docs/WorkflowStage.md)
+ - [WorkflowStageAssignment](docs/WorkflowStageAssignment.md)
+ - [WorkflowStageTemplate](docs/WorkflowStageTemplate.md)
+ - [WorkflowTask](docs/WorkflowTask.md)
+ - [WorkflowTemplate](docs/WorkflowTemplate.md)
 
 
 ## Documentation for Authorization

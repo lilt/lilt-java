@@ -1,6 +1,6 @@
 /*
  * Lilt REST API
- * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests. ## Authentication Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use. 
+ * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.  ## Authentication  Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.  ## Quotas  Our services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request. 
  *
  * The version of the OpenAPI document: v2.0
  * Contact: support@lilt.com
@@ -37,6 +37,7 @@ import com.lilt.client.model.MemoryInsertResponse;
 import com.lilt.client.model.MemorySyncDeleteResponse;
 import com.lilt.client.model.MemoryUpdateParameters;
 import com.lilt.client.model.MemoryUpdateResponse;
+import com.lilt.client.model.SDLXLIFFFilter;
 import com.lilt.client.model.TranslationMemoryEntry;
 
 import java.lang.reflect.Type;
@@ -417,7 +418,9 @@ public class MemoriesApi {
      * @param memoryId A unique Memory identifier. (required)
      * @param name Name of the TM or termbase file. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
+     * @param sdlxliffFilters Contains Filter information Unique to SDLXLIFF (optional)
      * @param hasHeaderRow A flag indicating whether an imported Termbase CSV has a header row or not (the default value is &#x60;false&#x60;). (optional)
+     * @param skipDuplicates A flag indicating whether or not to skip the import of segments which already exist in the memory. (the default value is &#x60;false&#x60;).  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -428,7 +431,7 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call importMemoryFileCall(Integer memoryId, String name, File body, Boolean hasHeaderRow, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call importMemoryFileCall(Integer memoryId, String name, File body, List<SDLXLIFFFilter> sdlxliffFilters, Boolean hasHeaderRow, Boolean skipDuplicates, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -448,8 +451,16 @@ public class MemoriesApi {
             localVarHeaderParams.put("name", localVarApiClient.parameterToString(name));
         }
 
+        if (sdlxliffFilters != null) {
+            localVarHeaderParams.put("sdlxliff_filters", localVarApiClient.parameterToString(sdlxliffFilters));
+        }
+
         if (hasHeaderRow != null) {
             localVarHeaderParams.put("has_header_row", localVarApiClient.parameterToString(hasHeaderRow));
+        }
+
+        if (skipDuplicates != null) {
+            localVarHeaderParams.put("skip_duplicates", localVarApiClient.parameterToString(skipDuplicates));
         }
 
         final String[] localVarAccepts = {
@@ -471,7 +482,7 @@ public class MemoriesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call importMemoryFileValidateBeforeCall(Integer memoryId, String name, File body, Boolean hasHeaderRow, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call importMemoryFileValidateBeforeCall(Integer memoryId, String name, File body, List<SDLXLIFFFilter> sdlxliffFilters, Boolean hasHeaderRow, Boolean skipDuplicates, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'memoryId' is set
         if (memoryId == null) {
@@ -489,18 +500,20 @@ public class MemoriesApi {
         }
         
 
-        okhttp3.Call localVarCall = importMemoryFileCall(memoryId, name, body, hasHeaderRow, _callback);
+        okhttp3.Call localVarCall = importMemoryFileCall(memoryId, name, body, sdlxliffFilters, hasHeaderRow, skipDuplicates, _callback);
         return localVarCall;
 
     }
 
     /**
      * File import for a Memory
-     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60; and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example CURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  
+     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60;, &#x60;*.sdlxliff&#x60;(With custom Filters), &#39;*.xliff&#39;, and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example CURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  Example CURL command to upload a translation memory file named &#x60;my_memory.sdlxliff&#x60; in the current working directory, with Custom Filters based on SDLXLIFF fields, conf_name which maps to, percentage, and whether we should ignore unlocked segments. &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdlxliff\\\&quot;,\\\&quot;memory_id\\\&quot;: 12,\\\&quot;sdlxliff_filters\\\&quot;:[{\\\&quot;conf_name\\\&quot;: \\\&quot;Translated\\\&quot;, \\\&quot;percentage\\\&quot;: 100, \\\&quot;allow_unlocked\\\&quot;: false}]\&quot;}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdlxliff   
      * @param memoryId A unique Memory identifier. (required)
      * @param name Name of the TM or termbase file. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
+     * @param sdlxliffFilters Contains Filter information Unique to SDLXLIFF (optional)
      * @param hasHeaderRow A flag indicating whether an imported Termbase CSV has a header row or not (the default value is &#x60;false&#x60;). (optional)
+     * @param skipDuplicates A flag indicating whether or not to skip the import of segments which already exist in the memory. (the default value is &#x60;false&#x60;).  (optional)
      * @return MemoryImportResponse
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -510,18 +523,20 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public MemoryImportResponse importMemoryFile(Integer memoryId, String name, File body, Boolean hasHeaderRow) throws ApiException {
-        ApiResponse<MemoryImportResponse> localVarResp = importMemoryFileWithHttpInfo(memoryId, name, body, hasHeaderRow);
+    public MemoryImportResponse importMemoryFile(Integer memoryId, String name, File body, List<SDLXLIFFFilter> sdlxliffFilters, Boolean hasHeaderRow, Boolean skipDuplicates) throws ApiException {
+        ApiResponse<MemoryImportResponse> localVarResp = importMemoryFileWithHttpInfo(memoryId, name, body, sdlxliffFilters, hasHeaderRow, skipDuplicates);
         return localVarResp.getData();
     }
 
     /**
      * File import for a Memory
-     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60; and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example CURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  
+     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60;, &#x60;*.sdlxliff&#x60;(With custom Filters), &#39;*.xliff&#39;, and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example CURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  Example CURL command to upload a translation memory file named &#x60;my_memory.sdlxliff&#x60; in the current working directory, with Custom Filters based on SDLXLIFF fields, conf_name which maps to, percentage, and whether we should ignore unlocked segments. &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdlxliff\\\&quot;,\\\&quot;memory_id\\\&quot;: 12,\\\&quot;sdlxliff_filters\\\&quot;:[{\\\&quot;conf_name\\\&quot;: \\\&quot;Translated\\\&quot;, \\\&quot;percentage\\\&quot;: 100, \\\&quot;allow_unlocked\\\&quot;: false}]\&quot;}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdlxliff   
      * @param memoryId A unique Memory identifier. (required)
      * @param name Name of the TM or termbase file. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
+     * @param sdlxliffFilters Contains Filter information Unique to SDLXLIFF (optional)
      * @param hasHeaderRow A flag indicating whether an imported Termbase CSV has a header row or not (the default value is &#x60;false&#x60;). (optional)
+     * @param skipDuplicates A flag indicating whether or not to skip the import of segments which already exist in the memory. (the default value is &#x60;false&#x60;).  (optional)
      * @return ApiResponse&lt;MemoryImportResponse&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -531,19 +546,21 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<MemoryImportResponse> importMemoryFileWithHttpInfo(Integer memoryId, String name, File body, Boolean hasHeaderRow) throws ApiException {
-        okhttp3.Call localVarCall = importMemoryFileValidateBeforeCall(memoryId, name, body, hasHeaderRow, null);
+    public ApiResponse<MemoryImportResponse> importMemoryFileWithHttpInfo(Integer memoryId, String name, File body, List<SDLXLIFFFilter> sdlxliffFilters, Boolean hasHeaderRow, Boolean skipDuplicates) throws ApiException {
+        okhttp3.Call localVarCall = importMemoryFileValidateBeforeCall(memoryId, name, body, sdlxliffFilters, hasHeaderRow, skipDuplicates, null);
         Type localVarReturnType = new TypeToken<MemoryImportResponse>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * File import for a Memory (asynchronously)
-     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60; and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example CURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  
+     * Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are &#x60;*.tmx&#x60;, &#x60;*.sdltm&#x60;, &#x60;*.sdlxliff&#x60;(With custom Filters), &#39;*.xliff&#39;, and &#x60;*.tmq&#x60; for TM data; &#x60;*.csv&#x60; and &#x60;*.tbx&#x60; for termbase data. Request parameters should be passed as JSON object with the header field &#x60;LILT-API&#x60;.  Example CURL command to upload a translation memory file named &#x60;my_memory.sdltm&#x60; in the current working directory: &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdltm\\\&quot;,\\\&quot;memory_id\\\&quot;: 42}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdltm &#x60;&#x60;&#x60;  Example CURL command to upload a translation memory file named &#x60;my_memory.sdlxliff&#x60; in the current working directory, with Custom Filters based on SDLXLIFF fields, conf_name which maps to, percentage, and whether we should ignore unlocked segments. &#x60;&#x60;&#x60;   curl -X POST https://lilt.com/2/memories/import?key&#x3D;API_KEY \\     --header \&quot;LILT-API: {\\\&quot;name\\\&quot;: \\\&quot;my_memory.sdlxliff\\\&quot;,\\\&quot;memory_id\\\&quot;: 12,\\\&quot;sdlxliff_filters\\\&quot;:[{\\\&quot;conf_name\\\&quot;: \\\&quot;Translated\\\&quot;, \\\&quot;percentage\\\&quot;: 100, \\\&quot;allow_unlocked\\\&quot;: false}]\&quot;}\&quot; \\     --header \&quot;Content-Type: application/octet-stream\&quot; \\     --data-binary @my_memory.sdlxliff   
      * @param memoryId A unique Memory identifier. (required)
      * @param name Name of the TM or termbase file. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file. (required)
+     * @param sdlxliffFilters Contains Filter information Unique to SDLXLIFF (optional)
      * @param hasHeaderRow A flag indicating whether an imported Termbase CSV has a header row or not (the default value is &#x60;false&#x60;). (optional)
+     * @param skipDuplicates A flag indicating whether or not to skip the import of segments which already exist in the memory. (the default value is &#x60;false&#x60;).  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -554,9 +571,9 @@ public class MemoriesApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call importMemoryFileAsync(Integer memoryId, String name, File body, Boolean hasHeaderRow, final ApiCallback<MemoryImportResponse> _callback) throws ApiException {
+    public okhttp3.Call importMemoryFileAsync(Integer memoryId, String name, File body, List<SDLXLIFFFilter> sdlxliffFilters, Boolean hasHeaderRow, Boolean skipDuplicates, final ApiCallback<MemoryImportResponse> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = importMemoryFileValidateBeforeCall(memoryId, name, body, hasHeaderRow, _callback);
+        okhttp3.Call localVarCall = importMemoryFileValidateBeforeCall(memoryId, name, body, sdlxliffFilters, hasHeaderRow, skipDuplicates, _callback);
         Type localVarReturnType = new TypeToken<MemoryImportResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

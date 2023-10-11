@@ -1,6 +1,6 @@
 /*
  * Lilt REST API
- * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests. ## Authentication Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use. 
+ * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.  ## Authentication  Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.  ## Quotas  Our services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request. 
  *
  * The version of the OpenAPI document: v2.0
  * Contact: support@lilt.com
@@ -1110,6 +1110,9 @@ public class JobsApi {
     /**
      * Build call for retrieveAllJobs
      * @param isArchived Retrieves all jobs that are archived. (optional)
+     * @param isDelivered Retrieves all jobs that are delivered. (optional)
+     * @param offset Return jobs starting at the offset row. If not given the default offset will be 0. (optional)
+     * @param limit The maximum number of jobs to be returned. If not given the default limit will be 25. (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
@@ -1120,7 +1123,7 @@ public class JobsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call retrieveAllJobsCall(Boolean isArchived, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call retrieveAllJobsCall(Boolean isArchived, Boolean isDelivered, Integer offset, Integer limit, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
@@ -1134,6 +1137,18 @@ public class JobsApi {
 
         if (isArchived != null) {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("isArchived", isArchived));
+        }
+
+        if (isDelivered != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("isDelivered", isDelivered));
+        }
+
+        if (offset != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("offset", offset));
+        }
+
+        if (limit != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("limit", limit));
         }
 
         final String[] localVarAccepts = {
@@ -1155,18 +1170,21 @@ public class JobsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call retrieveAllJobsValidateBeforeCall(Boolean isArchived, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call retrieveAllJobsValidateBeforeCall(Boolean isArchived, Boolean isDelivered, Integer offset, Integer limit, final ApiCallback _callback) throws ApiException {
         
 
-        okhttp3.Call localVarCall = retrieveAllJobsCall(isArchived, _callback);
+        okhttp3.Call localVarCall = retrieveAllJobsCall(isArchived, isDelivered, offset, limit, _callback);
         return localVarCall;
 
     }
 
     /**
      * Retrieve all Jobs
-     * Get all Jobs. You can retrieve all jobs from your account using the above API.  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs?key&#x3D;API_KEY&amp;isArchived&#x3D;false&#39; &#x60;&#x60;&#x60;
+     * Get all Jobs within a given offset and limit. You can retrieve jobs from your account using the above API.  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs?key&#x3D;API_KEY&amp;isArchived&#x3D;false&#39; &#x60;&#x60;&#x60;
      * @param isArchived Retrieves all jobs that are archived. (optional)
+     * @param isDelivered Retrieves all jobs that are delivered. (optional)
+     * @param offset Return jobs starting at the offset row. If not given the default offset will be 0. (optional)
+     * @param limit The maximum number of jobs to be returned. If not given the default limit will be 25. (optional)
      * @return List&lt;Job&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1176,15 +1194,18 @@ public class JobsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public List<Job> retrieveAllJobs(Boolean isArchived) throws ApiException {
-        ApiResponse<List<Job>> localVarResp = retrieveAllJobsWithHttpInfo(isArchived);
+    public List<Job> retrieveAllJobs(Boolean isArchived, Boolean isDelivered, Integer offset, Integer limit) throws ApiException {
+        ApiResponse<List<Job>> localVarResp = retrieveAllJobsWithHttpInfo(isArchived, isDelivered, offset, limit);
         return localVarResp.getData();
     }
 
     /**
      * Retrieve all Jobs
-     * Get all Jobs. You can retrieve all jobs from your account using the above API.  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs?key&#x3D;API_KEY&amp;isArchived&#x3D;false&#39; &#x60;&#x60;&#x60;
+     * Get all Jobs within a given offset and limit. You can retrieve jobs from your account using the above API.  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs?key&#x3D;API_KEY&amp;isArchived&#x3D;false&#39; &#x60;&#x60;&#x60;
      * @param isArchived Retrieves all jobs that are archived. (optional)
+     * @param isDelivered Retrieves all jobs that are delivered. (optional)
+     * @param offset Return jobs starting at the offset row. If not given the default offset will be 0. (optional)
+     * @param limit The maximum number of jobs to be returned. If not given the default limit will be 25. (optional)
      * @return ApiResponse&lt;List&lt;Job&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
@@ -1194,16 +1215,19 @@ public class JobsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<List<Job>> retrieveAllJobsWithHttpInfo(Boolean isArchived) throws ApiException {
-        okhttp3.Call localVarCall = retrieveAllJobsValidateBeforeCall(isArchived, null);
+    public ApiResponse<List<Job>> retrieveAllJobsWithHttpInfo(Boolean isArchived, Boolean isDelivered, Integer offset, Integer limit) throws ApiException {
+        okhttp3.Call localVarCall = retrieveAllJobsValidateBeforeCall(isArchived, isDelivered, offset, limit, null);
         Type localVarReturnType = new TypeToken<List<Job>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
      * Retrieve all Jobs (asynchronously)
-     * Get all Jobs. You can retrieve all jobs from your account using the above API.  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs?key&#x3D;API_KEY&amp;isArchived&#x3D;false&#39; &#x60;&#x60;&#x60;
+     * Get all Jobs within a given offset and limit. You can retrieve jobs from your account using the above API.  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://lilt.com/2/jobs?key&#x3D;API_KEY&amp;isArchived&#x3D;false&#39; &#x60;&#x60;&#x60;
      * @param isArchived Retrieves all jobs that are archived. (optional)
+     * @param isDelivered Retrieves all jobs that are delivered. (optional)
+     * @param offset Return jobs starting at the offset row. If not given the default offset will be 0. (optional)
+     * @param limit The maximum number of jobs to be returned. If not given the default limit will be 25. (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
@@ -1214,9 +1238,9 @@ public class JobsApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call retrieveAllJobsAsync(Boolean isArchived, final ApiCallback<List<Job>> _callback) throws ApiException {
+    public okhttp3.Call retrieveAllJobsAsync(Boolean isArchived, Boolean isDelivered, Integer offset, Integer limit, final ApiCallback<List<Job>> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = retrieveAllJobsValidateBeforeCall(isArchived, _callback);
+        okhttp3.Call localVarCall = retrieveAllJobsValidateBeforeCall(isArchived, isDelivered, offset, limit, _callback);
         Type localVarReturnType = new TypeToken<List<Job>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;

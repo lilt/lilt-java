@@ -9,6 +9,7 @@ Method | HTTP request | Description
 [**monitorFileTranslation**](TranslateApi.md#monitorFileTranslation) | **GET** /translate/file | Monitor file translation
 [**registerSegment**](TranslateApi.md#registerSegment) | **GET** /translate/register | Register a segment
 [**translateSegment**](TranslateApi.md#translateSegment) | **GET** /translate | Translate a segment
+[**translateSegmentPost**](TranslateApi.md#translateSegmentPost) | **POST** /translate | Translate a segment
 
 
 <a name="batchTranslateFile"></a>
@@ -328,7 +329,7 @@ Name | Type | Description  | Notes
 
 <a name="translateSegment"></a>
 # **translateSegment**
-> TranslationList translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, body)
+> TranslationList translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, containsIcuData, body)
 
 Translate a segment
 
@@ -369,9 +370,10 @@ public class Example {
     Boolean rich = false; // Boolean | Returns rich translation information (e.g., with word alignments).
     Boolean tmMatches = true; // Boolean | Include translation memory fuzzy matches.
     Boolean projectTags = false; // Boolean | Project tags. Projects tags in source to target if set to true.
+    Boolean containsIcuData = false; // Boolean | Contains ICU data. If true then tags in the source following the ICU standard will be parsed and retained.
     TranslateSegmentBody body = new TranslateSegmentBody(); // TranslateSegmentBody | 
     try {
-      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, body);
+      TranslationList result = apiInstance.translateSegment(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, containsIcuData, body);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#translateSegment");
@@ -396,7 +398,84 @@ Name | Type | Description  | Notes
  **rich** | **Boolean**| Returns rich translation information (e.g., with word alignments). | [optional] [default to false]
  **tmMatches** | **Boolean**| Include translation memory fuzzy matches. | [optional] [default to true]
  **projectTags** | **Boolean**| Project tags. Projects tags in source to target if set to true. | [optional] [default to false]
+ **containsIcuData** | **Boolean**| Contains ICU data. If true then tags in the source following the ICU standard will be parsed and retained. | [optional] [default to false]
  **body** | [**TranslateSegmentBody**](TranslateSegmentBody.md)|  | [optional]
+
+### Return type
+
+[**TranslationList**](TranslationList.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | A TranslationList object. |  -  |
+**202** | When the ML model is loading. |  -  |
+**0** | Unexpected error |  -  |
+
+<a name="translateSegmentPost"></a>
+# **translateSegmentPost**
+> TranslationList translateSegmentPost(body)
+
+Translate a segment
+
+Translate a source string.  Setting the &#x60;rich&#x60; parameter to &#x60;true&#x60; will change the response format to include additional information about each translation including a model score, word alignments,  and formatting information. The rich format can be seen in the example response on this page.  By default, this endpoint also returns translation memory (TM) fuzzy matches, along with associated scores. Fuzzy matches always appear ahead of machine translation output in the response.  The maximum source length is 5,000 characters.  Usage charges apply to this endpoint for production REST API keys.  
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.TranslateApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    TranslateApi apiInstance = new TranslateApi(defaultClient);
+    TranslateSegmentBody1 body = new TranslateSegmentBody1(); // TranslateSegmentBody1 | 
+    try {
+      TranslationList result = apiInstance.translateSegmentPost(body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling TranslateApi#translateSegmentPost");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**TranslateSegmentBody1**](TranslateSegmentBody1.md)|  | [optional]
 
 ### Return type
 

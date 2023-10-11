@@ -1,6 +1,6 @@
 /*
  * Lilt REST API
- * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests. ## Authentication Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use. 
+ * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.  ## Authentication  Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.  ## Quotas  Our services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request. 
  *
  * The version of the OpenAPI document: v2.0
  * Contact: support@lilt.com
@@ -31,6 +31,7 @@ import java.math.BigDecimal;
 import com.lilt.client.model.Error;
 import com.lilt.client.model.TranslateRegisterResponse;
 import com.lilt.client.model.TranslateSegmentBody;
+import com.lilt.client.model.TranslateSegmentBody1;
 import com.lilt.client.model.TranslationInfo;
 import com.lilt.client.model.TranslationList;
 
@@ -615,6 +616,7 @@ public class TranslateApi {
      * @param rich Returns rich translation information (e.g., with word alignments). (optional, default to false)
      * @param tmMatches Include translation memory fuzzy matches. (optional, default to true)
      * @param projectTags Project tags. Projects tags in source to target if set to true. (optional, default to false)
+     * @param containsIcuData Contains ICU data. If true then tags in the source following the ICU standard will be parsed and retained. (optional, default to false)
      * @param body  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -623,10 +625,13 @@ public class TranslateApi {
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A TranslationList object. </td><td>  -  </td></tr>
+        <tr><td> 202 </td><td> When the ML model is loading. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
+     * @deprecated
      */
-    public okhttp3.Call translateSegmentCall(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, TranslateSegmentBody body, final ApiCallback _callback) throws ApiException {
+    @Deprecated
+    public okhttp3.Call translateSegmentCall(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, Boolean containsIcuData, TranslateSegmentBody body, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
@@ -670,6 +675,10 @@ public class TranslateApi {
             localVarQueryParams.addAll(localVarApiClient.parameterToPair("project_tags", projectTags));
         }
 
+        if (containsIcuData != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("contains_icu_data", containsIcuData));
+        }
+
         final String[] localVarAccepts = {
             "application/json"
         };
@@ -688,8 +697,9 @@ public class TranslateApi {
         return localVarApiClient.buildCall(localVarPath, "GET", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
     }
 
+    @Deprecated
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call translateSegmentValidateBeforeCall(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, TranslateSegmentBody body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call translateSegmentValidateBeforeCall(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, Boolean containsIcuData, TranslateSegmentBody body, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'memoryId' is set
         if (memoryId == null) {
@@ -697,7 +707,7 @@ public class TranslateApi {
         }
         
 
-        okhttp3.Call localVarCall = translateSegmentCall(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, body, _callback);
+        okhttp3.Call localVarCall = translateSegmentCall(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, containsIcuData, body, _callback);
         return localVarCall;
 
     }
@@ -713,6 +723,7 @@ public class TranslateApi {
      * @param rich Returns rich translation information (e.g., with word alignments). (optional, default to false)
      * @param tmMatches Include translation memory fuzzy matches. (optional, default to true)
      * @param projectTags Project tags. Projects tags in source to target if set to true. (optional, default to false)
+     * @param containsIcuData Contains ICU data. If true then tags in the source following the ICU standard will be parsed and retained. (optional, default to false)
      * @param body  (optional)
      * @return TranslationList
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -720,11 +731,14 @@ public class TranslateApi {
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A TranslationList object. </td><td>  -  </td></tr>
+        <tr><td> 202 </td><td> When the ML model is loading. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
+     * @deprecated
      */
-    public TranslationList translateSegment(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, TranslateSegmentBody body) throws ApiException {
-        ApiResponse<TranslationList> localVarResp = translateSegmentWithHttpInfo(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, body);
+    @Deprecated
+    public TranslationList translateSegment(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, Boolean containsIcuData, TranslateSegmentBody body) throws ApiException {
+        ApiResponse<TranslationList> localVarResp = translateSegmentWithHttpInfo(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, containsIcuData, body);
         return localVarResp.getData();
     }
 
@@ -739,6 +753,7 @@ public class TranslateApi {
      * @param rich Returns rich translation information (e.g., with word alignments). (optional, default to false)
      * @param tmMatches Include translation memory fuzzy matches. (optional, default to true)
      * @param projectTags Project tags. Projects tags in source to target if set to true. (optional, default to false)
+     * @param containsIcuData Contains ICU data. If true then tags in the source following the ICU standard will be parsed and retained. (optional, default to false)
      * @param body  (optional)
      * @return ApiResponse&lt;TranslationList&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -746,11 +761,14 @@ public class TranslateApi {
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> A TranslationList object. </td><td>  -  </td></tr>
+        <tr><td> 202 </td><td> When the ML model is loading. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
+     * @deprecated
      */
-    public ApiResponse<TranslationList> translateSegmentWithHttpInfo(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, TranslateSegmentBody body) throws ApiException {
-        okhttp3.Call localVarCall = translateSegmentValidateBeforeCall(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, body, null);
+    @Deprecated
+    public ApiResponse<TranslationList> translateSegmentWithHttpInfo(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, Boolean containsIcuData, TranslateSegmentBody body) throws ApiException {
+        okhttp3.Call localVarCall = translateSegmentValidateBeforeCall(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, containsIcuData, body, null);
         Type localVarReturnType = new TypeToken<TranslationList>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
@@ -766,6 +784,120 @@ public class TranslateApi {
      * @param rich Returns rich translation information (e.g., with word alignments). (optional, default to false)
      * @param tmMatches Include translation memory fuzzy matches. (optional, default to true)
      * @param projectTags Project tags. Projects tags in source to target if set to true. (optional, default to false)
+     * @param containsIcuData Contains ICU data. If true then tags in the source following the ICU standard will be parsed and retained. (optional, default to false)
+     * @param body  (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A TranslationList object. </td><td>  -  </td></tr>
+        <tr><td> 202 </td><td> When the ML model is loading. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     * @deprecated
+     */
+    @Deprecated
+    public okhttp3.Call translateSegmentAsync(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, Boolean containsIcuData, TranslateSegmentBody body, final ApiCallback<TranslationList> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = translateSegmentValidateBeforeCall(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, containsIcuData, body, _callback);
+        Type localVarReturnType = new TypeToken<TranslationList>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for translateSegmentPost
+     * @param body  (optional)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A TranslationList object. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call translateSegmentPostCall(TranslateSegmentBody1 body, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/translate";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call translateSegmentPostValidateBeforeCall(TranslateSegmentBody1 body, final ApiCallback _callback) throws ApiException {
+        
+
+        okhttp3.Call localVarCall = translateSegmentPostCall(body, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Translate a segment
+     * Translate a source string.  Setting the &#x60;rich&#x60; parameter to &#x60;true&#x60; will change the response format to include additional information about each translation including a model score, word alignments,  and formatting information. The rich format can be seen in the example response on this page.  By default, this endpoint also returns translation memory (TM) fuzzy matches, along with associated scores. Fuzzy matches always appear ahead of machine translation output in the response.  The maximum source length is 5,000 characters.  Usage charges apply to this endpoint for production REST API keys.  
+     * @param body  (optional)
+     * @return TranslationList
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A TranslationList object. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public TranslationList translateSegmentPost(TranslateSegmentBody1 body) throws ApiException {
+        ApiResponse<TranslationList> localVarResp = translateSegmentPostWithHttpInfo(body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Translate a segment
+     * Translate a source string.  Setting the &#x60;rich&#x60; parameter to &#x60;true&#x60; will change the response format to include additional information about each translation including a model score, word alignments,  and formatting information. The rich format can be seen in the example response on this page.  By default, this endpoint also returns translation memory (TM) fuzzy matches, along with associated scores. Fuzzy matches always appear ahead of machine translation output in the response.  The maximum source length is 5,000 characters.  Usage charges apply to this endpoint for production REST API keys.  
+     * @param body  (optional)
+     * @return ApiResponse&lt;TranslationList&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> A TranslationList object. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<TranslationList> translateSegmentPostWithHttpInfo(TranslateSegmentBody1 body) throws ApiException {
+        okhttp3.Call localVarCall = translateSegmentPostValidateBeforeCall(body, null);
+        Type localVarReturnType = new TypeToken<TranslationList>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Translate a segment (asynchronously)
+     * Translate a source string.  Setting the &#x60;rich&#x60; parameter to &#x60;true&#x60; will change the response format to include additional information about each translation including a model score, word alignments,  and formatting information. The rich format can be seen in the example response on this page.  By default, this endpoint also returns translation memory (TM) fuzzy matches, along with associated scores. Fuzzy matches always appear ahead of machine translation output in the response.  The maximum source length is 5,000 characters.  Usage charges apply to this endpoint for production REST API keys.  
      * @param body  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -777,9 +909,9 @@ public class TranslateApi {
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call translateSegmentAsync(Integer memoryId, String source, Integer sourceHash, String prefix, Integer n, Boolean rich, Boolean tmMatches, Boolean projectTags, TranslateSegmentBody body, final ApiCallback<TranslationList> _callback) throws ApiException {
+    public okhttp3.Call translateSegmentPostAsync(TranslateSegmentBody1 body, final ApiCallback<TranslationList> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = translateSegmentValidateBeforeCall(memoryId, source, sourceHash, prefix, n, rich, tmMatches, projectTags, body, _callback);
+        okhttp3.Call localVarCall = translateSegmentPostValidateBeforeCall(body, _callback);
         Type localVarReturnType = new TypeToken<TranslationList>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
