@@ -1,6 +1,6 @@
 /*
  * Lilt REST API
- * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests. ## Authentication Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use. 
+ * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.  ## Authentication  Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.  ## Quotas  Our services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request. 
  *
  * The version of the OpenAPI document: v2.0
  * Contact: support@lilt.com
@@ -27,12 +27,8 @@ import java.io.IOException;
 /**
  * ProjectUpdateResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2021-12-20T00:13:26.792Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2023-10-11T00:19:44.343Z[GMT]")
 public class ProjectUpdateResponse {
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
-
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
@@ -56,28 +52,6 @@ public class ProjectUpdateResponse {
   public static final String SERIALIZED_NAME_SAMPLE_REVIEW_PERCENTAGE = "sample_review_percentage";
   @SerializedName(SERIALIZED_NAME_SAMPLE_REVIEW_PERCENTAGE)
   private Integer sampleReviewPercentage;
-
-
-  public ProjectUpdateResponse id(Integer id) {
-    
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * A unique Project identifier.
-   * @return id
-  **/
-  @ApiModelProperty(example = "1234", required = true, value = "A unique Project identifier.")
-
-  public Integer getId() {
-    return id;
-  }
-
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
 
 
   public ProjectUpdateResponse name(String name) {
@@ -227,8 +201,7 @@ public class ProjectUpdateResponse {
       return false;
     }
     ProjectUpdateResponse projectUpdateResponse = (ProjectUpdateResponse) o;
-    return Objects.equals(this.id, projectUpdateResponse.id) &&
-        Objects.equals(this.name, projectUpdateResponse.name) &&
+    return Objects.equals(this.name, projectUpdateResponse.name) &&
         Objects.equals(this.state, projectUpdateResponse.state) &&
         Objects.equals(this.dueDate, projectUpdateResponse.dueDate) &&
         Objects.equals(this.archived, projectUpdateResponse.archived) &&
@@ -238,14 +211,13 @@ public class ProjectUpdateResponse {
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name, state, dueDate, archived, metadata, sampleReviewPercentage);
+    return Objects.hash(name, state, dueDate, archived, metadata, sampleReviewPercentage);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
     sb.append("class ProjectUpdateResponse {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
     sb.append("    state: ").append(toIndentedString(state)).append("\n");
     sb.append("    dueDate: ").append(toIndentedString(dueDate)).append("\n");

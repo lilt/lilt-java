@@ -1,6 +1,6 @@
 /*
  * Lilt REST API
- * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests. ## Authentication Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use. 
+ * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.  ## Authentication  Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.  ## Quotas  Our services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request. 
  *
  * The version of the OpenAPI document: v2.0
  * Contact: support@lilt.com
@@ -27,13 +27,17 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
+import com.lilt.client.model.AutoAssignmentParameters;
+import com.lilt.client.model.AutoAssignmentResponse;
+import com.lilt.client.model.BadRequest;
 import com.lilt.client.model.Error;
 import com.lilt.client.model.Project;
 import com.lilt.client.model.ProjectCreateParameters;
 import com.lilt.client.model.ProjectDeleteResponse;
 import com.lilt.client.model.ProjectQuote;
 import com.lilt.client.model.ProjectStatus;
-import com.lilt.client.model.ProjectUpdateResponse;
+import com.lilt.client.model.ProjectsToDeliver;
+import com.lilt.client.model.ProjectsToUpdate;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -287,6 +291,125 @@ public class ProjectsApi {
         okhttp3.Call localVarCall = deleteProjectValidateBeforeCall(id, _callback);
         Type localVarReturnType = new TypeToken<ProjectDeleteResponse>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for deliverProjectsBulk
+     * @param body  (required)
+     * @param workflowEnabled Whether the project has or not workflows enabled. (not used) (optional)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Empty response if succeed. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call deliverProjectsBulkCall(ProjectsToDeliver body, Boolean workflowEnabled, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/projects/bulk-deliver";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (workflowEnabled != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("workflowEnabled", workflowEnabled));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call deliverProjectsBulkValidateBeforeCall(ProjectsToDeliver body, Boolean workflowEnabled, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'body' is set
+        if (body == null) {
+            throw new ApiException("Missing the required parameter 'body' when calling deliverProjectsBulk(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = deliverProjectsBulkCall(body, workflowEnabled, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Deliver multiple projects apart from their jobs.
+     * Deliver mulitple projects apart from their jobs. 
+     * @param body  (required)
+     * @param workflowEnabled Whether the project has or not workflows enabled. (not used) (optional)
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Empty response if succeed. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public void deliverProjectsBulk(ProjectsToDeliver body, Boolean workflowEnabled) throws ApiException {
+        deliverProjectsBulkWithHttpInfo(body, workflowEnabled);
+    }
+
+    /**
+     * Deliver multiple projects apart from their jobs.
+     * Deliver mulitple projects apart from their jobs. 
+     * @param body  (required)
+     * @param workflowEnabled Whether the project has or not workflows enabled. (not used) (optional)
+     * @return ApiResponse&lt;Void&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Empty response if succeed. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<Void> deliverProjectsBulkWithHttpInfo(ProjectsToDeliver body, Boolean workflowEnabled) throws ApiException {
+        okhttp3.Call localVarCall = deliverProjectsBulkValidateBeforeCall(body, workflowEnabled, null);
+        return localVarApiClient.execute(localVarCall);
+    }
+
+    /**
+     * Deliver multiple projects apart from their jobs. (asynchronously)
+     * Deliver mulitple projects apart from their jobs. 
+     * @param body  (required)
+     * @param workflowEnabled Whether the project has or not workflows enabled. (not used) (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> Empty response if succeed. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call deliverProjectsBulkAsync(ProjectsToDeliver body, Boolean workflowEnabled, final ApiCallback<Void> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = deliverProjectsBulkValidateBeforeCall(body, workflowEnabled, _callback);
+        localVarApiClient.executeAsync(localVarCall, _callback);
         return localVarCall;
     }
     /**
@@ -641,7 +764,7 @@ public class ProjectsApi {
     }
     /**
      * Build call for getProjects
-     * @param id A unique Project identifier. (optional)
+     * @param id A unique Project identifier. It can be a single id or multiple ids separated by a comma (optional)
      * @param srclang An ISO 639-1 language code. (optional)
      * @param trglang An ISO 639-1 language code. (optional)
      * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
@@ -732,8 +855,8 @@ public class ProjectsApi {
 
     /**
      * Retrieve a Project
-     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
-     * @param id A unique Project identifier. (optional)
+     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project, multiple projects or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter or you can retrieve multiple projects by adding comma (,) between ids eg. &#x60;?id&#x3D;1234,5678&#x60;. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
+     * @param id A unique Project identifier. It can be a single id or multiple ids separated by a comma (optional)
      * @param srclang An ISO 639-1 language code. (optional)
      * @param trglang An ISO 639-1 language code. (optional)
      * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
@@ -757,8 +880,8 @@ public class ProjectsApi {
 
     /**
      * Retrieve a Project
-     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
-     * @param id A unique Project identifier. (optional)
+     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project, multiple projects or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter or you can retrieve multiple projects by adding comma (,) between ids eg. &#x60;?id&#x3D;1234,5678&#x60;. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
+     * @param id A unique Project identifier. It can be a single id or multiple ids separated by a comma (optional)
      * @param srclang An ISO 639-1 language code. (optional)
      * @param trglang An ISO 639-1 language code. (optional)
      * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
@@ -783,8 +906,8 @@ public class ProjectsApi {
 
     /**
      * Retrieve a Project (asynchronously)
-     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
-     * @param id A unique Project identifier. (optional)
+     * Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project, multiple projects or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter or you can retrieve multiple projects by adding comma (,) between ids eg. &#x60;?id&#x3D;1234,5678&#x60;. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
+     * @param id A unique Project identifier. It can be a single id or multiple ids separated by a comma (optional)
      * @param srclang An ISO 639-1 language code. (optional)
      * @param trglang An ISO 639-1 language code. (optional)
      * @param fromTime Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. (optional)
@@ -810,7 +933,134 @@ public class ProjectsApi {
         return localVarCall;
     }
     /**
-     * Build call for updateProject
+     * Build call for triggerAutoAssignment
+     * @param projectIds The comma separated list of project ids to auto-assign. Can be sent in the body as an alternative but if both are specified the query has precedence.  (required)
+     * @param body  (optional)
+     * @param _callback Callback for upload/download progress
+     * @return Call to execute
+     * @throws ApiException If fail to serialize the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> An auto assignment response. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Bad request. Possible causes include no permission to the projects and the auto-assignment setting not being enabled. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call triggerAutoAssignmentCall(String projectIds, AutoAssignmentParameters body, final ApiCallback _callback) throws ApiException {
+        Object localVarPostBody = body;
+
+        // create path and map variables
+        String localVarPath = "/autoAssignment";
+
+        List<Pair> localVarQueryParams = new ArrayList<Pair>();
+        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
+        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
+        Map<String, String> localVarCookieParams = new HashMap<String, String>();
+        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
+
+        if (projectIds != null) {
+            localVarQueryParams.addAll(localVarApiClient.parameterToPair("projectIds", projectIds));
+        }
+
+        final String[] localVarAccepts = {
+            "application/json"
+        };
+        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
+        if (localVarAccept != null) {
+            localVarHeaderParams.put("Accept", localVarAccept);
+        }
+
+        final String[] localVarContentTypes = {
+            "application/json"
+        };
+        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
+        localVarHeaderParams.put("Content-Type", localVarContentType);
+
+        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
+        return localVarApiClient.buildCall(localVarPath, "POST", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
+    }
+
+    @SuppressWarnings("rawtypes")
+    private okhttp3.Call triggerAutoAssignmentValidateBeforeCall(String projectIds, AutoAssignmentParameters body, final ApiCallback _callback) throws ApiException {
+        
+        // verify the required parameter 'projectIds' is set
+        if (projectIds == null) {
+            throw new ApiException("Missing the required parameter 'projectIds' when calling triggerAutoAssignment(Async)");
+        }
+        
+
+        okhttp3.Call localVarCall = triggerAutoAssignmentCall(projectIds, body, _callback);
+        return localVarCall;
+
+    }
+
+    /**
+     * Auto Assignment
+     * Trigger automatic assignment of linguists.  Requires auto-assignment to be enabled as a setting on the origanization level. 
+     * @param projectIds The comma separated list of project ids to auto-assign. Can be sent in the body as an alternative but if both are specified the query has precedence.  (required)
+     * @param body  (optional)
+     * @return List&lt;AutoAssignmentResponse&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> An auto assignment response. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Bad request. Possible causes include no permission to the projects and the auto-assignment setting not being enabled. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public List<AutoAssignmentResponse> triggerAutoAssignment(String projectIds, AutoAssignmentParameters body) throws ApiException {
+        ApiResponse<List<AutoAssignmentResponse>> localVarResp = triggerAutoAssignmentWithHttpInfo(projectIds, body);
+        return localVarResp.getData();
+    }
+
+    /**
+     * Auto Assignment
+     * Trigger automatic assignment of linguists.  Requires auto-assignment to be enabled as a setting on the origanization level. 
+     * @param projectIds The comma separated list of project ids to auto-assign. Can be sent in the body as an alternative but if both are specified the query has precedence.  (required)
+     * @param body  (optional)
+     * @return ApiResponse&lt;List&lt;AutoAssignmentResponse&gt;&gt;
+     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> An auto assignment response. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Bad request. Possible causes include no permission to the projects and the auto-assignment setting not being enabled. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public ApiResponse<List<AutoAssignmentResponse>> triggerAutoAssignmentWithHttpInfo(String projectIds, AutoAssignmentParameters body) throws ApiException {
+        okhttp3.Call localVarCall = triggerAutoAssignmentValidateBeforeCall(projectIds, body, null);
+        Type localVarReturnType = new TypeToken<List<AutoAssignmentResponse>>(){}.getType();
+        return localVarApiClient.execute(localVarCall, localVarReturnType);
+    }
+
+    /**
+     * Auto Assignment (asynchronously)
+     * Trigger automatic assignment of linguists.  Requires auto-assignment to be enabled as a setting on the origanization level. 
+     * @param projectIds The comma separated list of project ids to auto-assign. Can be sent in the body as an alternative but if both are specified the query has precedence.  (required)
+     * @param body  (optional)
+     * @param _callback The callback to be executed when the API call finishes
+     * @return The request call
+     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
+     * @http.response.details
+     <table summary="Response Details" border="1">
+        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
+        <tr><td> 200 </td><td> An auto assignment response. </td><td>  -  </td></tr>
+        <tr><td> 400 </td><td> Bad request. Possible causes include no permission to the projects and the auto-assignment setting not being enabled. </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+     </table>
+     */
+    public okhttp3.Call triggerAutoAssignmentAsync(String projectIds, AutoAssignmentParameters body, final ApiCallback<List<AutoAssignmentResponse>> _callback) throws ApiException {
+
+        okhttp3.Call localVarCall = triggerAutoAssignmentValidateBeforeCall(projectIds, body, _callback);
+        Type localVarReturnType = new TypeToken<List<AutoAssignmentResponse>>(){}.getType();
+        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
+        return localVarCall;
+    }
+    /**
+     * Build call for updateProjectsBulk
      * @param body  (required)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -818,15 +1068,15 @@ public class ProjectsApi {
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A Project object. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The updated Project objects. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateProjectCall(ProjectUpdateResponse body, final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call updateProjectsBulkCall(ProjectsToUpdate body, final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = body;
 
         // create path and map variables
-        String localVarPath = "/projects";
+        String localVarPath = "/projects/bulk-update";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -853,59 +1103,59 @@ public class ProjectsApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateProjectValidateBeforeCall(ProjectUpdateResponse body, final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call updateProjectsBulkValidateBeforeCall(ProjectsToUpdate body, final ApiCallback _callback) throws ApiException {
         
         // verify the required parameter 'body' is set
         if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateProject(Async)");
+            throw new ApiException("Missing the required parameter 'body' when calling updateProjectsBulk(Async)");
         }
         
 
-        okhttp3.Call localVarCall = updateProjectCall(body, _callback);
+        okhttp3.Call localVarCall = updateProjectsBulkCall(body, _callback);
         return localVarCall;
 
     }
 
     /**
-     * Update a Project
-     * Update a Project. 
+     * Update multiple Projects with a single payload
+     * Update multiple Projects with a single payload. 
      * @param body  (required)
-     * @return Project
+     * @return List&lt;Project&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A Project object. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The updated Project objects. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public Project updateProject(ProjectUpdateResponse body) throws ApiException {
-        ApiResponse<Project> localVarResp = updateProjectWithHttpInfo(body);
+    public List<Project> updateProjectsBulk(ProjectsToUpdate body) throws ApiException {
+        ApiResponse<List<Project>> localVarResp = updateProjectsBulkWithHttpInfo(body);
         return localVarResp.getData();
     }
 
     /**
-     * Update a Project
-     * Update a Project. 
+     * Update multiple Projects with a single payload
+     * Update multiple Projects with a single payload. 
      * @param body  (required)
-     * @return ApiResponse&lt;Project&gt;
+     * @return ApiResponse&lt;List&lt;Project&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A Project object. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The updated Project objects. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<Project> updateProjectWithHttpInfo(ProjectUpdateResponse body) throws ApiException {
-        okhttp3.Call localVarCall = updateProjectValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<Project>(){}.getType();
+    public ApiResponse<List<Project>> updateProjectsBulkWithHttpInfo(ProjectsToUpdate body) throws ApiException {
+        okhttp3.Call localVarCall = updateProjectsBulkValidateBeforeCall(body, null);
+        Type localVarReturnType = new TypeToken<List<Project>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Update a Project (asynchronously)
-     * Update a Project. 
+     * Update multiple Projects with a single payload (asynchronously)
+     * Update multiple Projects with a single payload. 
      * @param body  (required)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
@@ -913,14 +1163,14 @@ public class ProjectsApi {
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A Project object. </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> The updated Project objects. </td><td>  -  </td></tr>
         <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call updateProjectAsync(ProjectUpdateResponse body, final ApiCallback<Project> _callback) throws ApiException {
+    public okhttp3.Call updateProjectsBulkAsync(ProjectsToUpdate body, final ApiCallback<List<Project>> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = updateProjectValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<Project>(){}.getType();
+        okhttp3.Call localVarCall = updateProjectsBulkValidateBeforeCall(body, _callback);
+        Type localVarReturnType = new TypeToken<List<Project>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

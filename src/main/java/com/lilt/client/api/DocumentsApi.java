@@ -1,6 +1,6 @@
 /*
  * Lilt REST API
- * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests. ## Authentication Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use. 
+ * The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:   * Training of and translating with interactive, adaptive machine translation   * Large-scale translation memory   * The Lexicon (a large-scale termbase)   * Programmatic control of the Lilt CAT environment   * Translation memory synchronization  Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.  ## Authentication  Requests are authenticated via REST API key, which requires the Business plan.  Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.  For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.  ## Quotas  Our services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request. 
  *
  * The version of the OpenAPI document: v2.0
  * Contact: support@lilt.com
@@ -37,10 +37,11 @@ import com.lilt.client.model.DocumentDoneUpdateParameters2;
 import com.lilt.client.model.DocumentParameters;
 import com.lilt.client.model.DocumentPretranslateParameters;
 import com.lilt.client.model.DocumentPretranslateResponse;
-import com.lilt.client.model.DocumentUpdateParameters;
 import com.lilt.client.model.DocumentWithSegments;
 import com.lilt.client.model.Error;
 import java.io.File;
+import com.lilt.client.model.ReviewCompletionTypeError;
+import com.lilt.client.model.TranslateCompletionTypeError;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -679,6 +680,7 @@ public class DocumentsApi {
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call markReviewDoneCall(DocumentDoneUpdateParameters2 body, final ApiCallback _callback) throws ApiException {
@@ -735,6 +737,7 @@ public class DocumentsApi {
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
     public List<BigDecimal> markReviewDone(DocumentDoneUpdateParameters2 body) throws ApiException {
@@ -752,6 +755,7 @@ public class DocumentsApi {
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<List<BigDecimal>> markReviewDoneWithHttpInfo(DocumentDoneUpdateParameters2 body) throws ApiException {
@@ -771,6 +775,7 @@ public class DocumentsApi {
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call markReviewDoneAsync(DocumentDoneUpdateParameters2 body, final ApiCallback<List<BigDecimal>> _callback) throws ApiException {
@@ -790,6 +795,7 @@ public class DocumentsApi {
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call markTranslationDoneCall(DocumentDoneUpdateParameters1 body, final ApiCallback _callback) throws ApiException {
@@ -846,6 +852,7 @@ public class DocumentsApi {
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
     public List<BigDecimal> markTranslationDone(DocumentDoneUpdateParameters1 body) throws ApiException {
@@ -863,6 +870,7 @@ public class DocumentsApi {
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
     public ApiResponse<List<BigDecimal>> markTranslationDoneWithHttpInfo(DocumentDoneUpdateParameters1 body) throws ApiException {
@@ -882,6 +890,7 @@ public class DocumentsApi {
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
         <tr><td> 200 </td><td> array of updated documents </td><td>  -  </td></tr>
+        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
      </table>
      */
     public okhttp3.Call markTranslationDoneAsync(DocumentDoneUpdateParameters1 body, final ApiCallback<List<BigDecimal>> _callback) throws ApiException {
@@ -970,7 +979,7 @@ public class DocumentsApi {
 
     /**
      * Pretranslate a Document
-     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
+     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d &#39;{\&quot;id\&quot;: [123]}&#39; -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
      * @param body  (required)
      * @param autoAccept Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits. (optional)
      * @param caseSensitive Deprecated, use body param instead. Optional for using case matching against TM hits. (optional)
@@ -992,7 +1001,7 @@ public class DocumentsApi {
 
     /**
      * Pretranslate a Document
-     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
+     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d &#39;{\&quot;id\&quot;: [123]}&#39; -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
      * @param body  (required)
      * @param autoAccept Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits. (optional)
      * @param caseSensitive Deprecated, use body param instead. Optional for using case matching against TM hits. (optional)
@@ -1015,7 +1024,7 @@ public class DocumentsApi {
 
     /**
      * Pretranslate a Document (asynchronously)
-     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
+     * Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d &#39;{\&quot;id\&quot;: [123]}&#39; -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
      * @param body  (required)
      * @param autoAccept Deprecated, use body param instead. Optional parameter for auto-accepting 100% TM hits. (optional)
      * @param caseSensitive Deprecated, use body param instead. Optional for using case matching against TM hits. (optional)
@@ -1150,129 +1159,14 @@ public class DocumentsApi {
         return localVarCall;
     }
     /**
-     * Build call for updateDocument
-     * @param body  (required)
-     * @param _callback Callback for upload/download progress
-     * @return Call to execute
-     * @throws ApiException If fail to serialize the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A Document object. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call updateDocumentCall(DocumentUpdateParameters body, final ApiCallback _callback) throws ApiException {
-        Object localVarPostBody = body;
-
-        // create path and map variables
-        String localVarPath = "/documents";
-
-        List<Pair> localVarQueryParams = new ArrayList<Pair>();
-        List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
-        Map<String, String> localVarHeaderParams = new HashMap<String, String>();
-        Map<String, String> localVarCookieParams = new HashMap<String, String>();
-        Map<String, Object> localVarFormParams = new HashMap<String, Object>();
-
-        final String[] localVarAccepts = {
-            "application/json"
-        };
-        final String localVarAccept = localVarApiClient.selectHeaderAccept(localVarAccepts);
-        if (localVarAccept != null) {
-            localVarHeaderParams.put("Accept", localVarAccept);
-        }
-
-        final String[] localVarContentTypes = {
-            "application/json"
-        };
-        final String localVarContentType = localVarApiClient.selectHeaderContentType(localVarContentTypes);
-        localVarHeaderParams.put("Content-Type", localVarContentType);
-
-        String[] localVarAuthNames = new String[] { "ApiKeyAuth", "BasicAuth" };
-        return localVarApiClient.buildCall(localVarPath, "PUT", localVarQueryParams, localVarCollectionQueryParams, localVarPostBody, localVarHeaderParams, localVarCookieParams, localVarFormParams, localVarAuthNames, _callback);
-    }
-
-    @SuppressWarnings("rawtypes")
-    private okhttp3.Call updateDocumentValidateBeforeCall(DocumentUpdateParameters body, final ApiCallback _callback) throws ApiException {
-        
-        // verify the required parameter 'body' is set
-        if (body == null) {
-            throw new ApiException("Missing the required parameter 'body' when calling updateDocument(Async)");
-        }
-        
-
-        okhttp3.Call localVarCall = updateDocumentCall(body, _callback);
-        return localVarCall;
-
-    }
-
-    /**
-     * Update a Document
-     * Update a Document. 
-     * @param body  (required)
-     * @return DocumentWithSegments
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A Document object. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
-     </table>
-     */
-    public DocumentWithSegments updateDocument(DocumentUpdateParameters body) throws ApiException {
-        ApiResponse<DocumentWithSegments> localVarResp = updateDocumentWithHttpInfo(body);
-        return localVarResp.getData();
-    }
-
-    /**
-     * Update a Document
-     * Update a Document. 
-     * @param body  (required)
-     * @return ApiResponse&lt;DocumentWithSegments&gt;
-     * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A Document object. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
-     </table>
-     */
-    public ApiResponse<DocumentWithSegments> updateDocumentWithHttpInfo(DocumentUpdateParameters body) throws ApiException {
-        okhttp3.Call localVarCall = updateDocumentValidateBeforeCall(body, null);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
-        return localVarApiClient.execute(localVarCall, localVarReturnType);
-    }
-
-    /**
-     * Update a Document (asynchronously)
-     * Update a Document. 
-     * @param body  (required)
-     * @param _callback The callback to be executed when the API call finishes
-     * @return The request call
-     * @throws ApiException If fail to process the API call, e.g. serializing the request body object
-     * @http.response.details
-     <table summary="Response Details" border="1">
-        <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> A Document object. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
-     </table>
-     */
-    public okhttp3.Call updateDocumentAsync(DocumentUpdateParameters body, final ApiCallback<DocumentWithSegments> _callback) throws ApiException {
-
-        okhttp3.Call localVarCall = updateDocumentValidateBeforeCall(body, _callback);
-        Type localVarReturnType = new TypeToken<DocumentWithSegments>(){}.getType();
-        localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
-        return localVarCall;
-    }
-    /**
      * Build call for uploadDocument
      * @param name A file name. (required)
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
      * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
-     * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
-     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
-     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
+     * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted it will default to your organization settings for &#x60;Accept and lock exact matches&#x60;, if set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value matches your organization settings for &#x60;Use case sensitive translation memory matching&#x60; setting  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value matches your organization settings for &#x60;Translation authorship&#x60; setting  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @param _callback Callback for upload/download progress
      * @return Call to execute
@@ -1373,9 +1267,9 @@ public class DocumentsApi {
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
      * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
-     * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
-     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
-     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
+     * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted it will default to your organization settings for &#x60;Accept and lock exact matches&#x60;, if set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value matches your organization settings for &#x60;Use case sensitive translation memory matching&#x60; setting  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value matches your organization settings for &#x60;Translation authorship&#x60; setting  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @return DocumentWithSegments
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1398,9 +1292,9 @@ public class DocumentsApi {
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
      * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
-     * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
-     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
-     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
+     * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted it will default to your organization settings for &#x60;Accept and lock exact matches&#x60;, if set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value matches your organization settings for &#x60;Use case sensitive translation memory matching&#x60; setting  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value matches your organization settings for &#x60;Translation authorship&#x60; setting  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @return ApiResponse&lt;DocumentWithSegments&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
@@ -1424,9 +1318,9 @@ public class DocumentsApi {
      * @param projectId A unique Project identifier. (required)
      * @param body The file contents to be uploaded. The entire POST body will be treated as the file.  (required)
      * @param pretranslate An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  (optional)
-     * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
-     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  (optional)
-     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  (optional)
+     * @param autoAccept An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted it will default to your organization settings for &#x60;Accept and lock exact matches&#x60;, if set to &#x60;false&#x60;, no segments will be auto-accepted.  (optional)
+     * @param caseSensitive An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value matches your organization settings for &#x60;Use case sensitive translation memory matching&#x60; setting  (optional)
+     * @param matchAttribution An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value matches your organization settings for &#x60;Translation authorship&#x60; setting  (optional)
      * @param configId An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  (optional)
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call

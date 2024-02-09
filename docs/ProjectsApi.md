@@ -6,11 +6,13 @@ Method | HTTP request | Description
 ------------- | ------------- | -------------
 [**createProject**](ProjectsApi.md#createProject) | **POST** /projects | Create a Project
 [**deleteProject**](ProjectsApi.md#deleteProject) | **DELETE** /projects | Delete a Project
+[**deliverProjectsBulk**](ProjectsApi.md#deliverProjectsBulk) | **POST** /projects/bulk-deliver | Deliver multiple projects apart from their jobs.
 [**getProjectReport**](ProjectsApi.md#getProjectReport) | **GET** /projects/quote | Retrieve Project report
 [**getProjectRevisionReport**](ProjectsApi.md#getProjectRevisionReport) | **GET** /projects/{id}/revision | Retrieve Project revision report
 [**getProjectStatus**](ProjectsApi.md#getProjectStatus) | **GET** /projects/status | Retrieve Project status
 [**getProjects**](ProjectsApi.md#getProjects) | **GET** /projects | Retrieve a Project
-[**updateProject**](ProjectsApi.md#updateProject) | **PUT** /projects | Update a Project
+[**triggerAutoAssignment**](ProjectsApi.md#triggerAutoAssignment) | **POST** /autoAssignment | Auto Assignment
+[**updateProjectsBulk**](ProjectsApi.md#updateProjectsBulk) | **PUT** /projects/bulk-update | Update multiple Projects with a single payload
 
 
 <a name="createProject"></a>
@@ -161,6 +163,82 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A status object. |  -  |
+**0** | Unexpected error |  -  |
+
+<a name="deliverProjectsBulk"></a>
+# **deliverProjectsBulk**
+> deliverProjectsBulk(body, workflowEnabled)
+
+Deliver multiple projects apart from their jobs.
+
+Deliver mulitple projects apart from their jobs. 
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.ProjectsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    ProjectsApi apiInstance = new ProjectsApi(defaultClient);
+    ProjectsToDeliver body = new ProjectsToDeliver(); // ProjectsToDeliver | 
+    Boolean workflowEnabled = true; // Boolean | Whether the project has or not workflows enabled. (not used)
+    try {
+      apiInstance.deliverProjectsBulk(body, workflowEnabled);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ProjectsApi#deliverProjectsBulk");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**ProjectsToDeliver**](ProjectsToDeliver.md)|  |
+ **workflowEnabled** | **Boolean**| Whether the project has or not workflows enabled. (not used) | [optional]
+
+### Return type
+
+null (empty response body)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | Empty response if succeed. |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="getProjectReport"></a>
@@ -393,7 +471,7 @@ Name | Type | Description  | Notes
 
 Retrieve a Project
 
-Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
+Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project, multiple projects or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter or you can retrieve multiple projects by adding comma (,) between ids eg. &#x60;?id&#x3D;1234,5678&#x60;. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
 
 ### Example
 ```java
@@ -422,7 +500,7 @@ public class Example {
     BasicAuth.setPassword("YOUR PASSWORD");
 
     ProjectsApi apiInstance = new ProjectsApi(defaultClient);
-    Integer id = 56; // Integer | A unique Project identifier.
+    Integer id = 56; // Integer | A unique Project identifier. It can be a single id or multiple ids separated by a comma
     String srclang = "srclang_example"; // String | An ISO 639-1 language code.
     String trglang = "trglang_example"; // String | An ISO 639-1 language code.
     Integer fromTime = 56; // Integer | Unix time stamp (epoch, in seconds) of Projects with `created_at` greater than or equal to the value.
@@ -448,7 +526,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Integer**| A unique Project identifier. | [optional]
+ **id** | **Integer**| A unique Project identifier. It can be a single id or multiple ids separated by a comma | [optional]
  **srclang** | **String**| An ISO 639-1 language code. | [optional]
  **trglang** | **String**| An ISO 639-1 language code. | [optional]
  **fromTime** | **Integer**| Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. | [optional]
@@ -476,13 +554,13 @@ Name | Type | Description  | Notes
 **200** | A list of Project objects. |  -  |
 **0** | Unexpected error |  -  |
 
-<a name="updateProject"></a>
-# **updateProject**
-> Project updateProject(body)
+<a name="triggerAutoAssignment"></a>
+# **triggerAutoAssignment**
+> List&lt;AutoAssignmentResponse&gt; triggerAutoAssignment(projectIds, body)
 
-Update a Project
+Auto Assignment
 
-Update a Project. 
+Trigger automatic assignment of linguists.  Requires auto-assignment to be enabled as a setting on the origanization level. 
 
 ### Example
 ```java
@@ -511,12 +589,13 @@ public class Example {
     BasicAuth.setPassword("YOUR PASSWORD");
 
     ProjectsApi apiInstance = new ProjectsApi(defaultClient);
-    ProjectUpdateResponse body = new ProjectUpdateResponse(); // ProjectUpdateResponse | 
+    String projectIds = "projectIds_example"; // String | The comma separated list of project ids to auto-assign. Can be sent in the body as an alternative but if both are specified the query has precedence. 
+    AutoAssignmentParameters body = new AutoAssignmentParameters(); // AutoAssignmentParameters | 
     try {
-      Project result = apiInstance.updateProject(body);
+      List<AutoAssignmentResponse> result = apiInstance.triggerAutoAssignment(projectIds, body);
       System.out.println(result);
     } catch (ApiException e) {
-      System.err.println("Exception when calling ProjectsApi#updateProject");
+      System.err.println("Exception when calling ProjectsApi#triggerAutoAssignment");
       System.err.println("Status code: " + e.getCode());
       System.err.println("Reason: " + e.getResponseBody());
       System.err.println("Response headers: " + e.getResponseHeaders());
@@ -530,11 +609,12 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **body** | [**ProjectUpdateResponse**](ProjectUpdateResponse.md)|  |
+ **projectIds** | **String**| The comma separated list of project ids to auto-assign. Can be sent in the body as an alternative but if both are specified the query has precedence.  |
+ **body** | [**AutoAssignmentParameters**](AutoAssignmentParameters.md)|  | [optional]
 
 ### Return type
 
-[**Project**](Project.md)
+[**List&lt;AutoAssignmentResponse&gt;**](AutoAssignmentResponse.md)
 
 ### Authorization
 
@@ -548,6 +628,82 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | A Project object. |  -  |
+**200** | An auto assignment response. |  -  |
+**400** | Bad request. Possible causes include no permission to the projects and the auto-assignment setting not being enabled. |  -  |
+**0** | Unexpected error |  -  |
+
+<a name="updateProjectsBulk"></a>
+# **updateProjectsBulk**
+> List&lt;Project&gt; updateProjectsBulk(body)
+
+Update multiple Projects with a single payload
+
+Update multiple Projects with a single payload. 
+
+### Example
+```java
+// Import classes:
+import com.lilt.client.ApiClient;
+import com.lilt.client.ApiException;
+import com.lilt.client.Configuration;
+import com.lilt.client.auth.*;
+import com.lilt.client.models.*;
+import com.lilt.client.api.ProjectsApi;
+
+public class Example {
+  public static void main(String[] args) {
+    ApiClient defaultClient = Configuration.getDefaultApiClient();
+    defaultClient.setBasePath("https://lilt.com/2");
+    
+    // Configure API key authorization: ApiKeyAuth
+    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
+    ApiKeyAuth.setApiKey("YOUR API KEY");
+    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
+    //ApiKeyAuth.setApiKeyPrefix("Token");
+
+    // Configure HTTP basic authorization: BasicAuth
+    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
+    BasicAuth.setUsername("YOUR USERNAME");
+    BasicAuth.setPassword("YOUR PASSWORD");
+
+    ProjectsApi apiInstance = new ProjectsApi(defaultClient);
+    ProjectsToUpdate body = new ProjectsToUpdate(); // ProjectsToUpdate | 
+    try {
+      List<Project> result = apiInstance.updateProjectsBulk(body);
+      System.out.println(result);
+    } catch (ApiException e) {
+      System.err.println("Exception when calling ProjectsApi#updateProjectsBulk");
+      System.err.println("Status code: " + e.getCode());
+      System.err.println("Reason: " + e.getResponseBody());
+      System.err.println("Response headers: " + e.getResponseHeaders());
+      e.printStackTrace();
+    }
+  }
+}
+```
+
+### Parameters
+
+Name | Type | Description  | Notes
+------------- | ------------- | ------------- | -------------
+ **body** | [**ProjectsToUpdate**](ProjectsToUpdate.md)|  |
+
+### Return type
+
+[**List&lt;Project&gt;**](Project.md)
+
+### Authorization
+
+[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
+
+### HTTP request headers
+
+ - **Content-Type**: application/json
+ - **Accept**: application/json
+
+### HTTP response details
+| Status code | Description | Response headers |
+|-------------|-------------|------------------|
+**200** | The updated Project objects. |  -  |
 **0** | Unexpected error |  -  |
 

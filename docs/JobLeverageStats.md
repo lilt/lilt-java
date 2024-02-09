@@ -11,7 +11,7 @@ Name | Type | Description | Notes
 **exactWords** | **Integer** | Total number of exact words. |  [optional]
 **fuzzyWords** | **Integer** | Total number of fuzzy words. |  [optional]
 **newWords** | **Integer** | Total number of new words. |  [optional]
-**projects** | [**List&lt;JobLeverageStatsProjects&gt;**](JobLeverageStatsProjects.md) |  |  [optional]
+**projects** | [**List&lt;ProjectStats&gt;**](ProjectStats.md) |  |  [optional]
 
 
 

@@ -13,7 +13,6 @@ Method | HTTP request | Description
 [**markTranslationDone**](DocumentsApi.md#markTranslationDone) | **POST** /documents/done/translation | Mark translation done
 [**pretranslateDocuments**](DocumentsApi.md#pretranslateDocuments) | **POST** /documents/pretranslate | Pretranslate a Document
 [**unlockDocuments**](DocumentsApi.md#unlockDocuments) | **POST** /documents/done/unlock | Unlock documents
-[**updateDocument**](DocumentsApi.md#updateDocument) | **PUT** /documents | Update a Document
 [**uploadDocument**](DocumentsApi.md#uploadDocument) | **POST** /documents/files | Upload a File
 
 
@@ -470,6 +469,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | array of updated documents |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="markTranslationDone"></a>
 # **markTranslationDone**
@@ -544,6 +544,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | array of updated documents |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="pretranslateDocuments"></a>
 # **pretranslateDocuments**
@@ -551,7 +552,7 @@ Name | Type | Description  | Notes
 
 Pretranslate a Document
 
-Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d {\&quot;id\&quot;: [123]} -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
+Initiate pretranslation of a list of Documents. This request will mark document(s) as being pretranslated. Pretranslation in this context is: - Applying and confirming exact TM matches based on the Memory of the Project; - Translating all other segments via MT without confirming them.  Example CURL command: &#x60;&#x60;&#x60; curl -X POST https://lilt.com/2/documents/pretranslate?key&#x3D;API_KEY -d &#39;{\&quot;id\&quot;: [123]}&#39; -H \&quot;Content-Type: application/json\&quot; &#x60;&#x60;&#x60;  Document translation is an asynchronous process that, in effect, is performed in the background.  To check the status of pretranslation for a document, use the &#x60;GET /documents&#x60; endpoint. When pretranslation is in progress for a document, the &#x60;GET /documents&#x60; endpoint&#39;s response will include &#x60;is_pretranslating &#x3D; true&#x60; as well as a more detailed status property &#x60;status.pretranslation&#x60; one of &#x60;idle&#x60;, &#x60;pending&#x60;, or &#x60;running&#x60;.  Once pretranslation is finished, the document can be downloaded via &#x60;GET /documents/files&#x60;. 
 
 ### Example
 ```java
@@ -702,81 +703,6 @@ Name | Type | Description  | Notes
 |-------------|-------------|------------------|
 **200** | array of updated documents |  -  |
 
-<a name="updateDocument"></a>
-# **updateDocument**
-> DocumentWithSegments updateDocument(body)
-
-Update a Document
-
-Update a Document. 
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.DocumentsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    DocumentsApi apiInstance = new DocumentsApi(defaultClient);
-    DocumentUpdateParameters body = new DocumentUpdateParameters(); // DocumentUpdateParameters | 
-    try {
-      DocumentWithSegments result = apiInstance.updateDocument(body);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling DocumentsApi#updateDocument");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**DocumentUpdateParameters**](DocumentUpdateParameters.md)|  |
-
-### Return type
-
-[**DocumentWithSegments**](DocumentWithSegments.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A Document object. |  -  |
-**0** | Unexpected error |  -  |
-
 <a name="uploadDocument"></a>
 # **uploadDocument**
 > DocumentWithSegments uploadDocument(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId)
@@ -816,9 +742,9 @@ public class Example {
     Integer projectId = 56; // Integer | A unique Project identifier.
     File body = new File("/path/to/file"); // File | The file contents to be uploaded. The entire POST body will be treated as the file. 
     String pretranslate = "pretranslate_example"; // String | An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are `TM`, or `TM+MT` 
-    Boolean autoAccept = true; // Boolean | An optional parameter to auto-accept segments with 100% translation memory matches when the `pretranslate` option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to `false`, no segments will be auto-accepted. 
-    Boolean caseSensitive = true; // Boolean | An optional parameter to use case sensitive translation memory matching when the `pretranslate` option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is `false` 
-    Boolean matchAttribution = true; // Boolean | An optional parameter to attribute translation authorship of exact matches to the author of the file when the `pretranslate` option is also enabled. Default value is `false` 
+    Boolean autoAccept = true; // Boolean | An optional parameter to auto-accept segments with 100% translation memory matches when the `pretranslate` option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted it will default to your organization settings for `Accept and lock exact matches`, if set to `false`, no segments will be auto-accepted. 
+    Boolean caseSensitive = true; // Boolean | An optional parameter to use case sensitive translation memory matching when the `pretranslate` option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value matches your organization settings for `Use case sensitive translation memory matching` setting 
+    Boolean matchAttribution = true; // Boolean | An optional parameter to attribute translation authorship of exact matches to the author of the file when the `pretranslate` option is also enabled. Default value matches your organization settings for `Translation authorship` setting 
     Integer configId = 56; // Integer | An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file. 
     try {
       DocumentWithSegments result = apiInstance.uploadDocument(name, projectId, body, pretranslate, autoAccept, caseSensitive, matchAttribution, configId);
@@ -842,9 +768,9 @@ Name | Type | Description  | Notes
  **projectId** | **Integer**| A unique Project identifier. |
  **body** | **File**| The file contents to be uploaded. The entire POST body will be treated as the file.  |
  **pretranslate** | **String**| An optional parameter indicating if and how the document will be pretranslated upon being uploaded. The accepted values are &#x60;TM&#x60;, or &#x60;TM+MT&#x60;  | [optional]
- **autoAccept** | **Boolean**| An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted or set to &#x60;false&#x60;, no segments will be auto-accepted.  | [optional]
- **caseSensitive** | **Boolean**| An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value is &#x60;false&#x60;  | [optional]
- **matchAttribution** | **Boolean**| An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value is &#x60;false&#x60;  | [optional]
+ **autoAccept** | **Boolean**| An optional parameter to auto-accept segments with 100% translation memory matches when the &#x60;pretranslate&#x60; option is also set, or to auto-accept any target data that is present when the uploaded file is XLIFF. If omitted it will default to your organization settings for &#x60;Accept and lock exact matches&#x60;, if set to &#x60;false&#x60;, no segments will be auto-accepted.  | [optional]
+ **caseSensitive** | **Boolean**| An optional parameter to use case sensitive translation memory matching when the &#x60;pretranslate&#x60; option is also enabled. Matches must have identical character-by-character case to qualify as matches. Default value matches your organization settings for &#x60;Use case sensitive translation memory matching&#x60; setting  | [optional]
+ **matchAttribution** | **Boolean**| An optional parameter to attribute translation authorship of exact matches to the author of the file when the &#x60;pretranslate&#x60; option is also enabled. Default value matches your organization settings for &#x60;Translation authorship&#x60; setting  | [optional]
  **configId** | **Integer**| An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.  | [optional]
 
 ### Return type

@@ -311,7 +311,7 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of files. |  -  |
-**403** | Unauthorized. |  -  |
+**403** | User does not have permission for provided file. |  -  |
 **410** | File deleted. |  -  |
 **0** | Unexpected error. |  -  |
 
