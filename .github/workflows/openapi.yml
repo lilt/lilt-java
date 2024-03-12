@@ -23,7 +23,7 @@ jobs:
         with:
           args: >-
             generate
-            -i https://lilt.com/docs/api/public-http-api-swagger.yaml
+            -i https://developers.lilt.com/redocusaurus/plugin-redoc-0.yaml
             -g java
             -p modelPackage=com.lilt.client.model
             -p apiPackage=com.lilt.client.api
