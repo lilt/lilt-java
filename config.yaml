@@ -1,0 +1,40 @@
+openapi-generator-version: 5
+
+# API spec location(s)
+inputs:
+  - https://lilt.com/docs/api/public-http-api-swagger.yaml 
+
+# Code generation language
+lang: java
+
+# Output information
+outputDir: ./
+artifactId: lilt-java-client
+groupId: com.lilt.client
+modelPackage: com.lilt.client.model
+apiPackage: com.lilt.client.api
+artifactVersion: 2.2.0
+packageName: lilt
+
+# Git repository configuration (optional)
+git:
+  host: https://github.com
+  username: lilt
+  repoId: lilt-java
+  remote: origin  
+  branch: main    
+
+
+# Global server configuration (overrides individual server entries)
+server:
+  url: https://lilt.com/2
+
+# Logging configuration (optional)
+# Sets the logging level (DEBUG, INFO, WARN, ERROR)
+logLevel: INFO
+
+# Schema validation options
+# Skip validation of the input OpenAPI spec (not recommended for production)
+skipValidateSpec: true
+# Fail generation on schema validation errors
+failOnErrors: false
