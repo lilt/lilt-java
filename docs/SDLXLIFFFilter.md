@@ -1,0 +1,26 @@
+
+
+# SDLXLIFFFilter
+
+## Properties
+
+Name | Type | Description | Notes
+------------ | ------------- | ------------- | -------------
+**confName** | [**ConfNameEnum**](#ConfNameEnum) | the current state of the SDLXLIFF Trans Unit. | 
+**allowablePercentage** | **Integer** | This represents for the current conf_name what percentage the filter applies to.  If you pass -1 it will take any value for this field and won&#39;t ignore blank values. If you pass 50, Lilt will only import Segments that have a 50 percent match or better. |  [optional]
+**allowUnlockedSegments** | **Boolean** | Boolean that tells Lilt whether we should allow unlocked Segments for this conf_name. |  [optional]
+
+
+
+## Enum: ConfNameEnum
+
+Name | Value
+---- | -----
+TRANSLATED | &quot;Translated&quot;
+DRAFT | &quot;Draft&quot;
+APPROVEDTRANSLATION | &quot;ApprovedTranslation&quot;
+LOCKED | &quot;Locked&quot;
+SIGNEDOFF | &quot;SignedOff&quot;
+
+
+
