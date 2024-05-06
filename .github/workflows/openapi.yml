@@ -33,7 +33,7 @@ jobs:
             --package-name lilt 
             --git-host github.com 
             --git-user-id lilt 
-            -p artifactDescription='LILT Java Client' 
+            -p artifactDescription="LILT Java Client" 
             -p artifactUrl=https://github.com/lilt/lilt-java 
             --git-repo-id lilt-java 
             --skip-validate-spec 
