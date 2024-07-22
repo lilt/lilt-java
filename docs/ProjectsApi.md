@@ -1,16 +1,12 @@
 # ProjectsApi
 
-All URIs are relative to *https://lilt.com/2*
+All URIs are relative to *https://api.lilt.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**createProject**](ProjectsApi.md#createProject) | **POST** /projects | Create a Project
-[**deleteProject**](ProjectsApi.md#deleteProject) | **DELETE** /projects | Delete a Project
-[**getProjectReport**](ProjectsApi.md#getProjectReport) | **GET** /projects/quote | Retrieve Project report
-[**getProjectRevisionReport**](ProjectsApi.md#getProjectRevisionReport) | **GET** /projects/{id}/revision | Retrieve Project revision report
-[**getProjectStatus**](ProjectsApi.md#getProjectStatus) | **GET** /projects/status | Retrieve Project status
-[**getProjects**](ProjectsApi.md#getProjects) | **GET** /projects | Retrieve a Project
-[**updateProject**](ProjectsApi.md#updateProject) | **PUT** /projects | Update a Project
+[**createProject**](ProjectsApi.md#createProject) | **POST** /v2/projects | Create a Project
+[**deleteProject**](ProjectsApi.md#deleteProject) | **DELETE** /v2/projects | Delete a Project
+[**getProjects**](ProjectsApi.md#getProjects) | **GET** /v2/projects | Retrieve a Project
 
 
 <a name="createProject"></a>
@@ -34,7 +30,7 @@ import com.lilt.client.api.ProjectsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
+    defaultClient.setBasePath("https://api.lilt.com");
     
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
@@ -109,7 +105,7 @@ import com.lilt.client.api.ProjectsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
+    defaultClient.setBasePath("https://api.lilt.com");
     
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
@@ -163,237 +159,13 @@ Name | Type | Description  | Notes
 **200** | A status object. |  -  |
 **0** | Unexpected error |  -  |
 
-<a name="getProjectReport"></a>
-# **getProjectReport**
-> ProjectQuote getProjectReport(id)
-
-Retrieve Project report
-
-Get information about a project that can be used for quoting. This includes: * A translation memory leverage report * Word count * Segment count  
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.ProjectsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    ProjectsApi apiInstance = new ProjectsApi(defaultClient);
-    Integer id = 56; // Integer | A unique Project identifier.
-    try {
-      ProjectQuote result = apiInstance.getProjectReport(id);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ProjectsApi#getProjectReport");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **Integer**| A unique Project identifier. |
-
-### Return type
-
-[**ProjectQuote**](ProjectQuote.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | An object that represents a Project quote. |  -  |
-**0** | Unexpected error |  -  |
-
-<a name="getProjectRevisionReport"></a>
-# **getProjectRevisionReport**
-> getProjectRevisionReport(id)
-
-Retrieve Project revision report
-
-Get information about a project&#39;s revision report. This includes: * Stats on accepted segments * reviewer details * Error rate  
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.ProjectsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    ProjectsApi apiInstance = new ProjectsApi(defaultClient);
-    Integer id = 56; // Integer | A unique Project identifier.
-    try {
-      apiInstance.getProjectRevisionReport(id);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ProjectsApi#getProjectRevisionReport");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **Integer**| A unique Project identifier. |
-
-### Return type
-
-null (empty response body)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A csv file containing revision report. |  -  |
-**0** | Unexpected error |  -  |
-
-<a name="getProjectStatus"></a>
-# **getProjectStatus**
-> ProjectStatus getProjectStatus(id)
-
-Retrieve Project status
-
-Retrieve the status of a Project.  
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.ProjectsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    ProjectsApi apiInstance = new ProjectsApi(defaultClient);
-    Integer id = 56; // Integer | A unique Project identifier.
-    try {
-      ProjectStatus result = apiInstance.getProjectStatus(id);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ProjectsApi#getProjectStatus");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **id** | **Integer**| A unique Project identifier. |
-
-### Return type
-
-[**ProjectStatus**](ProjectStatus.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: Not defined
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | An object that represents a Project status report. |  -  |
-**0** | Unexpected error |  -  |
-
 <a name="getProjects"></a>
 # **getProjects**
 > List&lt;Project&gt; getProjects(id, srclang, trglang, fromTime, toTime, state, archived, connectorId)
 
 Retrieve a Project
 
-Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
+Retrieves one or more projects, including the documents associated with each project. Retrieving a project is the most efficient way to retrieve a single project, multiple projects or a list of all available projects.  To retrieve a specific project, specify the &#x60;id&#x60; request parameter or you can retrieve multiple projects by adding comma (,) between ids eg. &#x60;?id&#x3D;1234,5678&#x60;. To retrieve all projects, omit the &#x60;id&#x60; request parameter. To limit the retrieved projects to those with a particular source language or target language, specify the corresponding ISO 639-1 language codes in the &#x60;srclang&#x60; and &#x60;trglang&#x60; request parameters, respectively.
 
 ### Example
 ```java
@@ -408,7 +180,7 @@ import com.lilt.client.api.ProjectsApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
+    defaultClient.setBasePath("https://api.lilt.com");
     
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
@@ -422,7 +194,7 @@ public class Example {
     BasicAuth.setPassword("YOUR PASSWORD");
 
     ProjectsApi apiInstance = new ProjectsApi(defaultClient);
-    Integer id = 56; // Integer | A unique Project identifier.
+    Integer id = 56; // Integer | A unique Project identifier. It can be a single id or multiple ids separated by a comma
     String srclang = "srclang_example"; // String | An ISO 639-1 language code.
     String trglang = "trglang_example"; // String | An ISO 639-1 language code.
     Integer fromTime = 56; // Integer | Unix time stamp (epoch, in seconds) of Projects with `created_at` greater than or equal to the value.
@@ -448,7 +220,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **id** | **Integer**| A unique Project identifier. | [optional]
+ **id** | **Integer**| A unique Project identifier. It can be a single id or multiple ids separated by a comma | [optional]
  **srclang** | **String**| An ISO 639-1 language code. | [optional]
  **trglang** | **String**| An ISO 639-1 language code. | [optional]
  **fromTime** | **Integer**| Unix time stamp (epoch, in seconds) of Projects with &#x60;created_at&#x60; greater than or equal to the value. | [optional]
@@ -474,80 +246,5 @@ Name | Type | Description  | Notes
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of Project objects. |  -  |
-**0** | Unexpected error |  -  |
-
-<a name="updateProject"></a>
-# **updateProject**
-> Project updateProject(body)
-
-Update a Project
-
-Update a Project. 
-
-### Example
-```java
-// Import classes:
-import com.lilt.client.ApiClient;
-import com.lilt.client.ApiException;
-import com.lilt.client.Configuration;
-import com.lilt.client.auth.*;
-import com.lilt.client.models.*;
-import com.lilt.client.api.ProjectsApi;
-
-public class Example {
-  public static void main(String[] args) {
-    ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
-    
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
-    // Configure HTTP basic authorization: BasicAuth
-    HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
-
-    ProjectsApi apiInstance = new ProjectsApi(defaultClient);
-    ProjectUpdateResponse body = new ProjectUpdateResponse(); // ProjectUpdateResponse | 
-    try {
-      Project result = apiInstance.updateProject(body);
-      System.out.println(result);
-    } catch (ApiException e) {
-      System.err.println("Exception when calling ProjectsApi#updateProject");
-      System.err.println("Status code: " + e.getCode());
-      System.err.println("Reason: " + e.getResponseBody());
-      System.err.println("Response headers: " + e.getResponseHeaders());
-      e.printStackTrace();
-    }
-  }
-}
-```
-
-### Parameters
-
-Name | Type | Description  | Notes
-------------- | ------------- | ------------- | -------------
- **body** | [**ProjectUpdateResponse**](ProjectUpdateResponse.md)|  |
-
-### Return type
-
-[**Project**](Project.md)
-
-### Authorization
-
-[ApiKeyAuth](../README.md#ApiKeyAuth), [BasicAuth](../README.md#BasicAuth)
-
-### HTTP request headers
-
- - **Content-Type**: application/json
- - **Accept**: application/json
-
-### HTTP response details
-| Status code | Description | Response headers |
-|-------------|-------------|------------------|
-**200** | A Project object. |  -  |
 **0** | Unexpected error |  -  |
 

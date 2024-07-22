@@ -14,11 +14,22 @@ Name | Type | Description | Notes
 **numLanguagePairs** | **Integer** | Total number of delivered projects. |  [optional]
 **numProjects** | **Integer** | Total number of projects. |  [optional]
 **percentReviewed** | **Integer** | Overall percentage of documents reviewed. |  [optional]
-**percentTranslated** | **Integer** |  |  [optional]
+**percentTranslated** | **Integer** | Overall percentage of documents translated. |  [optional]
 **projects** | [**List&lt;JobProject&gt;**](JobProject.md) |  |  [optional]
 **sourceWords** | **Integer** | Total number of source words. |  [optional]
 **uniqueLanguagePairs** | **Integer** | Number of unique language pairs. |  [optional]
 **uniqueLinguists** | **Integer** | Number of unique linguists. |  [optional]
+**workflowStatus** | [**WorkflowStatusEnum**](#WorkflowStatusEnum) | The status of the Workflow for the current job. |  [optional]
+
+
+
+## Enum: WorkflowStatusEnum
+
+Name | Value
+---- | -----
+READY_TO_START | &quot;READY_TO_START&quot;
+IN_PROGRESS | &quot;IN_PROGRESS&quot;
+DONE | &quot;DONE&quot;
 
 
 
