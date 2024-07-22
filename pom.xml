@@ -1,36 +1,25 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>org.openapitools</groupId>
-    <artifactId>openapi-java-client</artifactId>
+    <groupId>com.lilt.client</groupId>
+    <artifactId>lilt-java-client</artifactId>
     <packaging>jar</packaging>
-    <name>openapi-java-client</name>
-    <version>2.2.0</version>
+    <name>lilt-java-client</name>
+    <version>3.0.0</version>
     <url>https://github.com/openapitools/openapi-generator</url>
-    <description>OpenAPI Java</description>
+    <description>LILT Java</description>
     <scm>
         <connection>scm:git:git@github.com:openapitools/openapi-generator.git</connection>
         <developerConnection>scm:git:git@github.com:openapitools/openapi-generator.git</developerConnection>
         <url>https://github.com/openapitools/openapi-generator</url>
     </scm>
-
-    <licenses>
-        <license>
-            <name>Unlicense</name>
-            <url>http://unlicense.org</url>
-            <distribution>repo</distribution>
-        </license>
-    </licenses>
-
-    <developers>
-        <developer>
-            <name>OpenAPI-Generator Contributors</name>
-            <email>team@openapitools.org</email>
-            <organization>OpenAPITools.org</organization>
-            <organizationUrl>http://openapitools.org</organizationUrl>
-        </developer>
-    </developers>
-
+   <distributionManagement>
+      <repository>
+        <id>github</id>
+        <name>Lilt packages on GitHub</name>
+        <url>https://maven.pkg.github.com/lilt/lilt-java</url>
+      </repository>
+    </distributionManagement>
     <build>
         <plugins>
            <plugin>
