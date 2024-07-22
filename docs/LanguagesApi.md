@@ -1,10 +1,10 @@
 # LanguagesApi
 
-All URIs are relative to *https://lilt.com/2*
+All URIs are relative to *https://api.lilt.com*
 
 Method | HTTP request | Description
 ------------- | ------------- | -------------
-[**getLanguages**](LanguagesApi.md#getLanguages) | **GET** /languages | Retrieve supported languages
+[**getLanguages**](LanguagesApi.md#getLanguages) | **GET** /v2/languages | Retrieve supported languages
 
 
 <a name="getLanguages"></a>
@@ -28,7 +28,7 @@ import com.lilt.client.api.LanguagesApi;
 public class Example {
   public static void main(String[] args) {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
-    defaultClient.setBasePath("https://lilt.com/2");
+    defaultClient.setBasePath("https://api.lilt.com");
     
     // Configure API key authorization: ApiKeyAuth
     ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");

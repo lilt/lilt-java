@@ -24,6 +24,7 @@ Name | Type | Description | Notes
 **reviewerEmail** | **String** | The email of the assigned reviewer. |  [optional]
 **createdAt** | **Integer** | Time at which the object was created. Measured in seconds since the Unix epoch. |  [optional]
 **updatedAt** | **Integer** | Time at which the object was created. Measured in seconds since the Unix epoch. |  [optional]
+**isReviewComplete** | **Boolean** | Document review status. |  [optional]
 **segments** | [**List&lt;Segment&gt;**](Segment.md) | A list of Segments. |  [optional]
 
 

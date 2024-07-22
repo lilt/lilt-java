@@ -6,7 +6,7 @@
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**configId** | **Integer** |  |  [optional]
+**id** | **Integer** | The ID of the deleted Lilt Create content. |  [optional]
 
 
 
