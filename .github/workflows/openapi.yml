@@ -3,7 +3,7 @@
 
 name: OpenAPI Generator
 
-on:gi
+on:
   workflow_dispatch:
   repository_dispatch:
     types: [API-DocumentationV3-Deployment]
