@@ -12,6 +12,7 @@ docs/DocumentsApi.md
 docs/Error.md
 docs/FileDeleteResponse.md
 docs/FilesApi.md
+docs/GetLiltCreateContentResponse.md
 docs/InlineResponse200.md
 docs/Job.md
 docs/JobCreateParameters.md
@@ -25,6 +26,8 @@ docs/LanguagePair.md
 docs/LanguagesApi.md
 docs/LanguagesResponse.md
 docs/LiltCreateContent.md
+docs/LiltCreateContentPreferences.md
+docs/LiltCreateContentTemplateParams.md
 docs/MemoriesApi.md
 docs/Memory.md
 docs/MemoryCreateParameters.md
@@ -83,6 +86,7 @@ src/main/java/com/lilt/client/model/DocumentWithoutSegments.java
 src/main/java/com/lilt/client/model/DocumentWithoutSegmentsStatus.java
 src/main/java/com/lilt/client/model/Error.java
 src/main/java/com/lilt/client/model/FileDeleteResponse.java
+src/main/java/com/lilt/client/model/GetLiltCreateContentResponse.java
 src/main/java/com/lilt/client/model/InlineResponse200.java
 src/main/java/com/lilt/client/model/Job.java
 src/main/java/com/lilt/client/model/JobCreateParameters.java
@@ -94,6 +98,8 @@ src/main/java/com/lilt/client/model/JobUpdateParameters.java
 src/main/java/com/lilt/client/model/LanguagePair.java
 src/main/java/com/lilt/client/model/LanguagesResponse.java
 src/main/java/com/lilt/client/model/LiltCreateContent.java
+src/main/java/com/lilt/client/model/LiltCreateContentPreferences.java
+src/main/java/com/lilt/client/model/LiltCreateContentTemplateParams.java
 src/main/java/com/lilt/client/model/Memory.java
 src/main/java/com/lilt/client/model/MemoryCreateParameters.java
 src/main/java/com/lilt/client/model/MemoryDeleteResponse.java

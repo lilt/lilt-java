@@ -20,36 +20,57 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
-import com.lilt.client.model.LiltCreateContentPreferences;
-import com.lilt.client.model.LiltCreateContentTemplateParams;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * Content Parameters for LiltCreate. 
+ * The template parameters of the content.
  */
-@ApiModel(description = "Content Parameters for LiltCreate. ")
+@ApiModel(description = "The template parameters of the content.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-09-25T18:19:41.715Z[GMT]")
-public class LiltCreateContent {
+public class LiltCreateContentTemplateParams {
+  public static final String SERIALIZED_NAME_CONTENT_LENGTH = "contentLength";
+  @SerializedName(SERIALIZED_NAME_CONTENT_LENGTH)
+  private Integer contentLength;
+
   public static final String SERIALIZED_NAME_LANGUAGE = "language";
   @SerializedName(SERIALIZED_NAME_LANGUAGE)
   private String language;
 
-  public static final String SERIALIZED_NAME_TEMPLATE = "template";
-  @SerializedName(SERIALIZED_NAME_TEMPLATE)
-  private String template;
+  public static final String SERIALIZED_NAME_SECTIONS = "sections";
+  @SerializedName(SERIALIZED_NAME_SECTIONS)
+  private String sections;
 
-  public static final String SERIALIZED_NAME_TEMPLATE_PARAMS = "templateParams";
-  @SerializedName(SERIALIZED_NAME_TEMPLATE_PARAMS)
-  private LiltCreateContentTemplateParams templateParams;
-
-  public static final String SERIALIZED_NAME_PREFERENCES = "preferences";
-  @SerializedName(SERIALIZED_NAME_PREFERENCES)
-  private LiltCreateContentPreferences preferences;
+  public static final String SERIALIZED_NAME_SUMMARY = "summary";
+  @SerializedName(SERIALIZED_NAME_SUMMARY)
+  private String summary;
 
 
-  public LiltCreateContent language(String language) {
+  public LiltCreateContentTemplateParams contentLength(Integer contentLength) {
+    
+    this.contentLength = contentLength;
+    return this;
+  }
+
+   /**
+   * The length of the content.
+   * @return contentLength
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "The length of the content.")
+
+  public Integer getContentLength() {
+    return contentLength;
+  }
+
+
+  public void setContentLength(Integer contentLength) {
+    this.contentLength = contentLength;
+  }
+
+
+  public LiltCreateContentTemplateParams language(String language) {
     
     this.language = language;
     return this;
@@ -71,70 +92,49 @@ public class LiltCreateContent {
   }
 
 
-  public LiltCreateContent template(String template) {
+  public LiltCreateContentTemplateParams sections(String sections) {
     
-    this.template = template;
+    this.sections = sections;
     return this;
   }
 
    /**
-   * The template of the content.
-   * @return template
-  **/
-  @ApiModelProperty(required = true, value = "The template of the content.")
-
-  public String getTemplate() {
-    return template;
-  }
-
-
-  public void setTemplate(String template) {
-    this.template = template;
-  }
-
-
-  public LiltCreateContent templateParams(LiltCreateContentTemplateParams templateParams) {
-    
-    this.templateParams = templateParams;
-    return this;
-  }
-
-   /**
-   * Get templateParams
-   * @return templateParams
-  **/
-  @ApiModelProperty(required = true, value = "")
-
-  public LiltCreateContentTemplateParams getTemplateParams() {
-    return templateParams;
-  }
-
-
-  public void setTemplateParams(LiltCreateContentTemplateParams templateParams) {
-    this.templateParams = templateParams;
-  }
-
-
-  public LiltCreateContent preferences(LiltCreateContentPreferences preferences) {
-    
-    this.preferences = preferences;
-    return this;
-  }
-
-   /**
-   * Get preferences
-   * @return preferences
+   * The section of the content.
+   * @return sections
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(value = "")
+  @ApiModelProperty(value = "The section of the content.")
 
-  public LiltCreateContentPreferences getPreferences() {
-    return preferences;
+  public String getSections() {
+    return sections;
   }
 
 
-  public void setPreferences(LiltCreateContentPreferences preferences) {
-    this.preferences = preferences;
+  public void setSections(String sections) {
+    this.sections = sections;
+  }
+
+
+  public LiltCreateContentTemplateParams summary(String summary) {
+    
+    this.summary = summary;
+    return this;
+  }
+
+   /**
+   * The summary of the content.
+   * @return summary
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "The summary of the content.")
+
+  public String getSummary() {
+    return summary;
+  }
+
+
+  public void setSummary(String summary) {
+    this.summary = summary;
   }
 
 
@@ -146,26 +146,26 @@ public class LiltCreateContent {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LiltCreateContent liltCreateContent = (LiltCreateContent) o;
-    return Objects.equals(this.language, liltCreateContent.language) &&
-        Objects.equals(this.template, liltCreateContent.template) &&
-        Objects.equals(this.templateParams, liltCreateContent.templateParams) &&
-        Objects.equals(this.preferences, liltCreateContent.preferences);
+    LiltCreateContentTemplateParams liltCreateContentTemplateParams = (LiltCreateContentTemplateParams) o;
+    return Objects.equals(this.contentLength, liltCreateContentTemplateParams.contentLength) &&
+        Objects.equals(this.language, liltCreateContentTemplateParams.language) &&
+        Objects.equals(this.sections, liltCreateContentTemplateParams.sections) &&
+        Objects.equals(this.summary, liltCreateContentTemplateParams.summary);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(language, template, templateParams, preferences);
+    return Objects.hash(contentLength, language, sections, summary);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LiltCreateContent {\n");
+    sb.append("class LiltCreateContentTemplateParams {\n");
+    sb.append("    contentLength: ").append(toIndentedString(contentLength)).append("\n");
     sb.append("    language: ").append(toIndentedString(language)).append("\n");
-    sb.append("    template: ").append(toIndentedString(template)).append("\n");
-    sb.append("    templateParams: ").append(toIndentedString(templateParams)).append("\n");
-    sb.append("    preferences: ").append(toIndentedString(preferences)).append("\n");
+    sb.append("    sections: ").append(toIndentedString(sections)).append("\n");
+    sb.append("    summary: ").append(toIndentedString(summary)).append("\n");
     sb.append("}");
     return sb.toString();
   }

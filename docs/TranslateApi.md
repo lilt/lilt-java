@@ -12,7 +12,7 @@ Method | HTTP request | Description
 
 <a name="batchTranslateFile"></a>
 # **batchTranslateFile**
-> TranslationInfo batchTranslateFile(fileId, memoryId, configId, withTM)
+> List&lt;TranslationInfo&gt; batchTranslateFile(fileId, memoryId, configId, withTM)
 
 Translate a File
 
@@ -50,7 +50,7 @@ public class Example {
     BigDecimal configId = new BigDecimal(78); // BigDecimal | An optional pararameter to specify an import configuration to be applied when extracting translatable content from this file.
     Boolean withTM = true; // Boolean | An optional boolean parameter to toggle the use of Translation Memory in the translation of the file.
     try {
-      TranslationInfo result = apiInstance.batchTranslateFile(fileId, memoryId, configId, withTM);
+      List<TranslationInfo> result = apiInstance.batchTranslateFile(fileId, memoryId, configId, withTM);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#batchTranslateFile");
@@ -74,7 +74,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TranslationInfo**](TranslationInfo.md)
+[**List&lt;TranslationInfo&gt;**](TranslationInfo.md)
 
 ### Authorization
 
@@ -88,7 +88,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Translation info |  -  |
+**200** | Translation Info |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="downloadFile"></a>
@@ -167,7 +167,7 @@ Name | Type | Description  | Notes
 
 <a name="monitorFileTranslation"></a>
 # **monitorFileTranslation**
-> TranslationInfo monitorFileTranslation(translationIds, status, fromTime, toTime)
+> List&lt;TranslationInfo&gt; monitorFileTranslation(translationIds, status, fromTime, toTime)
 
 Monitor file translation
 
@@ -205,7 +205,7 @@ public class Example {
     BigDecimal fromTime = new BigDecimal(78); // BigDecimal | Results after this time (inclusive) will be returned, specified as seconds since the Unix epoch.
     BigDecimal toTime = new BigDecimal(78); // BigDecimal | Results before this time (exclusive) will be returned, specified as seconds since the Unix epoch.
     try {
-      TranslationInfo result = apiInstance.monitorFileTranslation(translationIds, status, fromTime, toTime);
+      List<TranslationInfo> result = apiInstance.monitorFileTranslation(translationIds, status, fromTime, toTime);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling TranslateApi#monitorFileTranslation");
@@ -229,7 +229,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-[**TranslationInfo**](TranslationInfo.md)
+[**List&lt;TranslationInfo&gt;**](TranslationInfo.md)
 
 ### Authorization
 
@@ -243,7 +243,7 @@ Name | Type | Description  | Notes
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
-**200** | Translation info |  -  |
+**200** | Translation Info |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="translateSegmentPost"></a>

@@ -25,62 +25,63 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * FileDeleteResponse
+ * The preferences of the content.
  */
+@ApiModel(description = "The preferences of the content.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-09-25T18:19:41.715Z[GMT]")
-public class FileDeleteResponse {
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
+public class LiltCreateContentPreferences {
+  public static final String SERIALIZED_NAME_TONE = "tone";
+  @SerializedName(SERIALIZED_NAME_TONE)
+  private String tone;
 
-  public static final String SERIALIZED_NAME_DELETED = "deleted";
-  @SerializedName(SERIALIZED_NAME_DELETED)
-  private Boolean deleted;
+  public static final String SERIALIZED_NAME_STYLEGUIDE = "styleguide";
+  @SerializedName(SERIALIZED_NAME_STYLEGUIDE)
+  private String styleguide;
 
 
-  public FileDeleteResponse id(Integer id) {
+  public LiltCreateContentPreferences tone(String tone) {
     
-    this.id = id;
+    this.tone = tone;
     return this;
   }
 
    /**
-   * A unique File identifier.
-   * @return id
+   * The tone of the content.
+   * @return tone
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "12345", value = "A unique File identifier.")
+  @ApiModelProperty(value = "The tone of the content.")
 
-  public Integer getId() {
-    return id;
+  public String getTone() {
+    return tone;
   }
 
 
-  public void setId(Integer id) {
-    this.id = id;
+  public void setTone(String tone) {
+    this.tone = tone;
   }
 
 
-  public FileDeleteResponse deleted(Boolean deleted) {
+  public LiltCreateContentPreferences styleguide(String styleguide) {
     
-    this.deleted = deleted;
+    this.styleguide = styleguide;
     return this;
   }
 
    /**
-   * If the operation succeeded, then &#x60;true&#x60;. Otherwise, &#x60;false&#x60;.
-   * @return deleted
+   * The styleguide of the content.
+   * @return styleguide
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "If the operation succeeded, then `true`. Otherwise, `false`.")
+  @ApiModelProperty(value = "The styleguide of the content.")
 
-  public Boolean getDeleted() {
-    return deleted;
+  public String getStyleguide() {
+    return styleguide;
   }
 
 
-  public void setDeleted(Boolean deleted) {
-    this.deleted = deleted;
+  public void setStyleguide(String styleguide) {
+    this.styleguide = styleguide;
   }
 
 
@@ -92,22 +93,22 @@ public class FileDeleteResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FileDeleteResponse fileDeleteResponse = (FileDeleteResponse) o;
-    return Objects.equals(this.id, fileDeleteResponse.id) &&
-        Objects.equals(this.deleted, fileDeleteResponse.deleted);
+    LiltCreateContentPreferences liltCreateContentPreferences = (LiltCreateContentPreferences) o;
+    return Objects.equals(this.tone, liltCreateContentPreferences.tone) &&
+        Objects.equals(this.styleguide, liltCreateContentPreferences.styleguide);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, deleted);
+    return Objects.hash(tone, styleguide);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FileDeleteResponse {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
+    sb.append("class LiltCreateContentPreferences {\n");
+    sb.append("    tone: ").append(toIndentedString(tone)).append("\n");
+    sb.append("    styleguide: ").append(toIndentedString(styleguide)).append("\n");
     sb.append("}");
     return sb.toString();
   }
