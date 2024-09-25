@@ -238,7 +238,7 @@ Name | Type | Description  | Notes
 
 <a name="getLiltCreateContent"></a>
 # **getLiltCreateContent**
-> List&lt;LiltCreateContent&gt; getLiltCreateContent()
+> GetLiltCreateContentResponse getLiltCreateContent()
 
 Get Lilt Create content
 
@@ -272,7 +272,7 @@ public class Example {
 
     CreateApi apiInstance = new CreateApi(defaultClient);
     try {
-      List<LiltCreateContent> result = apiInstance.getLiltCreateContent();
+      GetLiltCreateContentResponse result = apiInstance.getLiltCreateContent();
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling CreateApi#getLiltCreateContent");
@@ -290,7 +290,7 @@ This endpoint does not need any parameter.
 
 ### Return type
 
-[**List&lt;LiltCreateContent&gt;**](LiltCreateContent.md)
+[**GetLiltCreateContentResponse**](GetLiltCreateContentResponse.md)
 
 ### Authorization
 

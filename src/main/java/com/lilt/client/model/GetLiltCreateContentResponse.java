@@ -20,67 +20,51 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.lilt.client.model.LiltCreateContent;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * FileDeleteResponse
+ * GetLiltCreateContentResponse
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-09-25T18:19:41.715Z[GMT]")
-public class FileDeleteResponse {
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
-
-  public static final String SERIALIZED_NAME_DELETED = "deleted";
-  @SerializedName(SERIALIZED_NAME_DELETED)
-  private Boolean deleted;
+public class GetLiltCreateContentResponse {
+  public static final String SERIALIZED_NAME_CONTENTS = "contents";
+  @SerializedName(SERIALIZED_NAME_CONTENTS)
+  private List<LiltCreateContent> contents = null;
 
 
-  public FileDeleteResponse id(Integer id) {
+  public GetLiltCreateContentResponse contents(List<LiltCreateContent> contents) {
     
-    this.id = id;
+    this.contents = contents;
+    return this;
+  }
+
+  public GetLiltCreateContentResponse addContentsItem(LiltCreateContent contentsItem) {
+    if (this.contents == null) {
+      this.contents = new ArrayList<LiltCreateContent>();
+    }
+    this.contents.add(contentsItem);
     return this;
   }
 
    /**
-   * A unique File identifier.
-   * @return id
+   * List of LiltCreateContent objects
+   * @return contents
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "12345", value = "A unique File identifier.")
+  @ApiModelProperty(value = "List of LiltCreateContent objects")
 
-  public Integer getId() {
-    return id;
+  public List<LiltCreateContent> getContents() {
+    return contents;
   }
 
 
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-
-  public FileDeleteResponse deleted(Boolean deleted) {
-    
-    this.deleted = deleted;
-    return this;
-  }
-
-   /**
-   * If the operation succeeded, then &#x60;true&#x60;. Otherwise, &#x60;false&#x60;.
-   * @return deleted
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(example = "true", value = "If the operation succeeded, then `true`. Otherwise, `false`.")
-
-  public Boolean getDeleted() {
-    return deleted;
-  }
-
-
-  public void setDeleted(Boolean deleted) {
-    this.deleted = deleted;
+  public void setContents(List<LiltCreateContent> contents) {
+    this.contents = contents;
   }
 
 
@@ -92,22 +76,20 @@ public class FileDeleteResponse {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    FileDeleteResponse fileDeleteResponse = (FileDeleteResponse) o;
-    return Objects.equals(this.id, fileDeleteResponse.id) &&
-        Objects.equals(this.deleted, fileDeleteResponse.deleted);
+    GetLiltCreateContentResponse getLiltCreateContentResponse = (GetLiltCreateContentResponse) o;
+    return Objects.equals(this.contents, getLiltCreateContentResponse.contents);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, deleted);
+    return Objects.hash(contents);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class FileDeleteResponse {\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
-    sb.append("    deleted: ").append(toIndentedString(deleted)).append("\n");
+    sb.append("class GetLiltCreateContentResponse {\n");
+    sb.append("    contents: ").append(toIndentedString(contents)).append("\n");
     sb.append("}");
     return sb.toString();
   }
