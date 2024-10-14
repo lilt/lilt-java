@@ -23,11 +23,9 @@ public class TestSign {
     public TestSign(boolean sign) {
         this.sign = sign;
         this.defaultClient = Configuration.getDefaultApiClient();
-        this.defaultClient.setBasePath("https://staging-api.lilt.dev");
-        //this.defaultClient.setBasePath("System.getenv("API_HOST")");
+        this.defaultClient.setBasePath("System.getenv("API_HOST")");
         ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) this.defaultClient.getAuthentication("ApiKeyAuth");
-        ApiKeyAuth.setApiKey("bb12bddcff76e51a37a8999a02d97fbb");
-        //ApiKeyAuth.setApiKey(System.getenv("API_KEY"));
+        ApiKeyAuth.setApiKey(System.getenv("API_KEY"));
     }
 
     @Parameterized.Parameters(name="{0}")
