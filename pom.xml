@@ -266,7 +266,7 @@
         </dependency>
     </dependencies>
     <properties>
-        <java.version>1.11</java.version>
+        <java.version>1.9</java.version>
         <maven.compiler.release>${java.version}</maven.compiler.release>
         <gson-fire-version>1.8.5</gson-fire-version>
         <swagger-core-version>1.6.2</swagger-core-version>
