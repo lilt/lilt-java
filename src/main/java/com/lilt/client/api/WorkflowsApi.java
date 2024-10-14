@@ -27,8 +27,7 @@ import com.google.gson.reflect.TypeToken;
 import java.io.IOException;
 
 
-import com.lilt.client.model.Error;
-import com.lilt.client.model.LanguagesResponse;
+import com.lilt.client.model.WorkflowTemplate;
 
 import java.lang.reflect.Type;
 import java.util.ArrayList;
@@ -36,14 +35,14 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class LanguagesApi {
+public class WorkflowsApi {
     private ApiClient localVarApiClient;
 
-    public LanguagesApi() {
+    public WorkflowsApi() {
         this(Configuration.getDefaultApiClient());
     }
 
-    public LanguagesApi(ApiClient apiClient) {
+    public WorkflowsApi(ApiClient apiClient) {
         this.localVarApiClient = apiClient;
     }
 
@@ -56,22 +55,21 @@ public class LanguagesApi {
     }
 
     /**
-     * Build call for getLanguages
+     * Build call for getWorkflowTemplates
      * @param _callback Callback for upload/download progress
      * @return Call to execute
      * @throws ApiException If fail to serialize the request body object
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> An object listing supported languages and their corresponding locales. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> An array with a team&#39;s available WorkflowTemplates. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getLanguagesCall(final ApiCallback _callback) throws ApiException {
+    public okhttp3.Call getWorkflowTemplatesCall(final ApiCallback _callback) throws ApiException {
         Object localVarPostBody = null;
 
         // create path and map variables
-        String localVarPath = "/v2/languages";
+        String localVarPath = "/v2/workflows/templates";
 
         List<Pair> localVarQueryParams = new ArrayList<Pair>();
         List<Pair> localVarCollectionQueryParams = new ArrayList<Pair>();
@@ -98,66 +96,63 @@ public class LanguagesApi {
     }
 
     @SuppressWarnings("rawtypes")
-    private okhttp3.Call getLanguagesValidateBeforeCall(final ApiCallback _callback) throws ApiException {
+    private okhttp3.Call getWorkflowTemplatesValidateBeforeCall(final ApiCallback _callback) throws ApiException {
         
 
-        okhttp3.Call localVarCall = getLanguagesCall(_callback);
+        okhttp3.Call localVarCall = getWorkflowTemplatesCall(_callback);
         return localVarCall;
 
     }
 
     /**
-     * Retrieve supported languages
-     * Get a list of supported languages.  
-     * @return LanguagesResponse
+     * Retrieve workflow templates
+     * Get all of the possible Workflow Templates owned by the team. Useful for retrieving the ids corresponding to each workflow tables, and passing them to subsequent requests, for example, creating a new Job with a specific Workflow. Example CURL: &#x60;&#x60;&#x60;bash curl -X GET &#39;https://api.lilt.com/v2/workflows/templates?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60; 
+     * @return List&lt;WorkflowTemplate&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> An object listing supported languages and their corresponding locales. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> An array with a team&#39;s available WorkflowTemplates. </td><td>  -  </td></tr>
      </table>
      */
-    public LanguagesResponse getLanguages() throws ApiException {
-        ApiResponse<LanguagesResponse> localVarResp = getLanguagesWithHttpInfo();
+    public List<WorkflowTemplate> getWorkflowTemplates() throws ApiException {
+        ApiResponse<List<WorkflowTemplate>> localVarResp = getWorkflowTemplatesWithHttpInfo();
         return localVarResp.getData();
     }
 
     /**
-     * Retrieve supported languages
-     * Get a list of supported languages.  
-     * @return ApiResponse&lt;LanguagesResponse&gt;
+     * Retrieve workflow templates
+     * Get all of the possible Workflow Templates owned by the team. Useful for retrieving the ids corresponding to each workflow tables, and passing them to subsequent requests, for example, creating a new Job with a specific Workflow. Example CURL: &#x60;&#x60;&#x60;bash curl -X GET &#39;https://api.lilt.com/v2/workflows/templates?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60; 
+     * @return ApiResponse&lt;List&lt;WorkflowTemplate&gt;&gt;
      * @throws ApiException If fail to call the API, e.g. server error or cannot deserialize the response body
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> An object listing supported languages and their corresponding locales. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> An array with a team&#39;s available WorkflowTemplates. </td><td>  -  </td></tr>
      </table>
      */
-    public ApiResponse<LanguagesResponse> getLanguagesWithHttpInfo() throws ApiException {
-        okhttp3.Call localVarCall = getLanguagesValidateBeforeCall(null);
-        Type localVarReturnType = new TypeToken<LanguagesResponse>(){}.getType();
+    public ApiResponse<List<WorkflowTemplate>> getWorkflowTemplatesWithHttpInfo() throws ApiException {
+        okhttp3.Call localVarCall = getWorkflowTemplatesValidateBeforeCall(null);
+        Type localVarReturnType = new TypeToken<List<WorkflowTemplate>>(){}.getType();
         return localVarApiClient.execute(localVarCall, localVarReturnType);
     }
 
     /**
-     * Retrieve supported languages (asynchronously)
-     * Get a list of supported languages.  
+     * Retrieve workflow templates (asynchronously)
+     * Get all of the possible Workflow Templates owned by the team. Useful for retrieving the ids corresponding to each workflow tables, and passing them to subsequent requests, for example, creating a new Job with a specific Workflow. Example CURL: &#x60;&#x60;&#x60;bash curl -X GET &#39;https://api.lilt.com/v2/workflows/templates?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60; 
      * @param _callback The callback to be executed when the API call finishes
      * @return The request call
      * @throws ApiException If fail to process the API call, e.g. serializing the request body object
      * @http.response.details
      <table summary="Response Details" border="1">
         <tr><td> Status Code </td><td> Description </td><td> Response Headers </td></tr>
-        <tr><td> 200 </td><td> An object listing supported languages and their corresponding locales. </td><td>  -  </td></tr>
-        <tr><td> 0 </td><td> Unexpected error </td><td>  -  </td></tr>
+        <tr><td> 200 </td><td> An array with a team&#39;s available WorkflowTemplates. </td><td>  -  </td></tr>
      </table>
      */
-    public okhttp3.Call getLanguagesAsync(final ApiCallback<LanguagesResponse> _callback) throws ApiException {
+    public okhttp3.Call getWorkflowTemplatesAsync(final ApiCallback<List<WorkflowTemplate>> _callback) throws ApiException {
 
-        okhttp3.Call localVarCall = getLanguagesValidateBeforeCall(_callback);
-        Type localVarReturnType = new TypeToken<LanguagesResponse>(){}.getType();
+        okhttp3.Call localVarCall = getWorkflowTemplatesValidateBeforeCall(_callback);
+        Type localVarReturnType = new TypeToken<List<WorkflowTemplate>>(){}.getType();
         localVarApiClient.executeAsync(localVarCall, localVarReturnType, _callback);
         return localVarCall;
     }

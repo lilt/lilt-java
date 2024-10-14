@@ -25,85 +25,63 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * A list of translations for the query term.
+ * The preferences of the content.
  */
-@ApiModel(description = "A list of translations for the query term.")
+@ApiModel(description = "The preferences of the content.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
-public class DocumentWithoutSegmentsStatus {
-  /**
-   * Gets or Sets pretranslation
-   */
-  @JsonAdapter(PretranslationEnum.Adapter.class)
-  public enum PretranslationEnum {
-    IDLE("idle"),
+public class LiltCreateContentPreferences {
+  public static final String SERIALIZED_NAME_TONE = "tone";
+  @SerializedName(SERIALIZED_NAME_TONE)
+  private String tone;
+
+  public static final String SERIALIZED_NAME_STYLEGUIDE = "styleguide";
+  @SerializedName(SERIALIZED_NAME_STYLEGUIDE)
+  private String styleguide;
+
+
+  public LiltCreateContentPreferences tone(String tone) {
     
-    PENDING("pending"),
-    
-    RUNNING("running");
-
-    private String value;
-
-    PretranslationEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static PretranslationEnum fromValue(String value) {
-      for (PretranslationEnum b : PretranslationEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<PretranslationEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final PretranslationEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public PretranslationEnum read(final JsonReader jsonReader) throws IOException {
-        String value =  jsonReader.nextString();
-        return PretranslationEnum.fromValue(value);
-      }
-    }
-  }
-
-  public static final String SERIALIZED_NAME_PRETRANSLATION = "pretranslation";
-  @SerializedName(SERIALIZED_NAME_PRETRANSLATION)
-  private PretranslationEnum pretranslation;
-
-
-  public DocumentWithoutSegmentsStatus pretranslation(PretranslationEnum pretranslation) {
-    
-    this.pretranslation = pretranslation;
+    this.tone = tone;
     return this;
   }
 
    /**
-   * Get pretranslation
-   * @return pretranslation
+   * The tone of the content.
+   * @return tone
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "idle", value = "")
+  @ApiModelProperty(value = "The tone of the content.")
 
-  public PretranslationEnum getPretranslation() {
-    return pretranslation;
+  public String getTone() {
+    return tone;
   }
 
 
-  public void setPretranslation(PretranslationEnum pretranslation) {
-    this.pretranslation = pretranslation;
+  public void setTone(String tone) {
+    this.tone = tone;
+  }
+
+
+  public LiltCreateContentPreferences styleguide(String styleguide) {
+    
+    this.styleguide = styleguide;
+    return this;
+  }
+
+   /**
+   * The styleguide of the content.
+   * @return styleguide
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "The styleguide of the content.")
+
+  public String getStyleguide() {
+    return styleguide;
+  }
+
+
+  public void setStyleguide(String styleguide) {
+    this.styleguide = styleguide;
   }
 
 
@@ -115,20 +93,22 @@ public class DocumentWithoutSegmentsStatus {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DocumentWithoutSegmentsStatus documentWithoutSegmentsStatus = (DocumentWithoutSegmentsStatus) o;
-    return Objects.equals(this.pretranslation, documentWithoutSegmentsStatus.pretranslation);
+    LiltCreateContentPreferences liltCreateContentPreferences = (LiltCreateContentPreferences) o;
+    return Objects.equals(this.tone, liltCreateContentPreferences.tone) &&
+        Objects.equals(this.styleguide, liltCreateContentPreferences.styleguide);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pretranslation);
+    return Objects.hash(tone, styleguide);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DocumentWithoutSegmentsStatus {\n");
-    sb.append("    pretranslation: ").append(toIndentedString(pretranslation)).append("\n");
+    sb.append("class LiltCreateContentPreferences {\n");
+    sb.append("    tone: ").append(toIndentedString(tone)).append("\n");
+    sb.append("    styleguide: ").append(toIndentedString(styleguide)).append("\n");
     sb.append("}");
     return sb.toString();
   }

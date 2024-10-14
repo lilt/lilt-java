@@ -20,90 +20,51 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.lilt.client.model.LiltCreateContent;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * A list of translations for the query term.
+ * GetLiltCreateContentResponse
  */
-@ApiModel(description = "A list of translations for the query term.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
-public class DocumentWithoutSegmentsStatus {
-  /**
-   * Gets or Sets pretranslation
-   */
-  @JsonAdapter(PretranslationEnum.Adapter.class)
-  public enum PretranslationEnum {
-    IDLE("idle"),
+public class GetLiltCreateContentResponse {
+  public static final String SERIALIZED_NAME_CONTENTS = "contents";
+  @SerializedName(SERIALIZED_NAME_CONTENTS)
+  private List<LiltCreateContent> contents = null;
+
+
+  public GetLiltCreateContentResponse contents(List<LiltCreateContent> contents) {
     
-    PENDING("pending"),
-    
-    RUNNING("running");
-
-    private String value;
-
-    PretranslationEnum(String value) {
-      this.value = value;
-    }
-
-    public String getValue() {
-      return value;
-    }
-
-    @Override
-    public String toString() {
-      return String.valueOf(value);
-    }
-
-    public static PretranslationEnum fromValue(String value) {
-      for (PretranslationEnum b : PretranslationEnum.values()) {
-        if (b.value.equals(value)) {
-          return b;
-        }
-      }
-      throw new IllegalArgumentException("Unexpected value '" + value + "'");
-    }
-
-    public static class Adapter extends TypeAdapter<PretranslationEnum> {
-      @Override
-      public void write(final JsonWriter jsonWriter, final PretranslationEnum enumeration) throws IOException {
-        jsonWriter.value(enumeration.getValue());
-      }
-
-      @Override
-      public PretranslationEnum read(final JsonReader jsonReader) throws IOException {
-        String value =  jsonReader.nextString();
-        return PretranslationEnum.fromValue(value);
-      }
-    }
+    this.contents = contents;
+    return this;
   }
 
-  public static final String SERIALIZED_NAME_PRETRANSLATION = "pretranslation";
-  @SerializedName(SERIALIZED_NAME_PRETRANSLATION)
-  private PretranslationEnum pretranslation;
-
-
-  public DocumentWithoutSegmentsStatus pretranslation(PretranslationEnum pretranslation) {
-    
-    this.pretranslation = pretranslation;
+  public GetLiltCreateContentResponse addContentsItem(LiltCreateContent contentsItem) {
+    if (this.contents == null) {
+      this.contents = new ArrayList<LiltCreateContent>();
+    }
+    this.contents.add(contentsItem);
     return this;
   }
 
    /**
-   * Get pretranslation
-   * @return pretranslation
+   * List of LiltCreateContent objects
+   * @return contents
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "idle", value = "")
+  @ApiModelProperty(value = "List of LiltCreateContent objects")
 
-  public PretranslationEnum getPretranslation() {
-    return pretranslation;
+  public List<LiltCreateContent> getContents() {
+    return contents;
   }
 
 
-  public void setPretranslation(PretranslationEnum pretranslation) {
-    this.pretranslation = pretranslation;
+  public void setContents(List<LiltCreateContent> contents) {
+    this.contents = contents;
   }
 
 
@@ -115,20 +76,20 @@ public class DocumentWithoutSegmentsStatus {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DocumentWithoutSegmentsStatus documentWithoutSegmentsStatus = (DocumentWithoutSegmentsStatus) o;
-    return Objects.equals(this.pretranslation, documentWithoutSegmentsStatus.pretranslation);
+    GetLiltCreateContentResponse getLiltCreateContentResponse = (GetLiltCreateContentResponse) o;
+    return Objects.equals(this.contents, getLiltCreateContentResponse.contents);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pretranslation);
+    return Objects.hash(contents);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DocumentWithoutSegmentsStatus {\n");
-    sb.append("    pretranslation: ").append(toIndentedString(pretranslation)).append("\n");
+    sb.append("class GetLiltCreateContentResponse {\n");
+    sb.append("    contents: ").append(toIndentedString(contents)).append("\n");
     sb.append("}");
     return sb.toString();
   }

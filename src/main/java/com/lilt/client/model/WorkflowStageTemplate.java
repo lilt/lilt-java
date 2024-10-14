@@ -25,25 +25,33 @@ import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
 
 /**
- * A list of translations for the query term.
+ * A single stage within a Workflow Template.
  */
-@ApiModel(description = "A list of translations for the query term.")
+@ApiModel(description = "A single stage within a Workflow Template.")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
-public class DocumentWithoutSegmentsStatus {
+public class WorkflowStageTemplate {
+  public static final String SERIALIZED_NAME_NAME = "name";
+  @SerializedName(SERIALIZED_NAME_NAME)
+  private String name;
+
   /**
-   * Gets or Sets pretranslation
+   * An enum to represent all possible types of Workflow stage.
    */
-  @JsonAdapter(PretranslationEnum.Adapter.class)
-  public enum PretranslationEnum {
-    IDLE("idle"),
+  @JsonAdapter(AssignmentTypeEnum.Adapter.class)
+  public enum AssignmentTypeEnum {
+    READY_TO_START("READY_TO_START"),
     
-    PENDING("pending"),
+    TRANSLATE("TRANSLATE"),
     
-    RUNNING("running");
+    REVIEW("REVIEW"),
+    
+    SECONDARY_REVIEW("SECONDARY_REVIEW"),
+    
+    DONE("DONE");
 
     private String value;
 
-    PretranslationEnum(String value) {
+    AssignmentTypeEnum(String value) {
       this.value = value;
     }
 
@@ -56,8 +64,8 @@ public class DocumentWithoutSegmentsStatus {
       return String.valueOf(value);
     }
 
-    public static PretranslationEnum fromValue(String value) {
-      for (PretranslationEnum b : PretranslationEnum.values()) {
+    public static AssignmentTypeEnum fromValue(String value) {
+      for (AssignmentTypeEnum b : AssignmentTypeEnum.values()) {
         if (b.value.equals(value)) {
           return b;
         }
@@ -65,45 +73,68 @@ public class DocumentWithoutSegmentsStatus {
       throw new IllegalArgumentException("Unexpected value '" + value + "'");
     }
 
-    public static class Adapter extends TypeAdapter<PretranslationEnum> {
+    public static class Adapter extends TypeAdapter<AssignmentTypeEnum> {
       @Override
-      public void write(final JsonWriter jsonWriter, final PretranslationEnum enumeration) throws IOException {
+      public void write(final JsonWriter jsonWriter, final AssignmentTypeEnum enumeration) throws IOException {
         jsonWriter.value(enumeration.getValue());
       }
 
       @Override
-      public PretranslationEnum read(final JsonReader jsonReader) throws IOException {
+      public AssignmentTypeEnum read(final JsonReader jsonReader) throws IOException {
         String value =  jsonReader.nextString();
-        return PretranslationEnum.fromValue(value);
+        return AssignmentTypeEnum.fromValue(value);
       }
     }
   }
 
-  public static final String SERIALIZED_NAME_PRETRANSLATION = "pretranslation";
-  @SerializedName(SERIALIZED_NAME_PRETRANSLATION)
-  private PretranslationEnum pretranslation;
+  public static final String SERIALIZED_NAME_ASSIGNMENT_TYPE = "assignmentType";
+  @SerializedName(SERIALIZED_NAME_ASSIGNMENT_TYPE)
+  private AssignmentTypeEnum assignmentType;
 
 
-  public DocumentWithoutSegmentsStatus pretranslation(PretranslationEnum pretranslation) {
+  public WorkflowStageTemplate name(String name) {
     
-    this.pretranslation = pretranslation;
+    this.name = name;
     return this;
   }
 
    /**
-   * Get pretranslation
-   * @return pretranslation
+   * The human readable name of a Workflow stage.
+   * @return name
   **/
   @javax.annotation.Nullable
-  @ApiModelProperty(example = "idle", value = "")
+  @ApiModelProperty(example = "Translate", value = "The human readable name of a Workflow stage.")
 
-  public PretranslationEnum getPretranslation() {
-    return pretranslation;
+  public String getName() {
+    return name;
   }
 
 
-  public void setPretranslation(PretranslationEnum pretranslation) {
-    this.pretranslation = pretranslation;
+  public void setName(String name) {
+    this.name = name;
+  }
+
+
+  public WorkflowStageTemplate assignmentType(AssignmentTypeEnum assignmentType) {
+    
+    this.assignmentType = assignmentType;
+    return this;
+  }
+
+   /**
+   * An enum to represent all possible types of Workflow stage.
+   * @return assignmentType
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "TRANSLATE", value = "An enum to represent all possible types of Workflow stage.")
+
+  public AssignmentTypeEnum getAssignmentType() {
+    return assignmentType;
+  }
+
+
+  public void setAssignmentType(AssignmentTypeEnum assignmentType) {
+    this.assignmentType = assignmentType;
   }
 
 
@@ -115,20 +146,22 @@ public class DocumentWithoutSegmentsStatus {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    DocumentWithoutSegmentsStatus documentWithoutSegmentsStatus = (DocumentWithoutSegmentsStatus) o;
-    return Objects.equals(this.pretranslation, documentWithoutSegmentsStatus.pretranslation);
+    WorkflowStageTemplate workflowStageTemplate = (WorkflowStageTemplate) o;
+    return Objects.equals(this.name, workflowStageTemplate.name) &&
+        Objects.equals(this.assignmentType, workflowStageTemplate.assignmentType);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(pretranslation);
+    return Objects.hash(name, assignmentType);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class DocumentWithoutSegmentsStatus {\n");
-    sb.append("    pretranslation: ").append(toIndentedString(pretranslation)).append("\n");
+    sb.append("class WorkflowStageTemplate {\n");
+    sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    assignmentType: ").append(toIndentedString(assignmentType)).append("\n");
     sb.append("}");
     return sb.toString();
   }

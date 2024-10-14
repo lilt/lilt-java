@@ -7,8 +7,6 @@ A language pair couples the source and target language along with memory and pre
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**srcLang** | **String** | Source language, an ISO 639-1 language identifier. |  [optional]
-**srcLocale** | **String** | A locale identifier, supported for source language. |  [optional]
 **trgLang** | **String** | Target language, an ISO 639-1 language identifier. | 
 **trgLocale** | **String** | A locale identifier, supported for target language. |  [optional]
 **dueDate** | **String** | An ISO date. |  [optional]

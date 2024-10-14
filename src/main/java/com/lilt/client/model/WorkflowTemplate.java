@@ -20,57 +20,72 @@ import com.google.gson.annotations.JsonAdapter;
 import com.google.gson.annotations.SerializedName;
 import com.google.gson.stream.JsonReader;
 import com.google.gson.stream.JsonWriter;
+import com.lilt.client.model.WorkflowStageTemplate;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
 import java.io.IOException;
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
- * MemoryUpdateParameters
+ * A workflow template which defines the workflow&#39;s possible steps (combination of Translation, Review and Customer Review).
  */
+@ApiModel(description = "A workflow template which defines the workflow's possible steps (combination of Translation, Review and Customer Review).")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
-public class MemoryUpdateParameters {
+public class WorkflowTemplate {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
+  private BigDecimal id;
 
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
 
+  public static final String SERIALIZED_NAME_TEAM_ID = "TeamId";
+  @SerializedName(SERIALIZED_NAME_TEAM_ID)
+  private BigDecimal teamId;
 
-  public MemoryUpdateParameters id(Integer id) {
+  public static final String SERIALIZED_NAME_STAGES = "stages";
+  @SerializedName(SERIALIZED_NAME_STAGES)
+  private List<WorkflowStageTemplate> stages = null;
+
+
+  public WorkflowTemplate id(BigDecimal id) {
     
     this.id = id;
     return this;
   }
 
    /**
-   * A unique Memory identifier.
+   * Identifier of a teams Workflow template. Can be used during Job creation for specifying the workflow used for a job or language pair.
    * @return id
   **/
-  @ApiModelProperty(example = "7246", required = true, value = "A unique Memory identifier.")
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "15", value = "Identifier of a teams Workflow template. Can be used during Job creation for specifying the workflow used for a job or language pair.")
 
-  public Integer getId() {
+  public BigDecimal getId() {
     return id;
   }
 
 
-  public void setId(Integer id) {
+  public void setId(BigDecimal id) {
     this.id = id;
   }
 
 
-  public MemoryUpdateParameters name(String name) {
+  public WorkflowTemplate name(String name) {
     
     this.name = name;
     return this;
   }
 
    /**
-   * The Memory name.
+   * Get name
    * @return name
   **/
-  @ApiModelProperty(example = "Automotive Memory", required = true, value = "The Memory name.")
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "Translate > Review > Customer Review", value = "")
 
   public String getName() {
     return name;
@@ -82,6 +97,60 @@ public class MemoryUpdateParameters {
   }
 
 
+  public WorkflowTemplate teamId(BigDecimal teamId) {
+    
+    this.teamId = teamId;
+    return this;
+  }
+
+   /**
+   * The name of a given Workflow template.
+   * @return teamId
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(example = "100", value = "The name of a given Workflow template.")
+
+  public BigDecimal getTeamId() {
+    return teamId;
+  }
+
+
+  public void setTeamId(BigDecimal teamId) {
+    this.teamId = teamId;
+  }
+
+
+  public WorkflowTemplate stages(List<WorkflowStageTemplate> stages) {
+    
+    this.stages = stages;
+    return this;
+  }
+
+  public WorkflowTemplate addStagesItem(WorkflowStageTemplate stagesItem) {
+    if (this.stages == null) {
+      this.stages = new ArrayList<WorkflowStageTemplate>();
+    }
+    this.stages.add(stagesItem);
+    return this;
+  }
+
+   /**
+   * The stages in this workflow template.
+   * @return stages
+  **/
+  @javax.annotation.Nullable
+  @ApiModelProperty(value = "The stages in this workflow template.")
+
+  public List<WorkflowStageTemplate> getStages() {
+    return stages;
+  }
+
+
+  public void setStages(List<WorkflowStageTemplate> stages) {
+    this.stages = stages;
+  }
+
+
   @Override
   public boolean equals(Object o) {
     if (this == o) {
@@ -90,22 +159,26 @@ public class MemoryUpdateParameters {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    MemoryUpdateParameters memoryUpdateParameters = (MemoryUpdateParameters) o;
-    return Objects.equals(this.id, memoryUpdateParameters.id) &&
-        Objects.equals(this.name, memoryUpdateParameters.name);
+    WorkflowTemplate workflowTemplate = (WorkflowTemplate) o;
+    return Objects.equals(this.id, workflowTemplate.id) &&
+        Objects.equals(this.name, workflowTemplate.name) &&
+        Objects.equals(this.teamId, workflowTemplate.teamId) &&
+        Objects.equals(this.stages, workflowTemplate.stages);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(id, name);
+    return Objects.hash(id, name, teamId, stages);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class MemoryUpdateParameters {\n");
+    sb.append("class WorkflowTemplate {\n");
     sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
+    sb.append("    teamId: ").append(toIndentedString(teamId)).append("\n");
+    sb.append("    stages: ").append(toIndentedString(stages)).append("\n");
     sb.append("}");
     return sb.toString();
   }

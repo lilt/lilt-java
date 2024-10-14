@@ -24,7 +24,7 @@ Method | HTTP request | Description
 
 Archive a Job
 
-Set job to archived, unassign all linguists and archive all projects and documents inside the job.  It will return the archived job.  Example CURL command:  &#x60;&#x60;&#x60; curl -X POST &#39;https://api.lilt.com/v2/jobs/{id}/archive?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+Set job to archived, unassign all linguists and archive all projects and documents inside the job.  It will return the archived job.  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X POST &#39;https://api.lilt.com/v2/jobs/{id}/archive?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -99,7 +99,7 @@ Name | Type | Description  | Notes
 
 Create a Job
 
-Create a Job. A Job is a collection of Projects. A Job will contain multiple projects, based on the language pair. A Project is associated with exactly one Memory.  Jobs appear in the Jobs dashboard of the web app.  Example CURL command:  &#x60;&#x60;&#x60; curl -X POST &#39;https://api.lilt.com/v2/jobs?key&#x3D;API_KEY&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{   \&quot;name\&quot;: \&quot;test job\&quot;,   \&quot;fileIds\&quot;: [5009, 5010, 5011],   \&quot;due\&quot;: \&quot;2022-05-05T10:56:44.985Z\&quot;,   \&quot;srcLang\&quot;: \&quot;en\&quot;,   \&quot;srcLocale\&quot;: \&quot;US\&quot;,   \&quot;languagePairs\&quot;: [       { \&quot;memoryId\&quot;: 3121, \&quot;trgLang\&quot;: \&quot;de\&quot; },       { \&quot;memoryId\&quot;: 2508, \&quot;trgLang\&quot;: \&quot;fr\&quot; },       { \&quot;memoryId\&quot;: 3037, \&quot;trgLang\&quot;: \&quot;zh\&quot; }     ] }&#39; &#x60;&#x60;&#x60;  
+Create a Job. A Job is a collection of Projects. A Job will contain multiple projects, based on the language pair. A Project is associated with exactly one Memory.  Jobs appear in the Jobs dashboard of the web app.  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X POST &#39;https://api.lilt.com/v2/jobs?key&#x3D;API_KEY&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{   \&quot;name\&quot;: \&quot;test job\&quot;,   \&quot;fileIds\&quot;: [5009, 5010, 5011],   \&quot;due\&quot;: \&quot;2022-05-05T10:56:44.985Z\&quot;,   \&quot;srcLang\&quot;: \&quot;en\&quot;,   \&quot;srcLocale\&quot;: \&quot;US\&quot;,   \&quot;languagePairs\&quot;: [       { \&quot;memoryId\&quot;: 3121, \&quot;trgLang\&quot;: \&quot;de\&quot; },       { \&quot;memoryId\&quot;: 2508, \&quot;trgLang\&quot;: \&quot;fr\&quot; },       { \&quot;memoryId\&quot;: 3037, \&quot;trgLang\&quot;: \&quot;zh\&quot; }     ] }&#39; &#x60;&#x60;&#x60;  
 
 ### Example
 ```java
@@ -174,7 +174,7 @@ Name | Type | Description  | Notes
 
 Delete a Job
 
-Delete a job, deletes all projects and documents in the job, deletes all the segments from all the job&#39;s translation memories.  Example CURL command:  &#x60;&#x60;&#x60; curl -X DELETE &#39;https://api.lilt.com/v2/jobs/{id}?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+Delete a job, deletes all projects and documents in the job, deletes all the segments from all the job&#39;s translation memories.  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X DELETE &#39;https://api.lilt.com/v2/jobs/{id}?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -249,7 +249,7 @@ Name | Type | Description  | Notes
 
 Deliver a Job
 
-Set the job state to delivered and set all the projects in the job to done  It will return the delivered job.  Example CURL command:  &#x60;&#x60;&#x60; curl -X POST &#39;https://api.lilt.com/v2/jobs/{id}/deliver?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+Set the job state to delivered and set all the projects in the job to done  It will return the delivered job.  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X POST &#39;https://api.lilt.com/v2/jobs/{id}/deliver?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -324,7 +324,7 @@ Name | Type | Description  | Notes
 
 Download a Job
 
-Make sure you have exported a job with the same id before using this api.  Downloading files requires the exported job &#x60;id&#x60; in the param.  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://api.lilt.com/v2/jobs/{id}/download?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+Make sure you have exported a job with the same id before using this api.  Downloading files requires the exported job &#x60;id&#x60; in the param.  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X GET &#39;https://api.lilt.com/v2/jobs/{id}/download?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -398,7 +398,7 @@ null (empty response body)
 
 Export a Job
 
-Prepare job files for download. To export translated documents from the job use the query parameter &#x60;type&#x3D;files&#x60;:  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://api.lilt.com/v2/jobs/{id}/export?key&#x3D;API_KEY&amp;type&#x3D;files&#39; &#x60;&#x60;&#x60;  To export job memories use the query parameter &#x60;type&#x3D;memory&#x60;.  The status of the export can be checked by requesting the job &#x60;GET /jobs/:jobId&#x60;, &#x60;job.isProcessing&#x60; will be &#x60;1&#x60; while in progress, &#x60;0&#x60; when idle and &#x60;-2&#x60; when the export failed.
+Prepare job files for download. To export translated documents from the job use the query parameter &#x60;type&#x3D;files&#x60;:  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X GET &#39;https://api.lilt.com/v2/jobs/{id}/export?key&#x3D;API_KEY&amp;type&#x3D;files&#39; &#x60;&#x60;&#x60;  To export job memories use the query parameter &#x60;type&#x3D;memory&#x60;.  The status of the export can be checked by requesting the job &#x60;GET /jobs/:jobId&#x60;, &#x60;job.isProcessing&#x60; will be &#x60;1&#x60; while in progress, &#x60;0&#x60; when idle and &#x60;-2&#x60; when the export failed.
 
 ### Example
 ```java
@@ -474,7 +474,7 @@ null (empty response body)
 
 Retrieve a Job
 
-Retrieves a job data along with stats. To retrieve a specific job, you will need the job &#x60;id&#x60; in the url path.  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://api.lilt.com/v2/jobs/{id}?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+Retrieves a job data along with stats. To retrieve a specific job, you will need the job &#x60;id&#x60; in the url path.  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X GET &#39;https://api.lilt.com/v2/jobs/{id}?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -549,7 +549,7 @@ Name | Type | Description  | Notes
 
 Retrieve Job Leverage Stats
 
-Get the TM leverage stats for the job (new/exact/fuzzy matches).  Example CURL command:  &#x60;&#x60;&#x60; curl -X POST &#39;https://api.lilt.com/v2/jobs/{id}/stats?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+Get the TM leverage stats for the job (new/exact/fuzzy matches).  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X POST &#39;https://api.lilt.com/v2/jobs/{id}/stats?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -624,7 +624,7 @@ Name | Type | Description  | Notes
 
 Reactivate a Job
 
-Set the job state to active. Does not change the state of projects associated with the given job.  It will return the reactivated job.  Example CURL command:  &#x60;&#x60;&#x60; curl -X POST &#39;https://api.lilt.com/v2/jobs/{id}/reactivate?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+Set the job state to active. Does not change the state of projects associated with the given job.  It will return the reactivated job.  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X POST &#39;https://api.lilt.com/v2/jobs/{id}/reactivate?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -699,7 +699,7 @@ Name | Type | Description  | Notes
 
 Retrieve all Jobs
 
-Get all Jobs within a given offset and limit. You can retrieve jobs from your account using the above API.  Example CURL command:  &#x60;&#x60;&#x60; curl -X GET &#39;https://api.lilt.com/v2/jobs?key&#x3D;API_KEY&amp;isArchived&#x3D;false&#39; &#x60;&#x60;&#x60;
+Get all Jobs within a given offset and limit. You can retrieve jobs from your account using the above API.  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X GET &#39;https://api.lilt.com/v2/jobs?key&#x3D;API_KEY&amp;isArchived&#x3D;false&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -780,7 +780,7 @@ Name | Type | Description  | Notes
 
 Unarchive a Job
 
-Set job to unarchived, the job will move to active status.  Example CURL command:  &#x60;&#x60;&#x60; curl -X POST &#39;https://api.lilt.com/v2/jobs/{id}/unarchive?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
+Set job to unarchived, the job will move to active status.  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X POST &#39;https://api.lilt.com/v2/jobs/{id}/unarchive?key&#x3D;API_KEY&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -855,7 +855,7 @@ Name | Type | Description  | Notes
 
 Update a Job
 
-Updates a job with the new job properties. To update a specific job, you will need the job &#x60;id&#x60; in the url path.  You can update job&#39;s name and due date by passing the property and new value in the body.  Example CURL command:  &#x60;&#x60;&#x60; curl -X PUT &#39;https://api.lilt.com/v2/jobs/{id}?key&#x3D;API_KEY&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{   \&quot;name\&quot;: \&quot;test job\&quot;,   \&quot;due\&quot;: \&quot;2022-05-05T10:56:44.985Z\&quot; }&#39; &#x60;&#x60;&#x60;
+Updates a job with the new job properties. To update a specific job, you will need the job &#x60;id&#x60; in the url path.  You can update job&#39;s name and due date by passing the property and new value in the body.  Example CURL command:  &#x60;&#x60;&#x60;bash curl -X PUT &#39;https://api.lilt.com/v2/jobs/{id}?key&#x3D;API_KEY&#39; \\ --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{   \&quot;name\&quot;: \&quot;test job\&quot;,   \&quot;due\&quot;: \&quot;2022-05-05T10:56:44.985Z\&quot; }&#39; &#x60;&#x60;&#x60;
 
 ### Example
 ```java
