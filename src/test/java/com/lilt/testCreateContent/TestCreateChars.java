@@ -23,7 +23,7 @@ public class TestCreateChars {
     public TestCreateChars(String charCase) {
         this.charCase = charCase;
         this.defaultClient = Configuration.getDefaultApiClient();
-        this.defaultClient.setBasePath("System.getenv("API_HOST")");
+        this.defaultClient.setBasePath(System.getenv("API_HOST"));
         ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) this.defaultClient.getAuthentication("ApiKeyAuth");
         ApiKeyAuth.setApiKey(System.getenv("API_KEY"));
     }
