@@ -101,7 +101,7 @@ public class TestUploadTMX {
                 List<Memory> monitorResult = null;
                 while (this.translationStatus) {
                     monitorResult = this.memoriesApiInstance.getMemory(this.memoryId);
-                    this.translationStatus = monitorResult.getFirst().getIsProcessing();
+                    this.translationStatus = monitorResult.get(0).getIsProcessing();
                     Thread.sleep(5000);
                     System.out.println("Translation status: " + this.translationStatus + " || Request No: " + numMonitored);
                     numMonitored++;
@@ -109,7 +109,7 @@ public class TestUploadTMX {
                         break;
                     }
                 }
-                return monitorResult.getFirst().getIsProcessing();
+                return monitorResult.get(0).getIsProcessing();
             } catch (ApiException e) {
                 e.printStackTrace();
                 fail("Should be able to monitor translation");
@@ -171,8 +171,8 @@ public class TestUploadTMX {
             if (this.tmxFileCase.equals("wrong_data")) {
                 assert result.isEmpty();
             } else {
-                assertEquals(result.getFirst().getSource(), "chatte");
-                assertEquals(result.getFirst().getTarget(), "cat");
+                assertEquals(result.get(0).getSource(), "chatte");
+                assertEquals(result.get(0).getTarget(), "cat");
             }
         } catch (ApiException e) {
             printError(e);

@@ -59,7 +59,7 @@ public class TestInstantTranslate {
                 List<TranslationInfo> monitorResult = null;
                 while (this.translationStatus.equals("InProgress")) {
                     monitorResult = this.translateApiInstance.monitorFileTranslation(this.translationId, null, null, null);
-                    this.translationStatus = monitorResult.getFirst().getStatus();
+                    this.translationStatus = monitorResult.get(0).getStatus();
                     Thread.sleep(5000);
                     System.out.println("Translation status: " + translationStatus + " || Request No: " + numMonitored);
                     numMonitored++;
@@ -68,7 +68,7 @@ public class TestInstantTranslate {
                     }
                 }
                 assert monitorResult != null;
-                return monitorResult.getFirst().getStatus();
+                return monitorResult.get(0).getStatus();
             } catch (ApiException e) {
                 printError(e);
                 fail("Should be able to monitor translation");
@@ -112,7 +112,7 @@ public class TestInstantTranslate {
         try {
             List<TranslationInfo> translateResult = translateApiInstance.batchTranslateFile(fileId, memoryId, null, null);
             System.out.println(translateResult);
-            TranslationInfo translationResponse = translateResult.getFirst();
+            TranslationInfo translationResponse = translateResult.get(0);
             translationId = Integer.toString(translationResponse.getId());
             translationStatus = translationResponse.getStatus();
         } catch (ApiException e) {
