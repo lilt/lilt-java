@@ -12,10 +12,7 @@ import com.lilt.client.api.TranslateApi;
 
 import java.io.File;
 import java.nio.charset.StandardCharsets;
-import java.time.Duration;
-import java.util.ConcurrentModificationException;
 import java.util.List;
-import java.util.Objects;
 import java.util.concurrent.*;
 
 import org.junit.Test;

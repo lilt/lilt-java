@@ -5,8 +5,6 @@ import static org.junit.Assert.*;
 import com.lilt.client.ApiClient;
 import com.lilt.client.ApiException;
 import com.lilt.client.Configuration;
-import com.lilt.client.api.FilesApi;
-import com.lilt.client.api.TranslateApi;
 import com.lilt.client.auth.*;
 import com.lilt.client.model.*;
 import com.lilt.client.api.MemoriesApi;
@@ -17,7 +15,6 @@ import java.util.Collection;
 import java.util.List;
 import java.util.concurrent.*;
 
-import com.lilt.testInstantTranslate.TestInstantTranslate;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.junit.runners.Parameterized;
