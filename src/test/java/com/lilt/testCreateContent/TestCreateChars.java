@@ -48,7 +48,7 @@ public class TestCreateChars {
                 return new String(new char[10]).replace("\0", normal_summary);
             default:
                 return"";
-        };
+        }
     }
 
     @Test

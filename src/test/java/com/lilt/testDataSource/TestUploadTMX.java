@@ -51,18 +51,21 @@ public class TestUploadTMX {
                 return "fr_to_en.tmx";
             default:
                 return "";
-        };
+        }
     }
 
     public static File getTMXFile(String tmxFileCase) {
-        String filepath = switch (tmxFileCase) {
+        String filepath = "";
+        switch (tmxFileCase) {
             case "wrong_data":
-                return "/src/test-resources/get_documents.json";
+                filepath = "/src/test-resources/get_documents.json";
+                break;
             case "normal":
-                return "/src/test-resources/test-fr_to_en.tmx";
+                filepath = "/src/test-resources/test-fr_to_en.tmx";
+                break;
             default:
-                return "";
-        };
+                filepath = "";
+        }
         try {
             return new File(System.getProperty("user.dir") + filepath);
         } catch (NullPointerException e) {

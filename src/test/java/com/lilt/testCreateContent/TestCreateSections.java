@@ -47,7 +47,7 @@ public class TestCreateSections {
                 return Arrays.asList("Bees and me", "Honey for you", "Conclusion");
             default:
                 return Arrays.asList();
-        };
+        }
     }
 
     @Test
