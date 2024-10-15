@@ -44,18 +44,24 @@ public class TestUploadTMX {
     }
 
     public static String getTMXName(String tmxFileCase) {
-        return switch (tmxFileCase) {
-            case "wrong_data" -> "get_documents.json";
-            case "normal" -> "fr_to_en.tmx";
-            default -> "";
+        switch (tmxFileCase) {
+            case "wrong_data":
+                return "get_documents.json";
+            case "normal":
+                return "fr_to_en.tmx";
+            default:
+                return "";
         };
     }
 
     public static File getTMXFile(String tmxFileCase) {
         String filepath = switch (tmxFileCase) {
-            case "wrong_data" -> "/src/test-resources/get_documents.json";
-            case "normal" -> "/src/test-resources/test-fr_to_en.tmx";
-            default -> "";
+            case "wrong_data":
+                return "/src/test-resources/get_documents.json";
+            case "normal":
+                return "/src/test-resources/test-fr_to_en.tmx";
+            default:
+                return "";
         };
         try {
             return new File(System.getProperty("user.dir") + filepath);

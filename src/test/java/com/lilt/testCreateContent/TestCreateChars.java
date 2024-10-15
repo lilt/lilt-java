@@ -39,11 +39,15 @@ public class TestCreateChars {
 
     public static String getSummary(String charCase) {
         String normal_summary = "a blog post about how important bees are to my honey farm";
-        return switch (charCase) {
-            case "none" -> "";
-            case "normal" -> normal_summary;
-            case "over500" -> new String(new char[10]).replace("\0", normal_summary);
-            default -> "";
+        switch (charCase) {
+            case "none":
+                return "";
+            case "normal":
+                return normal_summary;
+            case "over500":
+                return new String(new char[10]).replace("\0", normal_summary);
+            default:
+                return"";
         };
     }
 

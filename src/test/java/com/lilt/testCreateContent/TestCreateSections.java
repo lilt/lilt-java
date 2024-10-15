@@ -40,10 +40,13 @@ public class TestCreateSections {
     }
 
     public static List<String> getSections(String sectionCase) {
-        return switch (sectionCase) {
-            case "one" -> Arrays.asList("Bees and me");
-            case "multiple" -> Arrays.asList("Bees and me", "Honey for you", "Conclusion");
-            default -> Arrays.asList();
+        switch (sectionCase) {
+            case "one":
+                return Arrays.asList("Bees and me");
+            case "multiple":
+                return Arrays.asList("Bees and me", "Honey for you", "Conclusion");
+            default:
+                return Arrays.asList();
         };
     }
 

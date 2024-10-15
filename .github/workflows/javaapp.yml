@@ -25,7 +25,7 @@ jobs:
           java-version: '7'
 
       - name: Build
-        run: mvn --batch-mode -DskipTests -X package
+        run: mvn --batch-mode -DskipTests package
 
       - name: Test
         run: mvn --batch-mode -Dmaven.test.failure.ignore=true test
