@@ -52,6 +52,20 @@ public class TestCreateChars {
         }
     }
 
+    public static void assertExpected(LiltCreateContent response, String expectedSummary) {
+        assertEquals(response.getLanguage(), "en-US");
+        assertEquals(response.getTemplate(), "blog-post");
+        LiltCreateContentTemplateParams responseTemplateParams = response.getTemplateParams();
+        assertEquals((int) responseTemplateParams.getContentLength(), 1000);
+        assertNull(responseTemplateParams.getMemoryId());
+        assertEquals(responseTemplateParams.getLanguage(), "en-US");
+        List<String> expectedSections = Arrays.asList("Bees and me", "Honey for you", "Conclusion");
+        for (int index=0; index <expectedSections.size(); index++) {
+            assertEquals(responseTemplateParams.getSections().get(index), expectedSections.get(index));
+        }
+        assertEquals(responseTemplateParams.getSummary(), expectedSummary);
+    }
+
     @Test
     public void create() {
         CreateApi apiInstance = new CreateApi(defaultClient);
@@ -79,6 +93,7 @@ public class TestCreateChars {
             List<LiltCreateContent> createResultContents = createResult.getContents();
             LiltCreateContent latest = createResultContents.get(createResultContents.size() - 1);
             System.out.println(latest);
+            assertExpected(latest, getSummary(this.charCase));
         } catch (ApiException e) {
             System.err.println("Exception when calling CreateApi#signLiltCreateTerms");
             System.err.println("Status code: " + e.getCode());
