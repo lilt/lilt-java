@@ -2,6 +2,7 @@ package com.lilt.testCreateContent;
 
 import static org.junit.Assert.*;
 
+import com.google.gson.JsonArray;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.lilt.client.ApiClient;
@@ -53,7 +54,7 @@ public class TestCreateSections {
     }
 
     public static JsonObject getExpected(String charCase) {
-        List<String> sections = Arrays.asList();
+        JsonArray sections = new JsonArray();
         switch (charCase) {
             case "none":
                 break;
@@ -73,7 +74,7 @@ public class TestCreateSections {
         templateParams.addProperty("contentLength", 1000);
         templateParams.addProperty("memoryId", (String) null);
         templateParams.addProperty("language", "en-US");
-        templateParams.add("sections", (JsonElement) sections);
+        templateParams.add("sections", sections);
         templateParams.addProperty("summary", "a blog post about how important bees are to my honey farm");
         return expected;
     }
@@ -83,11 +84,13 @@ public class TestCreateSections {
         assertEquals(response.getTemplate(), expected.get("template"));
         LiltCreateContentTemplateParams responseTemplateParams = response.getTemplateParams();
         JsonObject expectedTemplateParams = (JsonObject) expected.get("templateParams");
-        List<String> expectedSections = (List<String>) expectedTemplateParams.get("sections");
+        JsonArray expectedSections = (JsonArray) expectedTemplateParams.get("sections");
         assertEquals(responseTemplateParams.getContentLength(), expectedTemplateParams.get("contentLength"));
         assertEquals(responseTemplateParams.getMemoryId(), expected.get("memoryId"));
         assertEquals(responseTemplateParams.getLanguage(), expectedTemplateParams.get("language"));
-        assertArrayEquals(responseTemplateParams.getSections().toArray(), expectedSections.toArray());
+        for (int index=0; index <expectedSections.size(); index++) {
+            assertEquals(responseTemplateParams.getSections().get(index), expectedSections.get(index));gi
+        }
         assertEquals(responseTemplateParams.getSummary(), expectedTemplateParams.get("summary"));
     }
 
