@@ -79,7 +79,7 @@ public class TestCreateSections {
         return expected;
     }
 
-    public static Boolean assertExpected(LiltCreateContent response, JsonObject expected) {
+    public static void assertExpected(LiltCreateContent response, JsonObject expected) {
         assertEquals(response.getLanguage(), expected.get("language"));
         assertEquals(response.getTemplate(), expected.get("template"));
         LiltCreateContentTemplateParams responseTemplateParams = response.getTemplateParams();
@@ -89,7 +89,7 @@ public class TestCreateSections {
         assertEquals(responseTemplateParams.getMemoryId(), expected.get("memoryId"));
         assertEquals(responseTemplateParams.getLanguage(), expectedTemplateParams.get("language"));
         for (int index=0; index <expectedSections.size(); index++) {
-            assertEquals(responseTemplateParams.getSections().get(index), expectedSections.get(index));gi
+            assertEquals(responseTemplateParams.getSections().get(index), expectedSections.get(index));
         }
         assertEquals(responseTemplateParams.getSummary(), expectedTemplateParams.get("summary"));
     }
