@@ -10,6 +10,7 @@ import com.lilt.client.model.*;
 import com.lilt.client.api.CreateApi;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.List;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -75,7 +76,9 @@ public class TestCreateChars {
             assertEquals(signResult.getSignedAgreement(), true);
             apiInstance.generateLiltCreateContent(requestBody);
             GetLiltCreateContentResponse createResult = apiInstance.getLiltCreateContent();
-            System.out.println(createResult);
+            List<LiltCreateContent> createResultContents = createResult.getContents();
+            LiltCreateContent latest = createResultContents.get(createResultContents.size() - 1);
+            System.out.println(latest);
         } catch (ApiException e) {
             System.err.println("Exception when calling CreateApi#signLiltCreateTerms");
             System.err.println("Status code: " + e.getCode());

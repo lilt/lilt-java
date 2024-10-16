@@ -74,7 +74,9 @@ public class TestCreateSections {
             assertEquals(signResult.getSignedAgreement(), true);
             apiInstance.generateLiltCreateContent(requestBody);
             GetLiltCreateContentResponse createResult = apiInstance.getLiltCreateContent();
-            System.out.println(createResult);
+            List<LiltCreateContent> createResultContents = createResult.getContents();
+            LiltCreateContent latest = createResultContents.get(createResultContents.size() - 1);
+            System.out.println(latest);
         } catch (ApiException e) {
             System.err.println("Exception when calling CreateApi#signLiltCreateTerms");
             System.err.println("Status code: " + e.getCode());
