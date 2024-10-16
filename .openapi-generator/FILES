@@ -12,6 +12,7 @@ docs/DocumentsApi.md
 docs/Error.md
 docs/FileDeleteResponse.md
 docs/FilesApi.md
+docs/GetLiltCreateContentResponse.md
 docs/InlineResponse200.md
 docs/Job.md
 docs/JobCreateParameters.md
@@ -25,6 +26,8 @@ docs/LanguagePair.md
 docs/LanguagesApi.md
 docs/LanguagesResponse.md
 docs/LiltCreateContent.md
+docs/LiltCreateContentPreferences.md
+docs/LiltCreateContentTemplateParams.md
 docs/MemoriesApi.md
 docs/Memory.md
 docs/MemoryCreateParameters.md
@@ -48,6 +51,9 @@ docs/TranslationInfo.md
 docs/TranslationList.md
 docs/TranslationMemoryEntry.md
 docs/WorkflowStageAssignment.md
+docs/WorkflowStageTemplate.md
+docs/WorkflowTemplate.md
+docs/WorkflowsApi.md
 pom.xml
 src/main/AndroidManifest.xml
 src/main/java/com/lilt/client/ApiCallback.java
@@ -71,6 +77,7 @@ src/main/java/com/lilt/client/api/LanguagesApi.java
 src/main/java/com/lilt/client/api/MemoriesApi.java
 src/main/java/com/lilt/client/api/ProjectsApi.java
 src/main/java/com/lilt/client/api/TranslateApi.java
+src/main/java/com/lilt/client/api/WorkflowsApi.java
 src/main/java/com/lilt/client/auth/ApiKeyAuth.java
 src/main/java/com/lilt/client/auth/Authentication.java
 src/main/java/com/lilt/client/auth/HttpBasicAuth.java
@@ -83,6 +90,7 @@ src/main/java/com/lilt/client/model/DocumentWithoutSegments.java
 src/main/java/com/lilt/client/model/DocumentWithoutSegmentsStatus.java
 src/main/java/com/lilt/client/model/Error.java
 src/main/java/com/lilt/client/model/FileDeleteResponse.java
+src/main/java/com/lilt/client/model/GetLiltCreateContentResponse.java
 src/main/java/com/lilt/client/model/InlineResponse200.java
 src/main/java/com/lilt/client/model/Job.java
 src/main/java/com/lilt/client/model/JobCreateParameters.java
@@ -94,6 +102,8 @@ src/main/java/com/lilt/client/model/JobUpdateParameters.java
 src/main/java/com/lilt/client/model/LanguagePair.java
 src/main/java/com/lilt/client/model/LanguagesResponse.java
 src/main/java/com/lilt/client/model/LiltCreateContent.java
+src/main/java/com/lilt/client/model/LiltCreateContentPreferences.java
+src/main/java/com/lilt/client/model/LiltCreateContentTemplateParams.java
 src/main/java/com/lilt/client/model/Memory.java
 src/main/java/com/lilt/client/model/MemoryCreateParameters.java
 src/main/java/com/lilt/client/model/MemoryDeleteResponse.java
@@ -114,3 +124,5 @@ src/main/java/com/lilt/client/model/TranslationInfo.java
 src/main/java/com/lilt/client/model/TranslationList.java
 src/main/java/com/lilt/client/model/TranslationMemoryEntry.java
 src/main/java/com/lilt/client/model/WorkflowStageAssignment.java
+src/main/java/com/lilt/client/model/WorkflowStageTemplate.java
+src/main/java/com/lilt/client/model/WorkflowTemplate.java

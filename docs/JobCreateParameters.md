@@ -13,8 +13,7 @@ Name | Type | Description | Notes
 **srcLang** | **String** | 2-letter ISO source language code | 
 **srcLocale** | **String** | 2-letter source language code | 
 **isPlural** | **Boolean** | A boolean value representing if the files have plurals. |  [optional]
-**workflowTemplateId** | **Integer** | Identifier of the workflow template to be used when creating a job. If not passed the organization default will be used. |  [optional]
-**workflowTemplateName** | **Integer** | Name of the workflow template to be used, must be passed with teamId or look up will fail. If workflowTemplateId is passed it supercedes any other look up. |  [optional]
+**workflowTemplateId** | **Integer** | ID of the workflow template to be used. Use the [workflows templates endpoint](#tag/Workflows/operation/getWorkflowTemplates) to get the list of available workflows. |  [optional]
 
 
 

@@ -1,34 +1,25 @@
 openapi: 3.0.1
 info:
-  contact:
-    email: support@lilt.com
-    name: Lilt REST API Support
-    url: https://developers.lilt.com/
-  description: |
-    The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:
-      * Training of and translating with interactive, adaptive machine translation
-      * Large-scale translation memory
-      * The Lexicon (a large-scale termbase)
-      * Programmatic control of the Lilt CAT environment
-      * Translation memory synchronization
-
-    Requests and responses are in JSON format. The REST API only responds to HTTPS / SSL requests.
-
-    ## Authentication
-
-    Requests are authenticated via REST API key, which requires the Business plan.
-
-    Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.
-
-    For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.
-
-    ## Quotas
-
-    Our services have a general quota of 4000 requests per minute. Should you hit the maximum requests per minute, you will need to wait 60 seconds before you can send another request.
+  description: "Lilt REST API Support: https://lilt.atlassian.net/servicedesk/customer/portals\
+    \   \nThe Lilt REST API enables programmatic access to the full-range of Lilt\
+    \ backend services including:\n  * Training of and translating with interactive,\
+    \ adaptive machine translation\n  * Large-scale translation memory\n  * The Lexicon\
+    \ (a large-scale termbase)\n  * Programmatic control of the Lilt CAT environment\n\
+    \  * Translation memory synchronization\n\nRequests and responses are in JSON\
+    \ format. The REST API only responds to HTTPS / SSL requests. \nThe base url for\
+    \ this REST API is `https://api.lilt.com/`.\n\n## Authentication\n\nRequests are\
+    \ authenticated via REST API key, which requires the Business plan.\n\nRequests\
+    \ are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication).\
+    \ Add your REST API key as both the `username` and `password`.\n\nFor development,\
+    \ you may also pass the REST API key via the `key` query parameter. This is less\
+    \ secure than HTTP Basic Auth, and is not recommended for production use.\n\n\
+    ## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should\
+    \ you hit the maximum requests per minute, you will need to wait 60 seconds before\
+    \ you can send another request.\n"
   title: Lilt REST API
   version: v3.0
 servers:
-- url: https://api.lilt.com/
+- url: https://api.lilt.com
 security:
 - ApiKeyAuth: []
 - BasicAuth: []
@@ -299,7 +290,7 @@ paths:
         Imports common translation memory or termbase file formats to a specific Lilt memory. Currently supported file formats are `*.tmx`, `*.sdltm`, `*.sdlxliff`(With custom Filters), '*.xliff', and `*.tmq` for TM data; `*.csv` and `*.tbx` for termbase data. Request parameters should be passed as JSON object with the header field `LILT-API`.
 
         Example CURL command to upload a translation memory file named `my_memory.sdltm` in the current working directory:
-        ```
+        ```bash
           curl -X POST https://api.lilt.com/v2/memories/import?key=API_KEY \
             --header "LILT-API: {\"name\": \"my_memory.sdltm\",\"memory_id\": 42}" \
             --header "Content-Type: application/octet-stream" \
@@ -307,12 +298,12 @@ paths:
         ```
 
         Example CURL command to upload a translation memory file named `my_memory.sdlxliff` in the current working directory, with Custom Filters based on SDLXLIFF fields, conf_name which maps to, percentage, and whether we should ignore unlocked segments.
-        ```
+        ```bash
           curl -X POST https://api.lilt.com/v2/memories/import?key=API_KEY \
             --header "LILT-API: {\"name\": \"my_memory.sdlxliff\",\"memory_id\": 12,\"sdlxliff_filters\":[{\"conf_name\": \"Translated\", \"percentage\": 100, \"allow_unlocked\": false}]"}" \
             --header "Content-Type: application/octet-stream" \
             --data-binary @my_memory.sdlxliff
-
+        ```
 
       operationId: importMemoryFile
       parameters:
@@ -400,7 +391,7 @@ paths:
         endpoint. When the `is_processing` value is 0 then call the
         `POST /2/memories/termbase/download` endpoint.
 
-        ```
+        ```bash
           curl -X POST https://api.lilt.com/v2/memories/termbase/export?key=API_KEY&id=ID
         ```
       operationId: exportTermbase
@@ -438,7 +429,7 @@ paths:
         Ensure you first call the `/2/memories/termbase/export` endpoint to
         start the export process before you try to download it.
 
-        ```
+        ```bash
           curl -X GET https://api.lilt.com/v2/memories/termbase/download?key=API_KEY&id=ID
         ```
       operationId: downloadTermbase
@@ -475,7 +466,7 @@ paths:
       description: |
         Delete a segment from a memory.
 
-        ```
+        ```bash
           curl -X DELETE https://api.lilt.com/v2/memories/segment?key=API_KEY&id=ID&segment_id=$SEGMENT_ID
         ```
       operationId: deleteSegmentFromMemory
@@ -612,8 +603,8 @@ paths:
         Get information about the one or more Files that are being translated with machine translation. Query filters are optional but at least one must be provided.
 
         Example CURL:
-        ```
-        curl --X --request GET 'https://api.lilt.com/v2/translate/file?key=API_KEY&translationIds=1,2&fromTime=1607966744&toTime=1707966744&status=InProgress'
+        ```bash
+        curl -X GET 'https://api.lilt.com/v2/translate/file?key=API_KEY&translationIds=1,2&fromTime=1607966744&toTime=1707966744&status=InProgress'
         ```
 
       operationId: monitorFileTranslation
@@ -658,8 +649,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TranslationInfo'
-          description: Translation info
+                description: List of TranslationInfo objects
+                items:
+                  $ref: '#/components/schemas/TranslationInfo'
+                title: monitorFileTranslationResponse
+                type: array
+          description: Translation Info
         default:
           content:
             application/json:
@@ -675,8 +670,8 @@ paths:
         Start machine translation of one or more Files that have previously been uploaded.  The response will include an `id` parameter that can be used to monitor and download the translations in subsequent calls.
 
         Example CURL:
-        ```
-        curl --X --request POST 'https://api.lilt.com/v2/translate/file?key=API_KEY&fileId=583&memoryId=2495&configId=123&withTM=true'
+        ```bash
+        curl -X POST 'https://api.lilt.com/v2/translate/file?key=API_KEY&fileId=583&memoryId=2495&configId=123&withTM=true'
         ```
 
       operationId: batchTranslateFile
@@ -720,8 +715,12 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/TranslationInfo'
-          description: Translation info
+                description: List of TranslationInfo objects
+                items:
+                  $ref: '#/components/schemas/TranslationInfo'
+                title: batchTranslateFileResponse
+                type: array
+          description: Translation Info
         default:
           content:
             application/json:
@@ -738,8 +737,8 @@ paths:
         Download a translated File.
 
         Example CURL:
-        ```
-        curl --X --request GET 'https://api.lilt.com/v2/translate/files?key=API_KEY&id=1'
+        ```bash
+        curl -X GET 'https://api.lilt.com/v2/translate/files?key=API_KEY&id=1'
         ```
 
       operationId: downloadFile
@@ -773,8 +772,8 @@ paths:
         endpoint.
 
         Example CURL:
-        ```
-        curl --X --request POST 'https://api.lilt.com/v2/create/terms-and-conditions?key=API_KEY' \
+        ```bash
+        curl -X POST 'https://api.lilt.com/v2/create/terms-and-conditions?key=API_KEY' \
         --header 'Content-Type: application/json' \
         --data-raw '{"signedAgreement": true}'
         ```
@@ -818,8 +817,8 @@ paths:
         Get a list of all content that has been generated by Lilt Create.
 
         Example CURL:
-        ```
-        curl --X --request GET 'https://api.lilt.com/v2/create?key=API_KEY'
+        ```bash
+        curl -X GET 'https://api.lilt.com/v2/create?key=API_KEY'
         ```
 
       operationId: getLiltCreateContent
@@ -828,9 +827,7 @@ paths:
           content:
             application/json:
               schema:
-                items:
-                  $ref: '#/components/schemas/LiltCreateContent'
-                type: array
+                $ref: '#/components/schemas/getLiltCreateContentResponse'
           description: An object with a documents next task Workflow metadata.
       summary: Get Lilt Create content
       tags:
@@ -841,8 +838,8 @@ paths:
         Generate new Lilt Create content with the given parameters.
 
         Example CURL:
-        ```
-        curl --X --request POST 'https://api.lilt.com/v2/create?key=API_KEY' \
+        ```bash
+        curl -X POST 'https://api.lilt.com/v2/create?key=API_KEY' \
         --header 'Content-Type: application/json' \
         --data-raw '{
           "language":"en-US",
@@ -887,8 +884,8 @@ paths:
         Get the stored preferences for Lilt Create.
 
         Example CURL:
-        ```
-        curl --X --request POST 'https://api.lilt.com/v2/create/preferences?key=API_KEY'
+        ```bash
+        curl -X POST 'https://api.lilt.com/v2/create/preferences?key=API_KEY'
         ```
 
       operationId: getLiltCreatePreferences
@@ -905,8 +902,8 @@ paths:
         Update the stored preferences for Lilt Create.
 
         Example CURL:
-        ```
-        curl --X --request PUT
+        ```bash
+        curl -X PUT
         'https://api.lilt.com/v2/create/preferences?key=API_KEY' \
         --header 'Content-Type: application/json' \
         --data-raw '{"tone": "formal", "styleguide": ""}'
@@ -936,8 +933,8 @@ paths:
         Delete a piece of Lilt Create content.
 
         Example CURL:
-        ```
-        curl --X --request DELETE 'https://api.lilt.com/v2/create/1234?key=API_KEY'
+        ```bash
+        curl -X DELETE 'https://api.lilt.com/v2/create/1234?key=API_KEY'
         ```
 
       operationId: deleteLiltCreateContent
@@ -966,8 +963,8 @@ paths:
         Get Lilt Create content by ID.
 
         Example CURL:
-        ```
-        curl --X --request GET 'https://api.lilt.com/v2/create/1234?key=API_KEY'
+        ```bash
+        curl -X GET 'https://api.lilt.com/v2/create/1234?key=API_KEY'
         ```
 
       operationId: getLiltCreateById
@@ -996,8 +993,8 @@ paths:
         Update a piece of Lilt Create content.
 
         Example CURL:
-        ```
-        curl --X --request PUT 'https://api.lilt.com/v2/create/1234?key=API_KEY' \
+        ```bash
+        curl -X PUT 'https://api.lilt.com/v2/create/1234?key=API_KEY' \
         --header 'Content-Type: application/json' \
         --data-raw '{"language":"de-DE"}'
         ```
@@ -1037,8 +1034,8 @@ paths:
         Regenerate the given piece of content with the current parameters.
 
         Example CURL:
-        ```
-        curl --X --request GET 'https://api.lilt.com/v2/create/1234/create?key=API_KEY'
+        ```bash
+        curl -X GET 'https://api.lilt.com/v2/create/1234/create?key=API_KEY'
         ```
 
       operationId: regenerateLiltCreateContent
@@ -1064,6 +1061,26 @@ paths:
       tags:
       - Create
       x-accepts: application/json
+  /v2/workflows/templates:
+    get:
+      description: |
+        Get all of the possible Workflow Templates owned by the team. Useful for retrieving the ids corresponding to each workflow tables, and passing them to subsequent requests, for example, creating a new Job with a specific Workflow.
+        Example CURL:
+        ```bash curl -X GET 'https://api.lilt.com/v2/workflows/templates?key=API_KEY' ```
+      operationId: getWorkflowTemplates
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/WorkflowTemplate'
+                type: array
+          description: An array with a team's available WorkflowTemplates.
+      summary: Retrieve workflow templates
+      tags:
+      - Workflows
+      x-accepts: application/json
   /v2/jobs:
     get:
       description: |-
@@ -1071,7 +1088,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X GET 'https://api.lilt.com/v2/jobs?key=API_KEY&isArchived=false'
         ```
       operationId: retrieveAllJobs
@@ -1142,7 +1159,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X POST 'https://api.lilt.com/v2/jobs?key=API_KEY' \
         --header 'Content-Type: application/json' \
         --data-raw '{
@@ -1184,10 +1201,8 @@ paths:
                   workflowTemplateId: 14
                   autoAccept: true
                   configId: 2332
-                  srcLocale: US
                   memoryId: 1241
                   trgLang: de
-                  srcLang: en
                 - workflowStageAssignments:
                   - workflowStageTemplateId: 12345
                     userId: 123
@@ -1205,11 +1220,9 @@ paths:
                   workflowTemplateId: 14
                   autoAccept: true
                   configId: 2332
-                  srcLocale: US
                   memoryId: 1241
                   trgLang: de
-                  srcLang: en
-                workflowTemplateId: 123
+                workflowTemplateId: 6
                 fileIds:
                 - 298
                 - 299
@@ -1217,7 +1230,6 @@ paths:
                 name: My new Job
                 srcLocale: US
                 isPlural: true
-                workflowTemplateName: 6
                 srcLang: en
               properties:
                 name:
@@ -1256,15 +1268,9 @@ paths:
                   example: true
                   type: boolean
                 workflowTemplateId:
-                  description: Identifier of the workflow template to be used when
-                    creating a job. If not passed the organization default will be
-                    used.
-                  example: 123
-                  type: integer
-                workflowTemplateName:
-                  description: Name of the workflow template to be used, must be passed
-                    with teamId or look up will fail. If workflowTemplateId is passed
-                    it supercedes any other look up.
+                  description: ID of the workflow template to be used. Use the [workflows
+                    templates endpoint](#tag/Workflows/operation/getWorkflowTemplates)
+                    to get the list of available workflows.
                   type: integer
               required:
               - fileIds
@@ -1302,7 +1308,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X DELETE 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY'
         ```
       operationId: deleteJob
@@ -1338,7 +1344,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X GET 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY'
         ```
       operationId: getJob
@@ -1376,7 +1382,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X PUT 'https://api.lilt.com/v2/jobs/{id}?key=API_KEY' \
         --header 'Content-Type: application/json' \
         --data-raw '{
@@ -1461,7 +1467,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X POST 'https://api.lilt.com/v2/jobs/{id}/stats?key=API_KEY'
         ```
       operationId: getJobLeverageStats
@@ -1500,7 +1506,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X POST 'https://api.lilt.com/v2/jobs/{id}/archive?key=API_KEY'
         ```
       operationId: archiveJob
@@ -1537,7 +1543,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X POST 'https://api.lilt.com/v2/jobs/{id}/unarchive?key=API_KEY'
         ```
       operationId: unarchiveJob
@@ -1576,7 +1582,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X POST 'https://api.lilt.com/v2/jobs/{id}/deliver?key=API_KEY'
         ```
       operationId: deliverJob
@@ -1615,7 +1621,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X POST 'https://api.lilt.com/v2/jobs/{id}/reactivate?key=API_KEY'
         ```
       operationId: reactivateJob
@@ -1653,7 +1659,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X GET 'https://api.lilt.com/v2/jobs/{id}/export?key=API_KEY&type=files'
         ```
 
@@ -1702,7 +1708,7 @@ paths:
 
         Example CURL command:
 
-        ```
+        ```bash
         curl -X GET 'https://api.lilt.com/v2/jobs/{id}/download?key=API_KEY'
         ```
       operationId: downloadJob
@@ -1946,7 +1952,7 @@ paths:
         Any Document can be downloaded in XLIFF 1.2 format, or can be retrieved in its original uploaded format by setting `is_xliff=false`.
         This endpoint will fail if either (a) export or (b) pre-translation operations are in-progress. The status of those operations can be determined by retrieving the Document resource.
         Example CURL command:
-        ```
+        ```bash
           curl -X GET https://api.lilt.com/v2/documents/files?key=API_KEY&id=274 -o from_lilt.xliff
         ```
 
@@ -1999,7 +2005,7 @@ paths:
         File names in the header can only contain [US-ASCII characters](https://en.wikipedia.org/wiki/ASCII). File names with characters outside of US-ASCII should be [URI encoded](https://en.wikipedia.org/wiki/Percent-encoding) or transliterated to US-ASCII strings.
 
         Example CURL command:
-        ```
+        ```bash
           curl -X POST https://api.lilt.com/v2/documents/files?key=API_KEY \
           --header "LILT-API: {\"name\": \"introduction.xliff\",\"pretranslate\": \"tm+mt\",\"project_id\": 9}" \
           --header "Content-Type: application/octet-stream" \
@@ -2111,13 +2117,8 @@ paths:
       x-accepts: application/json
   /v2/files:
     delete:
-      description: |+
-        Delete a File.
-
-        Example CURL command:
-        ```
-          curl -X DELETE https://api.lilt.com/v2/files?key=API_KEY&id=123 ```
-
+      description: "Delete a File.\n\nExample CURL command:\n```bash\n  curl -X DELETE\
+        \ https://api.lilt.com/v2/files?key=API_KEY&id=123 \n```\n\n"
       operationId: deleteFile
       parameters:
       - description: A unique File identifier.
@@ -2152,8 +2153,9 @@ paths:
         To retrieve a specific file, specify the <strong>id</strong> request parameter. To retrieve all files, omit the <strong>id</strong> request parameter.
 
         Example CURL command:
+        ```bash
+         curl -X GET https://api.lilt.com/v2/files?key=API_KEY&id=274
         ```
-         curl -X GET https://api.lilt.com/v2/files?key=API_KEY&id=274```
       operationId: getFiles
       parameters:
       - description: A unique File identifier.
@@ -2209,7 +2211,7 @@ paths:
         Request parameters should be passed in as query string parameters.
 
         Example CURL command:
-        ```
+        ```bash
           curl -X POST https://api.lilt.com/v2/files?key=API_KEY&name=en_US.json \
           --header "Content-Type: application/octet-stream" \
           --data-binary @en_US.json
@@ -2309,8 +2311,8 @@ paths:
         Download a File.
 
         Example CURL:
-        ```
-        curl --X --request GET 'https://api.lilt.com/v2/files/download?key=API_KEY&id=1'
+        ```bash
+        curl -X GET 'https://api.lilt.com/v2/files/download?key=API_KEY&id=1'
         ```
       operationId: download
       parameters:
@@ -2341,8 +2343,8 @@ paths:
         Remove a label from a File.
 
         Example CURL:
-        ```
-        curl --X --request DELETE 'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1&name=label_name'
+        ```bash
+        curl -X DELETE 'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1&name=label_name'
         ```
       operationId: removeLabel
       parameters:
@@ -2375,8 +2377,8 @@ paths:
         Add a label to a File.
 
         Example CURL:
-        ```
-        curl --X --request POST 'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1'
+        ```bash
+        curl -X POST 'https://api.lilt.com/v2/files/labels?key=API_KEY&id=1'
         --header 'Content-Type: application/json' \
         --data-raw '{
             "name": "label_name"
@@ -2789,34 +2791,85 @@ components:
       description: |
         Content Parameters for LiltCreate.
       example:
-        summary: summary
-        tone: tone
-        terms: terms
+        template: template
+        preferences:
+          styleguide: styleguide
+          tone: tone
+        templateParams:
+          summary: summary
+          contentLength: 0
+          language: language
+          memoryId: 6
+          sections:
+          - sections
+          - sections
         language: language
-        memoryId: memoryId
-        sections:
-        - sections
-        - sections
       properties:
-        tone:
-          description: The tone of the content.
-          type: string
-        terms:
-          description: The terms of the content.
-          type: string
-        summary:
-          description: The summary of the content.
-          type: string
         language:
           description: The language of the content.
           type: string
-        memoryId:
-          description: The memory ID of the content.
+        template:
+          description: The template of the content.
           type: string
-        sections:
-          description: The sections of the content.
+        templateParams:
+          $ref: '#/components/schemas/LiltCreateContent_templateParams'
+        preferences:
+          $ref: '#/components/schemas/LiltCreateContent_preferences'
+      required:
+      - language
+      - template
+      - templateParams
+      type: object
+    WorkflowStageTemplate:
+      description: A single stage within a Workflow Template.
+      example:
+        name: Translate
+        assignmentType: TRANSLATE
+      properties:
+        name:
+          description: The human readable name of a Workflow stage.
+          example: Translate
+          type: string
+        assignmentType:
+          description: An enum to represent all possible types of Workflow stage.
+          enum:
+          - READY_TO_START
+          - TRANSLATE
+          - REVIEW
+          - SECONDARY_REVIEW
+          - DONE
+          example: TRANSLATE
+          type: string
+      type: object
+    WorkflowTemplate:
+      description: A workflow template which defines the workflow's possible steps
+        (combination of Translation, Review and Customer Review).
+      example:
+        name: Translate > Review > Customer Review
+        stages:
+        - name: Translate
+          assignmentType: TRANSLATE
+        - name: Translate
+          assignmentType: TRANSLATE
+        id: 15
+        TeamId: 100
+      properties:
+        id:
+          description: Identifier of a teams Workflow template. Can be used during
+            Job creation for specifying the workflow used for a job or language pair.
+          example: 15
+          type: number
+        name:
+          example: Translate > Review > Customer Review
+          type: string
+        TeamId:
+          description: The name of a given Workflow template.
+          example: 100
+          type: number
+        stages:
+          description: The stages in this workflow template.
           items:
-            type: string
+            $ref: '#/components/schemas/WorkflowStageTemplate'
           type: array
       type: object
     JobProject:
@@ -3160,19 +3213,9 @@ components:
         workflowTemplateId: 14
         autoAccept: true
         configId: 2332
-        srcLocale: US
         memoryId: 1241
         trgLang: de
-        srcLang: en
       properties:
-        srcLang:
-          description: Source language, an ISO 639-1 language identifier.
-          example: en
-          type: string
-        srcLocale:
-          description: A locale identifier, supported for source language.
-          example: US
-          type: string
         trgLang:
           description: Target language, an ISO 639-1 language identifier.
           example: de
@@ -4016,6 +4059,43 @@ components:
           type: boolean
       title: signLiltCreateTermsResponse
       type: object
+    getLiltCreateContentResponse:
+      example:
+        contents:
+        - template: template
+          preferences:
+            styleguide: styleguide
+            tone: tone
+          templateParams:
+            summary: summary
+            contentLength: 0
+            language: language
+            memoryId: 6
+            sections:
+            - sections
+            - sections
+          language: language
+        - template: template
+          preferences:
+            styleguide: styleguide
+            tone: tone
+          templateParams:
+            summary: summary
+            contentLength: 0
+            language: language
+            memoryId: 6
+            sections:
+            - sections
+            - sections
+          language: language
+      properties:
+        contents:
+          description: List of LiltCreateContent objects
+          items:
+            $ref: '#/components/schemas/LiltCreateContent'
+          type: array
+      title: getLiltCreateContentResponse
+      type: object
     inline_response_200:
       example:
         id: 0
@@ -4044,10 +4124,8 @@ components:
           workflowTemplateId: 14
           autoAccept: true
           configId: 2332
-          srcLocale: US
           memoryId: 1241
           trgLang: de
-          srcLang: en
         - workflowStageAssignments:
           - workflowStageTemplateId: 12345
             userId: 123
@@ -4065,11 +4143,9 @@ components:
           workflowTemplateId: 14
           autoAccept: true
           configId: 2332
-          srcLocale: US
           memoryId: 1241
           trgLang: de
-          srcLang: en
-        workflowTemplateId: 123
+        workflowTemplateId: 6
         fileIds:
         - 298
         - 299
@@ -4077,7 +4153,6 @@ components:
         name: My new Job
         srcLocale: US
         isPlural: true
-        workflowTemplateName: 6
         srcLang: en
       properties:
         name:
@@ -4116,14 +4191,9 @@ components:
           example: true
           type: boolean
         workflowTemplateId:
-          description: Identifier of the workflow template to be used when creating
-            a job. If not passed the organization default will be used.
-          example: 123
-          type: integer
-        workflowTemplateName:
-          description: Name of the workflow template to be used, must be passed with
-            teamId or look up will fail. If workflowTemplateId is passed it supercedes
-            any other look up.
+          description: ID of the workflow template to be used. Use the [workflows
+            templates endpoint](#tag/Workflows/operation/getWorkflowTemplates) to
+            get the list of available workflows.
           type: integer
       required:
       - fileIds
@@ -4265,6 +4335,51 @@ components:
           example: label_name
           type: string
       title: AddFileLabelRequest
+      type: object
+    LiltCreateContent_templateParams:
+      description: The template parameters of the content.
+      example:
+        summary: summary
+        contentLength: 0
+        language: language
+        memoryId: 6
+        sections:
+        - sections
+        - sections
+      properties:
+        contentLength:
+          description: The length of the content.
+          type: integer
+        memoryId:
+          description: The ID referencing a Data Source.
+          type: integer
+        language:
+          description: The language of the content.
+          type: string
+        sections:
+          description: The sections of the content.
+          items:
+            description: A section heading of the content.
+            type: string
+          type: array
+        summary:
+          description: The summary of the content.
+          type: string
+      required:
+      - language
+      type: object
+    LiltCreateContent_preferences:
+      description: The preferences of the content.
+      example:
+        styleguide: styleguide
+        tone: tone
+      properties:
+        tone:
+          description: The tone of the content.
+          type: string
+        styleguide:
+          description: The styleguide of the content.
+          type: string
       type: object
     DocumentWithoutSegments_status:
       description: A list of translations for the query term.
