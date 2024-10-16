@@ -2,6 +2,8 @@ package com.lilt.testCreateContent;
 
 import static org.junit.Assert.*;
 
+import com.google.gson.JsonElement;
+import com.google.gson.JsonObject;
 import com.lilt.client.ApiClient;
 import com.lilt.client.ApiException;
 import com.lilt.client.Configuration;
@@ -50,6 +52,45 @@ public class TestCreateSections {
         }
     }
 
+    public static JsonObject getExpected(String charCase) {
+        List<String> sections = Arrays.asList();
+        switch (charCase) {
+            case "none":
+                break;
+            case "normal":
+                sections.add("Bees and me");
+                break;
+            case "over500":
+                sections.add("Bees and me");
+                sections.add("Honey for you");
+                sections.add("Conclusion");
+                break;
+        }
+        JsonObject expected = new JsonObject();
+        JsonObject templateParams = new JsonObject();
+        expected.addProperty("language", "en-US");
+        expected.addProperty("template", "blog-post");
+        templateParams.addProperty("contentLength", 1000);
+        templateParams.addProperty("memoryId", (String) null);
+        templateParams.addProperty("language", "en-US");
+        templateParams.add("sections", (JsonElement) sections);
+        templateParams.addProperty("summary", "a blog post about how important bees are to my honey farm");
+        return expected;
+    }
+
+    public static Boolean assertExpected(LiltCreateContent response, JsonObject expected) {
+        assertEquals(response.getLanguage(), expected.get("language"));
+        assertEquals(response.getTemplate(), expected.get("template"));
+        LiltCreateContentTemplateParams responseTemplateParams = response.getTemplateParams();
+        JsonObject expectedTemplateParams = (JsonObject) expected.get("templateParams");
+        List<String> expectedSections = (List<String>) expectedTemplateParams.get("sections");
+        assertEquals(responseTemplateParams.getContentLength(), expectedTemplateParams.get("contentLength"));
+        assertEquals(responseTemplateParams.getMemoryId(), expected.get("memoryId"));
+        assertEquals(responseTemplateParams.getLanguage(), expectedTemplateParams.get("language"));
+        assertArrayEquals(responseTemplateParams.getSections().toArray(), expectedSections.toArray());
+        assertEquals(responseTemplateParams.getSummary(), expectedTemplateParams.get("summary"));
+    }
+
     @Test
     public void create() {
         CreateApi apiInstance = new CreateApi(defaultClient);
@@ -77,6 +118,7 @@ public class TestCreateSections {
             List<LiltCreateContent> createResultContents = createResult.getContents();
             LiltCreateContent latest = createResultContents.get(createResultContents.size() - 1);
             System.out.println(latest);
+            assertExpected(latest, getExpected(this.sectionCase));
         } catch (ApiException e) {
             System.err.println("Exception when calling CreateApi#signLiltCreateTerms");
             System.err.println("Status code: " + e.getCode());
