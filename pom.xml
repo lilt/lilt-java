@@ -217,7 +217,9 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>3.2.0</version>
-                <useAgent>false</useAgent>
+                <configuration>
+                    <useAgent>false</useAgent>
+                </configuration>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
