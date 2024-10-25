@@ -35,4 +35,4 @@ jobs:
         run: mvn --batch-mode package
 
       - name: Publish
-        run: mvn clean deploy -Dgpg.passphrase="${GPG_KEY}"
+        run: mvn clean deploy

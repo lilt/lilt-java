@@ -26,8 +26,8 @@
         <developer>
         <name>Nicholas Chiu</name>
         <email>nicholas.chiu@lilt.com</email>
-        <organization>${organization.name}</organization>
-        <organizationUrl>${organization.organizationUrl}</organizationUrl>
+        <organization>${project.organization.name}</organization>
+        <organizationUrl>${project.organization.organizationUrl}</organizationUrl>
         </developer>
     </developers>
 
@@ -217,6 +217,7 @@
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-gpg-plugin</artifactId>
                 <version>3.2.0</version>
+                <useAgent>false</useAgent>
                 <executions>
                     <execution>
                         <id>sign-artifacts</id>
