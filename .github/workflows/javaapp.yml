@@ -5,6 +5,8 @@ env:
   API_KEY: ${{ secrets.API_KEY }}
   MAVEN_GPG_KEY: ${{ secrets.MAVEN_GPG_KEY }}
   MAVEN_GPG_PASSPHRASE: ${{ secrets.MAVEN_GPG_PASSPHRASE }}
+  MAVEN_USERNAME: ${{ secrets.NEXUS_USERNAME }}
+  MAVEN_CENTRAL_TOKEN: ${{ secrets.NEXUS_PASSWORD }}
 
 on:
   push:
@@ -33,7 +35,7 @@ jobs:
           maven-version: 3.8.1
 
       - name: Build
-        run: mvn --batch-mode package
+        run: mvn -B package --file pom.xml
 
       - name: Publish
-        run: mvn clean deploy
+        run: mvn clean deploy -PsonatypeDeploy
