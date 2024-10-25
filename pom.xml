@@ -45,7 +45,7 @@
                 <version>2.4.0</version>
                 <configuration>
                     <licenseName>lilt_license</licenseName>
-                    <licenseResolver>${project.basedir}/src/license</licenseResolver>
+                    <licenseResolver>file://${project.basedir}/src/license</licenseResolver>
                 </configuration>
                 <executions>
                     <execution>
