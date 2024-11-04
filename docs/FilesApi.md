@@ -18,7 +18,7 @@ Method | HTTP request | Description
 
 Add Label to File
 
-Add a label to a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request POST &#39;https://api.lilt.com/v2/files/labels?key&#x3D;API_KEY&amp;id&#x3D;1&#39; --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;name\&quot;: \&quot;label_name\&quot; }&#39; &#x60;&#x60;&#x60; 
+Add a label to a File.  Example CURL: &#x60;&#x60;&#x60;bash curl -X POST &#39;https://api.lilt.com/v2/files/labels?key&#x3D;API_KEY&amp;id&#x3D;1&#39; --header &#39;Content-Type: application/json&#39; \\ --data-raw &#39;{     \&quot;name\&quot;: \&quot;label_name\&quot; }&#39; &#x60;&#x60;&#x60; 
 
 ### Example
 ```java
@@ -93,7 +93,7 @@ null (empty response body)
 
 Delete a File
 
-Delete a File.  Example CURL command: &#x60;&#x60;&#x60;   curl -X DELETE https://api.lilt.com/v2/files?key&#x3D;API_KEY&amp;id&#x3D;123 &#x60;&#x60;&#x60;  
+Delete a File.  Example CURL command: &#x60;&#x60;&#x60;bash   curl -X DELETE https://api.lilt.com/v2/files?key&#x3D;API_KEY&amp;id&#x3D;123  &#x60;&#x60;&#x60;  
 
 ### Example
 ```java
@@ -168,7 +168,7 @@ Name | Type | Description  | Notes
 
 Download file
 
-Download a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request GET &#39;https://api.lilt.com/v2/files/download?key&#x3D;API_KEY&amp;id&#x3D;1&#39; &#x60;&#x60;&#x60; 
+Download a File.  Example CURL: &#x60;&#x60;&#x60;bash curl -X GET &#39;https://api.lilt.com/v2/files/download?key&#x3D;API_KEY&amp;id&#x3D;1&#39; &#x60;&#x60;&#x60; 
 
 ### Example
 ```java
@@ -242,7 +242,7 @@ Name | Type | Description  | Notes
 
 Retrieve a File
 
-Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.  To retrieve a specific file, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all files, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;  curl -X GET https://api.lilt.com/v2/files?key&#x3D;API_KEY&amp;id&#x3D;274&#x60;&#x60;&#x60;
+Retrieves one or more files available to your user. Files are not associated with a project or a memory. They are unprocessed and can be used later in the project/document creation workflow step.  To retrieve a specific file, specify the &lt;strong&gt;id&lt;/strong&gt; request parameter. To retrieve all files, omit the &lt;strong&gt;id&lt;/strong&gt; request parameter.  Example CURL command: &#x60;&#x60;&#x60;bash  curl -X GET https://api.lilt.com/v2/files?key&#x3D;API_KEY&amp;id&#x3D;274 &#x60;&#x60;&#x60;
 
 ### Example
 ```java
@@ -321,7 +321,7 @@ Name | Type | Description  | Notes
 
 Remove Label from File
 
-Remove a label from a File.  Example CURL: &#x60;&#x60;&#x60; curl --X --request DELETE &#39;https://api.lilt.com/v2/files/labels?key&#x3D;API_KEY&amp;id&#x3D;1&amp;name&#x3D;label_name&#39; &#x60;&#x60;&#x60; 
+Remove a label from a File.  Example CURL: &#x60;&#x60;&#x60;bash curl -X DELETE &#39;https://api.lilt.com/v2/files/labels?key&#x3D;API_KEY&amp;id&#x3D;1&amp;name&#x3D;label_name&#39; &#x60;&#x60;&#x60; 
 
 ### Example
 ```java
@@ -396,7 +396,7 @@ null (empty response body)
 
 Upload a File
 
-Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  Example CURL command: &#x60;&#x60;&#x60;   curl -X POST https://api.lilt.com/v2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
+Upload a File in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats). Request parameters should be passed in as query string parameters.  Example CURL command: &#x60;&#x60;&#x60;bash   curl -X POST https://api.lilt.com/v2/files?key&#x3D;API_KEY&amp;name&#x3D;en_US.json \\   --header \&quot;Content-Type: application/octet-stream\&quot; \\   --data-binary @en_US.json &#x60;&#x60;&#x60; Calls to GET /files are used to monitor the language detection results. The API response will be augmented to include detected language and confidence score.  The language detection will complete asynchronously. Prior to completion, the &#x60;detected_lang&#x60; value will be &#x60;zxx&#x60;, the reserved ISO 639-2 code for \&quot;No linguistic content/not applicable\&quot;.  If the language can not be determined, or the detection process fails, the &#x60;detected_lang&#x60; field will return &#x60;und&#x60;, the reserved ISO 639-2 code for undetermined language, and the &#x60;detected_lang_confidence&#x60; score will be &#x60;0&#x60;.  
 
 ### Example
 ```java
