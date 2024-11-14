@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * SignLiltCreateTermsResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-14T22:57:19.235Z[GMT]")
 public class SignLiltCreateTermsResponse {
   public static final String SERIALIZED_NAME_SIGNED_AGREEMENT = "signedAgreement";
   @SerializedName(SERIALIZED_NAME_SIGNED_AGREEMENT)

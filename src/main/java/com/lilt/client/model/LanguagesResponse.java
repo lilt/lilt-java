@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * LanguagesResponse
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-14T22:57:19.235Z[GMT]")
 public class LanguagesResponse {
   public static final String SERIALIZED_NAME_SOURCE_TO_TARGET = "source_to_target";
   @SerializedName(SERIALIZED_NAME_SOURCE_TO_TARGET)

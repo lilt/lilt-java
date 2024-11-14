@@ -31,7 +31,7 @@ import java.util.List;
  * A machine translation (MT) or a translation memory (TM) match of a source segment.
  */
 @ApiModel(description = "A machine translation (MT) or a translation memory (TM) match of a source segment.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-14T22:57:19.235Z[GMT]")
 public class Translation {
   public static final String SERIALIZED_NAME_TARGET = "target";
   @SerializedName(SERIALIZED_NAME_TARGET)

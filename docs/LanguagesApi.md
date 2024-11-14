@@ -70,11 +70,12 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | An object listing supported languages and their corresponding locales. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 

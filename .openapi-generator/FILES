@@ -27,6 +27,7 @@ docs/LanguagesApi.md
 docs/LanguagesResponse.md
 docs/LiltCreateContent.md
 docs/LiltCreateContentPreferences.md
+docs/LiltCreateContentRequest.md
 docs/LiltCreateContentTemplateParams.md
 docs/MemoriesApi.md
 docs/Memory.md
@@ -103,6 +104,7 @@ src/main/java/com/lilt/client/model/LanguagePair.java
 src/main/java/com/lilt/client/model/LanguagesResponse.java
 src/main/java/com/lilt/client/model/LiltCreateContent.java
 src/main/java/com/lilt/client/model/LiltCreateContentPreferences.java
+src/main/java/com/lilt/client/model/LiltCreateContentRequest.java
 src/main/java/com/lilt/client/model/LiltCreateContentTemplateParams.java
 src/main/java/com/lilt/client/model/Memory.java
 src/main/java/com/lilt/client/model/MemoryCreateParameters.java

@@ -32,7 +32,7 @@ import org.threeten.bp.OffsetDateTime;
  * A SourceFile is an unprocessed source file that can later be added to a project.
  */
 @ApiModel(description = "A SourceFile is an unprocessed source file that can later be added to a project.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-14T22:57:19.235Z[GMT]")
 public class SourceFile {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)

@@ -31,7 +31,7 @@ import java.util.List;
  * A job leverage stats object shows an overview of job&#39;s statistical data including total number of exact words, fuzzy words, and exact words for the job in total and for each project. 
  */
 @ApiModel(description = "A job leverage stats object shows an overview of job's statistical data including total number of exact words, fuzzy words, and exact words for the job in total and for each project. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-14T22:57:19.235Z[GMT]")
 public class JobLeverageStats {
   public static final String SERIALIZED_NAME_SOURCE_WORDS = "sourceWords";
   @SerializedName(SERIALIZED_NAME_SOURCE_WORDS)

@@ -28,7 +28,7 @@ import java.io.IOException;
  * An assignment object that associates a user to a workflow stage template.
  */
 @ApiModel(description = "An assignment object that associates a user to a workflow stage template.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-14T22:57:19.235Z[GMT]")
 public class WorkflowStageAssignment {
   public static final String SERIALIZED_NAME_WORKFLOW_STAGE_TEMPLATE_ID = "workflowStageTemplateId";
   @SerializedName(SERIALIZED_NAME_WORKFLOW_STAGE_TEMPLATE_ID)

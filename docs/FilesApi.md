@@ -80,12 +80,14 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/octet-stream, text/plain, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | A success response. |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="deleteFile"></a>
 # **deleteFile**
@@ -154,12 +156,13 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | A status object. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="download"></a>
@@ -229,12 +232,14 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/octet-stream
+ - **Accept**: application/octet-stream, text/plain, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A file. |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="getFiles"></a>
 # **getFiles**
@@ -305,12 +310,13 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of files. |  -  |
+**401** | Unauthorized |  -  |
 **403** | User does not have permission for provided file. |  -  |
 **410** | File deleted. |  -  |
 **0** | Unexpected error. |  -  |
@@ -383,12 +389,14 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/octet-stream, text/plain, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **204** | A success response. |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="uploadFile"></a>
 # **uploadFile**
@@ -469,11 +477,12 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/octet-stream
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **201** | A SourceFile object. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 

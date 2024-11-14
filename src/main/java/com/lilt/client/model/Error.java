@@ -28,14 +28,14 @@ import java.io.IOException;
  * Response in the event of an unexpected error. 
  */
 @ApiModel(description = "Response in the event of an unexpected error. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-14T22:57:19.235Z[GMT]")
 public class Error {
   public static final String SERIALIZED_NAME_MESSAGE = "message";
   @SerializedName(SERIALIZED_NAME_MESSAGE)
-  private Object message;
+  private String message;
 
 
-  public Error message(Object message) {
+  public Error message(String message) {
     
     this.message = message;
     return this;
@@ -48,12 +48,12 @@ public class Error {
   @javax.annotation.Nullable
   @ApiModelProperty(value = "A human-readable message describing the error.")
 
-  public Object getMessage() {
+  public String getMessage() {
     return message;
   }
 
 
-  public void setMessage(Object message) {
+  public void setMessage(String message) {
     this.message = message;
   }
 

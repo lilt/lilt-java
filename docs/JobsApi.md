@@ -8,7 +8,7 @@ Method | HTTP request | Description
 [**createJob**](JobsApi.md#createJob) | **POST** /v2/jobs | Create a Job
 [**deleteJob**](JobsApi.md#deleteJob) | **DELETE** /v2/jobs/{jobId} | Delete a Job
 [**deliverJob**](JobsApi.md#deliverJob) | **POST** /v2/jobs/{jobId}/deliver | Deliver a Job
-[**downloadJob**](JobsApi.md#downloadJob) | **GET** /v2/jobs/{jobId}/downlod | Download a Job
+[**downloadJob**](JobsApi.md#downloadJob) | **GET** /v2/jobs/{jobId}/download | Download a Job
 [**exportJob**](JobsApi.md#exportJob) | **GET** /v2/jobs/{jobId}/export | Export a Job
 [**getJob**](JobsApi.md#getJob) | **GET** /v2/jobs/{jobId} | Retrieve a Job
 [**getJobLeverageStats**](JobsApi.md#getJobLeverageStats) | **POST** /v2/jobs/{jobId}/stats | Retrieve Job Leverage Stats
@@ -85,12 +85,13 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A job object. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="createJob"></a>
@@ -160,12 +161,13 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A Job object. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="deleteJob"></a>
@@ -235,12 +237,13 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A status object. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="deliverJob"></a>
@@ -310,17 +313,18 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A job object. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="downloadJob"></a>
 # **downloadJob**
-> downloadJob(jobId)
+> byte[] downloadJob(jobId)
 
 Download a Job
 
@@ -355,7 +359,8 @@ public class Example {
     JobsApi apiInstance = new JobsApi(defaultClient);
     Integer jobId = 56; // Integer | A job id.
     try {
-      apiInstance.downloadJob(jobId);
+      byte[] result = apiInstance.downloadJob(jobId);
+      System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling JobsApi#downloadJob");
       System.err.println("Status code: " + e.getCode());
@@ -375,7 +380,7 @@ Name | Type | Description  | Notes
 
 ### Return type
 
-null (empty response body)
+**byte[]**
 
 ### Authorization
 
@@ -384,12 +389,13 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/octet-stream, text/plain, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | zipped file |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="exportJob"></a>
@@ -460,12 +466,13 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/octet-stream, text/plain, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | 200 status. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="getJob"></a>
@@ -535,12 +542,13 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A job object. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="getJobLeverageStats"></a>
@@ -610,12 +618,13 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A job leverage stats object. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="reactivateJob"></a>
@@ -685,12 +694,13 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A job object. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="retrieveAllJobs"></a>
@@ -766,12 +776,13 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A list of Job objects. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="unarchiveJob"></a>
@@ -841,12 +852,13 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A job object. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 
 <a name="updateJob"></a>
@@ -918,11 +930,12 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | A job object. |  -  |
+**401** | Unauthorized |  -  |
 **0** | Unexpected error |  -  |
 

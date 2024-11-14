@@ -28,7 +28,7 @@ import java.io.IOException;
  * A job project contains project statistical data that belongs to a specific job. 
  */
 @ApiModel(description = "A job project contains project statistical data that belongs to a specific job. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-14T22:57:19.235Z[GMT]")
 public class JobProject {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)

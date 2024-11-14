@@ -31,7 +31,7 @@ import java.util.List;
  * An ranked list of translations and associated metadata.
  */
 @ApiModel(description = "An ranked list of translations and associated metadata.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-10-14T17:01:14.551Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-14T22:57:19.235Z[GMT]")
 public class TranslationList {
   public static final String SERIALIZED_NAME_UNTOKENIZED_SOURCE = "untokenizedSource";
   @SerializedName(SERIALIZED_NAME_UNTOKENIZED_SOURCE)

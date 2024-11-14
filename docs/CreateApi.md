@@ -82,12 +82,14 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The Delete Lilt Create Content Response. |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="generateLiltCreateContent"></a>
 # **generateLiltCreateContent**
@@ -124,7 +126,7 @@ public class Example {
     BasicAuth.setPassword("YOUR PASSWORD");
 
     CreateApi apiInstance = new CreateApi(defaultClient);
-    LiltCreateContent templateParams = new LiltCreateContent(); // LiltCreateContent | Input parameters that determine what content will be generated. 
+    LiltCreateContentRequest templateParams = new LiltCreateContentRequest(); // LiltCreateContentRequest | Input parameters that determine what content will be generated. 
     try {
       apiInstance.generateLiltCreateContent(templateParams);
     } catch (ApiException e) {
@@ -142,7 +144,7 @@ public class Example {
 
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
- **templateParams** | [**LiltCreateContent**](LiltCreateContent.md)| Input parameters that determine what content will be generated.  |
+ **templateParams** | [**LiltCreateContentRequest**](LiltCreateContentRequest.md)| Input parameters that determine what content will be generated.  |
 
 ### Return type
 
@@ -155,12 +157,14 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/octet-stream, text/plain, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | An event stream produced by Server Side Events. The following events are supported. - message: an object with the newly generated text (e.g. {\&quot;text\&quot;: \&quot;hello\&quot;}) - message: upon completion of events the string \&quot;[DONE]\&quot; will be emitted - fullcontent: an object containing the full response  |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="getLiltCreateById"></a>
 # **getLiltCreateById**
@@ -229,12 +233,14 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The Lilt Create content. |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="getLiltCreateContent"></a>
 # **getLiltCreateContent**
@@ -299,12 +305,14 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | An object with a documents next task Workflow metadata. |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="getLiltCreatePreferences"></a>
 # **getLiltCreatePreferences**
@@ -368,12 +376,14 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/octet-stream, text/plain, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | An object describing the stored preferences. |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="regenerateLiltCreateContent"></a>
 # **regenerateLiltCreateContent**
@@ -441,12 +451,14 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: Not defined
+ - **Accept**: application/octet-stream, text/plain, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | An event stream produced by Server Side Events. The following events are supported. - message: an object with the newly generated text (e.g. {\&quot;text\&quot;: \&quot;hello\&quot;}) - message: upon completion of events the string \&quot;[DONE]\&quot; will be emitted - fullcontent: an object containing the full response  |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="signLiltCreateTerms"></a>
 # **signLiltCreateTerms**
@@ -515,12 +527,14 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | An object indicating whether the agreement has been signed or not.  |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="updateLiltCreateContent"></a>
 # **updateLiltCreateContent**
@@ -591,12 +605,14 @@ Name | Type | Description  | Notes
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The updated Lilt Create content. |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
 <a name="updateLiltCreatePreferences"></a>
 # **updateLiltCreatePreferences**
@@ -664,10 +680,12 @@ null (empty response body)
 ### HTTP request headers
 
  - **Content-Type**: application/json
- - **Accept**: Not defined
+ - **Accept**: application/octet-stream, text/plain, application/json
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | The updated Lilt Create preferences. |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 
