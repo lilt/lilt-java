@@ -1,7 +1,7 @@
 # openapi-java-client
 
 Lilt REST API
-- API version: v3.0
+- API version: 3.0.0
   - Build date: 2024-11-14T22:57:19.235Z[GMT]
 
 Lilt REST API Support: https://lilt.atlassian.net/servicedesk/customer/portals   
@@ -62,7 +62,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>org.openapitools</groupId>
   <artifactId>openapi-java-client</artifactId>
-  <version>v3.0</version>
+  <version>3.0.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -72,7 +72,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:v3.0"
+compile "org.openapitools:openapi-java-client:3.0.0"
 ```
 
 ### Others
@@ -85,7 +85,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-v3.0.jar`
+* `target/openapi-java-client-3.0.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
