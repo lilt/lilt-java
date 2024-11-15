@@ -91,6 +91,7 @@ public class TestCreateSections {
             LiltCreateContent latest = createResultContents.get(createResultContents.size() - 1);
             System.out.println(latest);
             assertExpected(latest, getSections(this.sectionCase));
+            apiInstance.deleteLiltCreateContent(latest.getId());
         } catch (ApiException e) {
             System.err.println("Exception when calling CreateApi#signLiltCreateTerms");
             System.err.println("Status code: " + e.getCode());
