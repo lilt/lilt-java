@@ -78,7 +78,7 @@ public class TestCreateChars {
         templateParams.setSections(Arrays.asList("Bees and me", "Honey for you", "Conclusion"));
         LiltCreateContentPreferences preferences = new LiltCreateContentPreferences();
         preferences.setTone("formal");
-        LiltCreateContent requestBody = new LiltCreateContent();
+        LiltCreateContentRequest requestBody = new LiltCreateContent();
         requestBody.setLanguage("en-US");
         requestBody.setTemplate("blog-post");
         requestBody.setTemplateParams(templateParams);

@@ -1,4 +1,4 @@
-package com.lilt.TestVerifiedTranslate;
+package com.lilt.testVerifiedTranslate;
 
 import static org.junit.Assert.*;
 
@@ -9,17 +9,20 @@ import com.lilt.client.auth.*;
 import com.lilt.client.model.*;
 import com.lilt.client.api.FilesApi;
 import com.lilt.client.api.JobsApi;
-import com.lilt.client.api.TranslateApi;
+import com.lilt.client.api.MemoriesApi;
 
 import java.io.ByteArrayInputStream;
-import java.util.zip.ZipInputStream;
-import java.util.zip.ZipEntry;
 import java.io.File;
+import java.io.InputStream;
+import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.*;
+import java.util.zip.ZipInputStream;
+import java.util.zip.ZipEntry;
 
 import org.junit.Test;
 
@@ -40,28 +43,28 @@ public class TestVerifiedTranslate {
         e.printStackTrace();
     }
 
-    public class MonitorJobCreateHandler implements Callable<String>{
+    public class MonitorJobCreateHandler implements Callable<Integer>{
         private final JobsApi jobsApiInstance;
-        private final String jobId;
-        private String jobLength;
+        private final int jobId;
+        private int jobLength;
         private int numMonitored;
 
-        public MonitorJobCreateHandler(JobsApi jobsApiInstance, String jobId, String jobLength, int numMonitored) {
+        public MonitorJobCreateHandler(JobsApi jobsApiInstance, int jobId, int jobLength, int numMonitored) {
             this.jobsApiInstance = jobsApiInstance;
             this.jobId = jobId;
             this.jobLength = jobLength;
             this.numMonitored = numMonitored;
         }
 
-        private String monitorJobCreate() {
+        private int monitorJobCreate() {
             try {
-                List<Jobs> monitorResult = null;
-                while (this.jobLength) {
+                List<Job> monitorResult = null;
+                while (this.jobLength.equals(0)) {
                     this.jobsApiInstance.deliverJob(this.jobId);
-                    monitorResult = this.jobsApiInstance.retrieveAllJobs(false, true);
+                    monitorResult = this.jobsApiInstance.retrieveAllJobs(false, true, 0, 25);
                     this.jobLength = monitorResult.length;
                     Thread.sleep(5000);
-                    System.out.println("Job length: " + this.jobLength + " || Request No: " + numMonitored);
+                    System.out.println("Job length: " + Integer.toString(this.jobLength) + " || Request No: " + Integer.toString(numMonitored));
                     numMonitored++;
                     if (numMonitored > 12) {
                         break;
@@ -80,32 +83,32 @@ public class TestVerifiedTranslate {
         }
 
         @Override
-        public String call() throws Exception {
+        public int call() throws Exception {
             return monitorJobCreate();
         }
     }
 
-    public class MonitorJobExportHandler implements Callable<String>{
+    public class MonitorJobExportHandler implements Callable<Integer>{
         private final JobsApi jobsApiInstance;
-        private final String jobId;
+        private final int jobId;
         private int isProcessing;
         private int numMonitored;
 
-        public MonitorJobExportHandler(JobsApi jobsApiInstance, String jobId, int isProcessing, int numMonitored) {
+        public MonitorJobExportHandler(JobsApi jobsApiInstance, int jobId, int isProcessing, int numMonitored) {
             this.jobsApiInstance = jobsApiInstance;
             this.jobId = jobId;
             this.isProcessing = isProcessing;
             this.numMonitored = numMonitored;
         }
 
-        private String monitorJobExport() {
+        private int monitorJobExport() {
             try {
                 Job monitorResult = null;
-                while (this.isProcessing) {
-                    Job monitorResult = this.jobsApiInstance.getJob(this.jobId);
+                while (this.isProcessing.equals(1)) {
+                    monitorResult = this.jobsApiInstance.getJob(this.jobId);
                     this.isProcessing = monitorResult.getIsProcessing();
                     Thread.sleep(5000);
-                    System.out.println("Job length: " + this.jobLength + " || Request No: " + numMonitored);
+                    System.out.println("Job length: " + Integer.toString(this.isProcessing) + " || Request No: " + Integer.toString(numMonitored));
                     numMonitored++;
                     if (numMonitored > 12) {
                         break;
@@ -124,7 +127,7 @@ public class TestVerifiedTranslate {
         }
 
         @Override
-        public String call() throws Exception {
+        public int call() throws Exception {
             return monitorJobExport();
         }
     }
@@ -139,16 +142,16 @@ public class TestVerifiedTranslate {
         String name = "test_file.txt";
         String text = "hello world";
         try {
-            Files.write(Paths.get(name), text, utf8);
+            Files.write(Paths.get(name), text, "utf8");
         } catch (IOException e) {
             e.printStackTrace();
         }
-        File body = new File(System.getProperty("user.dir") + name);
-        String fileId = null;
+        File fileBody = new File(System.getProperty("user.dir") + name);
+        int fileId = null;
         try {
-            SourceFile fileUploadResult = filesApiInstance.uploadFile(name, body, null, null, null, null, null);
-            fileId = Integer.toString(fileUploadResult.getId());
-            System.out.println("File uploaded with ID: " + fileId);
+            SourceFile fileUploadResult = filesApiInstance.uploadFile(name, fileBody, null, null, null, null, null);
+            fileId = fileUploadResult.getId();
+            System.out.println("File uploaded with ID: " + Integer.toString(fileId));
         } catch (ApiException apiError) {
             System.err.println("Exception when calling FilesApi#uploadFile");
             printError(apiError);
@@ -159,17 +162,17 @@ public class TestVerifiedTranslate {
         };
 
         //Create Memory
-        MemoryCreateParameters body = new MemoryCreateParameters();
-        body.setName(bodyParameters.get("name"));
-        body.setSrclang(bodyParameters.get("en"));
-        body.setTrglang(bodyParameters.get("de"));
-        body.setSrclocale(bodyParameters.get("US"));
-        body.setTrglocale(bodyParameters.get("DE"));
+        MemoryCreateParameters memoryBody = new MemoryCreateParameters();
+        memoryBody.setName("name");
+        memoryBody.setSrclang("en");
+        memoryBody.setTrglang("de");
+        memoryBody.setSrclocale("US");
+        memoryBody.setTrglocale("DE");
         int memoryId = null;
         try {
-            Memory result = apiInstance.createMemory(body);
-            int memoryId = result.getId();
-            System.out.println("Memory created with ID: " + memoryId);
+            Memory result = memoriesApiInstance.createMemory(memoryBody);
+            memoryId = result.getId();
+            System.out.println("Memory created with ID: " + Integer.toString(memoryId));
         } catch (ApiException e) {
             System.err.println("Exception when calling MemoriesApi#createMemory");
             printError(e);
@@ -190,10 +193,11 @@ public class TestVerifiedTranslate {
         createJobBody.setSrcLocale("US");
         createJobBody.setLanguagePairs(languagePairs);
         createJobBody.setFileIds(fileIds);
+        int jobId = null;
         try {
             Job createJobResponse = jobsApiInstance.createJob(createJobBody);
-            int jobId = createJobResponse.getId();
-            System.out.println("Job created with ID: " + jobId);
+            jobId = createJobResponse.getId();
+            System.out.println("Job created with ID: " + Integer.toString(jobId));
         } catch (ApiException e) {
             System.err.println("Exception when calling JobsApi#createJob");
             printError(e);
@@ -201,11 +205,11 @@ public class TestVerifiedTranslate {
         }
 
         //Monitor Job Progress
-        MonitorJobCreateHandler handler = new MonitorJobCreateHandler(jobsApiInstance, jobId, 0, 0);
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        final Future<String> monitorJobCreateHandler = executor.submit(handler);
+        MonitorJobCreateHandler jobCreateHandler = new MonitorJobCreateHandler(jobsApiInstance, jobId, 0, 0);
+        ExecutorService jobCreateExecutor = Executors.newSingleThreadExecutor();
+        final Future<String> monitorJobCreateHandler = jobCreateExecutor.submit(jobCreateHandler);
         try {
-            jobLength = monitorJobCreateHandler.get(120, TimeUnit.SECONDS);
+            int jobLength = monitorJobCreateHandler.get(120, TimeUnit.SECONDS);
             if (jobLength.equals(0)) {
                 System.out.println("Job creation exceeding time limit.");
                 fail("Job creation should not timeout");
@@ -213,7 +217,7 @@ public class TestVerifiedTranslate {
         } catch (TimeoutException | InterruptedException | ExecutionException e) {
             monitorJobCreateHandler.cancel(true);
         }
-        executor.shutdownNow();
+        jobCreateExecutor.shutdownNow();
 
         //Export Job
         try {
@@ -227,11 +231,11 @@ public class TestVerifiedTranslate {
         }
 
         //Monitor Export Progress
-        MonitorJobExportHandler handler = new MonitorJobExportHandler(jobsApiInstance, jobId, exportIsProcessing, 0);
-        ExecutorService executor = Executors.newSingleThreadExecutor();
-        final Future<String> monitorJobExportHandler = executor.submit(handler);
+        MonitorJobExportHandler jobExportHandler = new MonitorJobExportHandler(jobsApiInstance, jobId, exportIsProcessing, 0);
+        ExecutorService jobExportExecutor = Executors.newSingleThreadExecutor();
+        final Future<String> monitorJobExportHandler = jobExportExecutor.submit(jobExportHandler);
         try {
-            exportIsProcessing = monitorJobExportHandler.get(120, TimeUnit.SECONDS);
+            int exportIsProcessing = monitorJobExportHandler.get(120, TimeUnit.SECONDS);
             if (exportIsProcessing.equals(1)) {
                 System.out.println("Job export exceeding time limit.");
                 fail("Job export should not timeout");
@@ -239,6 +243,7 @@ public class TestVerifiedTranslate {
         } catch (TimeoutException | InterruptedException | ExecutionException e) {
             monitorJobExportHandler.cancel(true);
         }
+        jobExportExecutor.shutdownNow();
 
         //Download Job
         try {
@@ -246,8 +251,8 @@ public class TestVerifiedTranslate {
             ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(downloadResult));
             ZipEntry zipEntry = zip.getNextEntry();
             zipEntry = zip.getNextEntry();
-            InputStream zipStream = zipFile.getInputStream(zipEntry);
-            String zipContents = IOUtils.toString(inputStream, "UTF-8");
+            InputStream zipStream = zip.getInputStream(zipEntry);
+            String zipContents = IOUtils.toString(zipStream, "UTF-8");
             assertEquals(zipContents, "hello world");
         } catch (ApiException e) {
             System.err.println("Exception when calling JobsApi#downloadJob");
