@@ -46,7 +46,7 @@ public class TestVerifiedTranslate {
         private String jobLength;
         private int numMonitored;
 
-        public MonitorFileHandler(JobsApi jobsApiInstance, String jobId, String jobLength, int numMonitored) {
+        public MonitorJobCreateHandler(JobsApi jobsApiInstance, String jobId, String jobLength, int numMonitored) {
             this.jobsApiInstance = jobsApiInstance;
             this.jobId = jobId;
             this.jobLength = jobLength;
@@ -58,10 +58,7 @@ public class TestVerifiedTranslate {
                 List<Jobs> monitorResult = null;
                 while (this.jobLength) {
                     this.jobsApiInstance.deliverJob(this.jobId);
-                    monitorResult = this.jobsApiInstance.retrieveAllJobs({
-                        "isDelivered": "true",
-                        "isArchived": "false"
-                    });
+                    monitorResult = this.jobsApiInstance.retrieveAllJobs(false, true);
                     this.jobLength = monitorResult.length;
                     Thread.sleep(5000);
                     System.out.println("Job length: " + this.jobLength + " || Request No: " + numMonitored);
@@ -246,10 +243,9 @@ public class TestVerifiedTranslate {
         //Download Job
         try {
             byte[] downloadResult = jobsApiInstance.downloadJob(jobId);
-            ZipInputStream z = new ZipInputStream(new ByteArrayInputStream(downloadResult));
-            a
-            ZipEntry zipEntry = z.getNextEntry();
-            zipEntry = z.getNextEntry();
+            ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(downloadResult));
+            ZipEntry zipEntry = zip.getNextEntry();
+            zipEntry = zip.getNextEntry();
             InputStream zipStream = zipFile.getInputStream(zipEntry);
             String zipContents = IOUtils.toString(inputStream, "UTF-8");
             assertEquals(zipContents, "hello world");
