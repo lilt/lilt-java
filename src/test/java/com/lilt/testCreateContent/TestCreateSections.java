@@ -75,7 +75,7 @@ public class TestCreateSections {
         templateParams.setSections(getSections(this.sectionCase));
         LiltCreateContentPreferences preferences = new LiltCreateContentPreferences();
         preferences.setTone("formal");
-        LiltCreateContentRequest requestBody = new LiltCreateContent();
+        LiltCreateContentRequest requestBody = new LiltCreateContentRequest();
         requestBody.setLanguage("en-US");
         requestBody.setTemplate("blog-post");
         requestBody.setTemplateParams(templateParams);
