@@ -141,13 +141,7 @@ public class TestVerifiedTranslate {
         JobsApi jobsApiInstance = new JobsApi(defaultClient);
 
         //Upload File
-        String name = "test_file.txt";
-        List<String> text = Arrays.asList("hello world");
-        try {
-            Files.write(Paths.get(name), text, StandardCharsets.UTF_8);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        String name = "/src/test-resources/test_file.txt";
         File fileBody = new File(System.getProperty("user.dir") + name);
         String fileId = null;
         try {
