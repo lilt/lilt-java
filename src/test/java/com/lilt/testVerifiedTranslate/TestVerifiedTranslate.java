@@ -249,10 +249,16 @@ public class TestVerifiedTranslate {
         //Download Job
         try {
             byte[] downloadResult = jobsApiInstance.downloadJob(jobIdInt);
-            ZipInputStream zip = new ZipInputStream(new ByteArrayInputStream(downloadResult));
-            zip.getNextEntry();
-            String zipContents = IOUtils.toString(zip, "UTF-8");
-            assertEquals(zipContents, "hello world");
+            ZipInputStream zis = new ZipInputStream(new ByteArrayInputStream(downloadResult));
+            List<String> zipContents = new ArrayList<String>();
+            ZipEntry entry;
+            while ((entry = zis.getNextEntry())!= null) {
+                String entryAsString = IOUtils.toString(zis, StandardCharsets.UTF_8);
+                zipContents.add(entryAsString);
+            }
+            IOUtils.closeQuietly(zis);
+            System.out.println(zipContents);
+            assertEquals(zipContents.get(1), "hello world");
         } catch (ApiException e) {
             System.err.println("Exception when calling JobsApi#downloadJob");
             printError(e);
