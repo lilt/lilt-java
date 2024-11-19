@@ -150,6 +150,7 @@ public class TestCreateDataSource {
             Memory result = apiInstance.createMemory(body);
             System.out.println(result);
             assertResponse(result, getExpected(this.dataSourceLanguages));
+            apiInstance.deleteMemory(result.getId());
         } catch (ApiException e) {
             System.err.println("Exception when calling MemoriesApi#createMemory");
             System.err.println("Status code: " + e.getCode());

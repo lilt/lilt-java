@@ -171,6 +171,8 @@ public class TestUploadTMX {
                 assertEquals(result.get(0).getSource(), "chatte");
                 assertEquals(result.get(0).getTarget(), "cat");
             }
+            apiInstance.deleteMemory(memoryId);
+
         } catch (ApiException e) {
             printError(e);
             fail("should not throw exception");

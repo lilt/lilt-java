@@ -75,7 +75,7 @@ public class TestCreateSections {
         templateParams.setSections(getSections(this.sectionCase));
         LiltCreateContentPreferences preferences = new LiltCreateContentPreferences();
         preferences.setTone("formal");
-        LiltCreateContent requestBody = new LiltCreateContent();
+        LiltCreateContentRequest requestBody = new LiltCreateContentRequest();
         requestBody.setLanguage("en-US");
         requestBody.setTemplate("blog-post");
         requestBody.setTemplateParams(templateParams);
@@ -91,6 +91,7 @@ public class TestCreateSections {
             LiltCreateContent latest = createResultContents.get(createResultContents.size() - 1);
             System.out.println(latest);
             assertExpected(latest, getSections(this.sectionCase));
+            apiInstance.deleteLiltCreateContent(latest.getId());
         } catch (ApiException e) {
             System.err.println("Exception when calling CreateApi#signLiltCreateTerms");
             System.err.println("Status code: " + e.getCode());

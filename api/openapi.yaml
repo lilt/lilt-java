@@ -20,7 +20,7 @@ info:
     name: Lilt Platform Terms and Conditions
     url: https://lilt.com/lilt-platform-terms-and-conditions
   title: Lilt REST API
-  version: v3.0
+  version: 3.0.0
 servers:
 - url: https://api.lilt.com
 security:

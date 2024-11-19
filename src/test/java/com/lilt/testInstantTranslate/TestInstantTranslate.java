@@ -144,6 +144,7 @@ public class TestInstantTranslate {
             System.out.println(downloadString);
             assertTrue(downloadString.contains("cat"));
             assertTrue(downloadString.contains("Hello"));
+            fileApiInstance.deleteFile(Integer.parseInt(fileId));
         } catch (ApiException e) {
             printError(e);
         }
