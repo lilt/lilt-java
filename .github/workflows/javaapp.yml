@@ -30,5 +30,16 @@ jobs:
         with:
           maven-version: 3.8.1
 
+      - name: Configure Datadog Test Visibility
+        uses: datadog/test-visibility-github-action@v2
+        with:
+          languages: java
+          service: lilt-java
+          api_key: ${{ secrets.DD_API_KEY }}
+          site: us5.datadoghq.com
+
       - name: Build
         run: mvn --batch-mode package
+        env:
+          DD_ENV: staging-tests
+          DD_CIVISIBILITY_AGENTLESS_ENABLED: true
