@@ -23,10 +23,20 @@ jobs:
           args: >-
             generate
             -i https://developers.lilt.com/redocusaurus/plugin-redoc-0.yaml
-            -g java
-            -p modelPackage=com.lilt.client.model
             -p apiPackage=com.lilt.client.api
+            -p artifactId=lilt-java
+            -p artifactUrl=https://github.com/lilt/lilt-java
+            -p developerEmail=nicholas.chiu@lilt.com
+            -p developerName="Nicholas Chiu"
+            -p developerOrganization="Lilt"
+            -p developerOrganizationUrl=https://lilt.com
+            -p groupId=com.lilt.client
+            -g java
+            -p licenseName="Lilt Client Library License"
+            -p licenseUrl=license.md
+            -p modelPackage=com.lilt.client.model
             -p packageVersion=${{ github.event.client_payload.version }}
+
             --package-name lilt
             --git-host github.com
             --git-user-id lilt
