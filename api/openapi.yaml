@@ -16,8 +16,11 @@ info:
     ## Quotas\n\nOur services have a general quota of 4000 requests per minute. Should\
     \ you hit the maximum requests per minute, you will need to wait 60 seconds before\
     \ you can send another request.\n"
+  license:
+    name: Lilt Platform Terms and Conditions
+    url: https://lilt.com/lilt-platform-terms-and-conditions
   title: Lilt REST API
-  version: v3.0
+  version: 3.0.0
 servers:
 - url: https://api.lilt.com
 security:
@@ -38,6 +41,15 @@ paths:
                 $ref: '#/components/schemas/LanguagesResponse'
           description: An object listing supported languages and their corresponding
             locales.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -69,6 +81,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/MemoryDeleteResponse'
           description: A status object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -103,6 +124,21 @@ paths:
                 title: MemoryResponse
                 type: array
           description: A list of Memory objects.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        "404":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Memory not found.
         default:
           content:
             application/json:
@@ -173,6 +209,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Memory'
           description: A Memory object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -220,6 +265,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Memory'
           description: A Memory object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -234,9 +288,8 @@ paths:
       x-accepts: application/json
   /v2/memories/query:
     get:
-      description: |+
+      description: |
         Perform a translation memory query.
-
       operationId: queryMemory
       parameters:
       - description: A unique Memory identifier.
@@ -274,6 +327,15 @@ paths:
                 title: MemoryQueryResponse
                 type: array
           description: A list of TranslationMemoryEntry objects.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -369,6 +431,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/MemoryImportResponse'
           description: A status object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -411,6 +482,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/TermbaseExportResponse'
           description: A status object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -451,6 +531,15 @@ paths:
                 title: TermbaseDownloadResponse
                 type: string
           description: A file.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -494,6 +583,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/DeleteSegmentFromMemoryResponse'
           description: A success resposne.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -585,6 +683,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/TranslationList'
           description: A TranslationList object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -655,6 +762,15 @@ paths:
                 title: monitorFileTranslationResponse
                 type: array
           description: Translation Info
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -721,6 +837,15 @@ paths:
                 title: batchTranslateFileResponse
                 type: array
           description: Translation Info
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -760,10 +885,25 @@ paths:
                 title: DocumentDownloadResponse
                 type: string
           description: A file.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Download translated file
       tags:
       - Translate
-      x-accepts: application/octet-stream
+      x-accepts: application/json
   /v2/create/terms-and-conditions:
     post:
       description: |+
@@ -805,6 +945,21 @@ paths:
                 $ref: '#/components/schemas/signLiltCreateTermsResponse'
           description: |
             An object indicating whether the agreement has been signed or not.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Sign the Lilt Create terms and conditions
       tags:
       - Create
@@ -829,6 +984,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/getLiltCreateContentResponse'
           description: An object with a documents next task Workflow metadata.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Get Lilt Create content
       tags:
       - Create
@@ -859,7 +1029,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/LiltCreateContent'
+              $ref: '#/components/schemas/LiltCreateContentRequest'
         description: |
           Input parameters that determine what content will be generated.
         required: true
@@ -872,6 +1042,21 @@ paths:
             - message: an object with the newly generated text (e.g. {"text": "hello"})
             - message: upon completion of events the string "[DONE]" will be emitted
             - fullcontent: an object containing the full response
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Generate new Lilt Create content
       tags:
       - Create
@@ -893,6 +1078,21 @@ paths:
         "200":
           content: {}
           description: An object describing the stored preferences.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Get Lilt Create preferences
       tags:
       - Create
@@ -921,6 +1121,21 @@ paths:
         "200":
           content: {}
           description: The updated Lilt Create preferences.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Update Lilt Create preferences
       tags:
       - Create
@@ -954,6 +1169,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/inline_response_200'
           description: The Delete Lilt Create Content Response.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Delete Lilt Create content
       tags:
       - Create
@@ -984,6 +1214,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/LiltCreateContent'
           description: The Lilt Create content.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Get Lilt Create content by ID.
       tags:
       - Create
@@ -1022,6 +1267,21 @@ paths:
               schema:
                 $ref: '#/components/schemas/LiltCreateContent'
           description: The updated Lilt Create content.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Update Lilt Create content
       tags:
       - Create
@@ -1057,6 +1317,21 @@ paths:
             - message: an object with the newly generated text (e.g. {"text": "hello"})
             - message: upon completion of events the string "[DONE]" will be emitted
             - fullcontent: an object containing the full response
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Regenerate Lilt Create content
       tags:
       - Create
@@ -1077,6 +1352,21 @@ paths:
                   $ref: '#/components/schemas/WorkflowTemplate'
                 type: array
           description: An array with a team's available WorkflowTemplates.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Retrieve workflow templates
       tags:
       - Workflows
@@ -1139,6 +1429,15 @@ paths:
                 title: JobsResponse
                 type: array
           description: A list of Job objects.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1289,6 +1588,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Job'
           description: A Job object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1328,6 +1636,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/JobDeleteResponse'
           description: A status object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1364,6 +1681,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Job'
           description: A job object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1448,6 +1774,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Job'
           description: A job object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1487,6 +1822,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/JobLeverageStats'
           description: A job leverage stats object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1526,6 +1870,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Job'
           description: A job object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1563,6 +1916,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Job'
           description: A job object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1602,6 +1964,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Job'
           description: A job object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1641,6 +2012,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Job'
           description: A job object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1689,6 +2069,15 @@ paths:
         "200":
           content: {}
           description: 200 status.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1699,7 +2088,7 @@ paths:
       tags:
       - Jobs
       x-accepts: application/json
-  /v2/jobs/{jobId}/downlod:
+  /v2/jobs/{jobId}/download:
     get:
       description: |-
         Make sure you have exported a job with the same id before using this api.
@@ -1723,8 +2112,21 @@ paths:
         style: simple
       responses:
         "200":
-          content: {}
+          content:
+            application/octet-stream:
+              schema:
+                format: byte
+                type: string
           description: zipped file
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1756,6 +2158,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/ProjectDeleteResponse'
           description: A status object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1851,6 +2262,15 @@ paths:
                 title: ProjectResponse
                 type: array
           description: A list of Project objects.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1933,6 +2353,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/Project'
           description: A Project object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -1984,6 +2413,15 @@ paths:
                 title: DocumentDownloadResponse
                 type: string
           description: A file.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         "502":
           content: {}
           description: File in pretranslation.
@@ -1996,7 +2434,7 @@ paths:
       summary: Download a Document
       tags:
       - Documents
-      x-accepts: application/octet-stream
+      x-accepts: application/octet-stream,text/plain
     post:
       description: |+
         Create a Document from a file in any of the formats [documented in our knowledge base](https://support.lilt.com/hc/en-us/articles/360020816253-File-Formats).
@@ -2103,6 +2541,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/DocumentWithSegments'
           description: A Document object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -2136,6 +2583,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/FileDeleteResponse'
           description: A status object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -2188,6 +2644,15 @@ paths:
                 title: FilesList
                 type: array
           description: A list of files.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         "403":
           content: {}
           description: User does not have permission for provided file.
@@ -2293,6 +2758,15 @@ paths:
               schema:
                 $ref: '#/components/schemas/SourceFile'
           description: A SourceFile object.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
         default:
           content:
             application/json:
@@ -2333,10 +2807,25 @@ paths:
                 title: DocumentDownloadResponse
                 type: string
           description: A file.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Download file
       tags:
       - Files
-      x-accepts: application/octet-stream
+      x-accepts: application/json
   /v2/files/labels:
     delete:
       description: |
@@ -2368,6 +2857,21 @@ paths:
         "204":
           content: {}
           description: A success response.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Remove Label from File
       tags:
       - Files
@@ -2414,6 +2918,21 @@ paths:
         "204":
           content: {}
           description: A success response.
+        "401":
+          content:
+            application/octet-stream:
+              schema:
+                type: string
+            text/plain:
+              schema:
+                type: string
+          description: Unauthorized
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
       summary: Add Label to File
       tags:
       - Files
@@ -2470,6 +2989,16 @@ components:
           schema:
             $ref: '#/components/schemas/AddFileLabelRequest'
       required: true
+  responses:
+    UnauthorizedError:
+      content:
+        application/octet-stream:
+          schema:
+            type: string
+        text/plain:
+          schema:
+            type: string
+      description: Unauthorized
   schemas:
     Error:
       description: |
@@ -2479,7 +3008,7 @@ components:
       properties:
         message:
           description: A human-readable message describing the error.
-          type: object
+          type: string
       type: object
     Memory:
       description: |
@@ -2795,16 +3324,61 @@ components:
         preferences:
           styleguide: styleguide
           tone: tone
+        name: name
         templateParams:
           summary: summary
-          contentLength: 0
+          contentLength: 6
           language: language
-          memoryId: 6
+          memoryId: 1
+          sections:
+          - sections
+          - sections
+        language: language
+        id: 0
+      properties:
+        name:
+          description: A name for the request content.
+          type: string
+        id:
+          description: A unique identifier for the generated content.
+          type: integer
+        language:
+          description: The language of the content.
+          type: string
+        template:
+          description: The template of the content.
+          type: string
+        templateParams:
+          $ref: '#/components/schemas/LiltCreateContent_templateParams'
+        preferences:
+          $ref: '#/components/schemas/LiltCreateContent_preferences'
+      required:
+      - language
+      - template
+      - templateParams
+      type: object
+    LiltCreateContentRequest:
+      description: |
+        Content Parameters for LiltCreate.
+      example:
+        template: template
+        preferences:
+          styleguide: styleguide
+          tone: tone
+        name: name
+        templateParams:
+          summary: summary
+          contentLength: 6
+          language: language
+          memoryId: 1
           sections:
           - sections
           - sections
         language: language
       properties:
+        name:
+          description: A name for the request content.
+          type: string
         language:
           description: The language of the content.
           type: string
@@ -4066,28 +4640,32 @@ components:
           preferences:
             styleguide: styleguide
             tone: tone
+          name: name
           templateParams:
             summary: summary
-            contentLength: 0
+            contentLength: 6
             language: language
-            memoryId: 6
+            memoryId: 1
             sections:
             - sections
             - sections
           language: language
+          id: 0
         - template: template
           preferences:
             styleguide: styleguide
             tone: tone
+          name: name
           templateParams:
             summary: summary
-            contentLength: 0
+            contentLength: 6
             language: language
-            memoryId: 6
+            memoryId: 1
             sections:
             - sections
             - sections
           language: language
+          id: 0
       properties:
         contents:
           description: List of LiltCreateContent objects
@@ -4340,9 +4918,9 @@ components:
       description: The template parameters of the content.
       example:
         summary: summary
-        contentLength: 0
+        contentLength: 6
         language: language
-        memoryId: 6
+        memoryId: 1
         sections:
         - sections
         - sections

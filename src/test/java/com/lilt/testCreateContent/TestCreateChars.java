@@ -25,6 +25,8 @@ public class TestCreateChars {
         this.charCase = charCase;
         this.defaultClient = Configuration.getDefaultApiClient();
         this.defaultClient.setBasePath(System.getenv("API_HOST"));
+        this.defaultClient.addDefaultHeader("x-is-automated-test", "true");
+        this.defaultClient.addDefaultHeader("x-is-expected-error", "true");
         ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) this.defaultClient.getAuthentication("ApiKeyAuth");
         ApiKeyAuth.setApiKey(System.getenv("API_KEY"));
     }
@@ -78,7 +80,7 @@ public class TestCreateChars {
         templateParams.setSections(Arrays.asList("Bees and me", "Honey for you", "Conclusion"));
         LiltCreateContentPreferences preferences = new LiltCreateContentPreferences();
         preferences.setTone("formal");
-        LiltCreateContent requestBody = new LiltCreateContent();
+        LiltCreateContentRequest requestBody = new LiltCreateContentRequest();
         requestBody.setLanguage("en-US");
         requestBody.setTemplate("blog-post");
         requestBody.setTemplateParams(templateParams);
@@ -94,6 +96,7 @@ public class TestCreateChars {
             LiltCreateContent latest = createResultContents.get(createResultContents.size() - 1);
             System.out.println(latest);
             assertExpected(latest, getSummary(this.charCase));
+            apiInstance.deleteLiltCreateContent(latest.getId());
         } catch (ApiException e) {
             System.err.println("Exception when calling CreateApi#signLiltCreateTerms");
             System.err.println("Status code: " + e.getCode());

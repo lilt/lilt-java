@@ -31,14 +31,10 @@ import java.io.IOException;
  */
 @ApiModel(description = "Content Parameters for LiltCreate. ")
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2024-11-14T22:57:19.235Z[GMT]")
-public class LiltCreateContent {
+public class LiltCreateContentRequest {
   public static final String SERIALIZED_NAME_NAME = "name";
   @SerializedName(SERIALIZED_NAME_NAME)
   private String name;
-
-  public static final String SERIALIZED_NAME_ID = "id";
-  @SerializedName(SERIALIZED_NAME_ID)
-  private Integer id;
 
   public static final String SERIALIZED_NAME_LANGUAGE = "language";
   @SerializedName(SERIALIZED_NAME_LANGUAGE)
@@ -57,7 +53,7 @@ public class LiltCreateContent {
   private LiltCreateContentPreferences preferences;
 
 
-  public LiltCreateContent name(String name) {
+  public LiltCreateContentRequest name(String name) {
     
     this.name = name;
     return this;
@@ -80,30 +76,7 @@ public class LiltCreateContent {
   }
 
 
-  public LiltCreateContent id(Integer id) {
-    
-    this.id = id;
-    return this;
-  }
-
-   /**
-   * A unique identifier for the generated content.
-   * @return id
-  **/
-  @javax.annotation.Nullable
-  @ApiModelProperty(value = "A unique identifier for the generated content.")
-
-  public Integer getId() {
-    return id;
-  }
-
-
-  public void setId(Integer id) {
-    this.id = id;
-  }
-
-
-  public LiltCreateContent language(String language) {
+  public LiltCreateContentRequest language(String language) {
     
     this.language = language;
     return this;
@@ -125,7 +98,7 @@ public class LiltCreateContent {
   }
 
 
-  public LiltCreateContent template(String template) {
+  public LiltCreateContentRequest template(String template) {
     
     this.template = template;
     return this;
@@ -147,7 +120,7 @@ public class LiltCreateContent {
   }
 
 
-  public LiltCreateContent templateParams(LiltCreateContentTemplateParams templateParams) {
+  public LiltCreateContentRequest templateParams(LiltCreateContentTemplateParams templateParams) {
     
     this.templateParams = templateParams;
     return this;
@@ -169,7 +142,7 @@ public class LiltCreateContent {
   }
 
 
-  public LiltCreateContent preferences(LiltCreateContentPreferences preferences) {
+  public LiltCreateContentRequest preferences(LiltCreateContentPreferences preferences) {
     
     this.preferences = preferences;
     return this;
@@ -200,26 +173,24 @@ public class LiltCreateContent {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    LiltCreateContent liltCreateContent = (LiltCreateContent) o;
-    return Objects.equals(this.name, liltCreateContent.name) &&
-        Objects.equals(this.id, liltCreateContent.id) &&
-        Objects.equals(this.language, liltCreateContent.language) &&
-        Objects.equals(this.template, liltCreateContent.template) &&
-        Objects.equals(this.templateParams, liltCreateContent.templateParams) &&
-        Objects.equals(this.preferences, liltCreateContent.preferences);
+    LiltCreateContentRequest liltCreateContentRequest = (LiltCreateContentRequest) o;
+    return Objects.equals(this.name, liltCreateContentRequest.name) &&
+        Objects.equals(this.language, liltCreateContentRequest.language) &&
+        Objects.equals(this.template, liltCreateContentRequest.template) &&
+        Objects.equals(this.templateParams, liltCreateContentRequest.templateParams) &&
+        Objects.equals(this.preferences, liltCreateContentRequest.preferences);
   }
 
   @Override
   public int hashCode() {
-    return Objects.hash(name, id, language, template, templateParams, preferences);
+    return Objects.hash(name, language, template, templateParams, preferences);
   }
 
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class LiltCreateContent {\n");
+    sb.append("class LiltCreateContentRequest {\n");
     sb.append("    name: ").append(toIndentedString(name)).append("\n");
-    sb.append("    id: ").append(toIndentedString(id)).append("\n");
     sb.append("    language: ").append(toIndentedString(language)).append("\n");
     sb.append("    template: ").append(toIndentedString(template)).append("\n");
     sb.append("    templateParams: ").append(toIndentedString(templateParams)).append("\n");

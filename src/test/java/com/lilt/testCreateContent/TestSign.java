@@ -24,6 +24,8 @@ public class TestSign {
         this.sign = sign;
         this.defaultClient = Configuration.getDefaultApiClient();
         this.defaultClient.setBasePath(System.getenv("API_HOST"));
+        this.defaultClient.addDefaultHeader("x-is-automated-test", "true");
+        this.defaultClient.addDefaultHeader("x-is-expected-error", "true");
         ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) this.defaultClient.getAuthentication("ApiKeyAuth");
         ApiKeyAuth.setApiKey(System.getenv("API_KEY"));
     }

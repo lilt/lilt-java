@@ -70,10 +70,12 @@ This endpoint does not need any parameter.
 ### HTTP request headers
 
  - **Content-Type**: Not defined
- - **Accept**: application/json
+ - **Accept**: application/json, application/octet-stream, text/plain
 
 ### HTTP response details
 | Status code | Description | Response headers |
 |-------------|-------------|------------------|
 **200** | An array with a team&#39;s available WorkflowTemplates. |  -  |
+**401** | Unauthorized |  -  |
+**0** | Unexpected error |  -  |
 

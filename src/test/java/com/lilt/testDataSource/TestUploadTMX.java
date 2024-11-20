@@ -28,6 +28,8 @@ public class TestUploadTMX {
         this.tmxFileCase = tmxFileCase;
         this.defaultClient = Configuration.getDefaultApiClient();
         this.defaultClient.setBasePath(System.getenv("API_HOST"));
+        this.defaultClient.addDefaultHeader("x-is-automated-test", "true");
+        this.defaultClient.addDefaultHeader("x-is-expected-error", "true");
         ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) this.defaultClient.getAuthentication("ApiKeyAuth");
         ApiKeyAuth.setApiKey(System.getenv("API_KEY"));
     }
@@ -171,6 +173,8 @@ public class TestUploadTMX {
                 assertEquals(result.get(0).getSource(), "chatte");
                 assertEquals(result.get(0).getTarget(), "cat");
             }
+            apiInstance.deleteMemory(memoryId);
+
         } catch (ApiException e) {
             printError(e);
             fail("should not throw exception");

@@ -1,8 +1,8 @@
 # openapi-java-client
 
 Lilt REST API
-- API version: v3.0
-  - Build date: 2024-10-14T17:01:14.551Z[GMT]
+- API version: 3.0.0
+  - Build date: 2024-11-14T22:57:19.235Z[GMT]
 
 Lilt REST API Support: https://lilt.atlassian.net/servicedesk/customer/portals   
 The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:
@@ -162,7 +162,7 @@ Class | Method | HTTP request | Description
 *JobsApi* | [**createJob**](docs/JobsApi.md#createJob) | **POST** /v2/jobs | Create a Job
 *JobsApi* | [**deleteJob**](docs/JobsApi.md#deleteJob) | **DELETE** /v2/jobs/{jobId} | Delete a Job
 *JobsApi* | [**deliverJob**](docs/JobsApi.md#deliverJob) | **POST** /v2/jobs/{jobId}/deliver | Deliver a Job
-*JobsApi* | [**downloadJob**](docs/JobsApi.md#downloadJob) | **GET** /v2/jobs/{jobId}/downlod | Download a Job
+*JobsApi* | [**downloadJob**](docs/JobsApi.md#downloadJob) | **GET** /v2/jobs/{jobId}/download | Download a Job
 *JobsApi* | [**exportJob**](docs/JobsApi.md#exportJob) | **GET** /v2/jobs/{jobId}/export | Export a Job
 *JobsApi* | [**getJob**](docs/JobsApi.md#getJob) | **GET** /v2/jobs/{jobId} | Retrieve a Job
 *JobsApi* | [**getJobLeverageStats**](docs/JobsApi.md#getJobLeverageStats) | **POST** /v2/jobs/{jobId}/stats | Retrieve Job Leverage Stats
@@ -213,6 +213,7 @@ Class | Method | HTTP request | Description
  - [LanguagesResponse](docs/LanguagesResponse.md)
  - [LiltCreateContent](docs/LiltCreateContent.md)
  - [LiltCreateContentPreferences](docs/LiltCreateContentPreferences.md)
+ - [LiltCreateContentRequest](docs/LiltCreateContentRequest.md)
  - [LiltCreateContentTemplateParams](docs/LiltCreateContentTemplateParams.md)
  - [Memory](docs/Memory.md)
  - [MemoryCreateParameters](docs/MemoryCreateParameters.md)
