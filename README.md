@@ -135,6 +135,27 @@ public class Example {
 
 ```
 
+## Checking Credentials
+
+If you would like to test your credentials using our functionality tests you can do the following.
+
+Navigate to the folder where the package is installed. In the command line run:
+
+```sh
+export API_HOST="{host}"
+export API_KEY="{key}"
+```
+
+Replacing {host} and {key} with the credentials you were given. Make sure to include the quotation marks.
+
+Then while inside the package folder, run:
+
+```sh
+mvn test
+```
+
+You should be able to see the tests run.
+
 ## Documentation for API Endpoints
 
 All URIs are relative to *https://api.lilt.com*
