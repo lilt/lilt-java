@@ -41,6 +41,7 @@ jobs:
             --git-host github.com
             --git-user-id lilt
             --git-repo-id lilt-java
+            --http-user-agent Lilt_Client_Library-Java
             --skip-validate-spec
             -o .
       - name: Create Pull Request
