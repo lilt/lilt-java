@@ -5,7 +5,6 @@ name: OpenAPI Generator
 
 on:
   workflow_dispatch:
-  pull_request:
   repository_dispatch:
     types: [API-DocumentationV3-Deployment]
 
