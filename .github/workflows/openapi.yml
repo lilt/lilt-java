@@ -37,7 +37,6 @@ jobs:
             -p modelPackage=com.lilt.client.model
             -p packageVersion=${{ github.event.client_payload.version }}
 
-            --package-name lilt
             --git-host github.com
             --git-user-id lilt
             --git-repo-id lilt-java
