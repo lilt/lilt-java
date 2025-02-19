@@ -37,9 +37,6 @@ jobs:
             -p modelPackage=com.lilt.client.model
             -p packageVersion=${{ github.event.client_payload.version }}
 
-            --git-host github.com
-            --git-user-id lilt
-            --git-repo-id lilt-java
             --skip-validate-spec
             -o .
       - name: Create Pull Request
