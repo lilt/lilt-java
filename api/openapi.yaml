@@ -20,7 +20,7 @@ info:
     name: Lilt Platform Terms and Conditions
     url: https://lilt.com/lilt-platform-terms-and-conditions
   title: Lilt REST API
-  version: 3.0.0
+  version: v3.0
 servers:
 - url: https://api.lilt.com
 security:
@@ -574,6 +574,7 @@ paths:
         name: segment_id
         required: true
         schema:
+          format: int64
           type: integer
         style: form
       responses:
@@ -2939,6 +2940,187 @@ paths:
       x-codegen-request-body-name: name
       x-contentType: application/json
       x-accepts: application/json
+  /v3/connectors/configuration/webhooks:
+    get:
+      description: |
+        Retrieves a list of webhook configurations available to your LILT organization.
+        Use this to manage your webhook configurations.
+      operationId: webhooksGetMany
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                items:
+                  $ref: '#/components/schemas/webhook_response'
+                type: array
+          description: The webhook configurations response.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve a list of Webhook Configurations.
+      tags:
+      - Webhook Configuration
+      x-accepts: application/json
+    post:
+      description: |
+        Creates a new webhook configuration for your LILT organization.
+      operationId: webhooksCreate
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/create_webhook_options'
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook_response'
+          description: Returns the newly created webhook configuration.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Creates a new Webhook Configuration
+      tags:
+      - Webhook Configuration
+      x-contentType: application/json
+      x-accepts: application/json
+  /v3/connectors/configuration/webhooks/{id}:
+    delete:
+      operationId: services.configuration_api.webhooks.delete
+      parameters:
+      - description: The Webhook Configuration ID.
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          example: 12345
+          type: integer
+        style: simple
+      responses:
+        "204":
+          description: Upon success a response with an empty body is returned.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Delete a specific Webhook Configuration by ID.
+      tags:
+      - Webhook Configuration
+      x-accepts: application/json
+    get:
+      description: |
+        Retrieves a specific webhook configuration by its ID.
+        Deleted webhook configurations are not returned.
+      operationId: webhooksGet
+      parameters:
+      - description: The Webhook Configuration ID.
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          example: 12345
+          type: integer
+        style: simple
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook_response'
+          description: Returns the webhook configuration.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Retrieve a specific Webhook Configuration by ID.
+      tags:
+      - Webhook Configuration
+      x-accepts: application/json
+    put:
+      description: |
+        Updates a specific webhook configuration by its ID.
+        Only the fields that are provided in the request body will be updated.
+      operationId: webhooksUpdate
+      parameters:
+      - description: The Webhook Configuration ID.
+        explode: false
+        in: path
+        name: id
+        required: true
+        schema:
+          example: 12345
+          type: integer
+        style: simple
+      requestBody:
+        content:
+          application/json:
+            schema:
+              anyOf:
+              - properties:
+                  webhookName:
+                    description: The name of the webhook configuration.
+                    type: string
+                required:
+                - webhookName
+                type: object
+              - properties:
+                  webhookUrl:
+                    description: The URL to which the webhook notifications will be
+                      sent.
+                    format: uri
+                    type: string
+                required:
+                - webhookUrl
+                type: object
+              - properties:
+                  eventType:
+                    description: The list of event types that will trigger the webhook
+                      notification.
+                    items:
+                      enum:
+                      - JOB_DELIVER
+                      - JOB_UPDATE
+                      - PROJECT_DELIVER
+                      - PROJECT_UPDATE
+                      type: string
+                    type: array
+                required:
+                - eventType
+                type: object
+        required: true
+      responses:
+        "200":
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/webhook_response'
+          description: Returns the updated webhook configuration.
+        default:
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+          description: Unexpected error
+      summary: Update a specific Webhook Configuration by ID.
+      tags:
+      - Webhook Configuration
+      x-contentType: application/json
+      x-accepts: application/json
 components:
   requestBodies:
     JobCreateParameters:
@@ -4191,6 +4373,7 @@ components:
         id:
           description: A unique number identifying the Segment.
           example: 84480010
+          format: int64
           type: integer
         created_at:
           description: Time at which the object was created. Measured in seconds since
@@ -4417,6 +4600,66 @@ components:
           example: 2019-10-16T22:12:34Z
           format: date-time
           type: string
+      type: object
+    webhook_response:
+      example:
+        webhookName: webhookName
+        id: 12345
+        eventType:
+        - JOB_DELIVER
+        - JOB_DELIVER
+        webhookUrl: https://openapi-generator.tech
+      properties:
+        id:
+          description: The unique identifier for the webhook configuration.
+          example: 12345
+          type: integer
+        webhookName:
+          description: The name of the webhook configuration.
+          type: string
+        webhookUrl:
+          description: The URL to which the webhook notifications will be sent.
+          format: uri
+          type: string
+        eventType:
+          description: The list of event types that will trigger the webhook notification.
+          items:
+            enum:
+            - JOB_DELIVER
+            - JOB_UPDATE
+            - PROJECT_DELIVER
+            - PROJECT_UPDATE
+            type: string
+          type: array
+      required:
+      - eventType
+      - id
+      - webhookName
+      - webhookUrl
+      type: object
+    create_webhook_options:
+      properties:
+        webhookName:
+          description: The name of the webhook configuration.
+          type: string
+        webhookUrl:
+          description: The URL to which the webhook notifications will be sent.
+          format: uri
+          type: string
+        eventType:
+          description: The list of event types that will trigger the webhook notification.
+          items:
+            enum:
+            - JOB_DELIVER
+            - JOB_UPDATE
+            - PROJECT_DELIVER
+            - PROJECT_UPDATE
+            type: string
+          type: array
+      required:
+      - eventType
+      - webhookName
+      - webhookUrl
       type: object
     LanguagesResponse:
       example:

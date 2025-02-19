@@ -4,6 +4,7 @@ api/openapi.yaml
 docs/AddFileLabelRequest.md
 docs/CreateApi.md
 docs/CreateConverterConfigParameters.md
+docs/CreateWebhookOptions.md
 docs/DeleteSegmentFromMemoryResponse.md
 docs/DocumentWithSegments.md
 docs/DocumentWithoutSegments.md
@@ -51,6 +52,8 @@ docs/Translation.md
 docs/TranslationInfo.md
 docs/TranslationList.md
 docs/TranslationMemoryEntry.md
+docs/WebhookConfigurationApi.md
+docs/WebhookResponse.md
 docs/WorkflowStageAssignment.md
 docs/WorkflowStageTemplate.md
 docs/WorkflowTemplate.md
@@ -78,6 +81,7 @@ src/main/java/com/lilt/client/api/LanguagesApi.java
 src/main/java/com/lilt/client/api/MemoriesApi.java
 src/main/java/com/lilt/client/api/ProjectsApi.java
 src/main/java/com/lilt/client/api/TranslateApi.java
+src/main/java/com/lilt/client/api/WebhookConfigurationApi.java
 src/main/java/com/lilt/client/api/WorkflowsApi.java
 src/main/java/com/lilt/client/auth/ApiKeyAuth.java
 src/main/java/com/lilt/client/auth/Authentication.java
@@ -85,6 +89,7 @@ src/main/java/com/lilt/client/auth/HttpBasicAuth.java
 src/main/java/com/lilt/client/auth/HttpBearerAuth.java
 src/main/java/com/lilt/client/model/AddFileLabelRequest.java
 src/main/java/com/lilt/client/model/CreateConverterConfigParameters.java
+src/main/java/com/lilt/client/model/CreateWebhookOptions.java
 src/main/java/com/lilt/client/model/DeleteSegmentFromMemoryResponse.java
 src/main/java/com/lilt/client/model/DocumentWithSegments.java
 src/main/java/com/lilt/client/model/DocumentWithoutSegments.java
@@ -125,6 +130,7 @@ src/main/java/com/lilt/client/model/Translation.java
 src/main/java/com/lilt/client/model/TranslationInfo.java
 src/main/java/com/lilt/client/model/TranslationList.java
 src/main/java/com/lilt/client/model/TranslationMemoryEntry.java
+src/main/java/com/lilt/client/model/WebhookResponse.java
 src/main/java/com/lilt/client/model/WorkflowStageAssignment.java
 src/main/java/com/lilt/client/model/WorkflowStageTemplate.java
 src/main/java/com/lilt/client/model/WorkflowTemplate.java

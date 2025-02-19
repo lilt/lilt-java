@@ -203,7 +203,7 @@ public class Example {
 
     MemoriesApi apiInstance = new MemoriesApi(defaultClient);
     Integer id = 56; // Integer | A unique Memory identifier.
-    Integer segmentId = 56; // Integer | A unique Segment identifier.
+    Long segmentId = 56L; // Long | A unique Segment identifier.
     try {
       DeleteSegmentFromMemoryResponse result = apiInstance.deleteSegmentFromMemory(id, segmentId);
       System.out.println(result);
@@ -223,7 +223,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **Integer**| A unique Memory identifier. |
- **segmentId** | **Integer**| A unique Segment identifier. |
+ **segmentId** | **Long**| A unique Segment identifier. |
 
 ### Return type
 
