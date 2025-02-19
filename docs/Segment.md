@@ -7,7 +7,7 @@ A Segment is a source string and, optionally, its translation. A Segment can be 
 
 Name | Type | Description | Notes
 ------------ | ------------- | ------------- | -------------
-**id** | **Integer** | A unique number identifying the Segment. |  [optional]
+**id** | **Long** | A unique number identifying the Segment. |  [optional]
 **createdAt** | **Integer** | Time at which the object was created. Measured in seconds since the Unix epoch. |  [optional]
 **updatedAt** | **Integer** | Time at which the object was created. Measured in seconds since the Unix epoch. |  [optional]
 **documentId** | **Integer** | A unique Document identifier. |  [optional]

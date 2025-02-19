@@ -1,8 +1,8 @@
-# openapi-java-client
+# lilt-java
 
 Lilt REST API
-- API version: 3.0.0
-  - Build date: 2024-11-14T22:57:19.235Z[GMT]
+- API version: v3.0
+  - Build date: 2025-02-19T20:26:43.350Z[GMT]
 
 Lilt REST API Support: https://lilt.atlassian.net/servicedesk/customer/portals   
 The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:
@@ -60,9 +60,9 @@ Add this dependency to your project's POM:
 
 ```xml
 <dependency>
-  <groupId>org.openapitools</groupId>
-  <artifactId>openapi-java-client</artifactId>
-  <version>3.0.0</version>
+  <groupId>com.lilt.client</groupId>
+  <artifactId>lilt-java</artifactId>
+  <version>v3.0</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -72,7 +72,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "org.openapitools:openapi-java-client:3.0.0"
+compile "com.lilt.client:lilt-java:v3.0"
 ```
 
 ### Others
@@ -85,7 +85,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/openapi-java-client-3.0.0.jar`
+* `target/lilt-java-v3.0.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -134,27 +134,6 @@ public class Example {
 }
 
 ```
-
-## Checking Credentials
-
-If you would like to test your credentials using our functionality tests you can do the following.
-
-Navigate to the folder where the package is installed. In the command line run:
-
-```sh
-export API_HOST="{host}"
-export API_KEY="{key}"
-```
-
-Replacing {host} and {key} with the credentials you were given. Make sure to include the quotation marks.
-
-Then while inside the package folder, run:
-
-```sh
-mvn test
-```
-
-You should be able to see the tests run.
 
 ## Documentation for API Endpoints
 
@@ -208,6 +187,11 @@ Class | Method | HTTP request | Description
 *TranslateApi* | [**downloadFile**](docs/TranslateApi.md#downloadFile) | **GET** /v2/translate/files | Download translated file
 *TranslateApi* | [**monitorFileTranslation**](docs/TranslateApi.md#monitorFileTranslation) | **GET** /v2/translate/file | Monitor file translation
 *TranslateApi* | [**translateSegmentPost**](docs/TranslateApi.md#translateSegmentPost) | **POST** /v2/translate | Translate a segment
+*WebhookConfigurationApi* | [**servicesConfigurationApiWebhooksDelete**](docs/WebhookConfigurationApi.md#servicesConfigurationApiWebhooksDelete) | **DELETE** /v3/connectors/configuration/webhooks/{id} | Delete a specific Webhook Configuration by ID.
+*WebhookConfigurationApi* | [**webhooksCreate**](docs/WebhookConfigurationApi.md#webhooksCreate) | **POST** /v3/connectors/configuration/webhooks | Creates a new Webhook Configuration
+*WebhookConfigurationApi* | [**webhooksGet**](docs/WebhookConfigurationApi.md#webhooksGet) | **GET** /v3/connectors/configuration/webhooks/{id} | Retrieve a specific Webhook Configuration by ID.
+*WebhookConfigurationApi* | [**webhooksGetMany**](docs/WebhookConfigurationApi.md#webhooksGetMany) | **GET** /v3/connectors/configuration/webhooks | Retrieve a list of Webhook Configurations.
+*WebhookConfigurationApi* | [**webhooksUpdate**](docs/WebhookConfigurationApi.md#webhooksUpdate) | **PUT** /v3/connectors/configuration/webhooks/{id} | Update a specific Webhook Configuration by ID.
 *WorkflowsApi* | [**getWorkflowTemplates**](docs/WorkflowsApi.md#getWorkflowTemplates) | **GET** /v2/workflows/templates | Retrieve workflow templates
 
 
@@ -215,6 +199,7 @@ Class | Method | HTTP request | Description
 
  - [AddFileLabelRequest](docs/AddFileLabelRequest.md)
  - [CreateConverterConfigParameters](docs/CreateConverterConfigParameters.md)
+ - [CreateWebhookOptions](docs/CreateWebhookOptions.md)
  - [DeleteSegmentFromMemoryResponse](docs/DeleteSegmentFromMemoryResponse.md)
  - [DocumentWithSegments](docs/DocumentWithSegments.md)
  - [DocumentWithoutSegments](docs/DocumentWithoutSegments.md)
@@ -255,6 +240,7 @@ Class | Method | HTTP request | Description
  - [TranslationInfo](docs/TranslationInfo.md)
  - [TranslationList](docs/TranslationList.md)
  - [TranslationMemoryEntry](docs/TranslationMemoryEntry.md)
+ - [WebhookResponse](docs/WebhookResponse.md)
  - [WorkflowStageAssignment](docs/WorkflowStageAssignment.md)
  - [WorkflowStageTemplate](docs/WorkflowStageTemplate.md)
  - [WorkflowTemplate](docs/WorkflowTemplate.md)
