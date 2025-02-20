@@ -5,6 +5,7 @@ name: OpenAPI Generator
 
 on:
   workflow_dispatch:
+  pull_request:
   repository_dispatch:
     types: [API-DocumentationV3-Deployment]
 
@@ -40,7 +41,7 @@ jobs:
             --skip-validate-spec
             -o .
       - name: Create Pull Request
-        uses: peter-evans/create-pull-request@v6.1.0
+        uses: peter-evans/create-pull-request@v7.0.6
         with:
           token: ${{ secrets.GHA_REPO_DISPATCH_TOKEN }}
           commit-message: Regenerates API Bindings
@@ -50,3 +51,4 @@ jobs:
 
             [1]: https://github.com/peter-evans/create-pull-request
           branch: openapi-bindings
+          base: master
