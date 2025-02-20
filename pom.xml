@@ -5,7 +5,7 @@
     <artifactId>lilt-java</artifactId>
     <packaging>jar</packaging>
     <name>lilt-java</name>
-    <version>v3.0</version>
+    <version>v3.0.1</version>
     <url>https://github.com/lilt/lilt-java</url>
     <description>OpenAPI Java</description>
     <scm>

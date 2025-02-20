@@ -14,6 +14,7 @@ docs/Error.md
 docs/FileDeleteResponse.md
 docs/FilesApi.md
 docs/GetLiltCreateContentResponse.md
+docs/InlineObject.md
 docs/InlineResponse200.md
 docs/Job.md
 docs/JobCreateParameters.md
@@ -97,6 +98,7 @@ src/main/java/com/lilt/client/model/DocumentWithoutSegmentsStatus.java
 src/main/java/com/lilt/client/model/Error.java
 src/main/java/com/lilt/client/model/FileDeleteResponse.java
 src/main/java/com/lilt/client/model/GetLiltCreateContentResponse.java
+src/main/java/com/lilt/client/model/InlineObject.java
 src/main/java/com/lilt/client/model/InlineResponse200.java
 src/main/java/com/lilt/client/model/Job.java
 src/main/java/com/lilt/client/model/JobCreateParameters.java
