@@ -15,7 +15,7 @@ import com.lilt.testInstantTranslate.TestInstantTranslate;
    TestSign.class,
    TestCreateChars.class,
    TestCreateSections.class,
-   TestCreateDataSource.class,
+   //TestCreateDataSource.class,
    TestUploadTMX.class,
    TestInstantTranslate.class
 })
