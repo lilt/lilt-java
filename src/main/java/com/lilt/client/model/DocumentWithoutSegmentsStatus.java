@@ -28,7 +28,7 @@ import java.io.IOException;
  * A list of translations for the query term.
  */
 @ApiModel(description = "A list of translations for the query term.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:01.428Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:28:02.795Z[GMT]")
 public class DocumentWithoutSegmentsStatus {
   /**
    * Gets or Sets pretranslation
