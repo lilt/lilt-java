@@ -31,7 +31,7 @@ import java.util.List;
  * A language pair couples the source and target language along with memory and pre-translations settings associated to a project. 
  */
 @ApiModel(description = "A language pair couples the source and target language along with memory and pre-translations settings associated to a project. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:01.428Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:58.249Z[GMT]")
 public class LanguagePair {
   public static final String SERIALIZED_NAME_TRG_LANG = "trgLang";
   @SerializedName(SERIALIZED_NAME_TRG_LANG)

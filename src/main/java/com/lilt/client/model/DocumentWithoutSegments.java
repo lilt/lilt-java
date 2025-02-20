@@ -29,7 +29,7 @@ import java.io.IOException;
  * A Document is a collection of zero or more Segments. 
  */
 @ApiModel(description = "A Document is a collection of zero or more Segments. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:01.428Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:58.249Z[GMT]")
 public class DocumentWithoutSegments {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)

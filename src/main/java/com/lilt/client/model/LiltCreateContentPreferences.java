@@ -28,7 +28,7 @@ import java.io.IOException;
  * The preferences of the content.
  */
 @ApiModel(description = "The preferences of the content.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:01.428Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:58.249Z[GMT]")
 public class LiltCreateContentPreferences {
   public static final String SERIALIZED_NAME_TONE = "tone";
   @SerializedName(SERIALIZED_NAME_TONE)

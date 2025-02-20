@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * SDLXLIFFFilter
  */
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:01.428Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:58.249Z[GMT]")
 public class SDLXLIFFFilter {
   /**
    * the current state of the SDLXLIFF Trans Unit.
