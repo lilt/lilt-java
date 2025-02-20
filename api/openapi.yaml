@@ -20,7 +20,7 @@ info:
     name: Lilt Platform Terms and Conditions
     url: https://lilt.com/lilt-platform-terms-and-conditions
   title: Lilt REST API
-  version: v3.0
+  version: v3.0.1
 servers:
 - url: https://api.lilt.com
 security:
@@ -3067,41 +3067,35 @@ paths:
           type: integer
         style: simple
       requestBody:
+        $ref: '#/components/requestBodies/inline_object'
         content:
           application/json:
             schema:
-              anyOf:
-              - properties:
-                  webhookName:
-                    description: The name of the webhook configuration.
+              properties:
+                webhookName:
+                  description: The name of the webhook configuration.
+                  type: string
+                webhookUrl:
+                  description: The URL to which the webhook notifications will be
+                    sent.
+                  format: uri
+                  type: string
+                eventType:
+                  description: The list of event types that will trigger the webhook
+                    notification.
+                  items:
+                    enum:
+                    - JOB_DELIVER
+                    - JOB_UPDATE
+                    - PROJECT_DELIVER
+                    - PROJECT_UPDATE
                     type: string
-                required:
-                - webhookName
-                type: object
-              - properties:
-                  webhookUrl:
-                    description: The URL to which the webhook notifications will be
-                      sent.
-                    format: uri
-                    type: string
-                required:
-                - webhookUrl
-                type: object
-              - properties:
-                  eventType:
-                    description: The list of event types that will trigger the webhook
-                      notification.
-                    items:
-                      enum:
-                      - JOB_DELIVER
-                      - JOB_UPDATE
-                      - PROJECT_DELIVER
-                      - PROJECT_UPDATE
-                      type: string
-                    type: array
-                required:
-                - eventType
-                type: object
+                  type: array
+              required:
+              - eventType
+              - webhookName
+              - webhookUrl
+              type: object
         required: true
       responses:
         "200":
@@ -3158,6 +3152,12 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/MemoryUpdateParameters'
+      required: true
+    inline_object:
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/inline_object'
       required: true
     TranslateSegmentBody:
       content:
@@ -5156,6 +5156,30 @@ components:
           example: label_name
           type: string
       title: AddFileLabelRequest
+      type: object
+    inline_object:
+      properties:
+        webhookName:
+          description: The name of the webhook configuration.
+          type: string
+        webhookUrl:
+          description: The URL to which the webhook notifications will be sent.
+          format: uri
+          type: string
+        eventType:
+          description: The list of event types that will trigger the webhook notification.
+          items:
+            enum:
+            - JOB_DELIVER
+            - JOB_UPDATE
+            - PROJECT_DELIVER
+            - PROJECT_UPDATE
+            type: string
+          type: array
+      required:
+      - eventType
+      - webhookName
+      - webhookUrl
       type: object
     LiltCreateContent_templateParams:
       description: The template parameters of the content.

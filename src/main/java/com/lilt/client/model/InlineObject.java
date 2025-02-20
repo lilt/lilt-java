@@ -28,10 +28,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * CreateWebhookOptions
+ * InlineObject
  */
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:58.249Z[GMT]")
-public class CreateWebhookOptions {
+public class InlineObject {
   public static final String SERIALIZED_NAME_WEBHOOK_NAME = "webhookName";
   @SerializedName(SERIALIZED_NAME_WEBHOOK_NAME)
   private String webhookName;
@@ -96,7 +96,7 @@ public class CreateWebhookOptions {
   private List<EventTypeEnum> eventType = new ArrayList<EventTypeEnum>();
 
 
-  public CreateWebhookOptions webhookName(String webhookName) {
+  public InlineObject webhookName(String webhookName) {
     
     this.webhookName = webhookName;
     return this;
@@ -118,7 +118,7 @@ public class CreateWebhookOptions {
   }
 
 
-  public CreateWebhookOptions webhookUrl(URI webhookUrl) {
+  public InlineObject webhookUrl(URI webhookUrl) {
     
     this.webhookUrl = webhookUrl;
     return this;
@@ -140,13 +140,13 @@ public class CreateWebhookOptions {
   }
 
 
-  public CreateWebhookOptions eventType(List<EventTypeEnum> eventType) {
+  public InlineObject eventType(List<EventTypeEnum> eventType) {
     
     this.eventType = eventType;
     return this;
   }
 
-  public CreateWebhookOptions addEventTypeItem(EventTypeEnum eventTypeItem) {
+  public InlineObject addEventTypeItem(EventTypeEnum eventTypeItem) {
     this.eventType.add(eventTypeItem);
     return this;
   }
@@ -175,10 +175,10 @@ public class CreateWebhookOptions {
     if (o == null || getClass() != o.getClass()) {
       return false;
     }
-    CreateWebhookOptions createWebhookOptions = (CreateWebhookOptions) o;
-    return Objects.equals(this.webhookName, createWebhookOptions.webhookName) &&
-        Objects.equals(this.webhookUrl, createWebhookOptions.webhookUrl) &&
-        Objects.equals(this.eventType, createWebhookOptions.eventType);
+    InlineObject inlineObject = (InlineObject) o;
+    return Objects.equals(this.webhookName, inlineObject.webhookName) &&
+        Objects.equals(this.webhookUrl, inlineObject.webhookUrl) &&
+        Objects.equals(this.eventType, inlineObject.eventType);
   }
 
   @Override
@@ -189,7 +189,7 @@ public class CreateWebhookOptions {
   @Override
   public String toString() {
     StringBuilder sb = new StringBuilder();
-    sb.append("class CreateWebhookOptions {\n");
+    sb.append("class InlineObject {\n");
     sb.append("    webhookName: ").append(toIndentedString(webhookName)).append("\n");
     sb.append("    webhookUrl: ").append(toIndentedString(webhookUrl)).append("\n");
     sb.append("    eventType: ").append(toIndentedString(eventType)).append("\n");
