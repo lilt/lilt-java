@@ -32,7 +32,7 @@ import java.util.List;
  * A workflow template which defines the workflow&#39;s possible steps (combination of Translation, Review and Customer Review).
  */
 @ApiModel(description = "A workflow template which defines the workflow's possible steps (combination of Translation, Review and Customer Review).")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T17:55:18.443Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:02:11.779Z[GMT]")
 public class WorkflowTemplate {
   public static final String SERIALIZED_NAME_ID = "id";
   @SerializedName(SERIALIZED_NAME_ID)

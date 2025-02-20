@@ -2,7 +2,7 @@
 
 Lilt REST API
 - API version: v3.0.1
-  - Build date: 2025-02-20T17:55:18.443Z[GMT]
+  - Build date: 2025-02-20T18:02:11.779Z[GMT]
 
 Lilt REST API Support: https://lilt.atlassian.net/servicedesk/customer/portals   
 The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:

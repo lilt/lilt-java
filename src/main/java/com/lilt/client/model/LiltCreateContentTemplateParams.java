@@ -30,7 +30,7 @@ import java.util.List;
  * The template parameters of the content.
  */
 @ApiModel(description = "The template parameters of the content.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T17:55:18.443Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:02:11.779Z[GMT]")
 public class LiltCreateContentTemplateParams {
   public static final String SERIALIZED_NAME_CONTENT_LENGTH = "contentLength";
   @SerializedName(SERIALIZED_NAME_CONTENT_LENGTH)
