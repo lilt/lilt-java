@@ -28,7 +28,7 @@ import java.io.IOException;
  * A translation memory entry.
  */
 @ApiModel(description = "A translation memory entry.")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:01.428Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:21:58.742Z[GMT]")
 public class TranslationMemoryEntry {
   public static final String SERIALIZED_NAME_SOURCE = "source";
   @SerializedName(SERIALIZED_NAME_SOURCE)

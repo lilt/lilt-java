@@ -31,7 +31,7 @@ import java.util.List;
  * A job stats shows an overview of job&#39;s statistical data including total number of exact words, fuzzy words, language pairs, projects, etc. 
  */
 @ApiModel(description = "A job stats shows an overview of job's statistical data including total number of exact words, fuzzy words, language pairs, projects, etc. ")
-@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:01.428Z[GMT]")
+@javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:21:58.742Z[GMT]")
 public class JobStats {
   public static final String SERIALIZED_NAME_EXACT_WORDS = "exactWords";
   @SerializedName(SERIALIZED_NAME_EXACT_WORDS)
