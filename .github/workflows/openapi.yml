@@ -51,4 +51,4 @@ jobs:
 
             [1]: https://github.com/peter-evans/create-pull-request
           branch: openapi-bindings
-          base: main
+          base: promote
