@@ -1,8 +1,8 @@
 # lilt-java
 
 Lilt REST API
-- API version: v3.0
-  - Build date: 2025-02-19T20:26:43.350Z[GMT]
+- API version: v3.0.1
+  - Build date: 2025-02-20T17:55:18.443Z[GMT]
 
 Lilt REST API Support: https://lilt.atlassian.net/servicedesk/customer/portals   
 The Lilt REST API enables programmatic access to the full-range of Lilt backend services including:
@@ -62,7 +62,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.lilt.client</groupId>
   <artifactId>lilt-java</artifactId>
-  <version>v3.0</version>
+  <version>v3.0.1</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -72,7 +72,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.lilt.client:lilt-java:v3.0"
+compile "com.lilt.client:lilt-java:v3.0.1"
 ```
 
 ### Others
@@ -85,7 +85,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/lilt-java-v3.0.jar`
+* `target/lilt-java-v3.0.1.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -207,6 +207,7 @@ Class | Method | HTTP request | Description
  - [Error](docs/Error.md)
  - [FileDeleteResponse](docs/FileDeleteResponse.md)
  - [GetLiltCreateContentResponse](docs/GetLiltCreateContentResponse.md)
+ - [InlineObject](docs/InlineObject.md)
  - [InlineResponse200](docs/InlineResponse200.md)
  - [Job](docs/Job.md)
  - [JobCreateParameters](docs/JobCreateParameters.md)

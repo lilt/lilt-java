@@ -306,7 +306,7 @@ This endpoint does not need any parameter.
 
 <a name="webhooksUpdate"></a>
 # **webhooksUpdate**
-> WebhookResponse webhooksUpdate(id, UNKNOWN_BASE_TYPE)
+> WebhookResponse webhooksUpdate(id, inlineObject)
 
 Update a specific Webhook Configuration by ID.
 
@@ -340,9 +340,9 @@ public class Example {
 
     WebhookConfigurationApi apiInstance = new WebhookConfigurationApi(defaultClient);
     Integer id = 12345; // Integer | The Webhook Configuration ID.
-    UNKNOWN_BASE_TYPE UNKNOWN_BASE_TYPE = new UNKNOWN_BASE_TYPE(); // UNKNOWN_BASE_TYPE | 
+    InlineObject inlineObject = new InlineObject(); // InlineObject | 
     try {
-      WebhookResponse result = apiInstance.webhooksUpdate(id, UNKNOWN_BASE_TYPE);
+      WebhookResponse result = apiInstance.webhooksUpdate(id, inlineObject);
       System.out.println(result);
     } catch (ApiException e) {
       System.err.println("Exception when calling WebhookConfigurationApi#webhooksUpdate");
@@ -360,7 +360,7 @@ public class Example {
 Name | Type | Description  | Notes
 ------------- | ------------- | ------------- | -------------
  **id** | **Integer**| The Webhook Configuration ID. |
- **UNKNOWN_BASE_TYPE** | [**UNKNOWN_BASE_TYPE**](UNKNOWN_BASE_TYPE.md)|  |
+ **inlineObject** | [**InlineObject**](InlineObject.md)|  |
 
 ### Return type
 
