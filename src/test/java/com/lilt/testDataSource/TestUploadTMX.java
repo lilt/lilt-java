@@ -172,7 +172,7 @@ public class TestUploadTMX {
             } else {
                 //assertEquals(result.get(0).getSource(), "chatte");
                 //assertEquals(result.get(0).getTarget(), "cat");
-                continue;
+                assert true;
             }
             apiInstance.deleteMemory(memoryId);
 
