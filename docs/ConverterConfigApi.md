@@ -35,16 +35,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://lilt.com/2");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     ConverterConfigApi apiInstance = new ConverterConfigApi(defaultClient);
     Integer organizationId = 56; // Integer | A unique Organization identifier.
@@ -112,16 +107,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://lilt.com/2");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     ConverterConfigApi apiInstance = new ConverterConfigApi(defaultClient);
     Integer configId = 56; // Integer | A unique configuration identifier.
@@ -187,16 +177,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://lilt.com/2");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     ConverterConfigApi apiInstance = new ConverterConfigApi(defaultClient);
     Integer configId = 56; // Integer | A unique configuration identifier.
@@ -264,16 +249,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://lilt.com/2");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     ConverterConfigApi apiInstance = new ConverterConfigApi(defaultClient);
     Integer configId = 56; // Integer | A unique configuration identifier.
@@ -343,16 +323,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://lilt.com/2");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     ConverterConfigApi apiInstance = new ConverterConfigApi(defaultClient);
     Integer configId = 56; // Integer | A unique configuration identifier.
@@ -418,16 +393,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://lilt.com/2");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     ConverterConfigApi apiInstance = new ConverterConfigApi(defaultClient);
     Integer organizationId = 56; // Integer | A unique Organization identifier.

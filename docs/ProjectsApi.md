@@ -32,16 +32,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     ProjectsApi apiInstance = new ProjectsApi(defaultClient);
     ProjectCreateParameters body = new ProjectCreateParameters(); // ProjectCreateParameters | 
@@ -108,16 +103,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     ProjectsApi apiInstance = new ProjectsApi(defaultClient);
     Integer id = 56; // Integer | A unique Project identifier.
@@ -184,16 +174,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     ProjectsApi apiInstance = new ProjectsApi(defaultClient);
     Integer id = 56; // Integer | A unique Project identifier. It can be a single id or multiple ids separated by a comma

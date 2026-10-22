@@ -21,7 +21,7 @@ Requests are authenticated via REST API key, which requires the Business plan.
 
 Requests are authenticated using [HTTP Basic Auth](https://en.wikipedia.org/wiki/Basic_access_authentication). Add your REST API key as both the `username` and `password`.
 
-For development, you may also pass the REST API key via the `key` query parameter. This is less secure than HTTP Basic Auth, and is not recommended for production use.
+Passing the REST API key via the `key` query parameter is deprecated and will stop working on the sunset date announced by Lilt. Since v3.0.2 this SDK never puts the key in the URL: a key set through `ApiKeyAuth.setApiKey` is sent as HTTP Basic authentication as well.
 
 ## Quotas
 
@@ -62,7 +62,7 @@ Add this dependency to your project's POM:
 <dependency>
   <groupId>com.lilt.client</groupId>
   <artifactId>lilt-java</artifactId>
-  <version>v3.0.1</version>
+  <version>v3.0.2</version>
   <scope>compile</scope>
 </dependency>
 ```
@@ -72,7 +72,7 @@ Add this dependency to your project's POM:
 Add this dependency to your project's build file:
 
 ```groovy
-compile "com.lilt.client:lilt-java:v3.0.1"
+compile "com.lilt.client:lilt-java:v3.0.2"
 ```
 
 ### Others
@@ -85,7 +85,7 @@ mvn clean package
 
 Then manually install the following JARs:
 
-* `target/lilt-java-v3.0.1.jar`
+* `target/lilt-java-v3.0.2.jar`
 * `target/lib/*.jar`
 
 ## Getting Started
@@ -107,16 +107,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     CreateApi apiInstance = new CreateApi(defaultClient);
     Integer contentId = 56; // Integer | The content ID.
@@ -252,9 +247,7 @@ Class | Method | HTTP request | Description
 Authentication schemes defined for the API:
 ### ApiKeyAuth
 
-- **Type**: API key
-- **API key parameter name**: key
-- **Location**: URL query string
+- **Deprecated**. Kept so existing code keeps working: `ApiKeyAuth.setApiKey` sends the key as HTTP Basic authentication, never as a URL query parameter.
 
 ### BasicAuth
 

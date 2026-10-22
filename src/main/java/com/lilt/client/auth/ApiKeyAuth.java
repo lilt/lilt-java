@@ -13,9 +13,30 @@
 
 package com.lilt.client.auth;
 
+/*-
+ * #%L
+ * com.lilt.client:lilt-java
+ * %%
+ * Copyright (C) 2015 - 2026 Lilt
+ * %%
+ * Lilt Client Library License – Source Supplied, Permissive, Attribution, Noncommercial
+ * 
+ * THE LILT CLIENT LIBRARY SOFTWARE OR WORK (AS DEFINED BELOW) IS PROVIDED UNDER
+ * THE TERMS OF THIS ("LICENSE"). THE WORK IS PROTECTED BY COPYRIGHT AND/OR OTHER
+ * APPLICABLE LAW. ANY USE OF THE WORK OTHER THAN AS AUTHORIZED UNDER THIS LICENSE
+ * OR COPYRIGHT LAW IS PROHIBITED. BY EXERCISING ANY RIGHTS TO THE WORK PROVIDED
+ * HERE, YOU ACCEPT AND AGREE TO BE BOUND BY THE TERMS OF THIS LICENSE. TO THE
+ * EXTENT THIS LICENSE MAY BE CONSIDERED TO BE A CONTRACT, THE LICENSOR GRANTS YOU
+ * THE RIGHTS CONTAINED HERE IN CONSIDERATION OF YOUR ACCEPTANCE OF SUCH TERMS AND
+ * CONDITIONS.
+ * #L%
+ */
+
 import com.lilt.client.Pair;
 
 import java.util.Map;
+
+import okhttp3.Credentials;
 import java.util.List;
 
 @javax.annotation.Generated(value = "org.openapitools.codegen.languages.JavaClientCodegen", date = "2025-02-20T18:18:58.249Z[GMT]")
@@ -58,6 +79,12 @@ public class ApiKeyAuth implements Authentication {
   @Override
   public void applyToParams(List<Pair> queryParams, Map<String, String> headerParams, Map<String, String> cookieParams) {
     if (apiKey == null) {
+      return;
+    }
+    // The REST API is retiring the key in the URL: a "basic" location sends the
+    // key as HTTP Basic authentication (key as username and password), prefix ignored.
+    if ("basic".equals(location)) {
+      headerParams.put("Authorization", Credentials.basic(apiKey, apiKey));
       return;
     }
     String value;
