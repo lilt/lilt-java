@@ -41,16 +41,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Integer jobId = 56; // Integer | A job id.
@@ -117,16 +112,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     JobCreateParameters body = new JobCreateParameters(); // JobCreateParameters | 
@@ -193,16 +183,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Integer jobId = 56; // Integer | A job id.
@@ -269,16 +254,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Integer jobId = 56; // Integer | A job id.
@@ -345,16 +325,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Integer jobId = 56; // Integer | A job id.
@@ -421,16 +396,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Integer jobId = 56; // Integer | A job id.
@@ -498,16 +468,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Integer jobId = 56; // Integer | A job id.
@@ -574,16 +539,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Integer jobId = 56; // Integer | A job id.
@@ -650,16 +610,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Integer jobId = 56; // Integer | A job id.
@@ -726,16 +681,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Boolean isArchived = true; // Boolean | Retrieves all jobs that are archived.
@@ -808,16 +758,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Integer jobId = 56; // Integer | A job id.
@@ -884,16 +829,11 @@ public class Example {
     ApiClient defaultClient = Configuration.getDefaultApiClient();
     defaultClient.setBasePath("https://api.lilt.com");
     
-    // Configure API key authorization: ApiKeyAuth
-    ApiKeyAuth ApiKeyAuth = (ApiKeyAuth) defaultClient.getAuthentication("ApiKeyAuth");
-    ApiKeyAuth.setApiKey("YOUR API KEY");
-    // Uncomment the following line to set a prefix for the API key, e.g. "Token" (defaults to null)
-    //ApiKeyAuth.setApiKeyPrefix("Token");
-
     // Configure HTTP basic authorization: BasicAuth
+    // Use your REST API key as both username and password.
     HttpBasicAuth BasicAuth = (HttpBasicAuth) defaultClient.getAuthentication("BasicAuth");
-    BasicAuth.setUsername("YOUR USERNAME");
-    BasicAuth.setPassword("YOUR PASSWORD");
+    BasicAuth.setUsername("YOUR API KEY");
+    BasicAuth.setPassword("YOUR API KEY");
 
     JobsApi apiInstance = new JobsApi(defaultClient);
     Integer jobId = 56; // Integer | A job id.
